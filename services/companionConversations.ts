@@ -2,6 +2,7 @@ import { createCompanionDraft, loadCompanionDraft, type CompanionDraft } from '.
 import { isReferenceDraft, type CompanionReferenceDraft } from './companionReferenceDraft';
 import { isReferenceReview, type ReferenceReview } from './companionReferenceReview';
 import { acceptsReferenceQueue, invalidateReferenceQueue, isReferenceQueue, type ReferenceQueue } from './companionReferenceQueue';
+import { isFixtureJobLink, type FixtureJobLink } from './companionFixtureJobs';
 
 export interface CompanionConversation {
   id: string;
@@ -13,6 +14,7 @@ export interface CompanionConversation {
   referenceInputRevision?: number;
   referenceReview?: ReferenceReview;
   referenceQueue?: ReferenceQueue;
+  referenceFixtureJob?: FixtureJobLink;
 }
 export interface CompanionConversations {
   version: 1;
@@ -29,11 +31,21 @@ export function adoptConversations(userId: string, draft: CompanionDraft | null,
   const chat = createConversation(draft ?? createCompanionDraft(), runId);
   return { version: 1, userId, selectedId: chat.id, chats: [chat] };
 }
-export function updateConversation(book: CompanionConversations, id: string, patch: Partial<Pick<CompanionConversation, 'draft' | 'composer' | 'runId' | 'referenceDraft' | 'referenceReview' | 'referenceQueue'>>): CompanionConversations {
+export function updateConversation(book: CompanionConversations, id: string, patch: Partial<Pick<CompanionConversation, 'draft' | 'composer' | 'runId' | 'referenceDraft' | 'referenceReview' | 'referenceQueue' | 'referenceFixtureJob'>>): CompanionConversations {
   const chat = book.chats.find(item => item.id === id);
   if (!chat || Object.entries(patch).every(([key, value]) => chat[key as keyof CompanionConversation] === value)) return book;
   const inputChanged = patch.referenceDraft !== undefined && patch.referenceDraft !== chat.referenceDraft;
   const reviewChanged = patch.referenceReview !== undefined && JSON.stringify(patch.referenceReview) !== JSON.stringify(chat.referenceReview);
+  const previousJob = chat.referenceFixtureJob, job = patch.referenceFixtureJob;
+  // Editing requires a separately acknowledged invalidation. Copies observe the owner's job.
+  if (previousJob && (inputChanged || reviewChanged) && (!previousJob.invalidated || previousJob.intent.ownerChatId !== id)) return book;
+  if (job !== undefined) {
+    if (!isFixtureJobLink(job, book.userId, chat.referenceReview, chat.referenceInputRevision ?? 0)
+      || job.intent.ownerChatId !== id || inputChanged || reviewChanged) return book;
+    if (previousJob && (previousJob.intent.requestId === job.intent.requestId
+      ? JSON.stringify(previousJob.intent) !== JSON.stringify(job.intent) || (previousJob.invalidated && !job.invalidated)
+      : !previousJob.invalidated || job.invalidated)) return book;
+  }
   const { referenceQueue, ...otherFields } = patch;
   const next = { ...chat, ...otherFields, updatedAt: Date.now() };
   if (inputChanged) {
@@ -80,6 +92,7 @@ export async function loadConversations(userId: string): Promise<CompanionConver
           && (chat.referenceReview === undefined || (chat.referenceDraft !== undefined && isReferenceReview(chat.referenceReview)
             && (chat.referenceReview.stale || chat.referenceReview.inputRevision === (chat.referenceInputRevision ?? 0))))
           && (chat.referenceQueue === undefined || (chat.referenceDraft !== undefined && isReferenceQueue(chat.referenceQueue, chat.referenceReview, chat.referenceInputRevision ?? 0)))
+          && (chat.referenceFixtureJob === undefined || (chat.referenceDraft !== undefined && isFixtureJobLink(chat.referenceFixtureJob, userId, chat.referenceReview, chat.referenceInputRevision ?? 0)))
           && loadCompanionDraft(userId, { getItem: () => JSON.stringify({ version: 1, userId, draft: chat.draft }) }))
         || !book.chats.some(chat => chat.id === book.selectedId)) throw new Error('Saved conversations could not be opened.');
       return { ...book, revision: book.revision ?? 0 };

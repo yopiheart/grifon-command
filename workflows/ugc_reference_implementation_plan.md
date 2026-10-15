@@ -62,6 +62,56 @@ need their own implementation and checks before paid integrations.
 
 ## Free fixture checks
 
+### Background fixture execution
+
+The background fixture path uses a standalone local worker and a SQLite journal,
+separate from browser playback. A saved submission intent identifies the job
+before its first request. Reopening performs read-only lookup; it never restarts
+work through polling. Duplicate submissions reuse the same intent, and worker
+transitions commit before the next step is scheduled. Retry and cancellation are
+explicit commands. Stopping a job is acknowledged before its plan can be edited.
+Conflict copies observe the original job without starting a second worker job.
+
+Start the isolated fixture host on an unused loopback port:
+
+```powershell
+node tools/verify-recovery-server.mjs --reference-jobs --port 5174 --jobs-db .tmp/companion-background-live/jobs.sqlite --worker-status .tmp/companion-background-live/worker.json
+```
+
+Open `http://localhost:5174/companion-chat-preview.html?background=1`. The explicit
+preview opt-in injects the fixture client; the normal app and local queue keep
+their existing behavior. The host still loads no environment files or live API
+middleware. Its dedicated fixture namespace permits only simulated fixture
+accounts; this is not production authentication. No uploaded media is processed,
+no provider executes and actual spend remains zero.
+
+With that host running, the browser suite uses its journal for an independent,
+read-only check while every browser owned by the test is closed:
+
+```powershell
+npm.cmd run test:e2e -- --config tests/e2e/companion-background-fixture.config.ts
+npx.cmd vitest run tests/unit/companionFixtureJobs.test.ts tests/unit/companionFixtureJournal.test.ts tests/unit/companionFixtureWorker.test.ts
+```
+
+For a different host or journal, set `COMPANION_BACKGROUND_URL` and
+`COMPANION_BACKGROUND_DB` to the matching local paths before the browser suite.
+Worker tests also exercise real process restart and two-worker contention.
+
+Browser closure does not stop the worker. Host/worker shutdown stops execution;
+restarting against the same journal resumes actual scheduled steps without
+recounting completed attempts or fabricating elapsed-time results. This is local
+restart-recovery evidence, not cloud durability or a completed S2 spending system.
+The desktop must remain running. Cloud media, authenticated distributed workers,
+atomic spend reservations and provider reconciliation remain S2 requirements.
+
+The bounded runtime investigation found the current producer client-driven and
+the existing cleanup cron unrelated to stage execution. Local fixture proof uses
+installed Node's [SQLite API](https://nodejs.org/download/release/latest-v24.x/docs/api/sqlite.html)
+without adding dependencies. [Vercel Workflows](https://vercel.com/docs/workflows)
+is a cloud execution candidate; no SDK migration or deployment is included here.
+
+### Existing local intake and review checks
+
 For a free fixture check, start the existing isolated frontend server in one
 terminal; it loads no environment files or live API middleware:
 
@@ -378,7 +428,9 @@ Do not claim sales lift from production acceptance alone.
 
 ## Next implementation task
 
-S0 is ready to turn into a code brief using local fixtures while Neil gathers the
-three references and brand assets. S1's structure can also be prepared with a fake
-planner. Real analysis, creative tuning and paid tests wait for exact inputs and
-their required approvals. This document authorizes none of those operations.
+Local S0 intake, S1 sample review and browser-independent fixture execution are
+implemented. Continue S2 with cloud-owned media, authenticated durable execution,
+atomic spend reservations and provider submission reconciliation. Neil is still
+gathering the three references and brand assets. Real analysis, creative tuning
+and paid tests wait for exact inputs and their required approvals. This document
+authorizes none of those operations.

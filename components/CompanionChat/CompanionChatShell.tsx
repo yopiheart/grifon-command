@@ -9,8 +9,9 @@ import './companionChat.css';
 
 export interface ConversationBinding {
   chat: CompanionConversation;
-  update: (patch: Partial<Pick<CompanionConversation, 'draft' | 'composer' | 'runId' | 'referenceDraft' | 'referenceReview' | 'referenceQueue'>>) => void;
+  update: (patch: Partial<Pick<CompanionConversation, 'draft' | 'composer' | 'runId' | 'referenceDraft' | 'referenceReview' | 'referenceQueue' | 'referenceFixtureJob'>>) => void;
   queueIsCurrent: (id: string, revision: number) => boolean;
+  fixtureJobIsCurrent: (requestId: string, invalidated: boolean) => boolean;
   saved: boolean;
   saving: boolean;
   saveConflict: boolean;
@@ -126,7 +127,7 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
     return () => { document.body.style.overflow = overflow; main.current?.removeAttribute('inert'); document.removeEventListener('keydown', key); window.removeEventListener('resize', resize); previous?.focus(); };
   }, [mobileOpen]);
   const update = useCallback((id: string, patch: Parameters<ConversationBinding['update']>[0]) => {
-    if (!mounted.current || !current.current || (patch.referenceQueue !== undefined && (navigating.current || recovering.current || current.current.selectedId !== id))) return;
+    if (!mounted.current || !current.current || ((patch.referenceQueue !== undefined || patch.referenceFixtureJob !== undefined) && (navigating.current || recovering.current || current.current.selectedId !== id))) return;
     const next = updateConversation(current.current, id, patch);
     if (next === current.current) return;
     current.current = next; setBook(next); if (!recovering.current) void persist(next);
@@ -143,7 +144,7 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
       let next = await saveConversationCopy(userId, selected);
       if (!mounted.current) return;
       const pending = current.current.chats.find(item => item.id === latest.selectedId)!;
-      if (pending !== selected) next = { ...next, chats: next.chats.map(chat => chat.id === next.selectedId ? { ...chat, draft: pending.draft, composer: pending.composer, runId: pending.runId, referenceDraft: pending.referenceDraft, referenceReview: pending.referenceReview, referenceInputRevision: pending.referenceInputRevision, referenceQueue: pending.referenceQueue } : chat) };
+      if (pending !== selected) next = { ...next, chats: next.chats.map(chat => chat.id === next.selectedId ? { ...chat, draft: pending.draft, composer: pending.composer, runId: pending.runId, referenceDraft: pending.referenceDraft, referenceReview: pending.referenceReview, referenceInputRevision: pending.referenceInputRevision, referenceQueue: pending.referenceQueue, referenceFixtureJob: pending.referenceFixtureJob } : chat) };
       revision.current = next.revision ?? 0; current.current = next; setBook(next);
       if (pending !== selected) await persist(next);
       setSaveConflict(false); setSaved(true); setNavigationError('');
@@ -201,6 +202,10 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
     <div ref={main} className="relative min-h-0 min-w-0 flex-1">{children({ chat, update: patch => update(chat.id, patch), queueIsCurrent: (id, queueRevision) => {
       const selected = current.current?.chats.find(item => item.id === current.current?.selectedId);
       return mounted.current && !navigating.current && !recovering.current && current.current?.userId === userId && selected?.id === chat.id && selected.referenceQueue?.id === id && selected.referenceQueue.revision === queueRevision;
+    }, fixtureJobIsCurrent: (requestId, invalidated) => {
+      const selected = current.current?.chats.find(item => item.id === current.current?.selectedId);
+      return mounted.current && !navigating.current && !recovering.current && current.current?.userId === userId && selected?.id === chat.id
+        && selected.referenceFixtureJob?.intent.requestId === requestId && selected.referenceFixtureJob.invalidated === invalidated;
     }, saved, saving, saveConflict, recoverCopy: () => void recoverCopy(), retrySave: () => { if (current.current) void persist(current.current); }, openNavigation: () => { setMobileOpen(true); setCollapsed(false); }, newChat: () => void navigate(), presentAvatar, leave, setMediaPreparing })}<CompanionAvatarLayer presentation={avatar} />{navigationError && collapsed && <p role="alert" className="absolute bottom-4 left-4 right-4 z-30 rounded-xl bg-zinc-900 p-3 text-sm text-zinc-300">{navigationError}</p>}</div>
     <SettingsModal open={settingsOpen} onClose={() => setSettingsOpen(false)} userEmail={userEmail} userName={userName} plan={plan} planLoading={planLoading} planError={planError} onRetryPlan={onRetryPlan} preview={preview} restoreFocus={restoreSettingsFocus}
       onLogout={onLogout ? () => leave(onLogout) : undefined} onUpgrade={onUpgrade ? () => leave(onUpgrade) : undefined} onNavigate={href => leave(() => onNavigate ? onNavigate(href) : window.location.assign(href))} />

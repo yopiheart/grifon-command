@@ -14,6 +14,7 @@ import type { ConversationBinding } from './CompanionChatShell';
 import { CompanionOutputViewer } from './CompanionOutputViewer';
 import { CompanionReferenceBrief } from './CompanionReferenceBrief';
 import { createReferenceDraft } from '../../services/companionReferenceDraft';
+import type { FixtureJobClient } from '../../services/companionFixtureJobs';
 import { RECOMMENDED_VOICES } from '../SignalModulator/pinoyReady';
 import { compressImageForUpload } from '../../utils/imageCompression';
 import {
@@ -36,6 +37,7 @@ export interface CompanionChatSurfaceProps {
   fixtureLabel?: string;
   conversation?: ConversationBinding;
   loadReferenceVoices?: () => Promise<VoiceLibrary>;
+  fixtureJobClient?: FixtureJobClient;
   onAvatarPresentation: (chatId: string, presentation: CompanionAvatarPresentation) => void;
 }
 
@@ -65,7 +67,7 @@ const Transcript = memo(function Transcript({ messages, hiddenMessageId }: { mes
 
 export function CompanionChatSurface(props: CompanionChatSurfaceProps) {
   if (props.conversation?.chat.referenceDraft && !props.conversation.chat.runId && !props.controller.run) {
-    return <CompanionReferenceBrief key={`${props.userId}:${props.conversation.chat.id}`} conversation={props.conversation} userId={props.userId} loadVoices={props.loadReferenceVoices} />;
+    return <CompanionReferenceBrief key={`${props.userId}:${props.conversation.chat.id}`} conversation={props.conversation} userId={props.userId} loadVoices={props.loadReferenceVoices} fixtureJobClient={props.fixtureJobClient} />;
   }
   return <LegacyCompanionChatSurface {...props} />;
 }

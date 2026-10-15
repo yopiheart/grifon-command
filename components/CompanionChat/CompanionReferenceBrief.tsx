@@ -12,6 +12,8 @@ import type { ConversationBinding } from './CompanionChatShell';
 import { confirmSampleReview, createSampleReview, fingerprintReferenceDraft } from '../../services/companionReferenceReview';
 import { CompanionReferenceReview } from './CompanionReferenceReview';
 import { CompanionReferenceQueue } from './CompanionReferenceQueue';
+import { CompanionFixtureJob } from './CompanionFixtureJob';
+import type { FixtureJobClient } from '../../services/companionFixtureJobs';
 
 const control = 'min-h-11 min-w-11 !rounded-xl !text-sm !font-semibold !normal-case !tracking-normal';
 const ghost = `${control} !bg-zinc-950 border border-white/10 !text-zinc-400 hover:!text-white hover:!border-[#FFCC00]`;
@@ -29,16 +31,20 @@ function MediaPreview({ media, video = false }: { media: ReferenceMedia; video?:
     : <img src={url} alt={media.name} className="h-28 w-full rounded-lg object-contain" />;
 }
 
-export function CompanionReferenceBrief({ conversation, userId, loadVoices = fetchVoices }: {
+export function CompanionReferenceBrief({ conversation, userId, loadVoices = fetchVoices, fixtureJobClient }: {
   conversation: ConversationBinding;
   userId: string;
   loadVoices?: () => Promise<VoiceLibrary>;
+  fixtureJobClient?: FixtureJobClient;
 }) {
   const draft = conversation.chat.referenceDraft!;
   const latest = useRef(draft); latest.current = draft;
   const latestChat = useRef(conversation.chat); latestChat.current = conversation.chat;
   const [showReview, setShowReview] = useState(!!conversation.chat.referenceReview);
   const [showQueue, setShowQueue] = useState(!!conversation.chat.referenceQueue);
+  const [showFixtureJob, setShowFixtureJob] = useState(!!conversation.chat.referenceFixtureJob);
+  const fixtureLink = conversation.chat.referenceFixtureJob;
+  const fixtureLocked = !!fixtureLink && (!fixtureLink.invalidated || fixtureLink.intent.ownerChatId !== conversation.chat.id);
   const [planning, setPlanning] = useState(false);
   const planningLock = useRef(false);
   const active = useRef(true);
@@ -78,11 +84,12 @@ export function CompanionReferenceBrief({ conversation, userId, loadVoices = fet
     return () => { observer.disconnect(); window.removeEventListener('resize', publish); };
   }, [conversation.chat.id, conversation.presentAvatar, uploading, planning]);
   const update = (patch: Partial<CompanionReferenceDraft>) => {
+    if (fixtureLocked) return;
     const next = { ...latest.current, ...patch }; latest.current = next;
     conversation.update({ referenceDraft: next });
   };
   const reviewAction = async (confirm = false) => {
-    if (uploadLock.current || planningLock.current || !conversation.saved || conversation.saving || conversation.saveConflict) return;
+    if (fixtureLocked || uploadLock.current || planningLock.current || !conversation.saved || conversation.saving || conversation.saveConflict) return;
     const startedScope = scope, snapshot = latest.current, chat = latestChat.current;
     planningLock.current = true; setPlanning(true); setError(''); conversation.setMediaPreparing(true);
     try {
@@ -99,7 +106,7 @@ export function CompanionReferenceBrief({ conversation, userId, loadVoices = fet
     finally { if (active.current && currentScope.current === startedScope) { planningLock.current = false; setPlanning(false); conversation.setMediaPreparing(false); } }
   };
   const attach = async (files: File[], kind: 'photo' | 'video') => {
-    if (!files.length || uploadLock.current || planningLock.current) return;
+    if (fixtureLocked || !files.length || uploadLock.current || planningLock.current) return;
     if (kind === 'photo' && latest.current.photos.length + files.length > 5) { setError('You can attach up to five photos. Remove a photo before adding another.'); return; }
     const startedScope = scope;
     uploadLock.current = true; setUploading(true); conversation.setMediaPreparing(true); setError('');
@@ -125,8 +132,8 @@ export function CompanionReferenceBrief({ conversation, userId, loadVoices = fet
       <div className="mx-auto max-w-2xl space-y-5">
         {error && <p role="alert" className="flex items-start gap-3 text-sm text-amber-500"><AlertTriangle className="h-5 w-5 shrink-0" />{error}</p>}
         {planning && <p role="status" className="text-sm text-zinc-300">Checking your saved brief and files… No generation or spending.</p>}
-        {showQueue ? <CompanionReferenceQueue key={`${scope}:${conversation.chat.referenceQueue?.id ?? 'new'}`} conversation={conversation} userId={userId} onBack={() => { setShowQueue(false); setShowReview(true); }} /> : showReview && conversation.chat.referenceReview ? <CompanionReferenceReview review={conversation.chat.referenceReview} busy={planning || uploading} saved={conversation.saved && !conversation.saving && !conversation.saveConflict}
-          onChange={review => conversation.update({ referenceReview: review })} onBack={() => setShowReview(false)} onPrepare={() => void reviewAction()} onConfirm={() => void reviewAction(true)} onQueue={() => setShowQueue(true)} hasQueue={!!conversation.chat.referenceQueue} /> : <>
+        {showFixtureJob ? fixtureJobClient ? <CompanionFixtureJob conversation={conversation} userId={userId} client={fixtureJobClient} onBack={() => { setShowFixtureJob(false); setShowReview(true); }} /> : <GlassPanel className="space-y-4 p-4 sm:p-5"><h2 className="!text-lg !font-semibold !normal-case !tracking-normal">Saved background fixture job</h2><p className="text-sm leading-relaxed text-zinc-300">Open the local background fixture preview to observe or stop this job. This view has no worker connection. Editing stays locked until the worker acknowledges stopping the plan.</p><p className="text-sm text-zinc-300">Original plan revision {fixtureLink?.intent.plan.revision}. Actual spend: PHP 0.00.</p></GlassPanel> : showQueue && !fixtureJobClient ? <CompanionReferenceQueue key={`${scope}:${conversation.chat.referenceQueue?.id ?? 'new'}`} conversation={conversation} userId={userId} onBack={() => { setShowQueue(false); setShowReview(true); }} /> : showReview && conversation.chat.referenceReview ? <CompanionReferenceReview review={conversation.chat.referenceReview} busy={planning || uploading || fixtureLocked} saved={conversation.saved && !conversation.saving && !conversation.saveConflict}
+          onChange={review => conversation.update({ referenceReview: review })} onBack={() => setShowReview(false)} onPrepare={() => void reviewAction()} onConfirm={() => void reviewAction(true)} onQueue={() => fixtureJobClient ? setShowFixtureJob(true) : setShowQueue(true)} hasQueue={!!conversation.chat.referenceQueue || !!fixtureLink} queueLabel={fixtureJobClient ? 'Open background fixture job' : undefined} /> : <>
         <GlassPanel className="space-y-4 p-4 sm:p-5" aria-label="Reference brief">
           <h2 className="!text-lg !font-semibold !normal-case !tracking-normal">Reference brief</h2>
           <p className="text-sm leading-relaxed text-zinc-300">Save your brief and assets, then try an editable sample plan. Real analysis and generation are not available here.</p>
@@ -170,7 +177,7 @@ export function CompanionReferenceBrief({ conversation, userId, loadVoices = fet
       </div>
     </div>
     <footer className="shrink-0 border-t border-white/10 bg-zinc-950 px-4 py-3 pb-[max(12px,env(safe-area-inset-bottom))] sm:px-8">
-      <div className="mx-auto max-w-2xl"><p role="status" id="companion-save-status" className="text-xs leading-relaxed text-zinc-400">{planning ? 'Preparing this sample locally. No generation or spending.' : uploading ? 'Media is still being checked. Keep this chat open until it is attached and saved.' : conversation.saveConflict ? 'Another tab saved newer chats. Save this chat as a copy to preserve both versions.' : conversation.saving ? 'Saving on this device…' : conversation.saved ? showQueue ? 'Demo queue saved on this device. No generation started.' : showReview ? 'Sample review saved on this device. No generation started.' : 'Reference brief saved on this device. No generation started.' : 'Draft could not be saved. Keep this tab open and retry.'}</p><Button variant={conversation.saved ? 'ghost' : 'secondary'} className={`${ghost} mt-2 w-full`} disabled={planning || uploading || conversation.saving} onClick={conversation.saveConflict ? conversation.recoverCopy : conversation.retrySave}>{conversation.saveConflict ? 'Save this chat as a copy' : conversation.saved ? showQueue ? 'Save demo queue' : showReview ? 'Save review' : 'Save brief' : 'Retry saving'}</Button></div>
+      <div className="mx-auto max-w-2xl"><p role="status" id="companion-save-status" className="text-xs leading-relaxed text-zinc-400">{planning ? 'Preparing this sample locally. No generation or spending.' : uploading ? 'Media is still being checked. Keep this chat open until it is attached and saved.' : conversation.saveConflict ? 'Another tab saved newer chats. Save this chat as a copy to preserve both versions.' : conversation.saving ? 'Saving on this device…' : conversation.saved ? showFixtureJob ? 'Job link saved in this browser. Worker status is shown separately.' : showQueue ? 'Demo queue saved on this device. No generation started.' : showReview ? 'Sample review saved on this device. No generation started.' : 'Reference brief saved on this device. No generation started.' : 'Draft could not be saved. Keep this tab open and retry.'}</p><Button variant={conversation.saved ? 'ghost' : 'secondary'} className={`${ghost} mt-2 w-full`} disabled={planning || uploading || conversation.saving} onClick={conversation.saveConflict ? conversation.recoverCopy : conversation.retrySave}>{conversation.saveConflict ? 'Save this chat as a copy' : conversation.saved ? showFixtureJob ? 'Save background fixture job link' : showQueue ? 'Save demo queue' : showReview ? 'Save review' : 'Save brief' : 'Retry saving'}</Button></div>
     </footer>
   </div>;
 }

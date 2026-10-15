@@ -1,83 +1,77 @@
 # NOW - the resume doc
-**Stamped: 2026-10-15; local fixture production queue built**
+**Stamped: 2026-10-15; browser-independent local fixture jobs built**
 
 ## Active task and boundary
 Checkout: F:/CodexWorktrees/61f5/grifon-command.
-Branch: codex/ugc-fixture-queue; base codex/ugc-reference-review at e41e6fd4.
-Neil authorized the next build while gathering assets: fixtures only, no paid
-production. This slice previews execution/recovery after sample plan review.
-It is local simulation before S2, not durable or browser-independent execution.
-No API/provider/model/prompt/migration/dependency changes, production writes,
-paid calls or manual deployment. Existing legacy flows and accepted work remain.
+Branch: codex/ugc-background-fixtures; base codex/ugc-fixture-queue at bbf8607c.
+Neil authorized fixture jobs that continue after browser closure and reopen in
+chat. No paid generation while real references/brand assets are being gathered.
+This is local worker/restart proof before cloud S2, not production durability.
+No tuned prompt/model changes, new dependencies, paid calls, production writes,
+manual deployment or merge. Actual spend remains PHP 0.00; no media/Assets entry.
 
 ## Implemented
-- Saved confirmed sample plan -> Preview demo queue -> Prepare -> Start.
-- Sequential scene clips, one voice/alignment step for spoken plans, music,
-  existing sound-bank cues, assembly and quality check. Silent plans omit voice.
-- Original illustrative quote/cap visible; actual spend PHP 0.00 throughout.
-  Demo complete creates no media and no Assets entry.
-- Progress reopens on this browser/device. Leaving the queue, reload, chat or
-  account switch stops playback and requires explicit Resume; no clock catch-up.
-- Optional normal or second-clip-fails-once scenario. One targeted retry keeps
-  successful steps and their attempt counts. Pause/resume retains the active
-  attempt; Cancel prevents more transitions. Duplicate actions cannot restart work.
-- Any brief/input/voice/review/timing/cost edit permanently invalidates the queue,
-  including edit-and-revert. Previous progress stays inspectable until explicit
-  replacement using a newly confirmed plan. No multi-queue archive is provided.
-- Save-aware timers pause for pending writes; a failed save stops playback and
-  requires Resume after Retry saving. Unsaved progress never claims durability.
-  Conflict copies retain queue state stopped, preserving the newer original.
-- Exact plan/confirmation/input binding, validated transitions and strict local
-  decoding. Malformed saved queues fail closed without deleting stored records.
-- Prior intake/review remains: reference video or text-only link, up to five
-  role-labelled photos, one saved voice, English sample script/visual timeline.
-  Samples do not analyze/localize media. Local storage is not spend authority;
-  manually rewritten database contents are not authenticated.
+- Opt-in Companion preview ?background=1: confirmed sample plan -> Open background
+  fixture job -> Start. Existing app/local demo queue behavior is preserved.
+- Exact submission intent saved in IndexedDB before POST. Stable owner/chat/plan
+  identity deduplicates starts and reconciles lost acknowledgements by GET.
+- Separate Node worker advances synthetic steps into an ignored SQLite journal.
+  GET never advances work; browser closure/navigation does not stop the worker.
+  Transitions commit before the next step is scheduled. Same journal resumes
+  after worker restart without recounting attempts or clock-based catch-up.
+- One targeted retry preserves successful steps. Cancel/invalidate stops current
+  intent despite worker revision races; retry retains revision protection.
+  Command errors remain visible across automatic status polls.
+- Stop acknowledgement and local save precede editing. Edit-and-revert cannot
+  revive a stopped plan. Conflict copies observe their original job read-only.
+- Fixture owner/chat validation, transactional multi-worker serialization,
+  idempotent command receipts and pre-start cancellation tombstones.
+- Preview-only same-origin /__companion-fixture-jobs transport, simulated accounts
+  only. Host reads no .env, blocks live API calls and denies HTTP access to .tmp.
+- Local intake/review still preserve reference, five photos, voice, plan and quote.
+  Reference language can differ from output language; samples do not analyze media.
 
-## Verification and review
-Build PASS; full Vitest PASS: 1,632 passed, 32 existing gated skips.
-Focused suite PASS: 13/13; tsc --noEmit PASS.
-New queue Playwright PASS: 15 functional cases plus two mobile overflow regressions.
-Viewport coverage: 375x667, 390x844 and 1280x900.
-Existing Companion chat/continuity/intake/review browser regression PASS: 37/37.
-Coverage includes reload/resume, bounded retry, cancel, navigation/account guards,
-permanent invalidation, silent mode, quota failures, conflict-copy recovery and
-three malformed saved queues retained after rejection. API/provider and fixture
-controller calls were zero; decorative font requests separately blocked/recorded.
-Meaningful red: absent domain module; queue entry absent after a saved confirmed
-plan. Both failed before implementation and passed afterward. No paid/live flags.
-Long visual URL overflow also reproduced red at375/390, then both panel/scroller
-checks passed after text wrapping. Failed-state icons and disabled controls clarified.
+## Verification and independent review
+Build PASS; full Vitest PASS: 1,647 passed, 32 existing gated skips.
+Focused protocol/journal/real-worker tests PASS: 15/15.
+New Playwright suite PASS: 13/13, no skips/flakes/page errors/forbidden calls.
+Existing Companion chat/continuity/intake/review/local-queue suites PASS: 54/54.
+Closed whole owned Edge process at 390/1280, read SQLite before any reopening/GET:
+jobs completed while browser was closed, then same profile/chat/request recovered.
+Lost-start-response case also completed before reopening with no second POST.
+Coverage: save-before-POST, failed save -> zero dispatch, duplicate tabs, copied
+chat, targeted retry, cancellation race, edit acknowledgement/revert, offline and
+late response/account isolation. Real worker tests cover crash/restart and two
+workers. Actual spend zero; decorative font traffic blocked/recorded separately.
+Meaningful REDs preserved: missing implementation/entry and forced cancel race;
+same assertions passed after fixes. No paid/live flags or skipped failed gates.
 Bundle-leak, voice-sync, eval-prompts, domain, PS1 ASCII, artifact anchors PASS.
-Independent correctness/React source review PASS, no actionable findings.
-Independent rendered smoke PASS; BRAND_PASS 44/50, zero unresolved findings.
-Own critic cases, mobile375/390 and desktop1280, icon crops, focus and disabled
-states passed. Post-fix panel/scroller widths match at both mobile sizes.
-Evidence local-only: .tmp/ugc-queue-{build-final,test-final,regression}.log,
-.tmp/companion-reference-queue-* and .tmp/ugc-queue-critic/. Not shared PR artifacts.
-Generated snapshot line-ending noise restored; no snapshot change included.
+Independent correctness/React review PASS; final follow-up PASS, no findings.
+Independent smoke PASS; final BRAND_PASS 45/50, zero critical/nits after icon fixes.
+Mobile 375/390, desktop 1280, focus and 200% crops inspected; no overflow.
+Evidence local-only: .tmp/ugc-background-*.log, .tmp/companion-background-final.json,
+.tmp/companion-background-evidence-summary.json and .tmp/ugc-background-critic/.
+Generated unrelated snapshot line-ending noise restored; no snapshot diff included.
 
 ## Delivery and reproduction
-Planning PR: https://github.com/yopiheart/grifon-command/pull/188.
-Intake PR: https://github.com/yopiheart/grifon-command/pull/190.
-Review PR: https://github.com/yopiheart/grifon-command/pull/191.
-Queue draft PR: https://github.com/yopiheart/grifon-command/pull/192.
-Application source committed and pushed as a6080682; independently reviewed.
-Queue PR stacks on codex/ugc-reference-review. Do not merge/deploy without Neil.
-Remote Vercel check on a6080682: FAILURE, exact description Account is blocked.
-No GitHub Actions runs listed for this branch at delivery. Local checks passed;
-no gate was disabled and no manual deployment ran.
-Reuse safe fixture server localhost:5173 (parent session91045 while alive).
-URL: http://localhost:5173/companion-chat-preview.html.
-Safe start: node tools/verify-recovery-server.mjs; no.env or live API middleware.
-Queue check: npm.cmd run test:e2e -- --config tests/e2e/companion-reference-queue.config.ts
-Reproduction/boundaries: workflows/ugc_reference_implementation_plan.md.
+Planning/intake/review/queue draft stack: PR188 / PR190 / PR191 / PR192.
+New background draft PR and remote checks: pending final backup this session.
+Safe preview: http://localhost:5173/companion-chat-preview.html?background=1.
+Current owned host session64372, host PID19340, worker PID14440 while alive.
+Journal: .tmp/companion-background-live/jobs.sqlite; keep this path for restart.
+Replaced only our old 5173/5174 hosts after tests; existing browser origin retained.
+Post-handoff HTTP checks: preview200, live API503, journal download403.
+Narrow 5173 closed-browser rerun PASS1/1; full 13-case suite passed on 5174.
+Start: node tools/verify-recovery-server.mjs --reference-jobs --port 5173 --jobs-db .tmp/companion-background-live/jobs.sqlite --worker-status .tmp/companion-background-live/worker.json
+Browser suite defaults5174; set COMPANION_BACKGROUND_URL for another local port.
+Commands and limits: workflows/ugc_reference_implementation_plan.md.
 
 ## Next action
-Neil supplies real UGC references/brand assets; references may be any language.
-Before paid integration: cloud-owned media, real analysis/research/planning under
-approved tuned diffs and pilot specs, verified quotes/voice compatibility,
-server-owned durable executor, reservations/submission reconciliation and budget
-ledger. Local demo confirmation grants no paid execution authority.
+PC and worker must remain on for progress. Restart with the same intact journal
+to resume; no automatic worker supervisor or cross-device recovery is claimed.
+Before paid integration: cloud-owned media, authenticated durable workers,
+atomic reservations/submission reconciliation/budget ledger, real research and
+analysis under approved tuned diffs, verified provider/voice contracts and an
+approved exact-input paid pilot. Local demo confirmation grants no spend authority.
 Roadmap: workflows/creative_library_roadmap.md; detailed S0-S6 plan linked above.
-Accepted orbital film/music sources remain untouched; prior paid approvals consumed.
+Accepted orbital film/music and existing legacy presets remain untouched.

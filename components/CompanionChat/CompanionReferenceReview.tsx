@@ -10,7 +10,7 @@ const control = 'min-h-11 !rounded-xl !text-sm !font-semibold disabled:opacity-5
 const ghost = `${control} !bg-zinc-950 border border-white/10 !text-zinc-400 hover:!text-white hover:!border-[#FFCC00]`;
 const money = (cents: number) => `PHP ${(cents / 100).toFixed(2)}`;
 
-export function CompanionReferenceReview({ review, busy, saved, onChange, onBack, onPrepare, onConfirm, onQueue, hasQueue }: {
+export function CompanionReferenceReview({ review, busy, saved, onChange, onBack, onPrepare, onConfirm, onQueue, hasQueue, queueLabel = 'Preview demo queue' }: {
   review: ReferenceReview;
   busy: boolean;
   saved: boolean;
@@ -20,6 +20,7 @@ export function CompanionReferenceReview({ review, busy, saved, onChange, onBack
   onConfirm: () => void;
   onQueue: () => void;
   hasQueue: boolean;
+  queueLabel?: string;
 }) {
   const errors = reviewErrors(review);
   let totals: ReturnType<typeof sampleQuoteTotals> | null = null;
@@ -75,8 +76,8 @@ export function CompanionReferenceReview({ review, busy, saved, onChange, onBack
       {errors.length > 0 && <div role="alert" className="flex items-start gap-2 text-sm text-amber-500"><AlertTriangle className="h-4 w-4 shrink-0" /><ul className="space-y-2">{errors.map((error, index) => <li key={index}>{error}</li>)}</ul></div>}
       {review.confirmation && <p role="status" className="flex items-start gap-2 text-sm text-zinc-200"><Check className="h-4 w-4 shrink-0 text-[#FFCC00]" />{saved ? `Sample plan confirmed for revision ${review.revision}. Nothing will be generated or charged.` : 'Demo confirmation is not saved yet. Keep this tab open and check the save status.'}</p>}
       {!review.confirmation && <GoldButton className={`${control} w-full`} disabled={busy || !saved || errors.length > 0} onClick={onConfirm}>{busy ? 'Checking sample inputs…' : 'Confirm sample plan'}</GoldButton>}
-      {review.confirmation && <GoldButton className={`${control} w-full`} disabled={busy || !saved} onClick={onQueue}>Preview demo queue</GoldButton>}
-      {!review.confirmation && hasQueue && <Button variant="ghost" className={`${ghost} w-full`} onClick={onQueue}>Preview demo queue</Button>}
+      {review.confirmation && <GoldButton className={`${control} w-full`} disabled={busy || !saved} onClick={onQueue}>{queueLabel}</GoldButton>}
+      {!review.confirmation && hasQueue && <Button variant="ghost" className={`${ghost} w-full`} onClick={onQueue}>{queueLabel}</Button>}
       <p className="text-xs leading-relaxed text-zinc-400">Demo confirmation records these inputs, this plan revision and the illustrative estimate on this device. Any change requires review again.</p>
     </GlassPanel>
   </div>;
