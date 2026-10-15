@@ -1,13 +1,14 @@
 # NOW - the resume doc
-**Stamped: 2026-10-15; Supabase cloud fixture executor activated**
+**Stamped: 2026-10-15; signed-in cloud fixture preview verified**
 
 ## Active task and authorization
 Checkout: F:/CodexWorktrees/61f5/grifon-command.
 Branch: codex/ugc-cloud-fixtures; base codex/ugc-background-fixtures at938f5c29.
 Neil requested fixture jobs that continue with the PC off and reopen in chat.
 He chose existing GRIFON AI with separate fixture tables and supplied his login
-email for owner-only pilot enrollment. No paid generation, new paid infra, merge
-or frontend deployment. No tuned prompt/model/settings changes or auth-user writes.
+email for owner-only pilot enrollment. Hosting is unblocked; continued with a
+frontend preview and signed-in smoke. No paid generation, new paid infra, merge
+or production release. No tuned prompt/model/settings changes or auth-user writes.
 Target: Supabase varoqxjccqmskzeejagn, PostgreSQL17, free plan, healthy at inspection.
 
 ## Implemented and activated
@@ -49,7 +50,7 @@ Live Supabase fixture started at11:19:45UTC; eight cron ticks completed at11:20:
 revision10, all8 attempts1, actualCents0. Confirmed both owned local processes and
 5173/5174 listeners absent at11:19:54 and11:21:46; first remote read11:21:13.
 Server events and successful cron history prove execution with no local executor
-or polling. Physical PC shutdown and live browser JWT were not performed.
+or polling. Physical PC shutdown was not tested; live browser proof is below.
 Actual hosted wire decoded through production cloud client, list/get only.
 Duplicate calls on two distinct PG backends returned one job/one start event.
 MCP serialized calls; observed lock contention/concurrent overlap NOT established.
@@ -58,24 +59,32 @@ no new WARN findings. Existing unrelated warnings preserved; no policies weakene
 Evidence local-only .tmp/ugc-cloud-{hosted-proof,client-recovery-proof,concurrency*-proof}.json,
 .tmp/ugc-cloud-{test-final,browser-final,existing-regression,background-regression}.*,
 .tmp/ugc-cloud-browser-critic/ and .tmp/cloud-fixture-*-{red,green}.log.
-Generated QA PNGs restored; continuity outputs moved under ignored.tmp; snapshot
-line-ending noise restored. No accepted media changes or paid/live flags.
+QA outputs restored or ignored; no accepted media changes or paid/live flags.
 
 ## Delivery and runtime
 Draft PR: https://github.com/yopiheart/grifon-command/pull/194, stacked on PR193.
-Application source committed/pushed b7de56fb. No merge/frontend deployment requested.
-Remote Vercel check on b7de56fb failed: Account is blocked. No Actions runs listed.
-Current safe host session1573, host16456, worker19636 while alive atlocalhost5173.
+Application source committed/pushed b7de56fb; preview built from 2fe76b87.
+Vercel preview dpl_BSkmNLqDqjEtfTiuGFS6c6vhUuVK READY, target null (preview).
+https://grifon-command-p7o5wkgwg-neilmaglayabusiness22-2085s-projects.vercel.app/app?cloudFixtures=1
+Historical b7de56fb check said Account is blocked; new deployment succeeds.
+Guest mobile 390px boot PASS, no overflow or console warnings/errors.
+Neil unlocked and completed inline email OTP directly on the preview.
+Real signed-in UI list/get/start/reopen/retry/cancel PASS; immutable plans recovered.
+Normal request 76f45e completed revision 10. Tab closed 12:19:29.897 UTC; ticks
+at 12:19:33/38 finished before independent read/reopen. All eight attempts = 1.
+Retry e25d83 completed revision 12, attempts [1,2,1,1,1,1,1,1]. Cancel 9400f8 stays
+cancelled revision 7 across refresh and six later cron runs; no downstream work.
+Independent runtime evidence review PASS. Five stored jobs, all actualCents = 0.
+Signed-in mobile 390px no overflow. Preview retained; no credential values read.
+Evidence .tmp/ugc-cloud-preview-smoke* and .tmp/ugc-cloud-preview-live/.
 Local journal .tmp/companion-background-live/jobs.sqlite preserved across restart.
 UI simulation: http://localhost:5173/companion-chat-preview.html?cloud=1.
-The signed-in cloud chat UI needs its frontend branch deployed before online use;
-existing Vercel account block remains an external limit. Live JWT transport not
-verified; no credentials/session files read or copied. Backend is live independently.
-Schema/schedule/reproduction: workflows/ugc_reference_implementation_plan.md.
-Cron deactivation command preserves jobs and appears in its activation SQL file.
+After login, fully navigate to /app?cloudFixtures=1; auth redirects drop the query.
+No auth configuration or app code changed. Production untouched; no paid generation.
+Schema/schedule/reproduction and safe cron deactivation: workflows/ugc_reference_implementation_plan.md.
 
 ## Next action
-Authenticated frontend rollout/real JWT smoke after hosting is unblocked.
+Cloud media storage and real-reference preparation are the next implementation slice.
 Before paid production: cloud media, reservations/submission reconciliation/budget
 ledger, verified provider/voice contracts, real reference analysis and exact-input
 approved paid pilot. Local/sample confirmation grants no spend authority.

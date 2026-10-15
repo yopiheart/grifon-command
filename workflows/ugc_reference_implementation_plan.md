@@ -134,6 +134,14 @@ browser storage is lost. A confirmed, saved sample review can start a new job.
 The server keeps its original plan even if a local draft later changes. Cancel
 the earlier active job before submitting another plan for that chat.
 
+For a fresh preview origin, unlock its normal invite gate and sign in using the
+existing account. Sessions and launch passes do not carry from the production
+origin. If a callback returns to production, use Continue with email and enter
+the emailed code directly in the preview's verification form instead of following
+the email link. After login, fully navigate to `/app?cloudFixtures=1`: current auth
+redirects drop the pilot query, and changing history alone may not remount the
+cloud client. Keep the normal access controls enabled during this check.
+
 Cloud recovery shows the frozen direction, script, visual plan, illustrative
 quote and job status. It does not fabricate missing uploaded files: reference
 videos and photos remain on the original device until cloud media storage is
@@ -163,8 +171,8 @@ decoder. SQL testing impersonated the enrolled authenticated role through the
 administrator connection; a real signed-in browser JWT remains a separate check.
 Two independent database backends returned the same job and single start event,
 but the connector serialized requests, so no lock-contention proof is claimed.
-The signed-in frontend must be deployed before this cloud path is available in
-the online app; an activated database does not publish the new chat UI.
+The signed-in frontend needs its own deployment before this cloud path is
+available online; current preview status and signed-in evidence belong in NOW.md.
 
 ### Existing local intake and review checks
 
