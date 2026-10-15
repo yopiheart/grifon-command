@@ -42,6 +42,8 @@ Bundle-leak, voice-sync, eval-prompts, domain, PS1 ASCII, artifact anchors PASS.
 Independent correctness/React review PASS with no actionable findings.
 Independent smoke passed desktop/mobile, including actual attachment replacement
 staling a confirmed review, account isolation, conflict/save failures and no calls.
+Viewport coverage: 375x667, 390x844 and 1280x900. Required 390x844 prepare/review/
+confirm follow-up passed with no overflow, 44px targets and zero API/page errors.
 Brand PASS_WITH_NITS: 42/50, zero critical. Nonblocking regular-prose icon sizing nit.
 Local evidence: .tmp/review-plan-critic/, .tmp/companion-reference-review-results/,
 .tmp/ugc-review-build.log, ugc-review-test.log and ugc-review-regression.log.
@@ -50,11 +52,12 @@ Evidence is local-only, not a shared PR artifact.
 ## Delivery and reproduction
 Planning PR: https://github.com/yopiheart/grifon-command/pull/188.
 First draft PR: https://github.com/yopiheart/grifon-command/pull/190.
-Review-build draft PR lookup:
-gh pr view codex/ugc-reference-review --repo yopiheart/grifon-command
+Review-build draft PR: https://github.com/yopiheart/grifon-command/pull/191.
+Application source committed and pushed as c9bcd953; independently reviewed.
 Review PR stacks on codex/ugc-reference-draft. Do not merge/deploy without Neil.
-Previous branch's Vercel automatic preview reported Account is blocked. Recheck
-remote checks on this branch; no gates were disabled and no manual deployment ran.
+Remote check on c9bcd953: Vercel FAILURE, exact description Account is blocked.
+No GitHub Actions runs listed for this branch at delivery. Local checks above passed;
+no gates were disabled and no manual deployment ran.
 Reuse the safe fixture server on localhost:5173 (parent session91045 while alive).
 URL: http://localhost:5173/companion-chat-preview.html.
 Safe start: node tools/verify-recovery-server.mjs; no.env or live API middleware.
