@@ -55,7 +55,10 @@ Generated unrelated snapshot line-ending noise restored; no snapshot diff includ
 
 ## Delivery and reproduction
 Planning/intake/review/queue draft stack: PR188 / PR190 / PR191 / PR192.
-New background draft PR and remote checks: pending final backup this session.
+Background draft PR: https://github.com/yopiheart/grifon-command/pull/193.
+Application source committed/pushed as 73855a20; PR stacks on codex/ugc-fixture-queue.
+Vercel preview check on 73855a20 failed: Account is blocked. Local checks passed;
+no gate disabled or manual deployment run. No GitHub Actions runs listed at delivery.
 Safe preview: http://localhost:5173/companion-chat-preview.html?background=1.
 Current owned host session64372, host PID19340, worker PID14440 while alive.
 Journal: .tmp/companion-background-live/jobs.sqlite; keep this path for restart.
