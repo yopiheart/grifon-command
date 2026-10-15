@@ -1,14 +1,14 @@
 # NOW - the resume doc
-**Stamped: 2026-10-15; fixture video delivery verified, rollout approval pending**
+**Stamped: 2026-10-16; fixture video migration active, preview READY, sign-in pending**
 
 ## Active task and authorization
 Workspace F:/CodexWorktrees/61f5/grifon-command.
 Branch codex/ugc-fixture-delivery, base codex/ugc-cloud-linked-fixtures at
 5970389f (draft PR196 https://github.com/yopiheart/grifon-command/pull/196).
 Neil requested fixture video results in chat and Grifon Assets, fixtures only,
-no paid generation. Local implementation/checks authorized. New migration and
-push/automatic preview deployment are NOT yet approved. No merge, production
-release, provider calls, auth changes or new paid services.
+no paid generation. Neil explicitly approved "Approve fixture video rollout" for
+reviewed SQL and b85f4e56 push/automatic preview. No merge, production release,
+provider calls, auth changes or new paid services. Independent native baseline saved.
 
 ## Success and failure contract
 Completed NEW linked fixture jobs expose one private durable result receipt.
@@ -37,8 +37,8 @@ object URLs. No public fixture file or token URL persisted.
 Manifest v1 / grifon-companion-fixture-video-v1,19302bytes, SHA256
 18a1f643983fec42567a1fc31f59d1fcf386e6c927ca71c56fc7917029f5a7e2.
 Retain v1 while saved receipts reference it. New bytes require new version.
-SQL supabase/companion_cloud_fixture_results.sql NOT activated. Supabase CLI absent;
-existing repository named SQL convention retained, no install or remote writes.
+SQL supabase/companion_cloud_fixture_results.sql applied successfully to existing
+GRIFON AI with exact approved SHA. Existing named SQL convention retained.
 
 ## Checks and evidence so far
 Core SQL/client20 PASS; media/API9 PASS; independently rerun29 PASS.
@@ -60,7 +60,9 @@ Evidence .tmp/ugc-fixture-delivery-final/, final-{build,test-serial}.log,
 .tmp/ugc-fixture-delivery-review.png. Narrow29 independently passed; race RED/GREEN
 and current-source35 browser cases preserved. No dependencies/tuned files changed.
 SQL reviewed SHA256 8BCDCA650434C163E2C50EFF8AC575152F388CFD668676B3897D0ECC2FB6FF7B.
-No hosted activation or native delivery evidence for this slice yet.
+Native preapply/postapply evidence .tmp/fixture-delivery-native-activation-*.json.
+Independent hosted audit29 PASS:8 exact function hashes; original data/ACL/cron
+unchanged;0results/no backfill/spend0. WARN3 unchanged, expected private-RLS INFO+1.
 
 ## Existing hosted baseline and preserved work
 GRIFON AI varoqxjccqmskzeejagn, same enrolled owner/private input caps.
@@ -76,10 +78,11 @@ Never transfer sessions; new origins may need direct inline OTP user handoff.
 Physical second device/native cleared-browser recovery remain unverified.
 
 ## Next actions
-Reviewed build and all required checks complete. Commit locally and obtain approval
-for exact migration and push/preview. Only then apply, create/attach draft PR stacked
-on196 and run signed-in native chat/Assets playback/reopen. Prior linked rollout
-approval does not authorize this new schema/deployment.
+Reviewed source b85f4e56bf226a6d0fe609dddfcce0297870731c pushed; all local checks
+complete. Draft PR197 https://github.com/yopiheart/grifon-command/pull/197 attached,
+stacked on196. Preview dpl_Dk2ZKvSGLywiK133RphPdh8xSyS1 READY at exact b85f4e56:
+https://grifon-command-m8ih9hug6-neilmaglayabusiness22-2085s-projects.vercel.app/app?cloudFixtures=1
+Tab6 awaiting user unlock/email inline OTP; native chat/Assets delivery not yet tested.
 Real reference analysis, brand plans, paid generation, real output storage and
 identity/voice quality remain future slices with real assets/approved paid spec.
 Runtime/roadmap: workflows/ugc_reference_implementation_plan.md.
