@@ -15,6 +15,7 @@ const stageIds = ['market_research', 'script', 'storyboard', 'scene_images', 'vi
 type FixtureEvent = 'researching' | 'script' | 'storyboard' | 'video' | 'result' | 'error' | 'resume-error';
 type FixtureCall = { name: string; value?: unknown };
 const calls: FixtureCall[] = [];
+const referenceVoices = async () => ({ stockVoices: [], myVoices: [{ voice_id: 'fixture-private', name: 'Fixture private voice', created_at: '2026-10-15' }], libraryVoices: [{ voice_id: 'fixture-curated', name: 'Fixture curated voice' }], quotaUsed: 0, quotaMax: 1 });
 const debug = new URLSearchParams(window.location.search).get('debug') === '1';
 const defaultInput: ProductionInput = { brandName: 'North Coffee', productName: 'Cold brew', productDescription: 'Fresh coffee for busy mornings', offer: 'Two bottles for 199', price: '199', heroImageBase64: IMAGE, avatar: { url: '', description: '', ethnicity: 'Filipino', prompt: '' }, voiceId: '', language: 'English', aspectRatio: '9:16', scriptType: 'Testimonial' };
 
@@ -89,7 +90,7 @@ function Fixture({ conversation, userId, setUserId }: { conversation: Conversati
     </div>
   </details>}<CompanionChatSurface key={conversation.chat.id} conversation={conversation} controller={controller} userId={userId} onAvatarPresentation={conversation.presentAvatar} fixtureLabel="Preview · simulated output."
     onBack={() => { void conversation.leave(() => { calls.push({ name: 'back' }); }).catch(() => {}); }} onUpgrade={() => { void conversation.leave(() => { calls.push({ name: 'upgrade' }); }).catch(() => {}); }}
-    presetUnlocked={presetUnlocked} quotaBlocked={quotaBlocked} videoAllowed={videoAllowed} /></div>;
+    loadReferenceVoices={referenceVoices} presetUnlocked={presetUnlocked} quotaBlocked={quotaBlocked} videoAllowed={videoAllowed} /></div>;
 }
 
 function Preview() {
