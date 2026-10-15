@@ -110,6 +110,62 @@ installed Node's [SQLite API](https://nodejs.org/download/release/latest-v24.x/d
 without adding dependencies. [Vercel Workflows](https://vercel.com/docs/workflows)
 is a cloud execution candidate; no SDK migration or deployment is included here.
 
+### Supabase cloud fixture executor
+
+The cloud fixture slice uses dedicated `grifon_fixture` tables and authenticated
+RPCs. An immutable accepted intent and synthetic queue live in Postgres. The
+database scheduler advances one due step per job per invocation; browser reads
+never advance work. It does not depend on Vercel, the desktop worker or an open
+browser. This proves fixture execution only, not paid-provider orchestration.
+
+Schema and activation are separate, reviewable inputs:
+
+- `supabase/companion_cloud_fixtures.sql`: private tables, owner-restricted RPCs,
+  idempotent starts/commands and a zero-spend SQL worker.
+- `supabase/companion_cloud_fixtures_schedule.sql`: the dedicated cloud schedule.
+  Deactivation keeps accepted jobs and evidence. Existing schedulers are untouched.
+- Pilot access is explicitly enrolled in `grifon_fixture.allowed_owners` by an
+  administrator. Authenticated users cannot enroll themselves, write queue tables
+  or invoke the worker. No auth accounts are created as a side effect.
+
+The signed-in app opts in with `?cloudFixtures=1`. **Cloud fixture jobs** in chat
+navigation lists the current owner's server-held jobs, including after local
+browser storage is lost. A confirmed, saved sample review can start a new job.
+The server keeps its original plan even if a local draft later changes. Cancel
+the earlier active job before submitting another plan for that chat.
+
+Cloud recovery shows the frozen direction, script, visual plan, illustrative
+quote and job status. It does not fabricate missing uploaded files: reference
+videos and photos remain on the original device until cloud media storage is
+implemented. There is no generated video, music, voice or Assets delivery.
+The original local job links are never reinterpreted as cloud jobs.
+
+Free database checks use pinned, development-only PGlite to execute the actual
+SQL and role permissions. PGlite has one database connection and no cloud cron;
+those checks alone do not prove distributed locking or independent scheduling.
+Cloud verification separately inspects server-written events and scheduler runs
+during a period with owned local hosts/workers stopped, before chat reconnection.
+This is not a claim that the physical desktop was shut down during verification.
+
+```powershell
+npx.cmd vitest run tests/unit/companionCloudFixtures.test.ts tests/unit/companionCloudFixtureSql.test.ts
+npm.cmd run test:e2e -- --config tests/e2e/companion-cloud-fixture.config.ts
+```
+
+The isolated local preview uses `?cloud=1` and a clearly labelled cloud fixture
+simulation. Its browser checks establish UI recovery/error behavior, not remote
+execution. Actual activation, account enrollment and live proof belong in NOW.md.
+
+The first hosted pilot completed all eight steps through Supabase Cron while
+owned local hosts/workers were stopped. Server events were read before local
+reconnection. Its actual hosted response also passed the production client
+decoder. SQL testing impersonated the enrolled authenticated role through the
+administrator connection; a real signed-in browser JWT remains a separate check.
+Two independent database backends returned the same job and single start event,
+but the connector serialized requests, so no lock-contention proof is claimed.
+The signed-in frontend must be deployed before this cloud path is available in
+the online app; an activated database does not publish the new chat UI.
+
 ### Existing local intake and review checks
 
 For a free fixture check, start the existing isolated frontend server in one
