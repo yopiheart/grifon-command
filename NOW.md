@@ -61,9 +61,12 @@ Generated snapshot line-ending noise restored; no snapshot change included.
 Planning PR: https://github.com/yopiheart/grifon-command/pull/188.
 Intake PR: https://github.com/yopiheart/grifon-command/pull/190.
 Review PR: https://github.com/yopiheart/grifon-command/pull/191.
-Queue PR lookup: gh pr view codex/ugc-fixture-queue --repo yopiheart/grifon-command.
+Queue draft PR: https://github.com/yopiheart/grifon-command/pull/192.
+Application source committed and pushed as a6080682; independently reviewed.
 Queue PR stacks on codex/ugc-reference-review. Do not merge/deploy without Neil.
-Remote status pending push; prior review branch Vercel check: Account is blocked.
+Remote Vercel check on a6080682: FAILURE, exact description Account is blocked.
+No GitHub Actions runs listed for this branch at delivery. Local checks passed;
+no gate was disabled and no manual deployment ran.
 Reuse safe fixture server localhost:5173 (parent session91045 while alive).
 URL: http://localhost:5173/companion-chat-preview.html.
 Safe start: node tools/verify-recovery-server.mjs; no.env or live API middleware.
