@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-15; cloud reference fixture build verified, rollout pending**
+**Stamped: 2026-10-15; cloud reference fixture rollout approved and activated**
 
 ## Active task and authorization
 Checkout: F:/CodexWorktrees/61f5/grifon-command.
@@ -7,10 +7,10 @@ Branch: codex/ugc-cloud-media-fixtures; base codex/ugc-cloud-fixtures at 4b88289
 Neil requested cloud save/reopen of reference video, photos and selected voice
 across devices, fixtures only. Reuse existing GRIFON AI and owner-only pilot.
 No paid generation, new paid infrastructure, merge or production release.
-Code and exact migration are reviewable; no hosted changes made for this slice.
-Remote publication/activation pending explicit rollout approval: AGENTS.md100/146.
-Vercel automatically deploys Git pushes (confirmed READY deployment for prior
-4b882896), so hold push/PR creation until that approval; do not disable CI.
+Neil explicitly approved "Approve fixture rollout" for the reviewed private
+storage migration and commit e39808f0 push/preview. Exact migration applied
+successfully; e39808f0 pushed. Vercel preview is READY. No production
+release or paid generation. Draft PR195 stacks on codex/ugc-cloud-fixtures /194.
 
 ## Implemented locally
 - New private bucket grifon-fixture-reference-media and reference_snapshots under
@@ -50,12 +50,17 @@ Independent probe .tmp/ugc-cloud-media-correctness-probe.json; review image
 .tmp/ugc-cloud-media-review.png; mobile/DPR2 evidence .tmp/ugc-cloud-media-e2e-brand/.
 
 ## Hosted boundary and remaining work
-New migration NOT applied, new bucket NOT created, new frontend NOT pushed/deployed.
+Reviewed migration applied successfully; new frontend pushed at e39808f0.
 Exact reviewed SQL SHA256:
 C710CABBA7ED2E36728B55CD3205E1BB3D9F842CD3FDFD4CE137E9773BE45A0E
 Target: Supabase varoqxjccqmskzeejagn (existing GRIFON AI). Existing one-owner pilot.
 Storage operation helpers installed; prior Storage policies empty, confirmed read-only.
 Baseline security advisor saved in tool state: 11 INFO/no-policy, 3 unrelated WARN.
+Independent read-only hosted permission/advisor audit PASS: all 18 deployed new
+function bodies match reviewed source, bucket private/caps exact, wrappers and
+RLS/grants correct; existing fixture functions and cron unchanged. Advisors now
+12 INFO/3 WARN; sole addition expected private reference_snapshots RLS notice.
+Evidence .tmp/ugc-cloud-media-correctness-activation.json.
 SQL tests use PGlite storage/auth stand-ins; browser tests use shared simulated HTTP.
 Actual authenticated hosted Storage upload/download, exact running Storage version
 and delayed-stream race remain unverified. Released Storage v1.81+ reauthorizes
@@ -73,7 +78,13 @@ after login fully navigate to /app?cloudFixtures=1 because auth drops pilot quer
 No credentials/session values read or copied. Physical PC shutdown not tested.
 
 ## Next action
-Obtain final approval for isolated fixture migration + branch push/preview rollout,
-then apply reviewed SQL, verify advisors/roles, push/create draft PR stacked on194,
-attach it, inspect automatic preview and complete real signed-in Storage smoke.
+Preview READY at exact e39808f0; new preview tab3 is at invite/login. Neil was
+asked to unlock and complete inline email OTP directly, not send credentials.
+On reply, fully navigate /app?cloudFixtures=1, then complete signed-in Storage
+upload/reopen using .tmp/ugc-cloud-media-live fixture-reference.webm + five logo
+copies. Do not alter saved voices if unavailable; distinguish fixture voice proof
+from actual hosted voice recovery. Draft PR195:
+https://github.com/yopiheart/grifon-command/pull/195 (attached).
+Preview build dpl_75bQZhh7W1r9hwFXxGq3Akoep4hR:
+https://grifon-command-408r86bmf-neilmaglayabusiness22-2085s-projects.vercel.app/app?cloudFixtures=1
 No paid generation. Detailed behavior/checks: workflows/ugc_reference_implementation_plan.md.
