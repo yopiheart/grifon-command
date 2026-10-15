@@ -195,15 +195,15 @@ end;
 $$;
 create or replace function grifon_fixture.reference_commit(p_save_id text)
 returns jsonb language plpgsql security definer set search_path = '' as $$
-declare owner uuid := grifon_fixture.reference_owner(true); snapshot grifon_fixture.reference_snapshots; media jsonb; metadata jsonb;
+declare request_owner uuid := grifon_fixture.reference_owner(true); snapshot grifon_fixture.reference_snapshots; media jsonb; metadata jsonb;
   metadata_snapshot jsonb := '{}'::jsonb; total_bytes bigint := 0;
 begin
-  select * into snapshot from grifon_fixture.reference_snapshots where owner_id = owner and save_id = p_save_id for update;
+  select * into snapshot from grifon_fixture.reference_snapshots where owner_id = request_owner and save_id = p_save_id for update;
   if not found then raise exception 'REFERENCE_NOT_FOUND' using errcode = 'P0002'; end if;
   if snapshot.committed then return grifon_fixture.reference_receipt(snapshot); end if;
   for media in select value from jsonb_array_elements(snapshot.manifest_text::jsonb->'media') loop
     select objects.metadata into metadata from storage.objects where bucket_id = 'grifon-fixture-reference-media'
-      and name = owner::text || '/' || p_save_id || '/' || (media->>'slot') for share;
+      and name = request_owner::text || '/' || p_save_id || '/' || (media->>'slot') for share;
     if not found then raise exception 'REFERENCE_MEDIA_INCOMPLETE' using errcode = '22023'; end if;
     if not grifon_fixture.reference_integer(metadata->'size', 1, 6000000) or metadata->'size' is distinct from media->'size'
       or metadata->>'mimetype' is distinct from media->>'type' then
@@ -213,7 +213,7 @@ begin
     metadata_snapshot := metadata_snapshot || jsonb_build_object(media->>'slot', metadata);
   end loop;
   update grifon_fixture.reference_snapshots set committed = true, actual_bytes = total_bytes, object_metadata = metadata_snapshot
-    where owner_id = owner and save_id = p_save_id returning * into snapshot;
+    where owner_id = request_owner and save_id = p_save_id returning * into snapshot;
   return grifon_fixture.reference_receipt(snapshot);
 end;
 $$;

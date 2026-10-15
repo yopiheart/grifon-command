@@ -68,7 +68,7 @@ describe('cloud reference PostgreSQL execution', { timeout: 30_000 }, () => {
         select coalesce(replace(storage.operation(), 'storage.', '') = replace(expected, 'storage.', ''), false); $$;
       grant usage on schema auth, storage to authenticated, anon; grant execute on function auth.uid() to authenticated, anon;
       create table storage.buckets(id text primary key, name text not null, public boolean default false, file_size_limit bigint, allowed_mime_types text[]);
-      create table storage.objects(id uuid primary key default gen_random_uuid(), bucket_id text references storage.buckets(id), name text not null, metadata jsonb, unique(bucket_id, name));
+      create table storage.objects(id uuid primary key default gen_random_uuid(), bucket_id text references storage.buckets(id), name text not null, owner uuid, owner_id text, metadata jsonb, unique(bucket_id, name));
       alter table storage.objects enable row level security;
       grant select, insert, update, delete on storage.objects to authenticated, anon;
       insert into storage.buckets(id, name) values ('unrelated', 'unrelated');

@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-15; cloud reference fixture rollout approved and activated**
+**Stamped: 2026-10-15; native cloud reference save/reopen verified**
 
 ## Active task and authorization
 Checkout: F:/CodexWorktrees/61f5/grifon-command.
@@ -11,6 +11,8 @@ Neil explicitly approved "Approve fixture rollout" for the reviewed private
 storage migration and commit e39808f0 push/preview. Exact migration applied
 successfully; e39808f0 pushed. Vercel preview is READY. No production
 release or paid generation. Draft PR195 stacks on codex/ugc-cloud-fixtures /194.
+The signed-in native smoke found and fixed a commit-only SQL name collision.
+The reviewed function-only repair was applied within the approved fixture rollout.
 
 ## Implemented locally
 - New private bucket grifon-fixture-reference-media and reference_snapshots under
@@ -49,10 +51,35 @@ Evidence: .tmp/ugc-cloud-media-final-{build,test}.log, .tmp/cloud-reference-unit
 Independent probe .tmp/ugc-cloud-media-correctness-probe.json; review image
 .tmp/ugc-cloud-media-review.png; mobile/DPR2 evidence .tmp/ugc-cloud-media-e2e-brand/.
 
+Native smoke on the signed-in preview PASS: one reference video, five photos and
+curated Pinay Spokesperson selected voice uploaded and reopened into a new editable
+chat. Ordered roles product/character/clothing/product/character retained; decoded
+video 90x160/0.5s and all five photos 745x997. Original local chat preserved; edited
+copy and media/voice survive reload. Cloud list refresh recovers the original
+snapshot after reload. Repeating identical save keeps one committed snapshot and
+six objects, 92,683 bytes, pending zero. Independent metadata audit verified local
+file SHA256/server ETag/size/MIME, manifest identity/fingerprint and exact voice.
+Existing five jobs remain unchanged, actualCents all zero. No generation started.
+Evidence .tmp/ugc-cloud-media-live/{reopened-dom.txt,reopened-media.json,
+original-and-copy-dom.txt,cloud-list-after-reload-dom.txt,cloud-list-after-reload.png}
+and .tmp/ugc-cloud-media-correctness-native-saved.json.
+
+Native defect: Storage's real owner column collided with reference_commit's local
+owner variable. Initial save left the same pending reservation and six uploaded
+objects; no incomplete snapshot was published. Rename only the local variable to
+request_owner; add real owner/owner_id columns to the test Storage stub.
+RED original13 failed/44 passed; fixed SQL57 and independent client+SQL63 PASS.
+Full repaired-source build/Vitest1737 passed/32 gated skips/check:codex26 PASS.
+Logs .tmp/cloud-reference-native-owner-*.log; independent repair probe
+.tmp/ugc-cloud-media-correctness-native-commit-probe.json. Generated snapshot EOL
+noise verified and restored; no unrelated changes.
+
 ## Hosted boundary and remaining work
 Reviewed migration applied successfully; new frontend pushed at e39808f0.
-Exact reviewed SQL SHA256:
+Initial reviewed SQL SHA256:
 C710CABBA7ED2E36728B55CD3205E1BB3D9F842CD3FDFD4CE137E9773BE45A0E
+Followup companion_cloud_reference_commit_owner_fix replaces only reference_commit:
+4961C16AA05884D6DBA0702D6882C926DE42B3B8235D5F674309962DBECCB195.
 Target: Supabase varoqxjccqmskzeejagn (existing GRIFON AI). Existing one-owner pilot.
 Storage operation helpers installed; prior Storage policies empty, confirmed read-only.
 Baseline security advisor saved in tool state: 11 INFO/no-policy, 3 unrelated WARN.
@@ -61,9 +88,10 @@ function bodies match reviewed source, bucket private/caps exact, wrappers and
 RLS/grants correct; existing fixture functions and cron unchanged. Advisors now
 12 INFO/3 WARN; sole addition expected private reference_snapshots RLS notice.
 Evidence .tmp/ugc-cloud-media-correctness-activation.json.
-SQL tests use PGlite storage/auth stand-ins; browser tests use shared simulated HTTP.
-Actual authenticated hosted Storage upload/download, exact running Storage version
-and delayed-stream race remain unverified. Released Storage v1.81+ reauthorizes
+SQL tests use PGlite storage/auth stand-ins; automated browser tests use simulated
+HTTP, including fresh browser contexts. Native authenticated Storage upload and
+download/reopen/reload now PASS; the target Storage version, delayed-stream race
+and a physical second-device check remain unverified. Released v1.81+ reauthorizes
 standard upload completion as caller; signed-upload bypass is blocked by new gate.
 Server metadata checks do not certify media SHA/decode for future paid execution.
 
@@ -78,12 +106,12 @@ after login fully navigate to /app?cloudFixtures=1 because auth drops pilot quer
 No credentials/session values read or copied. Physical PC shutdown not tested.
 
 ## Next action
-Preview READY at exact e39808f0; new preview tab3 is at invite/login. Neil was
-asked to unlock and complete inline email OTP directly, not send credentials.
-On reply, fully navigate /app?cloudFixtures=1, then complete signed-in Storage
-upload/reopen using .tmp/ugc-cloud-media-live fixture-reference.webm + five logo
-copies. Do not alter saved voices if unavailable; distinguish fixture voice proof
-from actual hosted voice recovery. Draft PR195:
+Native fixture cloud slice complete; preserve signed-in tab3 at the tested preview
+below. Its frontend is unchanged by the SQL/test-only repair. Do not require a new
+preview-origin login merely for the final repair/docs push. Await Neil's real
+references/brand assets; real analysis, larger-media intake, spending authority
+and provider execution require their own scoped implementation/test approvals.
+Draft PR195:
 https://github.com/yopiheart/grifon-command/pull/195 (attached).
 Preview build dpl_75bQZhh7W1r9hwFXxGq3Akoep4hR:
 https://grifon-command-408r86bmf-neilmaglayabusiness22-2085s-projects.vercel.app/app?cloudFixtures=1

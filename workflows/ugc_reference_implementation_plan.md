@@ -551,9 +551,10 @@ Do not claim sales lift from production acceptance alone.
 
 ## Next implementation task
 
-Local S0 intake, S1 sample review and browser-independent fixture execution are
-implemented. Continue S2 with cloud-owned media, authenticated durable execution,
-atomic spend reservations and provider submission reconciliation. Neil is still
+Local S0 intake, S1 sample review, browser-independent fixture execution and private
+cloud fixture input save/reopen are implemented. Continue S2 with authoritative
+paid-input integrity, atomic spend reservations and provider submission
+reconciliation. Neil is still
 gathering the three references and brand assets. Real analysis, creative tuning
 and paid tests wait for exact inputs and their required approvals. This document
 authorizes none of those operations.
