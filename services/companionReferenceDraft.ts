@@ -1,3 +1,5 @@
+import { isCreativeSource, type CreativeSource } from './companionCreativeLibrary.js';
+
 // Local intake data only. This is not a provider response or generation contract.
 export interface ReferenceMedia {
   id: string;
@@ -26,6 +28,7 @@ export interface CompanionReferenceDraft {
   voice: ReferenceVoice | null;
   adaptationMode?: 'adapt' | 'close';
   speechMode?: 'spoken' | 'silent';
+  creativeSource?: CreativeSource;
 }
 export function createReferenceDraft(): CompanionReferenceDraft {
   return { version: 1, brief: '', brandName: '', productName: '', audience: '', offer: '', callToAction: '', instructions: '', outputLanguage: 'Taglish', referenceLanguage: '', referenceLink: '', referenceVideo: null, photos: [], voice: null };
@@ -93,6 +96,7 @@ export function isReferenceDraft(value: unknown): value is CompanionReferenceDra
   if (draft.version !== 1 || !['Taglish', 'Tagalog', 'English'].includes(draft.outputLanguage)
     || (draft.adaptationMode !== undefined && !['adapt', 'close'].includes(draft.adaptationMode))
     || (draft.speechMode !== undefined && !['spoken', 'silent'].includes(draft.speechMode))
+    || (Object.prototype.hasOwnProperty.call(draft, 'creativeSource') && !isCreativeSource(draft.creativeSource))
     || !['brief', 'brandName', 'productName', 'audience', 'offer', 'callToAction', 'instructions', 'referenceLanguage', 'referenceLink'].every(key => typeof draft[key as keyof CompanionReferenceDraft] === 'string' && (draft[key as keyof CompanionReferenceDraft] as string).length <= 4000)
     || !Array.isArray(draft.photos) || draft.photos.length > 5
     || !draft.photos.every(photo => validMedia(photo, 'photo') && ['product', 'character', 'clothing'].includes(photo.role))

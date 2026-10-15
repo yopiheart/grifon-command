@@ -5,12 +5,13 @@ import Textarea from '../ui/Textarea';
 import { GlassPanel } from '../ui/GlassPanel';
 import { GoldButton } from '../ui/GoldButton';
 import { editSampleReview, reviewErrors, sampleQuoteTotals, type ReferenceReview, type SampleQuote } from '../../services/companionReferenceReview';
+import { CompanionCreativeReview } from './CompanionCreativeReview';
 
 const control = 'min-h-11 !rounded-xl !text-sm !font-semibold disabled:opacity-50 disabled:hover:scale-100';
 const ghost = `${control} !bg-zinc-950 border border-white/10 !text-zinc-400 hover:!text-white hover:!border-[#FFCC00]`;
 const money = (cents: number) => `PHP ${(cents / 100).toFixed(2)}`;
 
-export function CompanionReferenceReview({ review, busy, saved, onChange, onBack, onPrepare, onConfirm, onQueue, hasQueue, queueLabel = 'Preview demo queue', cloudMode = false, cloudLinked = false }: {
+export function CompanionReferenceReview({ review, busy, saved, onChange, onBack, onPrepare, onConfirm, onQueue, hasQueue, queueLabel = 'Preview demo queue', cloudMode = false, cloudLinked = false, photos = [] }: {
   review: ReferenceReview;
   busy: boolean;
   saved: boolean;
@@ -23,6 +24,7 @@ export function CompanionReferenceReview({ review, busy, saved, onChange, onBack
   queueLabel?: string;
   cloudMode?: boolean;
   cloudLinked?: boolean;
+  photos?: { id: string; name: string }[];
 }) {
   const errors = reviewErrors(review);
   let totals: ReturnType<typeof sampleQuoteTotals> | null = null;
@@ -42,9 +44,11 @@ export function CompanionReferenceReview({ review, busy, saved, onChange, onBack
       {review.missing.length > 0 && <div className="flex items-start gap-2 text-xs leading-relaxed text-amber-500"><AlertTriangle className="h-4 w-4 shrink-0" /><p>Still needed for real planning: {review.missing.join(', ')}. You can confirm this incomplete example only as a demo.</p></div>}
       <details><summary className="min-h-11 cursor-pointer py-3 text-sm font-semibold">User-supplied brief snapshot</summary><dl className="space-y-3 text-sm">{review.facts.map(fact => <div key={fact.label}><dt className="text-zinc-400">{fact.label}</dt><dd className="whitespace-pre-wrap break-words text-zinc-200">{fact.value || 'Not supplied'}</dd></div>)}</dl><p className="mt-3 text-xs text-zinc-400">These are supplied notes, not verified research or approved ad claims.</p></details>
     </GlassPanel>
+    {review.creativePlan && <CompanionCreativeReview plan={review.creativePlan} photos={photos} busy={busy} />}
     <GlassPanel className="space-y-4 p-4 sm:p-5">
       <Textarea id="sample-direction" label="Direction" maxLength={4000} value={review.direction} disabled={busy} onChange={event => edit({ direction: event.target.value })} />
       <h3 className="!text-base !font-semibold !normal-case !tracking-normal">Script and visual plan</h3>
+      {review.creativePlan && <p className="text-xs leading-relaxed text-zinc-400">The scenes below are the current editable timeline. Blueprint guidance stays unchanged when you edit them.</p>}
       <p className="text-xs text-zinc-400">Illustrative consecutive scene timing, up to 60 seconds. Real speech duration and reference cuts still need validation.</p>
       {review.scenes.map((scene, index) => {
         const update = (patch: Partial<typeof scene>) => edit({ scenes: review.scenes.map(item => item.id === scene.id ? { ...item, ...patch } : item) });

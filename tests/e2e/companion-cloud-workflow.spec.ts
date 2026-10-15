@@ -138,6 +138,8 @@ class SharedWorkflow {
       if (name === 'grifon_reference_get') return respond({ data: existing?.committed ? existing : null, error: null });
       if (name === 'grifon_reference_list') return respond({ data: this.committed(ownerId), error: null });
     } else {
+      // New optional safety panel reopens existing checks without creating one.
+      if (name === 'grifon_fixture_execution_find') return respond({ data: null, error: null });
       if (name === 'grifon_fixture_result_list') return respond({ data: [...this.results.values()].filter(result => result.ownerId === ownerId && result.status === 'READY'), error: null });
       if (name === 'grifon_fixture_result_get') { const result = this.results.get(args.p_request_id); return respond({ data: result?.ownerId === ownerId ? result : null, error: null }); }
       if (name === 'grifon_fixture_list') return respond({ data: [...this.jobs.entries()].filter(([id, job]) => !this.unknownJobs.has(id) && JSON.parse(job.intentText).ownerId === ownerId).map(([, job]) => job), error: null });
@@ -301,6 +303,46 @@ test('completed fixture delivers its video in the real chat', async ({ page, clo
   await expect(status(page)).toContainText(/complete/i);
   await page.getByRole('button', { name: 'Back to chat', exact: true }).click();
   await expect(page.getByTestId('fixture-result-card')).toBeVisible();
+});
+
+for (const [category, mode, recipeId] of [
+  ['ugc', 'fixture-recipe', 'fixture-ugc-detail-v1'],
+  ['motion-launch', 'fixture-auto', 'fixture-motion-launch-v1'],
+  ['cinematic-spec', 'fixture-auto', 'fixture-cinematic-spec-v1'],
+] as const) test(`creative ${category} ${mode} keeps exact cloud plan and generic result after fresh-browser reopen`, async ({ page, browser, cloud }) => {
+  await reference(page, 3);
+  await page.getByLabel('Creative source', { exact: true }).selectOption(mode);
+  await page.getByLabel('Creative category', { exact: true }).selectOption(category); await saved(page);
+  await prepare(page, cloud); await confirm(page);
+  const original = selectedChat(await book(page)), job = await start(page, cloud), intent = JSON.parse(job.intentText);
+  const source = original.referenceDraft.creativeSource;
+  const manifest = JSON.parse(cloud.committed()[0].manifestText);
+  expect(manifest.draft.creativeSource).toEqual(source);
+  expect(intent.plan.creativePlan.source).toMatchObject({ mode, category, recipeId, provenance: 'original-synthetic-fixture', referenceAnalysis: 'not-run' });
+  expect(intent.plan.creativePlan.execution).toMatchObject({ mode: 'metadata-only', providerCalls: 0, actualCents: 0 });
+  expect(intent.plan.creativePlan.audio.selectedVoice).toEqual(intent.plan.voice);
+  expect(intent.plan.creativePlan.bindings.map((item: any) => item.photoId)).toEqual(original.referenceDraft.photos.map((item: any) => item.id));
+  await page.context().close(); cloud.tick(intent.requestId, 20);
+  const reopened = await cloud.device(browser); await openCloud(reopened); await selectJob(reopened, intent.requestId);
+  await expect(resultCard(reopened)).toHaveAttribute('data-result-id', `${intent.requestId}:v1`);
+  await playable(reopened);
+  await expect(resultCard(reopened)).toContainText('This sample was not generated from your brief, reference, photos or selected voice.');
+  const frozen = JSON.stringify({ jobs: [...cloud.jobs], receipts: [...cloud.receipts], results: [...cloud.results], objects: cloud.objects.size });
+  await reopened.getByRole('button', { name: 'Open saved inputs/review in chat', exact: true }).click();
+  await expect(reopened.getByRole('heading', { name: 'Sample plan review', exact: true })).toBeVisible(); await saved(reopened);
+  const copy = selectedChat(await book(reopened));
+  expect(copy.referenceDraft).toEqual(original.referenceDraft);
+  // The editable copy starts a local input revision at zero. The frozen job
+  // retains its original revision and approval, only the copy is rebased.
+  const copiedPlan = { ...intent.plan.creativePlan, inputRevision: 0 };
+  expect(copy.referenceReview.creativePlan).toEqual(copiedPlan);
+  expect(copy.referenceCloudObservation.plan).toEqual(intent.plan);
+  expect(copy.referenceReview.confirmation).toBeNull();
+  await reopened.reload(); await expect(reopened.getByRole('heading', { name: 'Sample plan review', exact: true })).toBeVisible();
+  expect(selectedChat(await book(reopened)).referenceReview.creativePlan).toEqual(copiedPlan);
+  expect(cloud.startCalls()).toHaveLength(1);
+  expect(cloud.calls.filter(call => call.name === 'grifon_fixture_command')).toEqual([]);
+  expect(JSON.stringify({ jobs: [...cloud.jobs], receipts: [...cloud.receipts], results: [...cloud.results], objects: cloud.objects.size })).toBe(frozen);
 });
 
 test('completion between result and job reads becomes ready automatically in chat', async ({ page, cloud }) => {

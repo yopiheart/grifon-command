@@ -6,7 +6,8 @@ import type { PlanId } from '../../utils/planGate';
 import { CompanionAvatarLayer, type CompanionAvatarPresentation } from './CompanionAvatarLayer';
 import { clearCloudCopyApproval, ConversationConflictError, createConversation, loadConversations, saveConversationCopy, saveConversations, updateConversation, type CompanionConversation, type CompanionConversations, type ConversationPatch } from '../../services/companionConversations';
 import type { CloudFixtureClient } from '../../services/companionCloudFixtures';
-import { CompanionCloudFixtureJobs } from './CompanionCloudFixtureJobs';
+import { CompanionCloudFixtureJobs, type FixtureInputVerificationClient } from './CompanionCloudFixtureJobs';
+import type { FixtureExecutionSafetyClient } from '../../services/companionExecutionSafetyClient';
 import { cloudReferenceLink, verifyCloudReferenceDraft, type CloudReferenceClient, type CloudReferenceReceipt } from '../../services/companionCloudReferences';
 import { verifyFixtureJobIntent, type FixtureJobIntent } from '../../services/companionFixtureJobs';
 import { isReferenceDraft, type CompanionReferenceDraft } from '../../services/companionReferenceDraft';
@@ -56,13 +57,15 @@ interface Props {
   cloudFixtureClient?: CloudFixtureClient;
   cloudReferenceClient?: CloudReferenceClient;
   fixtureResultClient?: CloudFixtureResultClient;
+  executionSafetyClient?: FixtureExecutionSafetyClient;
+  inputVerificationClient?: FixtureInputVerificationClient;
   loadFixtureVideo?: FixtureVideoLoader;
   loadVideoLibrary?: () => Promise<VideoLibraryItem[]>;
   children: (binding: ConversationBinding) => ReactNode;
 }
 const button = 'min-h-11 min-w-11 !rounded-xl !text-sm !font-semibold !normal-case !tracking-normal';
 
-export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Account', plan = 'free', planLoading = false, planError = false, onRetryPlan, onLogout, onUpgrade, onNavigate, preview = false, cloudFixtureClient, cloudReferenceClient, fixtureResultClient, loadFixtureVideo, loadVideoLibrary, children }: Props) {
+export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Account', plan = 'free', planLoading = false, planError = false, onRetryPlan, onLogout, onUpgrade, onNavigate, preview = false, cloudFixtureClient, cloudReferenceClient, fixtureResultClient, executionSafetyClient, inputVerificationClient, loadFixtureVideo, loadVideoLibrary, children }: Props) {
   const [book, setBook] = useState<CompanionConversations | null>(null);
   const current = useRef<CompanionConversations | null>(null);
   const writes = useRef<Promise<void>>(Promise.resolve());
@@ -244,7 +247,7 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
       const before = current.current!;
       if (before.userId !== userId || before.selectedId !== sourceLocalChatId) throw new Error('The selected chat changed before the cloud copy could be opened.');
       const copy = { ...createConversation(), referenceDraft: draft, referenceInputRevision: 0, referenceCloudSource: source,
-        ...(job ? { referenceReview: { ...structuredClone(job.plan), inputRevision: 0, stale: false, confirmation: null }, referenceCloudObservation: job } : {}) };
+        ...(job ? { referenceReview: { ...structuredClone(job.plan), inputRevision: 0, ...(job.plan.creativePlan ? { creativePlan: { ...structuredClone(job.plan.creativePlan), inputRevision: 0 } } : {}), stale: false, confirmation: null }, referenceCloudObservation: job } : {}) };
       const next = { ...before, chats: [copy, ...before.chats], selectedId: copy.id, revision: revision.current };
       // Persist the entire new copy with the existing CAS before selecting it in the UI.
       const savedRevision = await saveConversations(next);
@@ -297,7 +300,7 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
     {!collapsed && <aside className="hidden w-60 shrink-0 flex-col border-r border-white/10 bg-zinc-900/40 md:flex">{navigation}</aside>}
     {collapsed && <aside className="hidden w-14 shrink-0 flex-col items-center border-r border-white/10 pt-3 md:flex"><Button variant="ghost" className={`${button} !p-3`} aria-label="Open conversations" onClick={() => setCollapsed(false)}><PanelLeft className="h-4 w-4" /></Button><Button variant="ghost" className={`${button} !p-3`} aria-label="New chat" onClick={() => void navigate()}><Plus className="h-4 w-4" /></Button>{loadFixtureVideo && loadVideoLibrary && <Button variant="ghost" className={`${button} !p-3 ${assetsOpen ? '!text-[#FFCC00]' : ''}`} aria-label="Grifon Assets" onClick={() => void openAssets()}><FolderOpen className="h-4 w-4 shrink-0" /></Button>}{cloudFixtureClient && <Button variant="ghost" className={`${button} !p-3 ${cloudOpen ? '!text-[#FFCC00]' : ''}`} aria-label="Cloud fixture jobs" onClick={() => void openCloud()}><Cloud className="h-4 w-4 shrink-0" /></Button>}{cloudReferenceClient && <Button variant="ghost" className={`${button} !p-3 ${referencesOpen ? '!text-[#FFCC00]' : ''}`} aria-label="Cloud reference briefs" onClick={() => void openReferences()}><Cloud className="h-4 w-4 shrink-0" /></Button>}<Button variant="ghost" className={`${button} mt-auto mb-3 !p-3`} aria-label="Account settings" onClick={event => openSettings(event.currentTarget)}><Settings className="h-4 w-4" /></Button></aside>}
     {mobileOpen && <div className="fixed inset-0 z-50 bg-zinc-950/80 md:hidden" onClick={() => setMobileOpen(false)}><aside ref={drawer} role="dialog" aria-modal="true" aria-label="Chat navigation" className="flex h-full w-[min(320px,85vw)] flex-col border-r border-white/10 bg-zinc-900" onClick={event => event.stopPropagation()}>{navigation}</aside></div>}
-    <div ref={main} className="relative min-h-0 min-w-0 flex-1">{assetsOpen && loadFixtureVideo && loadVideoLibrary ? <CompanionAssets key={userId} userId={userId} conversation={binding} client={fixtureResultClient} loadVideo={loadFixtureVideo} loadLibrary={loadVideoLibrary} selectedId={selectedAssetId} onSelect={setSelectedAssetId} onBack={() => setAssetsOpen(false)} onOpenChat={openResultChat} /> : referencesOpen && cloudReferenceClient ? <CompanionCloudReferences key={userId} userId={userId} conversation={binding} client={cloudReferenceClient} onBack={() => setReferencesOpen(false)} onOpen={importReference} /> : cloudOpen && cloudFixtureClient ? <CompanionCloudFixtureJobs key={userId} userId={userId} conversation={binding} client={cloudFixtureClient} onBack={() => setCloudOpen(false)} onOpenInputs={importReference} onOpenChat={openResultChat} /> : children(binding)}{!cloudOpen && !referencesOpen && !assetsOpen && <CompanionAvatarLayer presentation={avatar} />}{navigationError && collapsed && <p role="alert" className="absolute bottom-4 left-4 right-4 z-30 rounded-xl bg-zinc-900 p-3 text-sm text-zinc-300">{navigationError}</p>}</div>
+    <div ref={main} className="relative min-h-0 min-w-0 flex-1">{assetsOpen && loadFixtureVideo && loadVideoLibrary ? <CompanionAssets key={userId} userId={userId} conversation={binding} client={fixtureResultClient} loadVideo={loadFixtureVideo} loadLibrary={loadVideoLibrary} selectedId={selectedAssetId} onSelect={setSelectedAssetId} onBack={() => setAssetsOpen(false)} onOpenChat={openResultChat} /> : referencesOpen && cloudReferenceClient ? <CompanionCloudReferences key={userId} userId={userId} conversation={binding} client={cloudReferenceClient} onBack={() => setReferencesOpen(false)} onOpen={importReference} /> : cloudOpen && cloudFixtureClient ? <CompanionCloudFixtureJobs key={userId} userId={userId} conversation={binding} client={cloudFixtureClient} executionSafetyClient={executionSafetyClient} inputVerificationClient={inputVerificationClient} onBack={() => setCloudOpen(false)} onOpenInputs={importReference} onOpenChat={openResultChat} /> : children(binding)}{!cloudOpen && !referencesOpen && !assetsOpen && <CompanionAvatarLayer presentation={avatar} />}{navigationError && collapsed && <p role="alert" className="absolute bottom-4 left-4 right-4 z-30 rounded-xl bg-zinc-900 p-3 text-sm text-zinc-300">{navigationError}</p>}</div>
     <SettingsModal open={settingsOpen} onClose={() => setSettingsOpen(false)} userEmail={userEmail} userName={userName} plan={plan} planLoading={planLoading} planError={planError} onRetryPlan={onRetryPlan} preview={preview} restoreFocus={restoreSettingsFocus}
       onLogout={onLogout ? () => leave(onLogout) : undefined} onUpgrade={onUpgrade ? () => leave(onUpgrade) : undefined} onNavigate={href => leave(() => onNavigate ? onNavigate(href) : window.location.assign(href))} />
   </div>;

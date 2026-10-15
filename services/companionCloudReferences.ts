@@ -1,7 +1,7 @@
-import { getSupabase } from './supabaseClient';
-import { isReferenceDraft, prepareReferenceMedia, type CompanionReferenceDraft, type ReferenceMedia, type ReferencePhoto } from './companionReferenceDraft';
-import { fingerprintReferenceDraft } from './companionReferenceReview';
-import { isCloudReferenceLink, type CloudReferenceLink } from './companionFixtureJobs';
+import { getSupabase } from './supabaseClient.js';
+import { isReferenceDraft, prepareReferenceMedia, type CompanionReferenceDraft, type ReferenceMedia, type ReferencePhoto } from './companionReferenceDraft.js';
+import { fingerprintReferenceDraft } from './companionReferenceReview.js';
+import { isCloudReferenceLink, type CloudReferenceLink } from './companionFixtureJobs.js';
 
 export const CLOUD_REFERENCE_BUCKET = 'grifon-fixture-reference-media';
 export const CLOUD_REFERENCE_FILE_LIMIT = 6_000_000;
@@ -42,7 +42,7 @@ const hash = (value: unknown): value is string => typeof value === 'string' && /
 const identifier = (value: unknown): value is string => typeof value === 'string' && value.length > 0 && value.length <= 200 && !/[\u0000-\u001f]/.test(value);
 const only = (value: object, keys: string[]) => Object.keys(value).every(key => keys.includes(key));
 const metadataKeys = ['id', 'name', 'width', 'height', 'duration', 'role'];
-const draftKeys = ['version', 'brief', 'brandName', 'productName', 'audience', 'offer', 'callToAction', 'instructions', 'outputLanguage', 'referenceLanguage', 'referenceLink', 'referenceVideo', 'photos', 'voice', 'adaptationMode', 'speechMode'];
+const draftKeys = ['version', 'brief', 'brandName', 'productName', 'audience', 'offer', 'callToAction', 'instructions', 'outputLanguage', 'referenceLanguage', 'referenceLink', 'referenceVideo', 'photos', 'voice', 'adaptationMode', 'speechMode', 'creativeSource'];
 async function sha256(bytes: BufferSource): Promise<string> {
   return Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes)), byte => byte.toString(16).padStart(2, '0')).join('');
 }
@@ -89,6 +89,8 @@ function manifest(value: unknown): CloudReferenceManifest {
   if (!isReferenceDraft(local) || (draft.voice !== null && (!record(draft.voice) || !only(draft.voice, ['id', 'name', 'source'])))) throw new Error('The cloud brief has invalid draft or voice metadata.');
   return value as unknown as CloudReferenceManifest;
 }
+// The server verifier reuses this pure metadata boundary; no browser transport runs here.
+export { manifest as parseCloudReferenceManifest };
 async function verifyBytes(blob: Blob, expected: CloudReferenceMedia): Promise<void> {
   if (!(blob instanceof Blob) || blob.size !== expected.size || blob.type !== expected.type || await sha256(await blob.arrayBuffer()) !== expected.sha256) throw new Error('Cloud media integrity did not match the saved bytes, size or MIME.');
 }

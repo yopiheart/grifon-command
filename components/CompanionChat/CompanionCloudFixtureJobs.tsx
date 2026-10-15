@@ -10,16 +10,58 @@ import { cloudReferenceLink, verifyCloudReferenceDraft, type CloudReferenceRecei
 import type { CompanionReferenceDraft } from '../../services/companionReferenceDraft';
 import type { ConversationBinding } from './CompanionChatShell';
 import { CompanionFixtureResult } from './CompanionFixtureResult';
+import { CompanionExecutionSafety } from './CompanionExecutionSafety';
+import type { FixtureExecutionSafetyClient } from '../../services/companionExecutionSafetyClient';
+import { validateFixtureInputVerificationReceipt, type FixtureInputVerificationReceipt } from '../../services/companionInputVerification';
 
 const control = 'min-h-11 min-w-11 !rounded-xl !text-sm !font-semibold !normal-case !tracking-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFCC00] disabled:opacity-50 disabled:cursor-not-allowed';
 const ghost = `${control} !bg-zinc-950 border border-white/10 !text-zinc-400 hover:!text-white hover:!border-[#FFCC00]`;
 const money = (cents: number) => `PHP ${(cents / 100).toFixed(2)}`;
 const active = (job: CloudFixtureSnapshot) => !job.queue.invalidated && !['complete', 'cancelled'].includes(job.queue.status);
 
-export function CompanionCloudFixtureJobs({ userId, conversation, client, onBack, onOpenInputs, onOpenChat }: {
+export interface FixtureInputVerificationClient {
+  simulation?: boolean;
+  read: (intent: FixtureJobIntent) => Promise<FixtureInputVerificationReceipt | null>;
+  verify: (intent: FixtureJobIntent) => Promise<FixtureInputVerificationReceipt>;
+}
+function CompanionInputVerification({ userId, intent, client }: { userId: string; intent: FixtureJobIntent; client: FixtureInputVerificationClient }) {
+  const [receipt, setReceipt] = useState<FixtureInputVerificationReceipt | null>(null);
+  const [busy, setBusy] = useState(false), [error, setError] = useState(''), [checked, setChecked] = useState(false);
+  const mounted = useRef(true), locked = useRef(false), generation = useRef(0);
+  const scope = `${userId}:${intent.requestId}:${intent.plan.inputHash}`;
+  const current = useRef(scope); current.current = scope;
+  const visible = () => mounted.current && current.current === scope && intent.ownerId === userId;
+  const check = async (verify = false) => {
+    if (locked.current || !visible() || !intent.cloudReference) return;
+    locked.current = true; setBusy(true); setError(''); const turn = ++generation.current;
+    try {
+      const result = verify ? await client.verify(intent) : await client.read(intent);
+      if (!verify && result === null && receipt) throw new Error('The previously confirmed file verification is unavailable. Its last confirmed receipt is kept.');
+      const next = result === null ? null : await validateFixtureInputVerificationReceipt(result, userId, intent);
+      if (visible() && turn === generation.current) { setReceipt(next); setChecked(true); }
+    } catch (reason) {
+      if (visible() && turn === generation.current) setError(reason instanceof Error && !/^[A-Z_]+$/.test(reason.message) ? reason.message : 'The saved input verification receipt is invalid or unavailable. No generation was started.');
+    } finally { locked.current = false; if (visible() && turn === generation.current) setBusy(false); }
+  };
+  useEffect(() => { mounted.current = true; setReceipt(null); setChecked(false); void check(); return () => { mounted.current = false; generation.current++; }; }, [userId, intent.requestId, intent.plan.inputHash, client]);
+  return <GlassPanel className="p-4 sm:p-5" aria-label="Saved input file check"><details><summary className="min-h-11 cursor-pointer py-3 text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFCC00]">Saved input file check</summary><div className="space-y-4 pt-2">
+    <p className="text-sm leading-relaxed text-zinc-300">{client.simulation ? 'Simulated decode receipt only. This local preview does not decode private cloud files.' : 'Verify that this job’s exact saved reference and photos decode before future production. Opening this panel only reads an existing receipt.'}</p>
+    <p className="text-xs leading-relaxed text-zinc-400">Fixture limits: 6 MB per file and 30 seconds for a reference video. This checks file bytes and decoding, without analyzing faces, product identity, speech or the reference edit.</p>
+    {busy && <p role="status" className="text-sm text-zinc-400">{receipt ? 'Checking the saved verification receipt…' : 'Checking these fixture inputs…'}</p>}
+    {error && <p role="alert" className="flex items-start gap-2 text-sm leading-relaxed text-amber-500"><AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" /><span className="min-w-0 break-words">{error}</span></p>}
+    {checked && !receipt && <p className="text-sm text-zinc-400">No saved decode receipt for this job. No file verification ran on open.</p>}
+    {receipt && <><p role="status" data-testid="fixture-input-verification" className="text-sm text-zinc-300">{client.simulation ? 'Simulated fixture receipt' : 'Fixture decode receipt saved'} · {receipt.verifiedMedia.length} {receipt.verifiedMedia.length === 1 ? 'file' : 'files'} · actual spend PHP 0.00.</p><p className="text-xs text-zinc-400">The saved voice remains selected; this check does not generate or validate voice audio.</p><details><summary className="min-h-11 cursor-pointer py-3 text-sm font-semibold">Verified file details</summary><ul className="space-y-3 text-xs text-zinc-400">{receipt.verifiedMedia.map(media => <li key={media.slot} className="space-y-1"><p>{media.slot === 'reference' ? 'Reference video' : `Photo ${Number(media.slot.slice(6)) + 1}`} · {media.width}×{media.height}{media.durationSeconds === null ? '' : ` · ${media.durationSeconds}s`}</p><p>{media.sizeBytes} bytes · {media.frames} decoded {media.frames === 1 ? 'frame' : 'frames'}</p><p className="break-all font-mono">{media.sha256}</p></li>)}</ul></details></>}
+    <div className="grid gap-3 sm:grid-cols-2"><Button variant="ghost" className={ghost} disabled={busy} onClick={() => void check()}>Refresh saved file check</Button><Button variant="ghost" className={ghost} disabled={busy} onClick={() => void check(true)}>Verify saved input files</Button></div>
+    <p className="text-xs leading-relaxed text-zinc-400">No paid generation or spending. This separate fixture check does not start, retry or advance the video job.</p>
+  </div></details></GlassPanel>;
+}
+
+export function CompanionCloudFixtureJobs({ userId, conversation, client, onBack, onOpenInputs, onOpenChat, executionSafetyClient, inputVerificationClient }: {
   userId: string; conversation: ConversationBinding; client: CloudFixtureClient; onBack: () => void;
   onOpenInputs: (draft: CompanionReferenceDraft, sourceLocalChatId: string, receipt: CloudReferenceReceipt, job: FixtureJobIntent) => Promise<void>;
   onOpenChat?: (intent: FixtureJobIntent, isCurrent: () => boolean) => Promise<void>;
+  executionSafetyClient?: FixtureExecutionSafetyClient;
+  inputVerificationClient?: FixtureInputVerificationClient;
 }) {
   const [jobs, setJobs] = useState<CloudFixtureSnapshot[]>([]);
   const [selected, setSelected] = useState<CloudFixtureSnapshot | null>(null);
@@ -174,6 +216,8 @@ export function CompanionCloudFixtureJobs({ userId, conversation, client, onBack
           {jobs.map(job => <Button key={job.intent.requestId} variant="ghost" aria-label={`Open cloud fixture job: ${job.intent.requestId}`} aria-pressed={selected?.intent.requestId === job.intent.requestId} disabled={busy} className={`${ghost} w-full !text-left ${selected?.intent.requestId === job.intent.requestId ? '!text-[#FFCC00] border-[#FFCC00]/50' : ''}`} onClick={() => open(job)}><span className="block break-words">{job.intent.plan.direction}</span><span className="mt-1 block break-all text-xs font-normal text-zinc-400">Original chat {job.intent.ownerChatId} · {job.queue.status} · Revision {job.queue.revision}</span></Button>)}
         </GlassPanel>
         {selected && conversation.fixtureResultClient && conversation.loadFixtureVideo && <CompanionFixtureResult key={`${userId}:${conversation.chat.id}:${selected.intent.requestId}`} userId={userId} chatId={conversation.chat.id} intent={selected.intent} client={conversation.fixtureResultClient} cloudClient={client} observedJobStatus={selected.queue.invalidated ? 'invalidated' : selected.queue.status} loadVideo={conversation.loadFixtureVideo} onViewAssets={conversation.viewFixtureInAssets} onOpenChat={onOpenChat} />}
+        {selected?.intent.cloudReference && executionSafetyClient && <CompanionExecutionSafety key={`${userId}:${selected.intent.requestId}`} userId={userId} intent={selected.intent} client={executionSafetyClient} />}
+        {selected?.intent.cloudReference && inputVerificationClient && <CompanionInputVerification key={`inputs:${userId}:${selected.intent.requestId}`} userId={userId} intent={selected.intent} client={inputVerificationClient} />}
         {selected && queue && plan && <GlassPanel className="space-y-4 p-4 sm:p-5" aria-label="Cloud fixture job details">
           <h2 data-testid="cloud-fixture-status" role="status" className="!text-base !font-semibold !normal-case !tracking-normal">{status}</h2>
           <details><summary className="min-h-11 cursor-pointer py-3 text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFCC00]">Fixture details</summary><div className="space-y-2 text-xs leading-relaxed text-zinc-400">

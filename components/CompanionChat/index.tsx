@@ -7,6 +7,8 @@ import type { PlanId } from '../../utils/planGate';
 import { createCloudFixtureClient } from '../../services/companionCloudFixtures';
 import { createCloudReferenceClient } from '../../services/companionCloudReferences';
 import { createCloudFixtureResultClient } from '../../services/companionFixtureResults';
+import { createFixtureExecutionSafetyClient } from '../../services/companionExecutionSafetyClient';
+import { readFixtureInputVerification, verifyFixtureInputs } from '../../services/companionInputVerification';
 import { listCompanionVideoLibrary, loadFixtureResultVideo } from '../../services/companionAssets';
 
 interface Props {
@@ -32,6 +34,8 @@ export default function CompanionChat({ userId, userEmail, userName, actualPlanI
   const cloudFixtureClient = useMemo(() => new URLSearchParams(window.location.search).get('cloudFixtures') === '1' ? createCloudFixtureClient(userId) : undefined, [userId]);
   const cloudReferenceClient = useMemo(() => new URLSearchParams(window.location.search).get('cloudFixtures') === '1' ? createCloudReferenceClient(userId) : undefined, [userId]);
   const fixtureResultClient = useMemo(() => new URLSearchParams(window.location.search).get('cloudFixtures') === '1' ? createCloudFixtureResultClient(userId) : undefined, [userId]);
+  const executionSafetyClient = useMemo(() => new URLSearchParams(window.location.search).get('cloudFixtures') === '1' ? createFixtureExecutionSafetyClient(userId) : undefined, [userId]);
+  const inputVerificationClient = useMemo(() => new URLSearchParams(window.location.search).get('cloudFixtures') === '1' ? { read: readFixtureInputVerification, verify: verifyFixtureInputs } : undefined, [userId]);
   const quota = useQuota();
   const [retryingAllowance, setRetryingAllowance] = useState(false);
   const allowanceLoading = quota.loading || videoAllowanceLoading || retryingAllowance;
@@ -44,7 +48,7 @@ export default function CompanionChat({ userId, userEmail, userName, actualPlanI
     catch { /* Keep the unconfirmed allowance closed and offer another retry. */ }
     finally { setRetryingAllowance(false); }
   };
-  return <CompanionChatShell key={userId} userId={userId} userEmail={userEmail} userName={userName} plan={actualPlanId} planLoading={planLoading} planError={planError} onRetryPlan={onRetryPlan} onLogout={onLogout} onUpgrade={onUpgrade} onNavigate={onNavigate} onStudio={onBack} cloudFixtureClient={cloudFixtureClient} cloudReferenceClient={cloudReferenceClient} fixtureResultClient={fixtureResultClient} loadFixtureVideo={loadFixtureResultVideo} loadVideoLibrary={listCompanionVideoLibrary}>{conversation => {
+  return <CompanionChatShell key={userId} userId={userId} userEmail={userEmail} userName={userName} plan={actualPlanId} planLoading={planLoading} planError={planError} onRetryPlan={onRetryPlan} onLogout={onLogout} onUpgrade={onUpgrade} onNavigate={onNavigate} onStudio={onBack} cloudFixtureClient={cloudFixtureClient} cloudReferenceClient={cloudReferenceClient} fixtureResultClient={fixtureResultClient} executionSafetyClient={executionSafetyClient} inputVerificationClient={inputVerificationClient} loadFixtureVideo={loadFixtureResultVideo} loadVideoLibrary={listCompanionVideoLibrary}>{conversation => {
     const back = () => { void conversation.leave(onBack).catch(() => {}); };
     const upgrade = () => { void conversation.leave(onUpgrade).catch(() => {}); };
     return <ProducerFlow key={conversation.chat.id} conversation={conversation.chat} userId={userId} directorUnlocked={false} presetUnlocked={presetUnlocked} isBusinessTier={isBusinessTier}

@@ -3,6 +3,16 @@ import type { CloudFixtureRpc } from '../services/companionCloudFixtures';
 import type { VideoLibraryItem } from '../types';
 import type { CloudFixtureResultReceipt } from '../services/companionFixtureResults';
 import { verifyFixtureResultVideoBlob } from '../services/companionFixtureVideo';
+import { readFixtureInputVerification, verifyFixtureInputs } from '../services/companionInputVerification';
+import type { FixtureInputVerificationClient } from '../components/CompanionChat/CompanionCloudFixtureJobs';
+
+export function cloudWorkflowFixtureInputVerification(ownerId: string): FixtureInputVerificationClient {
+  return {
+    simulation: true,
+    read: intent => readFixtureInputVerification(intent, cloudWorkflowFixtureRpc(ownerId), async () => ownerId),
+    verify: intent => verifyFixtureInputs(intent, async (_input, init) => fetch('/__fixture-cloud-workflow/verify-inputs', { ...init, headers: { 'x-fixture-owner': ownerId, 'content-type': 'application/json' } }), async () => ({ ownerId, accessToken: 'fixture-session' })),
+  };
+}
 
 export function cloudWorkflowFixtureRpc(ownerId: string): CloudFixtureRpc {
   return async (name, args) => {
