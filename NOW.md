@@ -44,9 +44,11 @@ Evidence is local-only under .tmp/reference-critic/, .tmp/companion-reference-*,
 
 ## Delivery and reproduction
 Planning draft PR: https://github.com/yopiheart/grifon-command/pull/188.
-Implementation draft PR lookup:
-gh pr view codex/ugc-reference-draft --repo yopiheart/grifon-command
+Implementation draft PR: https://github.com/yopiheart/grifon-command/pull/190.
 Implementation PR stacks on the planning branch; do not merge/deploy without Neil.
+Remote Vercel preview check reports "Account is blocked." No hosted preview;
+local verification passes. No GitHub Actions run listed for the stacked branch
+at delivery. Recheck CI before any eventual merge; no gates were disabled.
 Free fixture commands and limits are documented in
 workflows/ugc_reference_implementation_plan.md, First build boundary section.
 Fixture URL: http://localhost:5173/companion-chat-preview.html.
