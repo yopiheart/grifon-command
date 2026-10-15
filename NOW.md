@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-16; pre-asset fixture foundation complete, power handoff pending**
+**Stamped: 2026-10-16; pre-asset fixture foundation complete, normal sleep scheduled**
 
 ## Authorization and boundary
 Neil authorized autonomous pre-asset fixture builds, reviewed fixture activation/
@@ -77,8 +77,8 @@ identity/edit/audio acceptance, paid-providerintegration and nativeconcurrency/l
 remain unproven. No physicalshutdown/seconddevice was tested in this iteration.
 Next: exact three references/brandassets and scoped provider/quality pilot approvals.
 Task-owned isolated5194host stopped; existing5173/session untouched. Displaynotheld.
-Powerhold PID19236 stillactive; normalS3sleep helper dry-run PASS. Sleep registration
-is pending this final GitHub backup. Runtime evidence .tmp/overnight-fixture-run/.
-After verified backup, queue one-time normal sleep and release active.marker;
-ready-to-sleep.json gates completion/backup. No force-close/shutdown/hibernate.
+One-time normalS3sleep scheduled 2026-10-16 02:24:18 PHT, task
+Codex-Grifon-Fixture-Sleep-20261016-021818; readback Ready, Limited/Interactive,
+no repeat/wake/catchup. After this backup release powerhold PID19236/active.marker;
+fresh ready-to-sleep.json gates checks/backup. No force-close/shutdown/hibernate.
 Roadmaps: workflows/ugc_reference_implementation_plan.md, creative_library_roadmap.md.
