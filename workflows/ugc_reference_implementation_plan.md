@@ -38,6 +38,28 @@ The review, partial edits and confirmation reopen with the draft. This is the UI
 portion of S1; server-owned approval, real quotes, paid execution and cross-device
 integrity remain future work. Local records are not authenticated spending tokens.
 
+## Local fixture queue preview before S2
+
+After saving a confirmed sample plan, **Preview demo queue** exercises the next
+interface with local simulated steps: each scene clip, the single saved voice and
+alignment for spoken plans, music, existing sound-bank cues, assembly and checking.
+The original illustrative estimate and cap remain visible; actual spend stays zero.
+Completion means the simulation finished. It produces no video or Assets entry.
+
+Start and Resume advance saved steps while the queue is open. Leaving, reloading
+or switching account/chat stops local playback; reopening preserves progress and
+requires Resume. This preview is not a background worker. Pending or failed saves
+and conflicting tabs block further advancement. Pause and Cancel exercise stopping.
+
+The optional second-clip failure scenario stops before downstream work. A bounded
+retry preserves successful steps. Changing the brief, inputs, voice, script,
+timing or estimate permanently invalidates that queue, including edit-and-revert.
+Its prior progress remains visible until an explicitly prepared replacement.
+
+This local slice does not complete S2. Server-owned durable execution, restart
+recovery, atomic budget reservations and provider submission reconciliation still
+need their own implementation and checks before paid integrations.
+
 ## Free fixture checks
 
 For a free fixture check, start the existing isolated frontend server in one
@@ -52,6 +74,7 @@ Then run in another terminal:
 ```powershell
 npm.cmd run test:e2e -- --config tests/e2e/companion-reference.config.ts
 npm.cmd run test:e2e -- --config tests/e2e/companion-reference-review.config.ts
+npm.cmd run test:e2e -- --config tests/e2e/companion-reference-queue.config.ts
 ```
 
 The test uses simulated saved voices and local media at
