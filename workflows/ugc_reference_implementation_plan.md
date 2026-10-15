@@ -11,8 +11,9 @@ The first S0 slice saves an account-scoped brief, an uploaded reference video,
 up to five role-labelled photos and one selected saved voice in this browser's
 IndexedDB. It reopens the original files and selection. Reference language is
 independent of output language. An optional reference link is retained as text;
-it is not fetched or analyzed. Cloud storage, cross-device recovery, voice upload,
-reference analysis, real planning and generation remain later slices.
+it is not fetched or analyzed. The optional cloud fixture reference slice below
+adds private save/reopen; voice upload, reference analysis, real planning and
+generation remain later slices. Ordinary local drafts remain device-local.
 
 Enter **Reference brief** from a fresh Companion chat. Existing started briefs
 and production runs keep their current flow. Clearing browser data removes these
@@ -173,6 +174,64 @@ Two independent database backends returned the same job and single start event,
 but the connector serialized requests, so no lock-contention proof is claimed.
 The signed-in frontend needs its own deployment before this cloud path is
 available online; current preview status and signed-in evidence belong in NOW.md.
+
+### Cloud reference storage fixtures
+
+Under the existing cloud pilot, **Cloud reference briefs** saves the current
+device-saved reference draft as an immutable private snapshot. It keeps reference
+video bytes, up to five photos with their original metadata/order/roles, text and
+language preferences, and the exact selected voice ID/name/source. Voice audio is
+not uploaded, generated or checked against a provider. An unavailable voice stays
+selected when the draft is reopened.
+
+Wait for **Cloud save confirmed** before closing the source device. An interrupted
+upload has not published a complete snapshot; retrying the same original chat and
+inputs reuses its content-derived save ID and immutable paths. Different inputs
+create another snapshot without replacing the prior version. Account/chat changes
+discard stale UI acknowledgements. Local save and cloud confirmation are separate.
+
+**Open copy in chat** authenticates and downloads every saved file, verifies byte
+hashes, MIME, decoded dimensions/duration and the original draft fingerprint, then
+persists a new editable local chat through the existing IndexedDB revision check
+before selecting it. Existing local work is retained. No reviewed plan, approval,
+queue, production run or generation authority is imported. Existing cloud jobs
+remain independent; their frozen intents are not rewritten or bound to new files.
+
+`supabase/companion_cloud_references.sql` creates a dedicated private
+`grifon-fixture-reference-media` bucket and private snapshot/reservation table.
+Native RPCs derive `auth.uid()` and reuse existing fixture owner enrollment. The
+bucket accepts only supported image/video MIME types and at most 6,000,000 bytes
+per file. Standard uploads suit these small fixtures; larger-file/resumable work
+is outside this slice. See [Supabase standard uploads](https://supabase.com/docs/guides/storage/uploads/standard-uploads).
+
+Limits are 20 reservations/snapshots and 200 MB per owner, including unfinished
+uploads. Pending files reserve worst-case bucket capacity; publication replaces
+that charge with verified object metadata size. All expected objects must exist
+with matching size/MIME before atomic publication. The new bucket's INSERT policy
+permits only `object.upload` and an exact owner reservation; signed-upload minting,
+copy/TUS/S3 alternatives, UPDATE and DELETE receive no permission. Other buckets,
+existing schedulers and production media cleanup are unchanged. Downloads use the
+authenticated SDK; the application creates no durable public/signed asset links.
+
+Database checks establish stored metadata and ownership, not authoritative media
+SHA/decode validation. Client verification proves fixture recovery; future paid
+execution still needs its own server-side input integrity boundary. Native upload
+completion reauthorization was reviewed in released Storage v1.81+ source; target
+runtime version, real Storage API behavior and activation status belong in NOW.md.
+
+Free checks:
+
+```powershell
+npx.cmd vitest run tests/unit/companionCloudReferences.test.ts tests/unit/companionCloudReferenceSql.test.ts
+npm.cmd run test:e2e -- --config tests/e2e/companion-cloud-reference.config.ts
+```
+
+The browser suite injects a shared simulated HTTP backend into the production
+client and reopens from a fresh browser context. It does not call hosted Storage,
+providers, production Assets or paid generation. Actual SQL/roles run in PGlite
+with storage metadata/helper stand-ins. RED/GREEN probes cover missing recovery,
+StrictMode replay and forbidden signed-upload operations. Hosted activation and
+authenticated Storage round trips require their own recorded evidence.
 
 ### Existing local intake and review checks
 

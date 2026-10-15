@@ -1,5 +1,5 @@
 // DEV ONLY: renders the real chat surface with a public mock controller. No provider imports.
-import { useMemo, useState } from 'react';
+import { StrictMode, useMemo, useState } from 'react';
 import { CompanionChatShell, type ConversationBinding } from '../components/CompanionChat/CompanionChatShell';
 import ReactDOM from 'react-dom/client';
 import { CompanionChatSurface } from '../components/CompanionChat/CompanionChatSurface';
@@ -9,6 +9,8 @@ import type { ProductionRun } from '../services/producerOrchestrator';
 import Button from '../components/ui/Button';
 import { createFixtureJobClient, verifyFixtureJobIntent, type FixtureJobIntent } from '../services/companionFixtureJobs';
 import { createCloudFixtureClient, type CloudFixtureRpc, type CloudFixtureSnapshot } from '../services/companionCloudFixtures';
+import { createCloudReferenceClient } from '../services/companionCloudReferences';
+import { cloudReferenceFixtureTransport } from './companionCloudReferenceFixture';
 import { createReferenceQueue, invalidateReferenceQueue, transitionReferenceQueue } from '../services/companionReferenceQueue';
 import '../index.css';
 
@@ -18,7 +20,7 @@ const stageIds = ['market_research', 'script', 'storyboard', 'scene_images', 'vi
 type FixtureEvent = 'researching' | 'script' | 'storyboard' | 'video' | 'result' | 'error' | 'resume-error';
 type FixtureCall = { name: string; value?: unknown };
 const calls: FixtureCall[] = [];
-const referenceVoices = async () => ({ stockVoices: [], myVoices: [{ voice_id: 'fixture-private', name: 'Fixture private voice', created_at: '2026-10-15' }], libraryVoices: [{ voice_id: 'fixture-curated', name: 'Fixture curated voice' }], quotaUsed: 0, quotaMax: 1 });
+const referenceVoices = async () => ({ stockVoices: [], myVoices: new URLSearchParams(window.location.search).get('voices') === 'missing' ? [] : [{ voice_id: 'fixture-private', name: 'Fixture private voice', created_at: '2026-10-15' }], libraryVoices: [{ voice_id: 'fixture-curated', name: 'Fixture curated voice' }], quotaUsed: 0, quotaMax: 1 });
 const debug = new URLSearchParams(window.location.search).get('debug') === '1';
 const fixtureJobClient = new URLSearchParams(window.location.search).get('background') === '1' ? createFixtureJobClient() : undefined;
 const cloudSimulation = new URLSearchParams(window.location.search).get('cloud') === '1';
@@ -156,11 +158,12 @@ function Preview() {
   const [signedIn, setSignedIn] = useState(true);
   const account = (id: string) => { setUserId(id); setSignedIn(true); };
   const cloudFixtureClient = useMemo(() => cloudSimulation ? { ...createCloudFixtureClient(userId, cloudRpc(userId)), simulation: true } : undefined, [userId]);
+  const cloudReferenceClient = useMemo(() => cloudSimulation ? { ...createCloudReferenceClient(userId, cloudReferenceFixtureTransport(userId)), simulation: true } : undefined, [userId]);
   if (cloudSimulation) { cloudHarness.account = account; Object.assign(window, { companionCloudFixture: cloudHarness }); }
   if (!signedIn) return <main className="flex min-h-dvh flex-col items-center justify-center gap-4 bg-zinc-950 px-6 font-sans text-sm text-white"><h1 className="!text-lg !font-semibold !normal-case !tracking-tight">Preview signed out</h1><p className="max-w-sm text-center text-sm leading-relaxed text-zinc-300">This simulated account is signed out. Your preview chats remain saved on this device.</p><Button className="!rounded-xl" onClick={() => setSignedIn(true)}>Simulate sign in</Button><a href="/login" className="inline-flex min-h-11 items-center text-sm font-semibold text-[#FFCC00]">Sign in to Grifon</a></main>;
-  return <CompanionChatShell key={userId} userId={userId} userEmail={`${userId}@preview.invalid`} userName="Preview account" plan="free" preview cloudFixtureClient={cloudFixtureClient}
+  return <CompanionChatShell key={userId} userId={userId} userEmail={`${userId}@preview.invalid`} userName="Preview account" plan="free" preview cloudFixtureClient={cloudFixtureClient} cloudReferenceClient={cloudReferenceClient}
     onLogout={async () => { calls.push({ name: 'preview-sign-out' }); setSignedIn(false); }} onUpgrade={() => { calls.push({ name: 'upgrade' }); }} onStudio={() => { calls.push({ name: 'back' }); }}>
     {conversation => <Fixture key={conversation.chat.id} userId={userId} setUserId={account} conversation={conversation} />}</CompanionChatShell>;
 }
 
-if ((import.meta as ImportMeta & { env: { DEV: boolean } }).env.DEV) ReactDOM.createRoot(document.getElementById('root')!).render(<Preview />);
+if ((import.meta as ImportMeta & { env: { DEV: boolean } }).env.DEV) ReactDOM.createRoot(document.getElementById('root')!).render(new URLSearchParams(window.location.search).get('strict') === '1' ? <StrictMode><Preview /></StrictMode> : <Preview />);
