@@ -1,5 +1,5 @@
 // DEV ONLY: renders the real chat surface with a public mock controller. No provider imports.
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { CompanionChatShell, type ConversationBinding } from '../components/CompanionChat/CompanionChatShell';
 import ReactDOM from 'react-dom/client';
 import { CompanionChatSurface } from '../components/CompanionChat/CompanionChatSurface';
@@ -7,7 +7,9 @@ import type { ProducerSurfaceController } from '../components/OneShotAd/Producer
 import type { ProductionInput } from '../services/oneShotIntake';
 import type { ProductionRun } from '../services/producerOrchestrator';
 import Button from '../components/ui/Button';
-import { createFixtureJobClient } from '../services/companionFixtureJobs';
+import { createFixtureJobClient, verifyFixtureJobIntent, type FixtureJobIntent } from '../services/companionFixtureJobs';
+import { createCloudFixtureClient, type CloudFixtureRpc, type CloudFixtureSnapshot } from '../services/companionCloudFixtures';
+import { createReferenceQueue, invalidateReferenceQueue, transitionReferenceQueue } from '../services/companionReferenceQueue';
 import '../index.css';
 
 const IMAGE = '/tests/fixtures/sample-batch/timpla-hero.jpg';
@@ -19,6 +21,60 @@ const calls: FixtureCall[] = [];
 const referenceVoices = async () => ({ stockVoices: [], myVoices: [{ voice_id: 'fixture-private', name: 'Fixture private voice', created_at: '2026-10-15' }], libraryVoices: [{ voice_id: 'fixture-curated', name: 'Fixture curated voice' }], quotaUsed: 0, quotaMax: 1 });
 const debug = new URLSearchParams(window.location.search).get('debug') === '1';
 const fixtureJobClient = new URLSearchParams(window.location.search).get('background') === '1' ? createFixtureJobClient() : undefined;
+const cloudSimulation = new URLSearchParams(window.location.search).get('cloud') === '1';
+const cloudJobs = new Map<string, CloudFixtureSnapshot>();
+const cloudCalls: { name: string; args?: Record<string, unknown>; ownerId: string }[] = [];
+let cloudOffline = false, loseStartAck = false, rejectCommand = false;
+let holdStartAck = false, releaseStartAck: (() => void) | undefined;
+const cloudWire = (job: CloudFixtureSnapshot) => {
+  if (!job?.intent || !job?.queue) return job;
+  const { plan: _, ...queue } = job.queue;
+  return { runtime: job.runtime, intentText: JSON.stringify(job.intent), queue, updatedAt: job.updatedAt, nextDueAt: job.nextDueAt };
+};
+const cloudRpc = (ownerId: string): CloudFixtureRpc => async (name, args) => {
+  cloudCalls.push({ name, args: structuredClone(args), ownerId });
+  if (cloudOffline) throw new Error('Fixture service offline');
+  if (name === 'grifon_fixture_list') return { data: [...cloudJobs.values()].filter(job => !job?.intent || job.intent.ownerId === ownerId).map(cloudWire).slice(0, 100), error: null };
+  if (name === 'grifon_fixture_start') {
+    const intent = JSON.parse(args!.p_intent_text as string) as FixtureJobIntent;
+    if (!await verifyFixtureJobIntent(intent) || intent.ownerId !== ownerId) return { data: null, error: { code: '42501' } };
+    let job = cloudJobs.get(intent.requestId);
+    if (job && JSON.stringify(job.intent) !== JSON.stringify(intent)) return { data: null, error: { code: '23505' } };
+    if (!job) {
+      if ([...cloudJobs.values()].some(other => other.intent.ownerId === ownerId && other.intent.ownerChatId === intent.ownerChatId && !other.queue.invalidated && !['cancelled', 'complete'].includes(other.queue.status))) return { data: null, error: { code: '23505' } };
+      const queue = transitionReferenceQueue(createReferenceQueue(intent.plan, intent.inputRevision, intent.scenario), 'start', intent.plan, intent.inputRevision);
+      job = { version: 1, fixture: true, runtime: 'supabase-cloud-fixture-v1', intent, queue, updatedAt: Date.now(), nextDueAt: null };
+      cloudJobs.set(intent.requestId, job);
+    }
+    if (holdStartAck) { holdStartAck = false; await new Promise<void>(resolve => { releaseStartAck = resolve; }); }
+    if (loseStartAck) { loseStartAck = false; throw new Error('Fixture lost acknowledgement'); }
+    return { data: cloudWire(job), error: null };
+  }
+  const job = cloudJobs.get(args?.p_request_id as string);
+  if (!job || job.intent.ownerId !== ownerId) return { data: null, error: null };
+  if (name === 'grifon_fixture_get') return { data: cloudWire(job), error: null };
+  if (name === 'grifon_fixture_command') {
+    if (rejectCommand) { rejectCommand = false; throw new Error('Fixture command rejected'); }
+    const action = args!.p_action;
+    if (action === 'retry' && args!.p_expected_revision !== job.queue.revision) return { data: null, error: { code: '40001' } };
+    const queue = action === 'invalidate' ? invalidateReferenceQueue(job.queue) : transitionReferenceQueue(job.queue, action === 'retry' ? 'retry' : 'cancel', job.intent.plan, job.intent.inputRevision);
+    const next = { ...job, queue, updatedAt: Date.now() }; cloudJobs.set(job.intent.requestId, next);
+    return { data: cloudWire(next), error: null };
+  }
+  return { data: null, error: { code: 'PGRST202' } };
+};
+const cloudHarness = {
+  snapshot: () => ({ calls: structuredClone(cloudCalls), jobs: structuredClone([...cloudJobs.values()]), offline: cloudOffline }),
+  advance: (requestId?: string) => { for (const [id, job] of cloudJobs) if (!requestId || id === requestId) cloudJobs.set(id, { ...job, queue: transitionReferenceQueue(job.queue, 'tick', job.intent.plan, job.intent.inputRevision), updatedAt: Date.now() }); },
+  failNextStartAck: () => { loseStartAck = true; },
+  failNextCommand: () => { rejectCommand = true; },
+  holdNextStartAck: () => { holdStartAck = true; },
+  releaseStartAck: () => { releaseStartAck?.(); releaseStartAck = undefined; },
+  offline: (value: boolean) => { cloudOffline = value; },
+  seed: (jobs: CloudFixtureSnapshot[]) => { cloudJobs.clear(); jobs.forEach((job, index) => cloudJobs.set(job?.intent?.requestId ?? `invalid-${index}`, structuredClone(job))); },
+  clearCalls: () => { cloudCalls.splice(0); },
+  account: (_id: string) => {},
+};
 const defaultInput: ProductionInput = { brandName: 'North Coffee', productName: 'Cold brew', productDescription: 'Fresh coffee for busy mornings', offer: 'Two bottles for 199', price: '199', heroImageBase64: IMAGE, avatar: { url: '', description: '', ethnicity: 'Filipino', prompt: '' }, voiceId: '', language: 'English', aspectRatio: '9:16', scriptType: 'Testimonial' };
 
 function makeRun(input: ProductionInput, userId: string): ProductionRun {
@@ -99,8 +155,10 @@ function Preview() {
   const [userId, setUserId] = useState('fixture-user-a');
   const [signedIn, setSignedIn] = useState(true);
   const account = (id: string) => { setUserId(id); setSignedIn(true); };
+  const cloudFixtureClient = useMemo(() => cloudSimulation ? { ...createCloudFixtureClient(userId, cloudRpc(userId)), simulation: true } : undefined, [userId]);
+  if (cloudSimulation) { cloudHarness.account = account; Object.assign(window, { companionCloudFixture: cloudHarness }); }
   if (!signedIn) return <main className="flex min-h-dvh flex-col items-center justify-center gap-4 bg-zinc-950 px-6 font-sans text-sm text-white"><h1 className="!text-lg !font-semibold !normal-case !tracking-tight">Preview signed out</h1><p className="max-w-sm text-center text-sm leading-relaxed text-zinc-300">This simulated account is signed out. Your preview chats remain saved on this device.</p><Button className="!rounded-xl" onClick={() => setSignedIn(true)}>Simulate sign in</Button><a href="/login" className="inline-flex min-h-11 items-center text-sm font-semibold text-[#FFCC00]">Sign in to Grifon</a></main>;
-  return <CompanionChatShell key={userId} userId={userId} userEmail={`${userId}@preview.invalid`} userName="Preview account" plan="free" preview
+  return <CompanionChatShell key={userId} userId={userId} userEmail={`${userId}@preview.invalid`} userName="Preview account" plan="free" preview cloudFixtureClient={cloudFixtureClient}
     onLogout={async () => { calls.push({ name: 'preview-sign-out' }); setSignedIn(false); }} onUpgrade={() => { calls.push({ name: 'upgrade' }); }} onStudio={() => { calls.push({ name: 'back' }); }}>
     {conversation => <Fixture key={conversation.chat.id} userId={userId} setUserId={account} conversation={conversation} />}</CompanionChatShell>;
 }

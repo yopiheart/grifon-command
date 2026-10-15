@@ -1,80 +1,90 @@
 # NOW - the resume doc
-**Stamped: 2026-10-15; browser-independent local fixture jobs built**
+**Stamped: 2026-10-15; signed-in cloud fixture preview verified**
 
-## Active task and boundary
+## Active task and authorization
 Checkout: F:/CodexWorktrees/61f5/grifon-command.
-Branch: codex/ugc-background-fixtures; base codex/ugc-fixture-queue at bbf8607c.
-Neil authorized fixture jobs that continue after browser closure and reopen in
-chat. No paid generation while real references/brand assets are being gathered.
-This is local worker/restart proof before cloud S2, not production durability.
-No tuned prompt/model changes, new dependencies, paid calls, production writes,
-manual deployment or merge. Actual spend remains PHP 0.00; no media/Assets entry.
+Branch: codex/ugc-cloud-fixtures; base codex/ugc-background-fixtures at938f5c29.
+Neil requested fixture jobs that continue with the PC off and reopen in chat.
+He chose existing GRIFON AI with separate fixture tables and supplied his login
+email for owner-only pilot enrollment. Hosting is unblocked; continued with a
+frontend preview and signed-in smoke. No paid generation, new paid infra, merge
+or production release. No tuned prompt/model/settings changes or auth-user writes.
+Target: Supabase varoqxjccqmskzeejagn, PostgreSQL17, free plan, healthy at inspection.
 
-## Implemented
-- Opt-in Companion preview ?background=1: confirmed sample plan -> Open background
-  fixture job -> Start. Existing app/local demo queue behavior is preserved.
-- Exact submission intent saved in IndexedDB before POST. Stable owner/chat/plan
-  identity deduplicates starts and reconciles lost acknowledgements by GET.
-- Separate Node worker advances synthetic steps into an ignored SQLite journal.
-  GET never advances work; browser closure/navigation does not stop the worker.
-  Transitions commit before the next step is scheduled. Same journal resumes
-  after worker restart without recounting attempts or clock-based catch-up.
-- One targeted retry preserves successful steps. Cancel/invalidate stops current
-  intent despite worker revision races; retry retains revision protection.
-  Command errors remain visible across automatic status polls.
-- Stop acknowledgement and local save precede editing. Edit-and-revert cannot
-  revive a stopped plan. Conflict copies observe their original job read-only.
-- Fixture owner/chat validation, transactional multi-worker serialization,
-  idempotent command receipts and pre-start cancellation tombstones.
-- Preview-only same-origin /__companion-fixture-jobs transport, simulated accounts
-  only. Host reads no .env, blocks live API calls and denies HTTP access to .tmp.
-- Local intake/review still preserve reference, five photos, voice, plan and quote.
-  Reference language can differ from output language; samples do not analyze media.
+## Implemented and activated
+- Applied companion_cloud_fixtures and companion_cloud_fixtures_schedule migrations.
+  Private grifon_fixture jobs/events/receipts/allowed_owners tables; RLS on all4.
+  Only Neil's existing account enrolled. Native RPCs derive auth.uid and verify
+  enrollment/ownership. Anon RPC, client table writes and worker execution denied.
+- Dedicated cron job1, grifon-cloud-fixture-tick, active every5seconds. Advances one
+  due synthetic step per job per invocation, max20; reads never drive work.
+  No provider/network/generation calls. ActualCents constrained zero.
+- Exact immutable intent text and canonical owner/chat/plan identity. Owner caps
+  total100/active3, same-chat active guard, idempotent starts/command receipts,
+  retry revision guard, race-safe cancel/invalidate, preserved successful attempts.
+- Canonical raw JSON/plan and UTF-16/ECMAScript whitespace validation match client.
+  Independent review found encoding/parity holes; failing repros preserved and
+  fixed before activation. Unsupported fractional/integer-index JSON extensions
+  rejected; official reviewed plan fields use text and safe integers.
+- Signed-in Companion opts in with ?cloudFixtures=1. Cloud fixture jobs navigation
+  lists/reopens server jobs even without browser drafts. Frozen direction, script,
+  visual timeline, voice and illustrative quote remain inspectable in chat.
+- Lost ACK reconciles same intent; failed-before-acceptance has explicit same-intent
+  retry. Command errors survive automatic reads. Local SQLite jobs remain separate.
+- Uploaded assets remain on original device. No generated video/music/voice/Assets.
+  Dev ?cloud=1 is explicitly labelled simulation; only test advance() ticks it.
+- Pinned dev-only @electric-sql/pglite0.5.10; unrelated optional peer entry retained.
 
-## Verification and independent review
-Build PASS; full Vitest PASS: 1,647 passed, 32 existing gated skips.
-Focused protocol/journal/real-worker tests PASS: 15/15.
-New Playwright suite PASS: 13/13, no skips/flakes/page errors/forbidden calls.
-Existing Companion chat/continuity/intake/review/local-queue suites PASS: 54/54.
-Closed whole owned Edge process at 390/1280, read SQLite before any reopening/GET:
-jobs completed while browser was closed, then same profile/chat/request recovered.
-Lost-start-response case also completed before reopening with no second POST.
-Coverage: save-before-POST, failed save -> zero dispatch, duplicate tabs, copied
-chat, targeted retry, cancellation race, edit acknowledgement/revert, offline and
-late response/account isolation. Real worker tests cover crash/restart and two
-workers. Actual spend zero; decorative font traffic blocked/recorded separately.
-Meaningful REDs preserved: missing implementation/entry and forced cancel race;
-same assertions passed after fixes. No paid/live flags or skipped failed gates.
+## Verification and live evidence
+Build PASS; final full Vitest PASS1674,32 existing gated skips.
+Focused actual SQL/roles22 + cloud adapter5 PASS. check:codex26/26 PASS.
+Playwright newcloud17 + existingchat/intake/review/queue54 + localbackground13 PASS,
+84 total, zero skips/flakes/provider/API calls/page errors. Mobile375/390/1280.
+Independent smoke PASS; BRAND_PASS43/50 zero findings,200% icon crops inspected.
+Independent final correctness/whole-validator parity review PASS, no open findings.
+Independent hosted runtime evidence/production decoder recheck PASS.
 Bundle-leak, voice-sync, eval-prompts, domain, PS1 ASCII, artifact anchors PASS.
-Independent correctness/React review PASS; final follow-up PASS, no findings.
-Independent smoke PASS; final BRAND_PASS 45/50, zero critical/nits after icon fixes.
-Mobile 375/390, desktop 1280, focus and 200% crops inspected; no overflow.
-Evidence local-only: .tmp/ugc-background-*.log, .tmp/companion-background-final.json,
-.tmp/companion-background-evidence-summary.json and .tmp/ugc-background-critic/.
-Generated unrelated snapshot line-ending noise restored; no snapshot diff included.
+Goal REDs: missing entry/module; duplicate identity/pretty-reordered plan/duplicate
+keys and Unicode overflow/blank text. Same regressions passed after fixes.
+Live Supabase fixture started at11:19:45UTC; eight cron ticks completed at11:20:25,
+revision10, all8 attempts1, actualCents0. Confirmed both owned local processes and
+5173/5174 listeners absent at11:19:54 and11:21:46; first remote read11:21:13.
+Server events and successful cron history prove execution with no local executor
+or polling. Physical PC shutdown was not tested; live browser proof is below.
+Actual hosted wire decoded through production cloud client, list/get only.
+Duplicate calls on two distinct PG backends returned one job/one start event.
+MCP serialized calls; observed lock contention/concurrent overlap NOT established.
+Post-activation security advisor adds only4 expected private RLS/no-policy INFOs;
+no new WARN findings. Existing unrelated warnings preserved; no policies weakened.
+Evidence local-only .tmp/ugc-cloud-{hosted-proof,client-recovery-proof,concurrency*-proof}.json,
+.tmp/ugc-cloud-{test-final,browser-final,existing-regression,background-regression}.*,
+.tmp/ugc-cloud-browser-critic/ and .tmp/cloud-fixture-*-{red,green}.log.
+QA outputs restored or ignored; no accepted media changes or paid/live flags.
 
-## Delivery and reproduction
-Planning/intake/review/queue draft stack: PR188 / PR190 / PR191 / PR192.
-Background draft PR: https://github.com/yopiheart/grifon-command/pull/193.
-Application source committed/pushed as 73855a20; PR stacks on codex/ugc-fixture-queue.
-Vercel preview check on 73855a20 failed: Account is blocked. Local checks passed;
-no gate disabled or manual deployment run. No GitHub Actions runs listed at delivery.
-Safe preview: http://localhost:5173/companion-chat-preview.html?background=1.
-Current owned host session64372, host PID19340, worker PID14440 while alive.
-Journal: .tmp/companion-background-live/jobs.sqlite; keep this path for restart.
-Replaced only our old 5173/5174 hosts after tests; existing browser origin retained.
-Post-handoff HTTP checks: preview200, live API503, journal download403.
-Narrow 5173 closed-browser rerun PASS1/1; full 13-case suite passed on 5174.
-Start: node tools/verify-recovery-server.mjs --reference-jobs --port 5173 --jobs-db .tmp/companion-background-live/jobs.sqlite --worker-status .tmp/companion-background-live/worker.json
-Browser suite defaults5174; set COMPANION_BACKGROUND_URL for another local port.
-Commands and limits: workflows/ugc_reference_implementation_plan.md.
+## Delivery and runtime
+Draft PR: https://github.com/yopiheart/grifon-command/pull/194, stacked on PR193.
+Application source committed/pushed b7de56fb; preview built from 2fe76b87.
+Vercel preview dpl_BSkmNLqDqjEtfTiuGFS6c6vhUuVK READY, target null (preview).
+https://grifon-command-p7o5wkgwg-neilmaglayabusiness22-2085s-projects.vercel.app/app?cloudFixtures=1
+Historical b7de56fb check said Account is blocked; new deployment succeeds.
+Guest mobile 390px boot PASS, no overflow or console warnings/errors.
+Neil unlocked and completed inline email OTP directly on the preview.
+Real signed-in UI list/get/start/reopen/retry/cancel PASS; immutable plans recovered.
+Normal request 76f45e completed revision 10. Tab closed 12:19:29.897 UTC; ticks
+at 12:19:33/38 finished before independent read/reopen. All eight attempts = 1.
+Retry e25d83 completed revision 12, attempts [1,2,1,1,1,1,1,1]. Cancel 9400f8 stays
+cancelled revision 7 across refresh and six later cron runs; no downstream work.
+Independent runtime evidence review PASS. Five stored jobs, all actualCents = 0.
+Signed-in mobile 390px no overflow. Preview retained; no credential values read.
+Evidence .tmp/ugc-cloud-preview-smoke* and .tmp/ugc-cloud-preview-live/.
+Local journal .tmp/companion-background-live/jobs.sqlite preserved across restart.
+UI simulation: http://localhost:5173/companion-chat-preview.html?cloud=1.
+After login, fully navigate to /app?cloudFixtures=1; auth redirects drop the query.
+No auth configuration or app code changed. Production untouched; no paid generation.
+Schema/schedule/reproduction and safe cron deactivation: workflows/ugc_reference_implementation_plan.md.
 
 ## Next action
-PC and worker must remain on for progress. Restart with the same intact journal
-to resume; no automatic worker supervisor or cross-device recovery is claimed.
-Before paid integration: cloud-owned media, authenticated durable workers,
-atomic reservations/submission reconciliation/budget ledger, real research and
-analysis under approved tuned diffs, verified provider/voice contracts and an
-approved exact-input paid pilot. Local demo confirmation grants no spend authority.
-Roadmap: workflows/creative_library_roadmap.md; detailed S0-S6 plan linked above.
-Accepted orbital film/music and existing legacy presets remain untouched.
+Cloud media storage and real-reference preparation are the next implementation slice.
+Before paid production: cloud media, reservations/submission reconciliation/budget
+ledger, verified provider/voice contracts, real reference analysis and exact-input
+approved paid pilot. Local/sample confirmation grants no spend authority.
