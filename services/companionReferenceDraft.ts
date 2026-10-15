@@ -24,6 +24,8 @@ export interface CompanionReferenceDraft {
   referenceVideo: ReferenceMedia | null;
   photos: ReferencePhoto[];
   voice: ReferenceVoice | null;
+  adaptationMode?: 'adapt' | 'close';
+  speechMode?: 'spoken' | 'silent';
 }
 export function createReferenceDraft(): CompanionReferenceDraft {
   return { version: 1, brief: '', brandName: '', productName: '', audience: '', offer: '', callToAction: '', instructions: '', outputLanguage: 'Taglish', referenceLanguage: '', referenceLink: '', referenceVideo: null, photos: [], voice: null };
@@ -89,6 +91,8 @@ export function isReferenceDraft(value: unknown): value is CompanionReferenceDra
   if (!value || typeof value !== 'object') return false;
   const draft = value as CompanionReferenceDraft;
   if (draft.version !== 1 || !['Taglish', 'Tagalog', 'English'].includes(draft.outputLanguage)
+    || (draft.adaptationMode !== undefined && !['adapt', 'close'].includes(draft.adaptationMode))
+    || (draft.speechMode !== undefined && !['spoken', 'silent'].includes(draft.speechMode))
     || !['brief', 'brandName', 'productName', 'audience', 'offer', 'callToAction', 'instructions', 'referenceLanguage', 'referenceLink'].every(key => typeof draft[key as keyof CompanionReferenceDraft] === 'string' && (draft[key as keyof CompanionReferenceDraft] as string).length <= 4000)
     || !Array.isArray(draft.photos) || draft.photos.length > 5
     || !draft.photos.every(photo => validMedia(photo, 'photo') && ['product', 'character', 'clothing'].includes(photo.role))
