@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-16; native receipt saved, media import repair verified locally**
+**Stamped: 2026-10-16; native fixture video delivery verified, final evidence saved**
 
 ## Active task and authorization
 Workspace F:/CodexWorktrees/61f5/grifon-command.
@@ -48,43 +48,43 @@ Forced completion-between-reads race RED then GREEN: bounded pending polling now
 continues for COMPLETE; independent probe reaches READY and halts at120 if stuck.
 Brand fixes: reserved player size/ratio, opaque-ID-only wrapping, truthful footer.
 Independent correctness PASS0findings; contract/React PASS, BRAND_PASS44/50,0nits.
-Final full Vitest1829 PASS/32 existing gated skips,143/152files, exit0 with
+Final full Vitest1830 PASS/32 existing gated skips,144/153files, exit0 with
 --maxWorkers=1 --no-file-parallelism (all cases/timeouts unchanged). Earlier default/
 bounded runs hit existing worker startup timeout and anchor sandbox filesystem/
 5s timeout failures; isolated worker3/3 and anchors9/9 PASS. Cause unproven; serial
 pass does not establish ordinary parallel-run reliability. No skipped/bypassed gates.
 check:codex26 PASS; voice-sync, eval-prompts, domain, anchors, diff PASS.
 Generated drawPlan snapshot noise verified semantically equal to HEAD then restored.
-Evidence .tmp/ugc-fixture-delivery-final/, final-{build,test-serial}.log,
-.tmp/fixture-delivery-correctness-final.json and *-recheck*.log. Review screenshot
-.tmp/ugc-fixture-delivery-review.png. Narrow29 independently passed; race RED/GREEN
-and current-source35 browser cases preserved. No dependencies/tuned files changed.
+Evidence .tmp/ugc-fixture-delivery-final/, final-{build,test-serial}.log, *-recheck*.log
+and .tmp/fixture-delivery-correctness-final.json. No dependencies/tuned files changed.
 SQL reviewed SHA256 8BCDCA650434C163E2C50EFF8AC575152F388CFD668676B3897D0ECC2FB6FF7B.
 Native preapply/postapply evidence .tmp/fixture-delivery-native-activation-*.json.
-Independent hosted audit29 PASS:8 exact function hashes; original data/ACL/cron
+Independent activation audit29 PASS:8 exact function hashes; original data/ACL/cron
 unchanged;0results/no backfill/spend0. WARN3 unchanged, expected private-RLS INFO+1.
 
 ## Existing hosted baseline and preserved work
 GRIFON AI varoqxjccqmskzeejagn, same enrolled owner/private input caps.
-Prior linked source b0f0efde native smoke passed:1 snapshot/6objects/92683bytes/
-6jobs,zero spend. Five post-close ticks captured before reconnection; recovered
-inputs/review survived reload with copied approval cleared. PC not shut down.
 Native request622b97863f8d1d1ed71edf3105180e18edf287ce5a89f011643d6bcebb1bd6db,
 jobfe51a755-3d0c-46f8-81de-b470d96dc2ff, chat4aa4e160-f302-4a26-b444-893db87906e4.
 Closed tab16:13:45Z; READY16:14:06Z with5postclose ticks,8steps once,1start/spend0.
 Independent capture .tmp/fixture-delivery-native-before-reconnect.json; same1snapshot/
 6objects92683bytes,7jobs/1result; original6jobs/events/commands hashes unchanged.
-Never transfer sessions; new origins may need direct inline OTP user handoff.
 
-## Next actions
-Reviewed source b85f4e56bf226a6d0fe609dddfcce0297870731c pushed; all local checks
+## Delivery and remaining work
+Reviewed repair3de16ba65c424154a00f47f09ab90671d5f7b47b pushed; all local checks
 complete. Draft PR197 https://github.com/yopiheart/grifon-command/pull/197 attached,
-stacked on196. Preview dpl_Dk2ZKvSGLywiK133RphPdh8xSyS1 READY at exact b85f4e56:
-https://grifon-command-m8ih9hug6-neilmaglayabusiness22-2085s-projects.vercel.app/app?cloudFixtures=1
-Signed-in tab7 recovered exact READY receipt; media endpoint500 before auth401.
-Native Node RED reproduced ERR_MODULE_NOT_FOUND; seven .js runtime edges fixed in
-4services only. Unmocked Node400/401/405/network0 GREEN;40focused/build/6checks/
-independent review PASS. Full serial1830 PASS/32existing skips; deploy/retest pending.
+stacked on196. Corrected preview dpl_9pMBTv9C6L7uVqAQfbc9NGCkVDhb READY at3de16ba6:
+https://grifon-command-git-f54d50-neilmaglayabusiness22-2085s-projects.vercel.app/app?cloudFixtures=1
+Independent native contract PASS: fresh-origin Assets→chat recovered inputs/review;
+Reference/5photo roles/voice restored; copy approval cleared. Play8s360x640 toend;
+download exactSHA; reload/refresh/cloud details sameID,oneentry/390nooverflow/noalerts.
+Final hosted16checks PASS: immutable receipt/job/timestamps,7jobs/1result/1Start/
+0newCommands/1snapshot/6objects92683bytes/spend0; original6jobs/data unchanged.
+Original deployed500 exposed seven extensionless service imports. Native Node RED
+then .js-only repair GREEN:400/401/405/network0;40focused/build/6checks/review PASS.
+Evidence .tmp/ugc-fixture-delivery-native/, .tmp/fixture-delivery-native-final-audit.json,
+.tmp/fixture-delivery-correctness-esm-repair.json, .tmp/fixture-video-esm-*.log.
+Tab10 stable origin stays signed in; PC shutdown/physical second device not tested.
 Real reference analysis, brand plans, paid generation, real output storage and
 identity/voice quality remain future slices with real assets/approved paid spec.
 Runtime/roadmap: workflows/ugc_reference_implementation_plan.md.
