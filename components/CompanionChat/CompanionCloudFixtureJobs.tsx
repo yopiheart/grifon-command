@@ -9,15 +9,17 @@ import type { QueueScenario } from '../../services/companionReferenceQueue';
 import { cloudReferenceLink, verifyCloudReferenceDraft, type CloudReferenceReceipt } from '../../services/companionCloudReferences';
 import type { CompanionReferenceDraft } from '../../services/companionReferenceDraft';
 import type { ConversationBinding } from './CompanionChatShell';
+import { CompanionFixtureResult } from './CompanionFixtureResult';
 
 const control = 'min-h-11 min-w-11 !rounded-xl !text-sm !font-semibold !normal-case !tracking-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFCC00] disabled:opacity-50 disabled:cursor-not-allowed';
 const ghost = `${control} !bg-zinc-950 border border-white/10 !text-zinc-400 hover:!text-white hover:!border-[#FFCC00]`;
 const money = (cents: number) => `PHP ${(cents / 100).toFixed(2)}`;
 const active = (job: CloudFixtureSnapshot) => !job.queue.invalidated && !['complete', 'cancelled'].includes(job.queue.status);
 
-export function CompanionCloudFixtureJobs({ userId, conversation, client, onBack, onOpenInputs }: {
+export function CompanionCloudFixtureJobs({ userId, conversation, client, onBack, onOpenInputs, onOpenChat }: {
   userId: string; conversation: ConversationBinding; client: CloudFixtureClient; onBack: () => void;
   onOpenInputs: (draft: CompanionReferenceDraft, sourceLocalChatId: string, receipt: CloudReferenceReceipt, job: FixtureJobIntent) => Promise<void>;
+  onOpenChat?: (intent: FixtureJobIntent, isCurrent: () => boolean) => Promise<void>;
 }) {
   const [jobs, setJobs] = useState<CloudFixtureSnapshot[]>([]);
   const [selected, setSelected] = useState<CloudFixtureSnapshot | null>(null);
@@ -148,7 +150,7 @@ export function CompanionCloudFixtureJobs({ userId, conversation, client, onBack
         <GlassPanel className="space-y-4 p-4 sm:p-5">
           <h1 className="flex items-center gap-3 !text-lg !font-semibold !normal-case !tracking-normal"><Cloud className="h-5 w-5 shrink-0 text-[#FFCC00]" />Cloud fixture jobs</h1>
           <p className="text-sm leading-relaxed text-zinc-300">{client.simulation ? 'Cloud fixture simulation. This preview uses a test service; it does not prove an activated cloud worker.' : 'Accepted fixture jobs run in the cloud while your PC is off. Sign in to the same account on another device to reopen the same job here.'}</p>
-          <p className="text-sm leading-relaxed text-zinc-400">New jobs freeze the approved sample plan and exact private cloud input snapshot. These fixtures simulate steps and create no clips, voice, music, finished video or Assets entry. Review edits stay on this device until Start is accepted.</p>
+          <p className="text-sm leading-relaxed text-zinc-400">New linked jobs freeze the approved sample plan and exact private cloud input snapshot. A generic sample video becomes available in chat and Grifon Assets when the fixture completes. It is not generated from your inputs. Review edits stay on this device until Start is accepted.</p>
           <p className="text-sm font-semibold text-[#FFCC00]">Actual spend: PHP 0.00. No spending is authorized.</p>
           {busy && <p role="status" className="text-sm leading-relaxed text-zinc-300">Checking your cloud request…</p>}
           {(commandError || error) && <p role="alert" className="flex items-start gap-2 break-words text-sm leading-relaxed text-amber-500"><AlertTriangle aria-hidden className="mt-0.5 h-4 w-4 shrink-0" /><span className="min-w-0">{commandError || error} {selected ? 'The last confirmed cloud status is shown.' : 'No cloud progress is confirmed.'}</span></p>}
@@ -171,6 +173,7 @@ export function CompanionCloudFixtureJobs({ userId, conversation, client, onBack
           {checked && !jobs.length && <p className="text-sm text-zinc-300">No cloud fixture jobs found.</p>}
           {jobs.map(job => <Button key={job.intent.requestId} variant="ghost" aria-label={`Open cloud fixture job: ${job.intent.requestId}`} aria-pressed={selected?.intent.requestId === job.intent.requestId} disabled={busy} className={`${ghost} w-full !text-left ${selected?.intent.requestId === job.intent.requestId ? '!text-[#FFCC00] border-[#FFCC00]/50' : ''}`} onClick={() => open(job)}><span className="block break-words">{job.intent.plan.direction}</span><span className="mt-1 block break-all text-xs font-normal text-zinc-400">Original chat {job.intent.ownerChatId} · {job.queue.status} · Revision {job.queue.revision}</span></Button>)}
         </GlassPanel>
+        {selected && conversation.fixtureResultClient && conversation.loadFixtureVideo && <CompanionFixtureResult key={`${userId}:${conversation.chat.id}:${selected.intent.requestId}`} userId={userId} chatId={conversation.chat.id} intent={selected.intent} client={conversation.fixtureResultClient} cloudClient={client} observedJobStatus={selected.queue.invalidated ? 'invalidated' : selected.queue.status} loadVideo={conversation.loadFixtureVideo} onViewAssets={conversation.viewFixtureInAssets} onOpenChat={onOpenChat} />}
         {selected && queue && plan && <GlassPanel className="space-y-4 p-4 sm:p-5" aria-label="Cloud fixture job details">
           <h2 data-testid="cloud-fixture-status" role="status" className="!text-base !font-semibold !normal-case !tracking-normal">{status}</h2>
           <details><summary className="min-h-11 cursor-pointer py-3 text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFCC00]">Fixture details</summary><div className="space-y-2 text-xs leading-relaxed text-zinc-400">
@@ -193,7 +196,7 @@ export function CompanionCloudFixtureJobs({ userId, conversation, client, onBack
           })}</ol>
           {queue.status === 'failed' && !queue.invalidated && <GoldButton className={`${control} w-full`} disabled={busy} onClick={() => void command('retry')}>Retry failed cloud step</GoldButton>}
           {active(selected) && <Button variant="ghost" className={`${ghost} w-full`} disabled={busy} onClick={() => void command('cancel')}>Cancel cloud fixture job</Button>}
-          {queue.status === 'complete' && <p className="text-sm leading-relaxed text-zinc-300">All simulated steps passed. There is no rendered video to play or download.</p>}
+          {queue.status === 'complete' && <p className="text-sm leading-relaxed text-zinc-300">All simulated steps passed. This job did not generate an ad.</p>}
         </GlassPanel>}
       </div>
     </div>

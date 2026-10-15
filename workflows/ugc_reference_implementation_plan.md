@@ -287,6 +287,35 @@ npx.cmd vitest run tests/unit/companionLinkedCloudFlow.test.ts tests/unit/compan
 npm.cmd run test:e2e -- --config tests/e2e/companion-cloud-workflow.config.ts
 ```
 
+### Fixture video delivery and Grifon Assets
+
+The next fixture slice gives NEW linked jobs a private, durable result receipt at
+acceptance. Existing cloud-worker completion atomically makes that same receipt
+READY. Failed/cancelled jobs have no ready asset; historical jobs are not backfilled.
+The receipt binds the original job, reviewed plan and cloud input snapshot. It
+does not grant generation or spending authority. READY records remain historical
+outputs after later edits, and reopening inputs still clears the copy's approval.
+
+Chat, cloud job details and the new read-only Grifon Assets view use the same
+request/version identity. Assets also reads the existing private video library.
+Opening, refreshing, playing and downloading do not write results or start jobs.
+Pending and unavailable media have explicit states, without substituting an older
+result. Reads remain bounded and recover when completion occurs between status
+reads; account/chat changes discard late responses.
+
+The playable output is a generic silent eight-second sample, explicitly NOT an ad
+generated from user inputs. Its immutable v1 bytes ship server-side and are served
+only after current-user JWT and READY-receipt checks. No signed URLs are persisted;
+client MIME/size/SHA checks precede temporary object URLs. This fixture path adds
+no per-user media upload, object-store cleanup exception, provider or scheduler.
+Retain shipped versions while saved receipts reference them. Real generated video
+storage, voice/music and creative quality remain separate future work.
+
+Reviewed activation requires `supabase/companion_cloud_fixture_results.sql` after
+the linked-input migration. Local SQL/browser fixtures are evidence for this
+build; hosted activation and signed-in chat/Assets playback need separate native
+evidence recorded in NOW.md. No paid generation is authorized.
+
 ### Existing local intake and review checks
 
 For a free fixture check, start the existing isolated frontend server in one

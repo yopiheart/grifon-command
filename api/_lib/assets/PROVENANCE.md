@@ -5,6 +5,15 @@ All files below are from **Pixabay** under the **Pixabay Content License**
 part of a larger work — i.e. muxed into rendered video ads). Source: pixabay.com.
 Added 2026-06-08.
 
+## fixtures/ (playback sample, separate from the audio assets below)
+
+`companion-video-v1.mp4` is an original silent test animation built locally with
+the pinned FFmpeg executable and the existing Inter font by
+`tools/create-companion-fixture-video.mjs` on 2026-10-15. It contains no user inputs,
+third-party footage, generated speech or music. Its immutable size/hash contract
+lives in `services/companionFixtureVideo.ts`. Retain this version while saved
+fixture result receipts reference it; new sample bytes require a new version.
+
 ## sfx/ (10)
 | File | Pixabay track | Page |
 |------|---------------|------|
