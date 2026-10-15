@@ -1,4 +1,4 @@
-import { isReferenceReview, type ReferenceReview } from './companionReferenceReview';
+import { isReferenceReview, type ReferenceReview } from './companionReferenceReview.js';
 
 export type QueueScenario = 'normal' | 'second-clip-fails-once';
 export type QueueAction = 'start' | 'pause' | 'resume' | 'tick' | 'retry' | 'cancel';

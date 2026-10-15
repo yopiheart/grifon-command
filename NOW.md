@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-16; fixture video migration active, preview READY, sign-in pending**
+**Stamped: 2026-10-16; native receipt saved, media import repair verified locally**
 
 ## Active task and authorization
 Workspace F:/CodexWorktrees/61f5/grifon-command.
@@ -69,20 +69,22 @@ GRIFON AI varoqxjccqmskzeejagn, same enrolled owner/private input caps.
 Prior linked source b0f0efde native smoke passed:1 snapshot/6objects/92683bytes/
 6jobs,zero spend. Five post-close ticks captured before reconnection; recovered
 inputs/review survived reload with copied approval cleared. PC not shut down.
-Evidence .tmp/linked-correctness-native*. Input snapshot reuse verified.
-Existing tested linked preview (preserve legitimate sign-in):
-https://grifon-command-9q5uq05ud-neilmaglayabusiness22-2085s-projects.vercel.app/app?cloudFixtures=1
-User ambient prior input preview:
-https://grifon-command-408r86bmf-neilmaglayabusiness22-2085s-projects.vercel.app/app?cloudFixtures=1
+Native request622b97863f8d1d1ed71edf3105180e18edf287ce5a89f011643d6bcebb1bd6db,
+jobfe51a755-3d0c-46f8-81de-b470d96dc2ff, chat4aa4e160-f302-4a26-b444-893db87906e4.
+Closed tab16:13:45Z; READY16:14:06Z with5postclose ticks,8steps once,1start/spend0.
+Independent capture .tmp/fixture-delivery-native-before-reconnect.json; same1snapshot/
+6objects92683bytes,7jobs/1result; original6jobs/events/commands hashes unchanged.
 Never transfer sessions; new origins may need direct inline OTP user handoff.
-Physical second device/native cleared-browser recovery remain unverified.
 
 ## Next actions
 Reviewed source b85f4e56bf226a6d0fe609dddfcce0297870731c pushed; all local checks
 complete. Draft PR197 https://github.com/yopiheart/grifon-command/pull/197 attached,
 stacked on196. Preview dpl_Dk2ZKvSGLywiK133RphPdh8xSyS1 READY at exact b85f4e56:
 https://grifon-command-m8ih9hug6-neilmaglayabusiness22-2085s-projects.vercel.app/app?cloudFixtures=1
-Tab6 awaiting user unlock/email inline OTP; native chat/Assets delivery not yet tested.
+Signed-in tab7 recovered exact READY receipt; media endpoint500 before auth401.
+Native Node RED reproduced ERR_MODULE_NOT_FOUND; seven .js runtime edges fixed in
+4services only. Unmocked Node400/401/405/network0 GREEN;40focused/build/6checks/
+independent review PASS. Full serial1830 PASS/32existing skips; deploy/retest pending.
 Real reference analysis, brand plans, paid generation, real output storage and
 identity/voice quality remain future slices with real assets/approved paid spec.
 Runtime/roadmap: workflows/ugc_reference_implementation_plan.md.

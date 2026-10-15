@@ -1,7 +1,7 @@
-import { getSupabase } from './supabaseClient';
-import { verifyFixtureJobIntent, type FixtureJobIntent } from './companionFixtureJobs';
+import { getSupabase } from './supabaseClient.js';
+import { verifyFixtureJobIntent, type FixtureJobIntent } from './companionFixtureJobs.js';
 import type { CloudFixtureRpc } from './companionCloudFixtures';
-import { FIXTURE_VIDEO_MANIFEST } from './companionFixtureVideo';
+import { FIXTURE_VIDEO_MANIFEST } from './companionFixtureVideo.js';
 
 export interface CloudFixtureResultReceipt {
   version: 1;
