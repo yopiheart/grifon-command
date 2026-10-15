@@ -5,18 +5,40 @@ Implementation proposal dated October 14, 2026. Product decisions are recorded i
 change application behavior or approve tuned diffs, paid tests or deployment.
 Current work status belongs in [NOW.md](../NOW.md).
 
-## First build boundary and free fixture check
+## Local intake and sample review boundary
 
 The first S0 slice saves an account-scoped brief, an uploaded reference video,
 up to five role-labelled photos and one selected saved voice in this browser's
 IndexedDB. It reopens the original files and selection. Reference language is
 independent of output language. An optional reference link is retained as text;
 it is not fetched or analyzed. Cloud storage, cross-device recovery, voice upload,
-reference analysis, planning and generation remain later slices.
+reference analysis, real planning and generation remain later slices.
 
 Enter **Reference brief** from a fresh Companion chat. Existing started briefs
 and production runs keep their current flow. Clearing browser data removes these
 local drafts and files, so users must retain their originals.
+
+**Prepare sample plan** opens the fixture review: editable direction, English
+sample speech, consecutive scene timing, visual descriptions, one-voice/audio
+assumptions and an illustrative PHP cost breakdown. Target language remains
+separate; the sample has not been localized or adapted by a model. Adapt for brand
+and Match closely record intent only. No supplied reference or photo is analyzed.
+No-voiceover samples omit speech and its illustrative audio charge.
+
+The sample estimate uses invented test amounts, not provider rates. It shows
+contingency and a maximum demo cap; optional amount edits test validation. Actual
+spend is zero. Changing timing/content does not automatically reprice the sample.
+**Confirm sample plan** records a device-local demo confirmation, not authorization
+to charge or generate. It binds the review revision, input revision, media content
+hashes and estimate. Editing the brief/assets/voice makes the prior review stale;
+editing plan text/timing/cost clears confirmation. Changing an input back does not
+restore confirmation. Previous content stays visible until explicitly replaced.
+
+The review, partial edits and confirmation reopen with the draft. This is the UI
+portion of S1; server-owned approval, real quotes, paid execution and cross-device
+integrity remain future work. Local records are not authenticated spending tokens.
+
+## Free fixture checks
 
 For a free fixture check, start the existing isolated frontend server in one
 terminal; it loads no environment files or live API middleware:
@@ -29,6 +51,7 @@ Then run in another terminal:
 
 ```powershell
 npm.cmd run test:e2e -- --config tests/e2e/companion-reference.config.ts
+npm.cmd run test:e2e -- --config tests/e2e/companion-reference-review.config.ts
 ```
 
 The test uses simulated saved voices and local media at

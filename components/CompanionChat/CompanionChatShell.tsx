@@ -9,7 +9,7 @@ import './companionChat.css';
 
 export interface ConversationBinding {
   chat: CompanionConversation;
-  update: (patch: Partial<Pick<CompanionConversation, 'draft' | 'composer' | 'runId' | 'referenceDraft'>>) => void;
+  update: (patch: Partial<Pick<CompanionConversation, 'draft' | 'composer' | 'runId' | 'referenceDraft' | 'referenceReview'>>) => void;
   saved: boolean;
   saving: boolean;
   saveConflict: boolean;
@@ -142,7 +142,7 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
       let next = await saveConversationCopy(userId, selected);
       if (!mounted.current) return;
       const pending = current.current.chats.find(item => item.id === latest.selectedId)!;
-      if (pending !== selected) next = updateConversation(next, next.selectedId, { draft: pending.draft, composer: pending.composer, runId: pending.runId, referenceDraft: pending.referenceDraft });
+      if (pending !== selected) next = { ...next, chats: next.chats.map(chat => chat.id === next.selectedId ? { ...chat, draft: pending.draft, composer: pending.composer, runId: pending.runId, referenceDraft: pending.referenceDraft, referenceReview: pending.referenceReview, referenceInputRevision: pending.referenceInputRevision } : chat) };
       revision.current = next.revision ?? 0; current.current = next; setBook(next);
       if (pending !== selected) await persist(next);
       setSaveConflict(false); setSaved(true); setNavigationError('');

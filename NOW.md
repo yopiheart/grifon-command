@@ -1,76 +1,81 @@
 # NOW - the resume doc
-**Stamped: 2026-10-15; first reference UGC draft built with free fixtures**
+**Stamped: 2026-10-15; fixture direction/script/visual-plan/cost review built**
 
 ## Active task and boundary
 Checkout: F:/CodexWorktrees/61f5/grifon-command.
-Branch: codex/ugc-reference-draft; base codex/creative-library-ugc-plan at 26411270.
-Neil authorized the first build using test fixtures: save/reopen brief, photos,
-reference and selected voice, with no paid generation. Scope is the same-device
-part of S0, explicitly disclosed in the UI. This does not complete cloud S0.
-No prompt/model/provider changes, paid calls, production data edits or deployment.
+Branch: codex/ugc-reference-review; base codex/ugc-reference-draft at 0145bcfd.
+Neil authorized the next build while gathering assets: review direction, script,
+visual plan and estimated cost with fixtures only; no paid generation.
+This is the local UI portion of S1, layered on the local S0 draft. No real planner,
+provider/model/prompt changes, paid calls, production data changes or deployment.
 
 ## Implemented
-- Fresh Companion chats offer Reference brief; started legacy chats/runs retain
-  their current flow. Saved reference drafts reopen in the new form.
-- Optional versioned referenceDraft on CompanionConversation holds brief/brand/
-  audience/offer/CTA/instructions, reference language and output language.
-- One local video (100 MB, up to 3 minutes) and up to five role-labelled photos
-  (10 MB each), decoded locally and retained as Blobs in account-scoped IndexedDB.
-  Object URLs are temporary previews, not persisted file identities.
-- Optional HTTPS link saved as text, never fetched or analyzed. Reference
-  language can differ from output language; Taglish is the draft default.
-- One curated/private saved voice selection. Missing/offline voice lists retain
-  the selected ID/name. Production uses existing read-only voice listing;
-  fixture tests inject simulated voices. No cloning, speech or video generation.
-- Existing save/revision/conflict-copy flow preserves media and voice; queued
-  superseded writes coalesce. Pending media blocks navigation and warns on unload.
-- Same browser/device only. Clearing browser data removes drafts/files; users
-  must keep originals. Account scoping is not cross-device cloud storage.
+- Reference brief -> Prepare sample plan -> editable sample review -> local demo
+  confirmation. Saved reviews reopen, with an Edit brief path that retains them.
+- Direction, three timed scenes with English sample speech/visual descriptions,
+  requested output language/adaptation mode, selected voice and audio assumptions.
+- Compact illustrative PHP cost ranges and contingency/cap. Optional Edit demo
+  estimate controls exercise invalid amounts and confirmation invalidation.
+  These are invented test amounts, not provider quotes. Actual spend is zero.
+- No-voiceover mode omits speech and the illustrative spoken-audio charge.
+- Input snapshots hash media bytes; monotonic input revisions and plan revisions
+  bind the demo confirmation to its inputs, plan and quote. Any input edit stales
+  the old review; plan/cost edits clear confirmation. Edit-and-revert cannot revive it.
+- Old review content remains until explicitly replaced with an updated sample.
+  Pending hashing is guarded by chat/account/input scope and navigation protection.
+- Conflict copies retain review/revision. Failed writes cannot show a saved
+  confirmation. Partial invalid edits persist; validation blocks confirmation.
+- Local records do not authorize spend or jobs. Reopen validates stored structure,
+  revision and receipt; confirmation recomputes media hashes. Local database contents
+  are not authenticated against manual rewriting. Server authority is future work.
+- Existing same-browser/device S0 storage remains: one reference video, up to five
+  photos and one selected voice. Clearing browser data removes drafts and files.
+  Reference links are text only. No real media interpretation/localization occurred.
 
 ## Verification and review
-Final build PASS; full Vitest PASS: 1,621 passed, 32 existing gated skips.
-Focused local-domain tests PASS: 7/7. Reference browser suite PASS: 8/8.
-Negative baseline: same 375px contract fails against the original HEAD surface
-because Reference brief is absent; same current-source test passes.
-Legacy Companion chat/continuity regression PASS: 24/24, fixture-backed.
+Build PASS; final full Vitest PASS: 1,627 passed, 32 existing gated skips.
+Focused domain suite PASS: 13/13. New review browser suite PASS: 5/5.
+Existing Companion chat/continuity/reference browser regression PASS: 32/32.
+New domain verifier failed before the implementation module existed with the test
+runner installed, then passed after implementation. No claim of live-media quality.
 Bundle-leak, voice-sync, eval-prompts, domain, PS1 ASCII, artifact anchors PASS.
-Independent adversarial review found pending-decode navigation loss; fixed and
-re-reviewed with no remaining actionable correctness findings.
-Independent smoke PASS at 375x667 and 1280x900, including voice-list outage,
-media reload, keyboard upload, 44px targets and no generation/API calls.
-Brand PASS_WITH_NITS, 41/50, zero critical; nonblocking caution-icon styling nit.
-Evidence is local-only under .tmp/reference-critic/, .tmp/companion-reference-*,
-.tmp/reference-baseline-results/ and .tmp/ugc-reference-*. No secrets in artifacts.
+Independent correctness/React review PASS with no actionable findings.
+Independent smoke passed desktop/mobile, including actual attachment replacement
+staling a confirmed review, account isolation, conflict/save failures and no calls.
+Brand PASS_WITH_NITS: 42/50, zero critical. Nonblocking regular-prose icon sizing nit.
+Local evidence: .tmp/review-plan-critic/, .tmp/companion-reference-review-results/,
+.tmp/ugc-review-build.log, ugc-review-test.log and ugc-review-regression.log.
+Evidence is local-only, not a shared PR artifact.
 
 ## Delivery and reproduction
-Planning draft PR: https://github.com/yopiheart/grifon-command/pull/188.
-Implementation draft PR: https://github.com/yopiheart/grifon-command/pull/190.
-Implementation PR stacks on the planning branch; do not merge/deploy without Neil.
-Remote Vercel preview check reports "Account is blocked." No hosted preview;
-local verification passes. No GitHub Actions run listed for the stacked branch
-at delivery. Recheck CI before any eventual merge; no gates were disabled.
-Free fixture commands and limits are documented in
-workflows/ugc_reference_implementation_plan.md, First build boundary section.
-Fixture URL: http://localhost:5173/companion-chat-preview.html.
-Safe server: node tools/verify-recovery-server.mjs (no environment-file loading or
-live API middleware). New config: tests/e2e/companion-reference.config.ts.
-Missing checkout dependencies were installed with npm.cmd ci; lockfile unchanged.
-Do not repeat setup unless a needed dependency is missing.
+Planning PR: https://github.com/yopiheart/grifon-command/pull/188.
+First draft PR: https://github.com/yopiheart/grifon-command/pull/190.
+Review-build draft PR lookup:
+gh pr view codex/ugc-reference-review --repo yopiheart/grifon-command
+Review PR stacks on codex/ugc-reference-draft. Do not merge/deploy without Neil.
+Previous branch's Vercel automatic preview reported Account is blocked. Recheck
+remote checks on this branch; no gates were disabled and no manual deployment ran.
+Reuse the safe fixture server on localhost:5173 (parent session91045 while alive).
+URL: http://localhost:5173/companion-chat-preview.html.
+Safe start: node tools/verify-recovery-server.mjs; no.env or live API middleware.
+New suite: npm.cmd run test:e2e -- --config tests/e2e/companion-reference-review.config.ts
+Commands and limitations: workflows/ugc_reference_implementation_plan.md.
+Dependencies already installed; no setup/secret restoration needed for fixtures.
 
 ## Next action
-Neil is gathering three UGC references and real brand assets. Accept references
-in any language; later planning adapts brand messaging and checks dialogue timing.
-Remaining S0: cloud-owned assets and cross-device persistence, reference analysis/
-Recipe selection, voice-upload workflow. S1 adds direction/script/visual-plan/cost
-review using a fake planner before any paid pilot. Exact tuned diffs and paid
-test spec inputs, pass/fail criteria and maximum cost still require approval.
-Roadmap: workflows/creative_library_roadmap.md. Full S0-S6 plan:
+Neil supplies three UGC references and real brand assets; references may be any
+language. The fixture demonstrates review mechanics, not creative output quality.
+Remaining: cloud-owned media/cross-device drafts, real reference analysis/Recipe
+selection and brand research, approved planner/model diffs, verified rate quotation,
+server-owned approvals/budget ledger and durable jobs before any paid execution.
+Voice upload/consent and real voice compatibility also remain. No prior paid budget
+or demo confirmation is authorization for those operations.
+Roadmap: workflows/creative_library_roadmap.md. S0-S6 implementation plan:
 workflows/ugc_reference_implementation_plan.md. Old presets/accepted work intact.
 
 ## Preserved prior delivery
-PR184 CI and PR186 recovery fixes are in the base; PR188 saves the larger roadmap.
-Known recovery limits: workflows/recovery-feature-map.md. Existing checkpoints
-are not a provider-spend cap or a durable background execution system.
+PR184 CI and PR186 recovery fixes are in the base. Recovery limitations remain in
+workflows/recovery-feature-map.md; existing checkpoints are not a provider-spend cap.
 Accepted film: workflows/assets/grifon-orbital-music-v2_5/grifon-orbital-launch-music-v2_5-v2.mp4.
 SHA256 4040ba1763aeb415b8d79a3b9d914959149b11fc89eed52489652da0e69d6405.
-Accepted film, score and picture sources untouched. Prior paid approvals consumed.
+Accepted film/score/picture sources untouched; prior paid approvals consumed.
