@@ -41,6 +41,7 @@ Playwright newcloud17 + existingchat/intake/review/queue54 + localbackground13 P
 84 total, zero skips/flakes/provider/API calls/page errors. Mobile375/390/1280.
 Independent smoke PASS; BRAND_PASS43/50 zero findings,200% icon crops inspected.
 Independent final correctness/whole-validator parity review PASS, no open findings.
+Independent hosted runtime evidence/production decoder recheck PASS.
 Bundle-leak, voice-sync, eval-prompts, domain, PS1 ASCII, artifact anchors PASS.
 Goal REDs: missing entry/module; duplicate identity/pretty-reordered plan/duplicate
 keys and Unicode overflow/blank text. Same regressions passed after fixes.
@@ -61,7 +62,9 @@ Generated QA PNGs restored; continuity outputs moved under ignored.tmp; snapshot
 line-ending noise restored. No accepted media changes or paid/live flags.
 
 ## Delivery and runtime
-New draft PR/commit pending final backup; stacks on PR193, no merge/deploy requested.
+Draft PR: https://github.com/yopiheart/grifon-command/pull/194, stacked on PR193.
+Application source committed/pushed b7de56fb. No merge/frontend deployment requested.
+Remote Vercel check on b7de56fb failed: Account is blocked. No Actions runs listed.
 Current safe host session1573, host16456, worker19636 while alive atlocalhost5173.
 Local journal .tmp/companion-background-live/jobs.sqlite preserved across restart.
 UI simulation: http://localhost:5173/companion-chat-preview.html?cloud=1.
@@ -72,8 +75,7 @@ Schema/schedule/reproduction: workflows/ugc_reference_implementation_plan.md.
 Cron deactivation command preserves jobs and appears in its activation SQL file.
 
 ## Next action
-Finish GitHub backup/draft PR attachment and actual remote check status.
-Then authenticated frontend rollout/real JWT smoke after hosting is unblocked.
+Authenticated frontend rollout/real JWT smoke after hosting is unblocked.
 Before paid production: cloud media, reservations/submission reconciliation/budget
 ledger, verified provider/voice contracts, real reference analysis and exact-input
 approved paid pilot. Local/sample confirmation grants no spend authority.
