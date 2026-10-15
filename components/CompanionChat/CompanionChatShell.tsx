@@ -9,7 +9,7 @@ import './companionChat.css';
 
 export interface ConversationBinding {
   chat: CompanionConversation;
-  update: (patch: Partial<Pick<CompanionConversation, 'draft' | 'composer' | 'runId'>>) => void;
+  update: (patch: Partial<Pick<CompanionConversation, 'draft' | 'composer' | 'runId' | 'referenceDraft'>>) => void;
   saved: boolean;
   saving: boolean;
   saveConflict: boolean;
@@ -19,6 +19,7 @@ export interface ConversationBinding {
   newChat: () => void;
   presentAvatar: (chatId: string, presentation: CompanionAvatarPresentation) => void;
   leave: (action: () => void | Promise<void>) => Promise<void>;
+  setMediaPreparing: (preparing: boolean) => void;
 }
 interface Props {
   userId: string;
@@ -45,6 +46,9 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
   const mounted = useRef(true);
   const [saved, setSaved] = useState(true);
   const [saving, setSaving] = useState(true);
+  const [mediaPreparing, setPreparingState] = useState(false);
+  const preparing = useRef(false);
+  const setMediaPreparing = useCallback((value: boolean) => { preparing.current = value; setPreparingState(value); }, []);
   const [saveConflict, setSaveConflict] = useState(false);
   const [loadError, setLoadError] = useState(false);
   const [attempt, setAttempt] = useState(0);
@@ -70,6 +74,8 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
   const persist = useCallback((next: CompanionConversations) => {
     setSaving(true);
     const task = writes.current.catch(() => {}).then(async () => {
+      // Coalesce superseded edits before cloning the book's local media into IndexedDB.
+      if (current.current !== next && current.current?.userId === next.userId) return;
       revision.current = await saveConversations({ ...next, revision: revision.current });
     });
     writes.current = task;
@@ -94,11 +100,11 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
     return () => { alive = false; mounted.current = false; };
   }, [userId, attempt, persist]);
   useEffect(() => {
-    if (saved && !saving) return;
+    if (saved && !saving && !mediaPreparing) return;
     const warn = (event: BeforeUnloadEvent) => { event.preventDefault(); event.returnValue = ''; };
     window.addEventListener('beforeunload', warn);
     return () => window.removeEventListener('beforeunload', warn);
-  }, [saved, saving]);
+  }, [saved, saving, mediaPreparing]);
   useLayoutEffect(() => {
     if (!mobileOpen) return;
     const previous = document.activeElement as HTMLElement | null;
@@ -136,7 +142,7 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
       let next = await saveConversationCopy(userId, selected);
       if (!mounted.current) return;
       const pending = current.current.chats.find(item => item.id === latest.selectedId)!;
-      if (pending !== selected) next = updateConversation(next, next.selectedId, { draft: pending.draft, composer: pending.composer, runId: pending.runId });
+      if (pending !== selected) next = updateConversation(next, next.selectedId, { draft: pending.draft, composer: pending.composer, runId: pending.runId, referenceDraft: pending.referenceDraft });
       revision.current = next.revision ?? 0; current.current = next; setBook(next);
       if (pending !== selected) await persist(next);
       setSaveConflict(false); setSaved(true); setNavigationError('');
@@ -145,6 +151,10 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
   };
   const leave = useCallback(async (action: () => void | Promise<void>) => {
     if (!current.current || navigating.current) throw new Error('Chat navigation is busy.');
+    if (preparing.current) {
+      setNavigationError('Wait for the selected media to finish checking and saving before leaving this chat.');
+      throw new Error('Wait for the selected media to finish checking and saving.');
+    }
     navigating.current = true;
     setNavigationError('');
     const wasInert = main.current?.hasAttribute('inert');
@@ -175,7 +185,7 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
   const restoreSettingsFocus = useCallback(() => settingsTrigger.current?.isConnected ? settingsTrigger.current : main.current?.querySelector<HTMLElement>('button[aria-label="Open conversations"]') ?? null, []);
   if (!book) return <div className="flex h-dvh flex-col items-center justify-center gap-4 bg-zinc-950 px-6 text-sm text-white"><p role={loadError ? 'alert' : 'status'}>{loadError ? 'Saved chats could not be opened. Your saved data has been kept.' : 'Opening your chats…'}</p>{loadError && <><Button className={button} onClick={() => setAttempt(value => value + 1)}>Retry saved chats</Button><Button variant="ghost" className={button} onClick={onStudio}>Studio</Button></>}</div>;
   const chat = book.chats.find(item => item.id === book.selectedId)!;
-  const title = (item: CompanionConversation) => item.draft.productName || item.draft.brandName || item.draft.brief || 'New chat';
+  const title = (item: CompanionConversation) => item.referenceDraft ? item.referenceDraft.productName || item.referenceDraft.brandName || item.referenceDraft.brief || 'Reference brief' : item.draft.productName || item.draft.brandName || item.draft.brief || 'New chat';
   const navigation = <>
     <div className="flex items-center justify-between px-2 py-2"><span className="px-2 text-sm font-semibold">Chats</span><Button variant="ghost" className={`${button} !p-3`} aria-label={mobileOpen ? 'Close conversations' : 'Collapse conversations'} onClick={() => mobileOpen ? setMobileOpen(false) : setCollapsed(true)}>{mobileOpen ? <X className="h-4 w-4" /> : <PanelLeftClose className="h-4 w-4" />}</Button></div>
     <Button variant="ghost" className={`${button} mx-2 flex items-center justify-start gap-3 !px-3`} onClick={() => void navigate()}><Plus className="h-5 w-5 shrink-0" />New chat</Button>
@@ -187,7 +197,7 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
     {!collapsed && <aside className="hidden w-60 shrink-0 flex-col border-r border-white/10 bg-zinc-900/40 md:flex">{navigation}</aside>}
     {collapsed && <aside className="hidden w-14 shrink-0 flex-col items-center border-r border-white/10 pt-3 md:flex"><Button variant="ghost" className={`${button} !p-3`} aria-label="Open conversations" onClick={() => setCollapsed(false)}><PanelLeft className="h-4 w-4" /></Button><Button variant="ghost" className={`${button} !p-3`} aria-label="New chat" onClick={() => void navigate()}><Plus className="h-4 w-4" /></Button><Button variant="ghost" className={`${button} mt-auto mb-3 !p-3`} aria-label="Account settings" onClick={event => openSettings(event.currentTarget)}><Settings className="h-4 w-4" /></Button></aside>}
     {mobileOpen && <div className="fixed inset-0 z-50 bg-zinc-950/80 md:hidden" onClick={() => setMobileOpen(false)}><aside ref={drawer} role="dialog" aria-modal="true" aria-label="Chat navigation" className="flex h-full w-[min(320px,85vw)] flex-col border-r border-white/10 bg-zinc-900" onClick={event => event.stopPropagation()}>{navigation}</aside></div>}
-    <div ref={main} className="relative min-h-0 min-w-0 flex-1">{children({ chat, update: patch => update(chat.id, patch), saved, saving, saveConflict, recoverCopy: () => void recoverCopy(), retrySave: () => { if (current.current) void persist(current.current); }, openNavigation: () => { setMobileOpen(true); setCollapsed(false); }, newChat: () => void navigate(), presentAvatar, leave })}<CompanionAvatarLayer presentation={avatar} />{navigationError && collapsed && <p role="alert" className="absolute bottom-4 left-4 right-4 z-30 rounded-xl bg-zinc-900 p-3 text-sm text-zinc-300">{navigationError}</p>}</div>
+    <div ref={main} className="relative min-h-0 min-w-0 flex-1">{children({ chat, update: patch => update(chat.id, patch), saved, saving, saveConflict, recoverCopy: () => void recoverCopy(), retrySave: () => { if (current.current) void persist(current.current); }, openNavigation: () => { setMobileOpen(true); setCollapsed(false); }, newChat: () => void navigate(), presentAvatar, leave, setMediaPreparing })}<CompanionAvatarLayer presentation={avatar} />{navigationError && collapsed && <p role="alert" className="absolute bottom-4 left-4 right-4 z-30 rounded-xl bg-zinc-900 p-3 text-sm text-zinc-300">{navigationError}</p>}</div>
     <SettingsModal open={settingsOpen} onClose={() => setSettingsOpen(false)} userEmail={userEmail} userName={userName} plan={plan} planLoading={planLoading} planError={planError} onRetryPlan={onRetryPlan} preview={preview} restoreFocus={restoreSettingsFocus}
       onLogout={onLogout ? () => leave(onLogout) : undefined} onUpgrade={onUpgrade ? () => leave(onUpgrade) : undefined} onNavigate={href => leave(() => onNavigate ? onNavigate(href) : window.location.assign(href))} />
   </div>;

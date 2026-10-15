@@ -1,4 +1,5 @@
 import { createCompanionDraft, loadCompanionDraft, type CompanionDraft } from './companionIntake';
+import { isReferenceDraft, type CompanionReferenceDraft } from './companionReferenceDraft';
 
 export interface CompanionConversation {
   id: string;
@@ -6,6 +7,7 @@ export interface CompanionConversation {
   composer: string;
   runId: string | null;
   updatedAt: number;
+  referenceDraft?: CompanionReferenceDraft;
 }
 export interface CompanionConversations {
   version: 1;
@@ -22,7 +24,7 @@ export function adoptConversations(userId: string, draft: CompanionDraft | null,
   const chat = createConversation(draft ?? createCompanionDraft(), runId);
   return { version: 1, userId, selectedId: chat.id, chats: [chat] };
 }
-export function updateConversation(book: CompanionConversations, id: string, patch: Partial<Pick<CompanionConversation, 'draft' | 'composer' | 'runId'>>): CompanionConversations {
+export function updateConversation(book: CompanionConversations, id: string, patch: Partial<Pick<CompanionConversation, 'draft' | 'composer' | 'runId' | 'referenceDraft'>>): CompanionConversations {
   const chat = book.chats.find(item => item.id === id);
   if (!chat || Object.entries(patch).every(([key, value]) => chat[key as keyof CompanionConversation] === value)) return book;
   return { ...book, chats: book.chats.map(chat => chat.id === id ? { ...chat, ...patch, updatedAt: Date.now() } : chat) };
@@ -53,6 +55,7 @@ export async function loadConversations(userId: string): Promise<CompanionConver
     if (book) {
       if (book.version !== 1 || book.userId !== userId || !Array.isArray(book.chats) || !book.chats.length
         || !book.chats.every(chat => typeof chat.id === 'string' && typeof chat.composer === 'string' && (chat.runId === null || typeof chat.runId === 'string')
+          && (chat.referenceDraft === undefined || isReferenceDraft(chat.referenceDraft))
           && loadCompanionDraft(userId, { getItem: () => JSON.stringify({ version: 1, userId, draft: chat.draft }) }))
         || !book.chats.some(chat => chat.id === book.selectedId)) throw new Error('Saved conversations could not be opened.');
       return { ...book, revision: book.revision ?? 0 };

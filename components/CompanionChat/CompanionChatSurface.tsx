@@ -1,7 +1,7 @@
 import { Fragment, memo, useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { AlertTriangle, ArrowLeft, Check, ImagePlus, Loader2, PanelLeft, Plus, X } from 'lucide-react';
 import type { ProducerSurfaceController } from '../OneShotAd/ProducerFlow';
-import type { LockablePresetId } from '../../types';
+import type { LockablePresetId, VoiceLibrary } from '../../types';
 import Button from '../ui/Button';
 import { GlassPanel } from '../ui/GlassPanel';
 import { LiquidGlass } from '../ui/LiquidGlass';
@@ -12,6 +12,8 @@ import { CompanionComposer, type CompanionComposerHandle } from './CompanionComp
 import './companionChat.css';
 import type { ConversationBinding } from './CompanionChatShell';
 import { CompanionOutputViewer } from './CompanionOutputViewer';
+import { CompanionReferenceBrief } from './CompanionReferenceBrief';
+import { createReferenceDraft } from '../../services/companionReferenceDraft';
 import { RECOMMENDED_VOICES } from '../SignalModulator/pinoyReady';
 import { compressImageForUpload } from '../../utils/imageCompression';
 import {
@@ -33,6 +35,7 @@ export interface CompanionChatSurfaceProps {
   videoAllowed?: boolean | null;
   fixtureLabel?: string;
   conversation?: ConversationBinding;
+  loadReferenceVoices?: () => Promise<VoiceLibrary>;
   onAvatarPresentation: (chatId: string, presentation: CompanionAvatarPresentation) => void;
 }
 
@@ -60,7 +63,14 @@ const Transcript = memo(function Transcript({ messages, hiddenMessageId }: { mes
   </article></Fragment>)}</>;
 });
 
-export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, presetUnlocked, quotaBlocked = false, quotaReady = true, allowanceLoading = false, onRetryAllowance, videoAllowed = true, fixtureLabel, conversation, onAvatarPresentation }: CompanionChatSurfaceProps) {
+export function CompanionChatSurface(props: CompanionChatSurfaceProps) {
+  if (props.conversation?.chat.referenceDraft && !props.conversation.chat.runId && !props.controller.run) {
+    return <CompanionReferenceBrief key={`${props.userId}:${props.conversation.chat.id}`} conversation={props.conversation} userId={props.userId} loadVoices={props.loadReferenceVoices} />;
+  }
+  return <LegacyCompanionChatSurface {...props} />;
+}
+
+function LegacyCompanionChatSurface({ controller, userId, onBack, onUpgrade, presetUnlocked, quotaBlocked = false, quotaReady = true, allowanceLoading = false, onRetryAllowance, videoAllowed = true, fixtureLabel, conversation, onAvatarPresentation }: CompanionChatSurfaceProps) {
   const [draft, setDraft] = useState<CompanionDraft>(() => conversation?.chat.draft ?? loadCompanionDraft(userId) ?? createCompanionDraft());
   const [hasText, setHasText] = useState(!!conversation?.chat.composer);
   const [viewer, setViewer] = useState(false);
@@ -322,6 +332,7 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
           <div className="mx-auto flex min-h-full max-w-2xl flex-col justify-end">
             <div className="shrink-0 space-y-5">
             <div aria-label="Beta limits" className="space-y-2 text-xs leading-relaxed text-zinc-400">
+              {conversation && !run && !conversation.chat.runId && !draft.brief && !draft.heroImageBase64 && !hasText && <Button variant="secondary" className={control} disabled={disabled} onClick={() => conversation.update({ referenceDraft: createReferenceDraft() })}>Reference brief</Button>}
               <p>Beta · guided ad brief. Each answer fills the field Grifon asks for. Use Edit brief at review to make corrections.</p>
               <p>Chats stay in this browser on this device. Keep this tab open during production; work may not resume after closing it.</p>
             </div>

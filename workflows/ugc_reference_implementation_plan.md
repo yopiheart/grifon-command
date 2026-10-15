@@ -5,6 +5,37 @@ Implementation proposal dated October 14, 2026. Product decisions are recorded i
 change application behavior or approve tuned diffs, paid tests or deployment.
 Current work status belongs in [NOW.md](../NOW.md).
 
+## First build boundary and free fixture check
+
+The first S0 slice saves an account-scoped brief, an uploaded reference video,
+up to five role-labelled photos and one selected saved voice in this browser's
+IndexedDB. It reopens the original files and selection. Reference language is
+independent of output language. An optional reference link is retained as text;
+it is not fetched or analyzed. Cloud storage, cross-device recovery, voice upload,
+reference analysis, planning and generation remain later slices.
+
+Enter **Reference brief** from a fresh Companion chat. Existing started briefs
+and production runs keep their current flow. Clearing browser data removes these
+local drafts and files, so users must retain their originals.
+
+For a free fixture check, start the existing isolated frontend server in one
+terminal; it loads no environment files or live API middleware:
+
+```powershell
+node tools/verify-recovery-server.mjs
+```
+
+Then run in another terminal:
+
+```powershell
+npm.cmd run test:e2e -- --config tests/e2e/companion-reference.config.ts
+```
+
+The test uses simulated saved voices and local media at
+`http://localhost:5173/companion-chat-preview.html`. Keep port 5173 free before
+starting the fixture server; do not substitute a live API server. Windows tests
+use installed Microsoft Edge. Evidence is written under ignored `.tmp/`.
+
 ## Success contract
 
 An authenticated customer creates a 15-30 second, 9:16 Taglish product ad from
