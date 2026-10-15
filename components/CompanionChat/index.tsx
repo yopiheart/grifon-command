@@ -5,6 +5,7 @@ import { CompanionChatSurface } from './CompanionChatSurface';
 import { CompanionChatShell } from './CompanionChatShell';
 import type { PlanId } from '../../utils/planGate';
 import { createCloudFixtureClient } from '../../services/companionCloudFixtures';
+import { createCloudReferenceClient } from '../../services/companionCloudReferences';
 
 interface Props {
   userId: string;
@@ -27,6 +28,7 @@ interface Props {
 
 export default function CompanionChat({ userId, userEmail, userName, actualPlanId, planLoading, planError, onRetryPlan, onLogout, onNavigate, presetUnlocked, isBusinessTier, videoAllowed, videoAllowanceLoading, onRetryVideoAllowance, onBack, onUpgrade }: Props) {
   const cloudFixtureClient = useMemo(() => new URLSearchParams(window.location.search).get('cloudFixtures') === '1' ? createCloudFixtureClient(userId) : undefined, [userId]);
+  const cloudReferenceClient = useMemo(() => new URLSearchParams(window.location.search).get('cloudFixtures') === '1' ? createCloudReferenceClient(userId) : undefined, [userId]);
   const quota = useQuota();
   const [retryingAllowance, setRetryingAllowance] = useState(false);
   const allowanceLoading = quota.loading || videoAllowanceLoading || retryingAllowance;
@@ -39,7 +41,7 @@ export default function CompanionChat({ userId, userEmail, userName, actualPlanI
     catch { /* Keep the unconfirmed allowance closed and offer another retry. */ }
     finally { setRetryingAllowance(false); }
   };
-  return <CompanionChatShell key={userId} userId={userId} userEmail={userEmail} userName={userName} plan={actualPlanId} planLoading={planLoading} planError={planError} onRetryPlan={onRetryPlan} onLogout={onLogout} onUpgrade={onUpgrade} onNavigate={onNavigate} onStudio={onBack} cloudFixtureClient={cloudFixtureClient}>{conversation => {
+  return <CompanionChatShell key={userId} userId={userId} userEmail={userEmail} userName={userName} plan={actualPlanId} planLoading={planLoading} planError={planError} onRetryPlan={onRetryPlan} onLogout={onLogout} onUpgrade={onUpgrade} onNavigate={onNavigate} onStudio={onBack} cloudFixtureClient={cloudFixtureClient} cloudReferenceClient={cloudReferenceClient}>{conversation => {
     const back = () => { void conversation.leave(onBack).catch(() => {}); };
     const upgrade = () => { void conversation.leave(onUpgrade).catch(() => {}); };
     return <ProducerFlow key={conversation.chat.id} conversation={conversation.chat} userId={userId} directorUnlocked={false} presetUnlocked={presetUnlocked} isBusinessTier={isBusinessTier}
