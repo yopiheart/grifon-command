@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createHash } from 'node:crypto';
 import { createReferenceDraft, type CompanionReferenceDraft } from '../../services/companionReferenceDraft.js';
 import { fingerprintReferenceDraft } from '../../services/companionReferenceReview.js';
-import { createCloudReferenceClient, type CloudReferenceReceipt, type CloudReferenceTransport } from '../../services/companionCloudReferences.js';
+import { cloudReferenceLink, createCloudReferenceClient, ensureCloudReference, verifyCloudReferenceDraft, type CloudReferenceReceipt, type CloudReferenceTransport } from '../../services/companionCloudReferences.js';
 
 // Browser decoding is covered by the fresh-browser E2E. These tests isolate the authenticated byte/manifest protocol.
 const decode = vi.hoisted(() => vi.fn());
@@ -50,6 +50,24 @@ function service() {
 beforeEach(() => { decode.mockReset(); decode.mockImplementation(async (file: File, kind: string) => ({ id: 'decoder-new-id', name: file.name, blob: file, width: kind === 'video' ? 640 : file.name === 'First.webp' ? 20 : 10, height: kind === 'video' ? 360 : file.name === 'First.webp' ? 10 : 20, ...(kind === 'video' ? { duration: 4 } : {}) })); });
 
 describe('immutable private cloud reference briefs', () => {
+  it('reuses verified committed inputs after opening a copy without uploading or reserving another snapshot', async () => {
+    const backend = service(), client = createCloudReferenceClient(owner, backend.transport), original = draft();
+    const receipt = await client.save('original-chat', original);
+    const link = await cloudReferenceLink(receipt, owner);
+    const opened = await client.openSnapshot(receipt.saveId);
+    expect(opened.receipt).toEqual(receipt);
+    const reserveCount = backend.rpc.mock.calls.filter(call => call[0] === 'grifon_reference_reserve').length;
+    const uploadCount = vi.mocked(backend.transport.upload).mock.calls.length;
+    expect(await ensureCloudReference(client, owner, 'new-copy-chat', opened.draft, link)).toEqual(link);
+    expect(await ensureCloudReference(client, owner, 'new-copy-chat', opened.draft, link)).toEqual(link);
+    expect(backend.rpc.mock.calls.filter(call => call[0] === 'grifon_reference_reserve')).toHaveLength(reserveCount);
+    expect(vi.mocked(backend.transport.upload)).toHaveBeenCalledTimes(uploadCount);
+    expect(backend.snapshots.size).toBe(1);
+    const changed = { ...opened.draft, offer: 'Updated offer' };
+    expect(await verifyCloudReferenceDraft(changed, link)).toBe(false);
+    expect((await ensureCloudReference(client, owner, 'new-copy-chat', changed, link)).saveId).not.toBe(link.saveId);
+    expect(backend.snapshots.size).toBe(2);
+  });
   it('saves original bytes/metadata/order/voice and reopens from a new client without generation or cloud fields in the draft', async () => {
     const backend = service(), original = draft();
     const receipt = await createCloudReferenceClient(owner, backend.transport).save('source-chat', original);

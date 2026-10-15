@@ -1,6 +1,7 @@
 import { getSupabase } from './supabaseClient';
 import { isReferenceDraft, prepareReferenceMedia, type CompanionReferenceDraft, type ReferenceMedia, type ReferencePhoto } from './companionReferenceDraft';
 import { fingerprintReferenceDraft } from './companionReferenceReview';
+import { isCloudReferenceLink, type CloudReferenceLink } from './companionFixtureJobs';
 
 export const CLOUD_REFERENCE_BUCKET = 'grifon-fixture-reference-media';
 export const CLOUD_REFERENCE_FILE_LIMIT = 6_000_000;
@@ -33,6 +34,7 @@ export interface CloudReferenceClient {
   save: (sourceChatId: string, draft: CompanionReferenceDraft) => Promise<CloudReferenceReceipt>;
   list: () => Promise<CloudReferenceReceipt[]>;
   open: (saveId: string) => Promise<CompanionReferenceDraft>;
+  openSnapshot: (saveId: string) => Promise<{ draft: CompanionReferenceDraft; receipt: CloudReferenceReceipt }>;
 }
 const runtime = 'supabase-cloud-reference-v1' as const;
 const record = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
@@ -45,6 +47,25 @@ async function sha256(bytes: BufferSource): Promise<string> {
   return Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes)), byte => byte.toString(16).padStart(2, '0')).join('');
 }
 const identity = (ownerId: string, sourceChatId: string, manifestText: string) => JSON.stringify([ownerId, sourceChatId, manifestText]);
+export async function cloudReferenceLink(receipt: CloudReferenceReceipt, ownerId: string): Promise<CloudReferenceLink> {
+  if (receipt.ownerId !== ownerId || !receipt.committed || receipt.runtime !== runtime || !hash(receipt.saveId) || !identifier(receipt.sourceChatId)
+    || typeof receipt.manifestText !== 'string' || receipt.manifestText.length > 131072
+    || await sha256(new TextEncoder().encode(identity(ownerId, receipt.sourceChatId, receipt.manifestText))) !== receipt.saveId) throw new Error('The saved cloud inputs do not match this account or snapshot.');
+  const payload = manifest(JSON.parse(receipt.manifestText));
+  return { version: 1, saveId: receipt.saveId, inputHash: payload.inputHash };
+}
+export async function verifyCloudReferenceDraft(draft: CompanionReferenceDraft, link: CloudReferenceLink): Promise<boolean> {
+  return isCloudReferenceLink(link) && await fingerprintReferenceDraft(draft) === link.inputHash;
+}
+export async function ensureCloudReference(client: CloudReferenceClient, ownerId: string, chatId: string, draft: CompanionReferenceDraft, existing?: CloudReferenceLink): Promise<CloudReferenceLink> {
+  const inputHash = await fingerprintReferenceDraft(draft);
+  if (existing !== undefined && !isCloudReferenceLink(existing)) throw new Error('The saved cloud input link is invalid. Your local work is kept.');
+  const reuse = existing?.inputHash === inputHash;
+  const receipt = reuse ? (await client.openSnapshot(existing.saveId)).receipt : await client.save(chatId, draft);
+  const verified = await cloudReferenceLink(receipt, ownerId);
+  if (verified.inputHash !== inputHash || (reuse && verified.saveId !== existing.saveId)) throw new Error('The cloud snapshot does not match the current brief. Your local work is kept.');
+  return verified;
+}
 function metadata(media: ReferenceMedia): MediaMetadata { const { blob: _, ...rest } = media; return rest; }
 function mediaList(draft: CompanionReferenceDraft) {
   return [...(draft.referenceVideo ? [{ slot: 'reference', media: draft.referenceVideo }] : []), ...draft.photos.map((media, index) => ({ slot: `photo-${index}`, media }))];
@@ -111,6 +132,23 @@ export function createCloudReferenceClient(ownerId: string, transport: CloudRefe
     await verifyBytes(result.data, expected);
     return result.data;
   };
+  const openSnapshot: CloudReferenceClient['openSnapshot'] = async saveId => {
+    if (!hash(saveId)) throw new Error('The cloud brief identity is invalid.');
+    const value = await call('grifon_reference_get', { p_save_id: saveId });
+    if (!value) throw new Error('This cloud brief is unavailable or has not finished saving.');
+    const receipt = await decode(value, saveId);
+    if (!receipt.committed) throw new Error('This cloud brief has not finished saving.');
+    const payload = manifest(JSON.parse(receipt.manifestText)), restored = new Map<string, ReferenceMedia>();
+    for (const item of payload.media) {
+      const blob = await download(`${ownerId}/${saveId}/${item.slot}`, item);
+      await verifyDecoded(blob, item, item.slot === 'reference');
+      const { slot: _, type: _type, size: _size, sha256: _hash, ...original } = item;
+      restored.set(item.slot, { ...original, blob });
+    }
+    const draft = { ...payload.draft, referenceVideo: payload.draft.referenceVideo ? restored.get('reference')! : null, photos: payload.draft.photos.map((_, index) => restored.get(`photo-${index}`) as ReferencePhoto) };
+    if (!isReferenceDraft(draft) || await fingerprintReferenceDraft(draft) !== payload.inputHash) throw new Error('The cloud brief fingerprint does not match the original draft.');
+    return { draft, receipt };
+  };
   return {
     runtime,
     save: async (sourceChatId, draft) => {
@@ -151,22 +189,7 @@ export function createCloudReferenceClient(ownerId: string, transport: CloudRefe
       if (receipts.some(item => !item.committed) || new Set(receipts.map(item => item.saveId)).size !== receipts.length) throw new Error('The cloud brief service returned an invalid unpublished or duplicate snapshot.');
       return receipts;
     },
-    open: async saveId => {
-      if (!hash(saveId)) throw new Error('The cloud brief identity is invalid.');
-      const value = await call('grifon_reference_get', { p_save_id: saveId });
-      if (!value) throw new Error('This cloud brief is unavailable or has not finished saving.');
-      const receipt = await decode(value, saveId);
-      if (!receipt.committed) throw new Error('This cloud brief has not finished saving.');
-      const payload = manifest(JSON.parse(receipt.manifestText)), restored = new Map<string, ReferenceMedia>();
-      for (const item of payload.media) {
-        const blob = await download(`${ownerId}/${saveId}/${item.slot}`, item);
-        await verifyDecoded(blob, item, item.slot === 'reference');
-        const { slot: _, type: _type, size: _size, sha256: _hash, ...original } = item;
-        restored.set(item.slot, { ...original, blob });
-      }
-      const draft = { ...payload.draft, referenceVideo: payload.draft.referenceVideo ? restored.get('reference')! : null, photos: payload.draft.photos.map((_, index) => restored.get(`photo-${index}`) as ReferencePhoto) };
-      if (!isReferenceDraft(draft) || await fingerprintReferenceDraft(draft) !== payload.inputHash) throw new Error('The cloud brief fingerprint does not match the original draft.');
-      return draft;
-    },
+    openSnapshot,
+    open: async saveId => (await openSnapshot(saveId)).draft,
   };
 }

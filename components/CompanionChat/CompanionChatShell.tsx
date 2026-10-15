@@ -4,17 +4,21 @@ import Button from '../ui/Button';
 import SettingsModal from '../dashboard/SettingsModal';
 import type { PlanId } from '../../utils/planGate';
 import { CompanionAvatarLayer, type CompanionAvatarPresentation } from './CompanionAvatarLayer';
-import { ConversationConflictError, createConversation, loadConversations, saveConversationCopy, saveConversations, updateConversation, type CompanionConversation, type CompanionConversations } from '../../services/companionConversations';
+import { clearCloudCopyApproval, ConversationConflictError, createConversation, loadConversations, saveConversationCopy, saveConversations, updateConversation, type CompanionConversation, type CompanionConversations, type ConversationPatch } from '../../services/companionConversations';
 import type { CloudFixtureClient } from '../../services/companionCloudFixtures';
 import { CompanionCloudFixtureJobs } from './CompanionCloudFixtureJobs';
-import type { CloudReferenceClient } from '../../services/companionCloudReferences';
+import { cloudReferenceLink, verifyCloudReferenceDraft, type CloudReferenceClient, type CloudReferenceReceipt } from '../../services/companionCloudReferences';
+import { verifyFixtureJobIntent, type FixtureJobIntent } from '../../services/companionFixtureJobs';
 import { isReferenceDraft, type CompanionReferenceDraft } from '../../services/companionReferenceDraft';
 import { CompanionCloudReferences } from './CompanionCloudReferences';
 import './companionChat.css';
 
 export interface ConversationBinding {
   chat: CompanionConversation;
-  update: (patch: Partial<Pick<CompanionConversation, 'draft' | 'composer' | 'runId' | 'referenceDraft' | 'referenceReview' | 'referenceQueue' | 'referenceFixtureJob'>>) => void;
+  update: (patch: ConversationPatch) => void;
+  updateSaved: (patch: ConversationPatch, expectedChat: CompanionConversation) => Promise<void>;
+  cloudReferenceClient?: CloudReferenceClient;
+  openCloudJobs?: () => void;
   queueIsCurrent: (id: string, revision: number) => boolean;
   fixtureJobIsCurrent: (requestId: string, invalidated: boolean) => boolean;
   saved: boolean;
@@ -141,6 +145,16 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
     if (next === current.current) return;
     current.current = next; setBook(next); if (!recovering.current) void persist(next);
   }, [persist]);
+  const updateSaved = async (patch: ConversationPatch, expectedChat: CompanionConversation) => {
+    const before = current.current;
+    if (!mounted.current || !before || before.userId !== userId || before.selectedId !== expectedChat.id || navigating.current || recovering.current
+      || before.chats.find(item => item.id === expectedChat.id) !== expectedChat) throw new Error('The selected chat or inputs changed. Check the current chat before continuing.');
+    const next = updateConversation(before, expectedChat.id, patch);
+    if (next === before) throw new Error('The current chat could not accept this saved cloud link or review.');
+    current.current = next; setBook(next);
+    await persist(next);
+    if (!mounted.current || current.current !== next || next.userId !== userId) throw new Error('The chat changed while saving. No cloud job was submitted.');
+  };
   const recoverCopy = async () => {
     if (!current.current || navigating.current) return;
     navigating.current = true; recovering.current = true;
@@ -153,7 +167,8 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
       let next = await saveConversationCopy(userId, selected);
       if (!mounted.current) return;
       const pending = current.current.chats.find(item => item.id === latest.selectedId)!;
-      if (pending !== selected) next = { ...next, chats: next.chats.map(chat => chat.id === next.selectedId ? { ...chat, draft: pending.draft, composer: pending.composer, runId: pending.runId, referenceDraft: pending.referenceDraft, referenceReview: pending.referenceReview, referenceInputRevision: pending.referenceInputRevision, referenceQueue: pending.referenceQueue, referenceFixtureJob: pending.referenceFixtureJob } : chat) };
+      const pendingCopy = clearCloudCopyApproval(pending);
+      if (pending !== selected) next = { ...next, chats: next.chats.map(chat => chat.id === next.selectedId ? { ...chat, draft: pendingCopy.draft, composer: pendingCopy.composer, runId: pendingCopy.runId, referenceDraft: pendingCopy.referenceDraft, referenceReview: pendingCopy.referenceReview, referenceInputRevision: pendingCopy.referenceInputRevision, referenceQueue: pendingCopy.referenceQueue, referenceFixtureJob: pendingCopy.referenceFixtureJob, referenceCloudSource: pendingCopy.referenceCloudSource, referenceCloudObservation: pendingCopy.referenceCloudObservation, referenceCloudJob: pendingCopy.referenceCloudJob } : chat) };
       revision.current = next.revision ?? 0; current.current = next; setBook(next);
       if (pending !== selected) await persist(next);
       setSaveConflict(false); setSaved(true); setNavigationError('');
@@ -202,12 +217,15 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
     try { await leave(() => { setReferencesOpen(true); setCloudOpen(false); setMobileOpen(false); setAvatar(null); }); }
     catch { /* The existing save error remains visible without discarding the chat. */ }
   };
-  const importReference = async (draft: CompanionReferenceDraft, sourceLocalChatId: string) => {
+  const importReference = async (draft: CompanionReferenceDraft, sourceLocalChatId: string, receipt: CloudReferenceReceipt, job?: FixtureJobIntent) => {
     if (!isReferenceDraft(draft) || !mounted.current || current.current?.userId !== userId || current.current.selectedId !== sourceLocalChatId) throw new Error('The account or selected chat changed. Open the cloud copy again from the current chat.');
+    const source = await cloudReferenceLink(receipt, userId);
+    if (!await verifyCloudReferenceDraft(draft, source) || (job && (!await verifyFixtureJobIntent(job) || job.ownerId !== userId || JSON.stringify(job.cloudReference) !== JSON.stringify(source)))) throw new Error('The cloud job does not match these verified saved inputs. Your current chat is kept.');
     await leave(async () => {
       const before = current.current!;
       if (before.userId !== userId || before.selectedId !== sourceLocalChatId) throw new Error('The selected chat changed before the cloud copy could be opened.');
-      const copy = { ...createConversation(), referenceDraft: draft, referenceInputRevision: 0 };
+      const copy = { ...createConversation(), referenceDraft: draft, referenceInputRevision: 0, referenceCloudSource: source,
+        ...(job ? { referenceReview: { ...structuredClone(job.plan), inputRevision: 0, stale: false, confirmation: null }, referenceCloudObservation: job } : {}) };
       const next = { ...before, chats: [copy, ...before.chats], selectedId: copy.id, revision: revision.current };
       // Persist the entire new copy with the existing CAS before selecting it in the UI.
       const savedRevision = await saveConversations(next);
@@ -231,7 +249,7 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
     <nav aria-label="Conversations" className="companion-sidebar-scroll min-h-0 flex-1 space-y-1 overflow-y-auto px-2 py-3">{book.chats.filter(item => title(item).toLowerCase().includes(search.toLowerCase())).map(item => <button key={item.id} data-chat-id={item.id} aria-label={`Open chat: ${title(item)}`} aria-current={item.id === chat.id ? 'page' : undefined} onClick={() => void navigate(item.id)} className={`min-h-11 w-full truncate rounded-xl px-3 text-left text-sm font-semibold ${item.id === chat.id ? 'bg-[#FFCC00]/10 text-[#FFCC00]' : 'text-zinc-300 hover:bg-white/5'}`}>{title(item)}</button>)}{!book.chats.some(item => title(item).toLowerCase().includes(search.toLowerCase())) && <p className="px-3 py-3 text-sm text-zinc-400">No matching chats</p>}</nav>
     <div className="border-t border-white/10 p-2"><Button variant="ghost" className={`${button} flex w-full items-center justify-start gap-3 !px-3`} onClick={() => void navigate(undefined, true)}><Clapperboard className="h-5 w-5 shrink-0" />Studio</Button><Button variant="ghost" className={`${button} flex w-full items-center gap-3 !px-3 text-left`} aria-label="Account settings" onClick={event => openSettings(event.currentTarget)}><Settings className="h-5 w-5 shrink-0" /><span className="min-w-0 flex-1 truncate">{userName}</span></Button><p className="px-3 py-2 text-xs text-zinc-400">{preview ? 'Preview · simulated output' : 'Saved on this device'}</p>{navigationError && <p role="alert" className="px-3 pb-2 text-sm text-zinc-300">{navigationError}</p>}</div>
   </>;
-  const binding: ConversationBinding = { chat, update: patch => update(chat.id, patch), queueIsCurrent: (id, queueRevision) => {
+  const binding: ConversationBinding = { chat, update: patch => update(chat.id, patch), updateSaved, cloudReferenceClient, openCloudJobs: cloudFixtureClient ? () => void openCloud() : undefined, queueIsCurrent: (id, queueRevision) => {
     const selected = current.current?.chats.find(item => item.id === current.current?.selectedId);
     return mounted.current && !navigating.current && !recovering.current && current.current?.userId === userId && selected?.id === chat.id && selected.referenceQueue?.id === id && selected.referenceQueue.revision === queueRevision;
   }, fixtureJobIsCurrent: (requestId, invalidated) => {
@@ -243,7 +261,7 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
     {!collapsed && <aside className="hidden w-60 shrink-0 flex-col border-r border-white/10 bg-zinc-900/40 md:flex">{navigation}</aside>}
     {collapsed && <aside className="hidden w-14 shrink-0 flex-col items-center border-r border-white/10 pt-3 md:flex"><Button variant="ghost" className={`${button} !p-3`} aria-label="Open conversations" onClick={() => setCollapsed(false)}><PanelLeft className="h-4 w-4" /></Button><Button variant="ghost" className={`${button} !p-3`} aria-label="New chat" onClick={() => void navigate()}><Plus className="h-4 w-4" /></Button>{cloudFixtureClient && <Button variant="ghost" className={`${button} !p-3 ${cloudOpen ? '!text-[#FFCC00]' : ''}`} aria-label="Cloud fixture jobs" onClick={() => void openCloud()}><Cloud className="h-4 w-4 shrink-0" /></Button>}{cloudReferenceClient && <Button variant="ghost" className={`${button} !p-3 ${referencesOpen ? '!text-[#FFCC00]' : ''}`} aria-label="Cloud reference briefs" onClick={() => void openReferences()}><Cloud className="h-4 w-4 shrink-0" /></Button>}<Button variant="ghost" className={`${button} mt-auto mb-3 !p-3`} aria-label="Account settings" onClick={event => openSettings(event.currentTarget)}><Settings className="h-4 w-4" /></Button></aside>}
     {mobileOpen && <div className="fixed inset-0 z-50 bg-zinc-950/80 md:hidden" onClick={() => setMobileOpen(false)}><aside ref={drawer} role="dialog" aria-modal="true" aria-label="Chat navigation" className="flex h-full w-[min(320px,85vw)] flex-col border-r border-white/10 bg-zinc-900" onClick={event => event.stopPropagation()}>{navigation}</aside></div>}
-    <div ref={main} className="relative min-h-0 min-w-0 flex-1">{referencesOpen && cloudReferenceClient ? <CompanionCloudReferences key={userId} userId={userId} conversation={binding} client={cloudReferenceClient} onBack={() => setReferencesOpen(false)} onOpen={importReference} /> : cloudOpen && cloudFixtureClient ? <CompanionCloudFixtureJobs key={userId} userId={userId} conversation={binding} client={cloudFixtureClient} onBack={() => setCloudOpen(false)} /> : children(binding)}{!cloudOpen && !referencesOpen && <CompanionAvatarLayer presentation={avatar} />}{navigationError && collapsed && <p role="alert" className="absolute bottom-4 left-4 right-4 z-30 rounded-xl bg-zinc-900 p-3 text-sm text-zinc-300">{navigationError}</p>}</div>
+    <div ref={main} className="relative min-h-0 min-w-0 flex-1">{referencesOpen && cloudReferenceClient ? <CompanionCloudReferences key={userId} userId={userId} conversation={binding} client={cloudReferenceClient} onBack={() => setReferencesOpen(false)} onOpen={importReference} /> : cloudOpen && cloudFixtureClient ? <CompanionCloudFixtureJobs key={userId} userId={userId} conversation={binding} client={cloudFixtureClient} onBack={() => setCloudOpen(false)} onOpenInputs={importReference} /> : children(binding)}{!cloudOpen && !referencesOpen && <CompanionAvatarLayer presentation={avatar} />}{navigationError && collapsed && <p role="alert" className="absolute bottom-4 left-4 right-4 z-30 rounded-xl bg-zinc-900 p-3 text-sm text-zinc-300">{navigationError}</p>}</div>
     <SettingsModal open={settingsOpen} onClose={() => setSettingsOpen(false)} userEmail={userEmail} userName={userName} plan={plan} planLoading={planLoading} planError={planError} onRetryPlan={onRetryPlan} preview={preview} restoreFocus={restoreSettingsFocus}
       onLogout={onLogout ? () => leave(onLogout) : undefined} onUpgrade={onUpgrade ? () => leave(onUpgrade) : undefined} onNavigate={href => leave(() => onNavigate ? onNavigate(href) : window.location.assign(href))} />
   </div>;

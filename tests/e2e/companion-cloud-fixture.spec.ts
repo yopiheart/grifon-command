@@ -2,7 +2,7 @@ import { test as base, expect, type BrowserContext, type Page, type TestInfo } f
 import { writeFileSync } from 'node:fs';
 
 // This harness is a simulated RPC server. Real PC-off/cron persistence has a separate SQL proof.
-const PREVIEW = '/companion-chat-preview.html?cloud=1';
+const PREVIEW = '/companion-chat-preview.html?cloud=1&legacyCloudJobs=1';
 const OWNER = 'fixture-user-a';
 const OTHER = 'fixture-user-b';
 type HarnessSnapshot = { calls: { name: string; args?: any; value?: any }[]; jobs: any[]; offline: boolean };

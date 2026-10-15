@@ -2,7 +2,7 @@ import { createCompanionDraft, loadCompanionDraft, type CompanionDraft } from '.
 import { isReferenceDraft, type CompanionReferenceDraft } from './companionReferenceDraft';
 import { isReferenceReview, type ReferenceReview } from './companionReferenceReview';
 import { acceptsReferenceQueue, invalidateReferenceQueue, isReferenceQueue, type ReferenceQueue } from './companionReferenceQueue';
-import { isFixtureJobLink, type FixtureJobLink } from './companionFixtureJobs';
+import { isCloudReferenceLink, isFixtureJobIntent, isFixtureJobLink, type CloudReferenceLink, type FixtureJobIntent, type FixtureJobLink } from './companionFixtureJobs';
 
 export interface CompanionConversation {
   id: string;
@@ -15,6 +15,9 @@ export interface CompanionConversation {
   referenceReview?: ReferenceReview;
   referenceQueue?: ReferenceQueue;
   referenceFixtureJob?: FixtureJobLink;
+  referenceCloudSource?: CloudReferenceLink;
+  referenceCloudJob?: FixtureJobIntent;
+  referenceCloudObservation?: FixtureJobIntent;
 }
 export interface CompanionConversations {
   version: 1;
@@ -31,12 +34,18 @@ export function adoptConversations(userId: string, draft: CompanionDraft | null,
   const chat = createConversation(draft ?? createCompanionDraft(), runId);
   return { version: 1, userId, selectedId: chat.id, chats: [chat] };
 }
-export function updateConversation(book: CompanionConversations, id: string, patch: Partial<Pick<CompanionConversation, 'draft' | 'composer' | 'runId' | 'referenceDraft' | 'referenceReview' | 'referenceQueue' | 'referenceFixtureJob'>>): CompanionConversations {
+export type ConversationPatch = Partial<Pick<CompanionConversation, 'draft' | 'composer' | 'runId' | 'referenceDraft' | 'referenceReview' | 'referenceQueue' | 'referenceFixtureJob' | 'referenceCloudSource' | 'referenceCloudJob' | 'referenceCloudObservation'>>;
+export function updateConversation(book: CompanionConversations, id: string, patch: ConversationPatch): CompanionConversations {
   const chat = book.chats.find(item => item.id === id);
   if (!chat || Object.entries(patch).every(([key, value]) => chat[key as keyof CompanionConversation] === value)) return book;
   const inputChanged = patch.referenceDraft !== undefined && patch.referenceDraft !== chat.referenceDraft;
   const reviewChanged = patch.referenceReview !== undefined && JSON.stringify(patch.referenceReview) !== JSON.stringify(chat.referenceReview);
   const previousJob = chat.referenceFixtureJob, job = patch.referenceFixtureJob;
+  if (patch.referenceCloudSource !== undefined && (!chat.referenceDraft || !isCloudReferenceLink(patch.referenceCloudSource) || inputChanged)) return book;
+  if (patch.referenceCloudJob !== undefined && (!isFixtureJobIntent(patch.referenceCloudJob) || !patch.referenceCloudJob.cloudReference
+    || !chat.referenceDraft || patch.referenceCloudJob.ownerId !== book.userId || patch.referenceCloudJob.ownerChatId !== id || inputChanged || reviewChanged
+    || !fixtureCloudIntentMatchesChat(patch.referenceCloudJob, chat))) return book;
+  if (patch.referenceCloudObservation !== undefined && (!chat.referenceDraft || !isFixtureJobIntent(patch.referenceCloudObservation) || !patch.referenceCloudObservation.cloudReference || patch.referenceCloudObservation.ownerId !== book.userId)) return book;
   // Editing requires a separately acknowledged invalidation. Copies observe the owner's job.
   if (previousJob && (inputChanged || reviewChanged) && (!previousJob.invalidated || previousJob.intent.ownerChatId !== id)) return book;
   if (job !== undefined) {
@@ -49,6 +58,7 @@ export function updateConversation(book: CompanionConversations, id: string, pat
   const { referenceQueue, ...otherFields } = patch;
   const next = { ...chat, ...otherFields, updatedAt: Date.now() };
   if (inputChanged) {
+    delete next.referenceCloudSource;
     next.referenceInputRevision = (chat.referenceInputRevision ?? 0) + 1;
     if (next.referenceReview) next.referenceReview = { ...next.referenceReview, stale: true, confirmation: null };
   }
@@ -93,6 +103,9 @@ export async function loadConversations(userId: string): Promise<CompanionConver
             && (chat.referenceReview.stale || chat.referenceReview.inputRevision === (chat.referenceInputRevision ?? 0))))
           && (chat.referenceQueue === undefined || (chat.referenceDraft !== undefined && isReferenceQueue(chat.referenceQueue, chat.referenceReview, chat.referenceInputRevision ?? 0)))
           && (chat.referenceFixtureJob === undefined || (chat.referenceDraft !== undefined && isFixtureJobLink(chat.referenceFixtureJob, userId, chat.referenceReview, chat.referenceInputRevision ?? 0)))
+          && (chat.referenceCloudSource === undefined || (chat.referenceDraft !== undefined && isCloudReferenceLink(chat.referenceCloudSource)))
+          && [chat.referenceCloudJob, chat.referenceCloudObservation].every(intent => intent === undefined || (chat.referenceDraft !== undefined && isFixtureJobIntent(intent) && !!intent.cloudReference && intent.ownerId === userId))
+          && (chat.referenceCloudJob === undefined || chat.referenceCloudJob.ownerChatId === chat.id)
           && loadCompanionDraft(userId, { getItem: () => JSON.stringify({ version: 1, userId, draft: chat.draft }) }))
         || !book.chats.some(chat => chat.id === book.selectedId)) throw new Error('Saved conversations could not be opened.');
       return { ...book, revision: book.revision ?? 0 };
@@ -104,6 +117,16 @@ export async function loadConversations(userId: string): Promise<CompanionConver
     if (rawDraft && !draft) throw new Error('The previous draft could not be opened.');
     return adoptConversations(userId, draft, runId);
   } finally { db.close(); }
+}
+function fixtureCloudIntentMatchesChat(intent: FixtureJobIntent, chat: CompanionConversation): boolean {
+  return JSON.stringify(intent.cloudReference) === JSON.stringify(chat.referenceCloudSource)
+    && JSON.stringify(intent.plan) === JSON.stringify(chat.referenceReview) && intent.inputRevision === (chat.referenceInputRevision ?? 0);
+}
+export function clearCloudCopyApproval(chat: CompanionConversation): CompanionConversation {
+  if (!chat.referenceCloudSource && !chat.referenceCloudJob && !chat.referenceCloudObservation) return chat;
+  return { ...chat, referenceReview: chat.referenceReview ? { ...chat.referenceReview, confirmation: null } : undefined,
+    referenceCloudObservation: chat.referenceCloudJob ?? chat.referenceCloudObservation, referenceCloudJob: undefined,
+    referenceQueue: undefined, referenceFixtureJob: undefined };
 }
 export async function saveConversations(book: CompanionConversations): Promise<number> {
   const db = await openDatabase();
@@ -143,7 +166,7 @@ export async function saveConversationCopy(userId: string, chat: CompanionConver
         const latest = request.result as CompanionConversations | undefined;
         if (!latest || latest.userId !== userId || latest.version !== 1 || !Array.isArray(latest.chats)) { transaction.abort(); return; }
         try {
-          const copy = { ...chat, id: crypto.randomUUID(), updatedAt: Date.now() };
+          const copy = { ...clearCloudCopyApproval(chat), id: crypto.randomUUID(), updatedAt: Date.now() };
           next = { ...latest, revision: (latest.revision ?? 0) + 1, selectedId: copy.id, chats: [copy, ...latest.chats] };
           store.put(next, userId);
         } catch (error) { failure = error; transaction.abort(); }
