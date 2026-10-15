@@ -3,7 +3,7 @@ import { AlertTriangle, ArrowLeft, Cloud, PanelLeft } from 'lucide-react';
 import Button from '../ui/Button';
 import { GlassPanel } from '../ui/GlassPanel';
 import { GoldButton } from '../ui/GoldButton';
-import type { CloudReferenceClient, CloudReferenceReceipt } from '../../services/companionCloudReferences';
+import { cloudReferenceLink, verifyCloudReferenceDraft, type CloudReferenceClient, type CloudReferenceReceipt } from '../../services/companionCloudReferences';
 import type { CompanionReferenceDraft } from '../../services/companionReferenceDraft';
 import type { ConversationBinding } from './CompanionChatShell';
 
@@ -14,7 +14,7 @@ export function CompanionCloudReferences({ userId, client, conversation, onBack,
   client: CloudReferenceClient;
   conversation: ConversationBinding;
   onBack: () => void;
-  onOpen: (draft: CompanionReferenceDraft, sourceLocalChatId: string) => Promise<void>;
+  onOpen: (draft: CompanionReferenceDraft, sourceLocalChatId: string, receipt: CloudReferenceReceipt) => Promise<void>;
 }) {
   const [receipts, setReceipts] = useState<CloudReferenceReceipt[]>([]);
   const [checked, setChecked] = useState(false);
@@ -37,13 +37,18 @@ export function CompanionCloudReferences({ userId, client, conversation, onBack,
     return () => { active.current = false; generation.current++; };
   }, [userId, client]);
   const save = async () => {
-    const draft = conversation.chat.referenceDraft;
+    const chat = conversation.chat, draft = chat.referenceDraft;
     if (locked.current || !draft || !conversation.saved || conversation.saving || conversation.saveConflict) return;
     const token = ++generation.current;
     locked.current = true; setBusy(true); setError(''); setStatus('Checking and saving this brief to cloud…');
     try {
       const receipt = await client.save(conversation.chat.id, draft);
-      if (visible(token)) { setReceipts(items => [receipt, ...items.filter(item => item.saveId !== receipt.saveId)]); setStatus('Cloud save confirmed. This private snapshot can be opened on another device.'); }
+      const link = await cloudReferenceLink(receipt, userId);
+      if (!await verifyCloudReferenceDraft(draft, link)) throw new Error('The cloud save does not match the current brief. Your local work is kept.');
+      if (visible(token)) {
+        await conversation.updateSaved({ referenceCloudSource: link }, chat);
+        if (visible(token)) { setReceipts(items => [receipt, ...items.filter(item => item.saveId !== receipt.saveId)]); setStatus('Cloud save confirmed. This private snapshot can be opened on another device.'); }
+      }
     } catch (reason) {
       if (visible(token)) { setError(reason instanceof Error ? reason.message : 'Cloud save was not confirmed. Retry the same brief when connected.'); setStatus('Cloud save is not confirmed. Your local brief is kept.'); }
     } finally { if (visible(token)) { locked.current = false; setBusy(false); } }
@@ -53,8 +58,8 @@ export function CompanionCloudReferences({ userId, client, conversation, onBack,
     const token = ++generation.current;
     locked.current = true; setBusy(true); setError(''); setStatus('Downloading and checking every saved file…');
     try {
-      const draft = await client.open(receipt.saveId);
-      if (visible(token)) await onOpen(draft, conversation.chat.id);
+      const opened = await client.openSnapshot(receipt.saveId);
+      if (visible(token)) await onOpen(opened.draft, conversation.chat.id, opened.receipt);
     } catch (reason) { if (visible(token)) { setError(reason instanceof Error ? reason.message : 'The cloud brief could not be opened. Your local work is kept.'); setStatus('No cloud copy was installed.'); } }
     finally { if (visible(token)) { locked.current = false; setBusy(false); } }
   };
@@ -70,7 +75,7 @@ export function CompanionCloudReferences({ userId, client, conversation, onBack,
           <h1 className="flex items-center gap-3 !text-lg !font-semibold !normal-case !tracking-normal"><Cloud className="h-5 w-5 shrink-0 text-[#FFCC00]" />Cloud reference briefs</h1>
           <p className="text-sm leading-relaxed text-zinc-300">{client.simulation ? 'Fixture simulation: this preview uses a test cloud service.' : 'Private fixture storage for this signed-in account. Open a saved brief on another device using the same account.'}</p>
           <p className="text-sm leading-relaxed text-zinc-400">Each snapshot keeps the reference video, up to five photos in order with their roles, and selected voice details. Files must be 6,000,000 bytes (6 MB) or smaller each. Up to 20 snapshots and 200 MB per account, including unfinished uploads.</p>
-          <p className="text-sm leading-relaxed text-zinc-400">Opening creates a new editable local chat. Prepare and confirm a new sample plan there. Existing cloud fixture jobs stay separate from these saved files.</p>
+          <p className="text-sm leading-relaxed text-zinc-400">Opening creates a new editable local chat. Prepare and confirm its sample plan, then start a cloud fixture job linked to these exact saved inputs. Review edits stay on this device until a job is accepted.</p>
           <p className="text-sm font-semibold text-[#FFCC00]">Private fixture · No generation · Actual spend: PHP 0.00</p>
           {error && <p role="alert" className="flex items-start gap-2 break-words text-sm leading-relaxed text-amber-500"><AlertTriangle aria-hidden className="mt-0.5 h-4 w-4 shrink-0" /><span className="min-w-0">{error}</span></p>}
           {status && <p role="status" data-testid="cloud-reference-status" className="text-sm leading-relaxed text-zinc-300">{status}</p>}

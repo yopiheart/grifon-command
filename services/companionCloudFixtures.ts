@@ -1,5 +1,5 @@
 import { getSupabase } from './supabaseClient';
-import { isFixtureJobSnapshot, verifyFixtureJobIntent, type FixtureJobAction, type FixtureJobIntent, type FixtureJobSnapshot } from './companionFixtureJobs';
+import { fixtureJobIdentityText, isFixtureJobSnapshot, verifyFixtureJobIntent, type FixtureJobAction, type FixtureJobIntent, type FixtureJobSnapshot } from './companionFixtureJobs';
 
 export interface CloudFixtureSnapshot extends FixtureJobSnapshot { runtime: 'supabase-cloud-fixture-v1' }
 export interface CloudFixtureClient {
@@ -54,7 +54,7 @@ export function createCloudFixtureClient(ownerId: string, rpc: CloudFixtureRpc =
     runtime: 'supabase-cloud-fixture-v1',
     start: async intent => {
       await ownerIntent(intent);
-      return accept(await decode(await call('grifon_fixture_start', { p_intent_text: JSON.stringify(intent), p_identity_text: JSON.stringify([ownerId, intent.ownerChatId, intent.plan.confirmation!.planSnapshot]) }), intent));
+      return accept(await decode(await call('grifon_fixture_start', { p_intent_text: JSON.stringify(intent), p_identity_text: fixtureJobIdentityText(intent) }), intent));
     },
     get: async intent => {
       await ownerIntent(intent);

@@ -256,7 +256,12 @@ for (const width of [375, 390, 1280]) {
     expect(original.referenceReview.confirmation).toBeTruthy();
     expect(original.referenceDraft.referenceVideo.sha256).toBe(hash(videoBytes));
     expect(original.referenceDraft.photos.map((item: any) => item.sha256)).toEqual(Array(5).fill(hash(photoBytes)));
-    await saveCloud(page, cloud); await layout(page, testInfo, `cloud-list-${width}`);
+    await saveCloud(page, cloud);
+    await expect(panel(page).getByText('Cloud save confirmed. This private snapshot can be opened on another device.', { exact: true })).toBeVisible();
+    const sourceAfterSave = selected(await book(page));
+    expect(sourceAfterSave.referenceDraft).toEqual(original.referenceDraft);
+    expect(sourceAfterSave.referenceReview).toEqual(original.referenceReview);
+    await layout(page, testInfo, `cloud-list-${width}`);
     const receipt = cloud.committed()[0], manifest = JSON.parse(receipt.manifestText);
     expect(manifest.media.map((item: any) => item.slot)).toEqual(['reference', 'photo-0', 'photo-1', 'photo-2', 'photo-3', 'photo-4']);
     expect(manifest.draft.voice).toEqual({ id: 'fixture-private', name: 'Fixture private voice', source: 'private' });
@@ -271,7 +276,7 @@ for (const width of [375, 390, 1280]) {
     expect(copy.referenceDraft).toEqual(original.referenceDraft);
     expect(copy.runId).toBeNull(); expect(copy.referenceReview).toBeUndefined(); expect(copy.referenceQueue).toBeUndefined(); expect(copy.referenceFixtureJob).toBeUndefined();
     expect(reopened.chats.find((chat: any) => chat.id === local.id)).toEqual(local);
-    expect(selected(await book(page))).toEqual(original);
+    expect(selected(await book(page))).toEqual(sourceAfterSave);
     await expect(other.getByLabel('Saved voice', { exact: true })).toHaveValue('private:fixture-private');
     await expect(other.getByLabel('Role for photo-0.png')).toHaveValue('character');
     await expect(other.getByLabel('Role for photo-1.png')).toHaveValue('clothing');

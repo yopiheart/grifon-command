@@ -11,6 +11,8 @@ import { createFixtureJobClient, verifyFixtureJobIntent, type FixtureJobIntent }
 import { createCloudFixtureClient, type CloudFixtureRpc, type CloudFixtureSnapshot } from '../services/companionCloudFixtures';
 import { createCloudReferenceClient } from '../services/companionCloudReferences';
 import { cloudReferenceFixtureTransport } from './companionCloudReferenceFixture';
+import { cloudWorkflowFixtureRpc } from './companionCloudWorkflowFixture';
+import { memoryCloudReferenceFixtureTransport } from './companionMemoryCloudReferenceFixture';
 import { createReferenceQueue, invalidateReferenceQueue, transitionReferenceQueue } from '../services/companionReferenceQueue';
 import '../index.css';
 
@@ -23,7 +25,9 @@ const calls: FixtureCall[] = [];
 const referenceVoices = async () => ({ stockVoices: [], myVoices: new URLSearchParams(window.location.search).get('voices') === 'missing' ? [] : [{ voice_id: 'fixture-private', name: 'Fixture private voice', created_at: '2026-10-15' }], libraryVoices: [{ voice_id: 'fixture-curated', name: 'Fixture curated voice' }], quotaUsed: 0, quotaMax: 1 });
 const debug = new URLSearchParams(window.location.search).get('debug') === '1';
 const fixtureJobClient = new URLSearchParams(window.location.search).get('background') === '1' ? createFixtureJobClient() : undefined;
-const cloudSimulation = new URLSearchParams(window.location.search).get('cloud') === '1';
+const cloudWorkflowSimulation = new URLSearchParams(window.location.search).get('workflow') === '1';
+const memoryCloudInputs = new URLSearchParams(window.location.search).get('legacyCloudJobs') === '1';
+const cloudSimulation = new URLSearchParams(window.location.search).get('cloud') === '1' || cloudWorkflowSimulation;
 const cloudJobs = new Map<string, CloudFixtureSnapshot>();
 const cloudCalls: { name: string; args?: Record<string, unknown>; ownerId: string }[] = [];
 let cloudOffline = false, loseStartAck = false, rejectCommand = false;
@@ -157,8 +161,8 @@ function Preview() {
   const [userId, setUserId] = useState('fixture-user-a');
   const [signedIn, setSignedIn] = useState(true);
   const account = (id: string) => { setUserId(id); setSignedIn(true); };
-  const cloudFixtureClient = useMemo(() => cloudSimulation ? { ...createCloudFixtureClient(userId, cloudRpc(userId)), simulation: true } : undefined, [userId]);
-  const cloudReferenceClient = useMemo(() => cloudSimulation ? { ...createCloudReferenceClient(userId, cloudReferenceFixtureTransport(userId)), simulation: true } : undefined, [userId]);
+  const cloudFixtureClient = useMemo(() => cloudSimulation ? { ...createCloudFixtureClient(userId, cloudWorkflowSimulation ? cloudWorkflowFixtureRpc(userId) : cloudRpc(userId)), simulation: true } : undefined, [userId]);
+  const cloudReferenceClient = useMemo(() => cloudSimulation ? { ...createCloudReferenceClient(userId, memoryCloudInputs && !cloudWorkflowSimulation ? memoryCloudReferenceFixtureTransport(userId) : cloudReferenceFixtureTransport(userId)), simulation: true } : undefined, [userId]);
   if (cloudSimulation) { cloudHarness.account = account; Object.assign(window, { companionCloudFixture: cloudHarness }); }
   if (!signedIn) return <main className="flex min-h-dvh flex-col items-center justify-center gap-4 bg-zinc-950 px-6 font-sans text-sm text-white"><h1 className="!text-lg !font-semibold !normal-case !tracking-tight">Preview signed out</h1><p className="max-w-sm text-center text-sm leading-relaxed text-zinc-300">This simulated account is signed out. Your preview chats remain saved on this device.</p><Button className="!rounded-xl" onClick={() => setSignedIn(true)}>Simulate sign in</Button><a href="/login" className="inline-flex min-h-11 items-center text-sm font-semibold text-[#FFCC00]">Sign in to Grifon</a></main>;
   return <CompanionChatShell key={userId} userId={userId} userEmail={`${userId}@preview.invalid`} userName="Preview account" plan="free" preview cloudFixtureClient={cloudFixtureClient} cloudReferenceClient={cloudReferenceClient}

@@ -10,7 +10,7 @@ const control = 'min-h-11 !rounded-xl !text-sm !font-semibold disabled:opacity-5
 const ghost = `${control} !bg-zinc-950 border border-white/10 !text-zinc-400 hover:!text-white hover:!border-[#FFCC00]`;
 const money = (cents: number) => `PHP ${(cents / 100).toFixed(2)}`;
 
-export function CompanionReferenceReview({ review, busy, saved, onChange, onBack, onPrepare, onConfirm, onQueue, hasQueue, queueLabel = 'Preview demo queue' }: {
+export function CompanionReferenceReview({ review, busy, saved, onChange, onBack, onPrepare, onConfirm, onQueue, hasQueue, queueLabel = 'Preview demo queue', cloudMode = false, cloudLinked = false }: {
   review: ReferenceReview;
   busy: boolean;
   saved: boolean;
@@ -21,6 +21,8 @@ export function CompanionReferenceReview({ review, busy, saved, onChange, onBack
   onQueue: () => void;
   hasQueue: boolean;
   queueLabel?: string;
+  cloudMode?: boolean;
+  cloudLinked?: boolean;
 }) {
   const errors = reviewErrors(review);
   let totals: ReturnType<typeof sampleQuoteTotals> | null = null;
@@ -36,7 +38,7 @@ export function CompanionReferenceReview({ review, busy, saved, onChange, onBack
       <p className="text-sm text-zinc-300">Target language: {review.outputLanguage}. {review.speechMode === 'spoken' ? 'Sample speech is English and has not been localized.' : 'No voiceover in this plan.'}</p>
       <p className="text-xs text-zinc-400">Revision {review.revision} · {review.adaptationMode === 'close' ? 'Match closely requested' : 'Adapt for brand requested'}. Reference resemblance is not evaluated in this demo.</p>
       {review.stale && <div role="alert" className="flex items-start gap-2 text-sm text-amber-500"><AlertTriangle className="h-4 w-4 shrink-0" /><p>The brief changed. This is the previous sample plan. Prepare an updated sample plan to replace it before confirming.</p></div>}
-      {review.stale && <GoldButton className={`${control} w-full`} disabled={busy || !saved} onClick={onPrepare}>{busy ? 'Preparing sample…' : 'Prepare updated sample plan'}</GoldButton>}
+      {(review.stale || (cloudMode && !cloudLinked)) && <GoldButton className={`${control} w-full`} disabled={busy || !saved} onClick={onPrepare}>{busy ? 'Preparing sample…' : 'Prepare updated sample plan'}</GoldButton>}
       {review.missing.length > 0 && <div className="flex items-start gap-2 text-xs leading-relaxed text-amber-500"><AlertTriangle className="h-4 w-4 shrink-0" /><p>Still needed for real planning: {review.missing.join(', ')}. You can confirm this incomplete example only as a demo.</p></div>}
       <details><summary className="min-h-11 cursor-pointer py-3 text-sm font-semibold">User-supplied brief snapshot</summary><dl className="space-y-3 text-sm">{review.facts.map(fact => <div key={fact.label}><dt className="text-zinc-400">{fact.label}</dt><dd className="whitespace-pre-wrap break-words text-zinc-200">{fact.value || 'Not supplied'}</dd></div>)}</dl><p className="mt-3 text-xs text-zinc-400">These are supplied notes, not verified research or approved ad claims.</p></details>
     </GlassPanel>
@@ -75,10 +77,10 @@ export function CompanionReferenceReview({ review, busy, saved, onChange, onBack
     <GlassPanel className="space-y-3 p-4 sm:p-5">
       {errors.length > 0 && <div role="alert" className="flex items-start gap-2 text-sm text-amber-500"><AlertTriangle className="h-4 w-4 shrink-0" /><ul className="space-y-2">{errors.map((error, index) => <li key={index}>{error}</li>)}</ul></div>}
       {review.confirmation && <p role="status" className="flex items-start gap-2 text-sm text-zinc-200"><Check className="h-4 w-4 shrink-0 text-[#FFCC00]" />{saved ? `Sample plan confirmed for revision ${review.revision}. Nothing will be generated or charged.` : 'Demo confirmation is not saved yet. Keep this tab open and check the save status.'}</p>}
-      {!review.confirmation && <GoldButton className={`${control} w-full`} disabled={busy || !saved || errors.length > 0} onClick={onConfirm}>{busy ? 'Checking sample inputs…' : 'Confirm sample plan'}</GoldButton>}
+      {!review.confirmation && <GoldButton className={`${control} w-full`} disabled={busy || !saved || errors.length > 0 || (cloudMode && !cloudLinked)} onClick={onConfirm}>{busy ? 'Checking sample inputs…' : 'Confirm sample plan'}</GoldButton>}
       {review.confirmation && <GoldButton className={`${control} w-full`} disabled={busy || !saved} onClick={onQueue}>{queueLabel}</GoldButton>}
       {!review.confirmation && hasQueue && <Button variant="ghost" className={`${ghost} w-full`} onClick={onQueue}>{queueLabel}</Button>}
-      <p className="text-xs leading-relaxed text-zinc-400">Demo confirmation records these inputs, this plan revision and the illustrative estimate on this device. Any change requires review again.</p>
+      <p className="text-xs leading-relaxed text-zinc-400">{cloudMode ? cloudLinked ? 'These inputs are saved privately in cloud storage. Review edits and demo confirmation stay on this device until Start cloud fixture job is accepted; that job freezes this approved plan and exact input snapshot. Any change requires review again.' : 'These current inputs are not confirmed in cloud storage. Prepare an updated sample plan to save or verify them before confirming the current cloud fixture plan. Review edits stay on this device; this review cannot start a cloud job until its inputs match a saved snapshot.' : 'Demo confirmation records these inputs, this plan revision and the illustrative estimate on this device. Any change requires review again.'}</p>
     </GlassPanel>
   </div>;
 }

@@ -144,9 +144,9 @@ redirects drop the pilot query, and changing history alone may not remount the
 cloud client. Keep the normal access controls enabled during this check.
 
 Cloud recovery shows the frozen direction, script, visual plan, illustrative
-quote and job status. It does not fabricate missing uploaded files: reference
-videos and photos remain on the original device until cloud media storage is
-implemented. There is no generated video, music, voice or Assets delivery.
+quote and job status. Legacy fixture jobs have no uploaded-input association;
+the linked flow below also recovers the original private cloud input snapshot.
+There is no generated video, music, voice or Assets delivery.
 The original local job links are never reinterpreted as cloud jobs.
 
 Free database checks use pinned, development-only PGlite to execute the actual
@@ -195,7 +195,8 @@ hashes, MIME, decoded dimensions/duration and the original draft fingerprint, th
 persists a new editable local chat through the existing IndexedDB revision check
 before selecting it. Existing local work is retained. No reviewed plan, approval,
 queue, production run or generation authority is imported. Existing cloud jobs
-remain independent; their frozen intents are not rewritten or bound to new files.
+retain their original frozen intents; they are never rewritten or rebound to new
+files. The linked flow below associates newly submitted fixture jobs explicitly.
 
 `supabase/companion_cloud_references.sql` creates a dedicated private
 `grifon-fixture-reference-media` bucket and private snapshot/reservation table.
@@ -232,6 +233,59 @@ providers, production Assets or paid generation. Actual SQL/roles run in PGlite
 with storage metadata/helper stand-ins. RED/GREEN probes cover missing recovery,
 StrictMode replay and forbidden signed-upload operations. Hosted activation and
 authenticated Storage round trips require their own recorded evidence.
+
+### Linked cloud input, review and fixture jobs
+
+In the cloud pilot, preparing a sample review first confirms a matching private
+cloud input snapshot. An unchanged imported snapshot is reused; changed inputs
+need a new snapshot. Cloud provenance stays beside the local draft, outside its
+existing fingerprint. The review continues to use fixture sample copy and invented
+estimates, with no reference analysis or provider calls.
+
+Review edits remain saved on the current device until **Start cloud fixture job**
+is accepted. Acceptance freezes that confirmed review and its cloud snapshot link
+in the existing cloud job. The review's continuation opens cloud jobs directly.
+It does not start a local queue or automatically submit a job.
+The exact request is durably saved before dispatch. Unknown acceptance is
+reconciled using that identity; viewing an older job cannot clear a newer pending
+request or submit a replacement automatically.
+
+Linked intents identify the exact committed snapshot and original input hash.
+`supabase/companion_cloud_fixture_references.sql` adds this validation to the
+existing intent validator after the job and reference schemas are installed.
+The server checks owner, committed state, input fingerprint, voice, language,
+adaptation/speech modes, immutable brief facts and required object size/MIME.
+The request identity also includes the snapshot ID. Existing legacy job identities,
+RPCs, worker, scheduler, quotas and zero-spend rules stay intact.
+
+A linked job can reopen its saved inputs and frozen review in an editable local
+copy. Every file is downloaded and checked before durable local installation.
+The copy has no restored confirmation or new execution authority; the original
+job and approved plan remain available for observation, retry and cancellation.
+Input edits invalidate the copy's current confirmation and cannot rebind an
+accepted job. Older jobs without a snapshot link remain viewable as legacy jobs.
+
+The integrated browser checks use one shared HTTP fixture backend for inputs and
+jobs, including fresh-browser recovery and continuation while its browser is
+closed. This is simulated execution, not native cloud or paid-provider evidence.
+
+Approved hosted rollout and signed-in smoke passed on 2026-10-15 at source
+`b0f0efde`. Unchanged Prepare reused the original private snapshot (one video,
+five ordered photos and the selected voice). Native Start froze the confirmed
+review and source link. The job completed after its preview tab closed: five
+worker ticks followed closure, captured server-side before reconnection. Reopen
+recovered the same job and restored verified inputs plus original review content
+into an unconfirmed editable chat; review fields survived a full reload. One new
+job, no duplicate snapshots/files and zero actual spend. Evidence is ignored under
+`.tmp/ugc-cloud-linked-live/` and `.tmp/linked-correctness-native*`.
+Only that job tab was closed; physical PC shutdown, a physical second device and
+native cleared-browser recovery were not tested. No paid generation or video/
+Assets output ran.
+
+```powershell
+npx.cmd vitest run tests/unit/companionLinkedCloudFlow.test.ts tests/unit/companionCloudFixtureReferencesSql.test.ts
+npm.cmd run test:e2e -- --config tests/e2e/companion-cloud-workflow.config.ts
+```
 
 ### Existing local intake and review checks
 

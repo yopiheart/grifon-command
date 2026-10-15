@@ -13,7 +13,8 @@ import { confirmSampleReview, createSampleReview, fingerprintReferenceDraft } fr
 import { CompanionReferenceReview } from './CompanionReferenceReview';
 import { CompanionReferenceQueue } from './CompanionReferenceQueue';
 import { CompanionFixtureJob } from './CompanionFixtureJob';
-import type { FixtureJobClient } from '../../services/companionFixtureJobs';
+import { cloudReferenceMatchesReview, type FixtureJobClient } from '../../services/companionFixtureJobs';
+import { ensureCloudReference } from '../../services/companionCloudReferences';
 
 const control = 'min-h-11 min-w-11 !rounded-xl !text-sm !font-semibold !normal-case !tracking-normal';
 const ghost = `${control} !bg-zinc-950 border border-white/10 !text-zinc-400 hover:!text-white hover:!border-[#FFCC00]`;
@@ -38,6 +39,7 @@ export function CompanionReferenceBrief({ conversation, userId, loadVoices = fet
   fixtureJobClient?: FixtureJobClient;
 }) {
   const draft = conversation.chat.referenceDraft!;
+  const cloudMode = !!conversation.cloudReferenceClient && !!conversation.openCloudJobs;
   const latest = useRef(draft); latest.current = draft;
   const latestChat = useRef(conversation.chat); latestChat.current = conversation.chat;
   const [showReview, setShowReview] = useState(!!conversation.chat.referenceReview);
@@ -94,6 +96,14 @@ export function CompanionReferenceBrief({ conversation, userId, loadVoices = fet
     planningLock.current = true; setPlanning(true); setError(''); conversation.setMediaPreparing(true);
     try {
       const hash = await fingerprintReferenceDraft(snapshot);
+      let cloudSource = chat.referenceCloudSource;
+      if (cloudMode) {
+        if (confirm) {
+          if (!cloudSource || cloudSource.inputHash !== hash) throw new Error('The current inputs need a cloud save and updated sample plan before confirmation.');
+        } else {
+          cloudSource = await ensureCloudReference(conversation.cloudReferenceClient!, userId, chat.id, snapshot, cloudSource);
+        }
+      }
       if (!active.current || currentScope.current !== startedScope) return;
       if (latest.current !== snapshot || latestChat.current.referenceInputRevision !== chat.referenceInputRevision || latestChat.current.referenceReview !== chat.referenceReview) {
         setError('The brief or review changed while checking inputs. Prepare the sample again.'); return;
@@ -101,7 +111,9 @@ export function CompanionReferenceBrief({ conversation, userId, loadVoices = fet
       const review = confirm && chat.referenceReview
         ? confirmSampleReview(chat.referenceReview, hash, chat.referenceInputRevision ?? 0)
         : createSampleReview(snapshot, hash, chat.referenceInputRevision ?? 0, chat.referenceReview?.revision ?? 0);
-      conversation.update({ referenceReview: review }); setShowReview(true);
+      if (cloudMode) await conversation.updateSaved({ referenceReview: review, referenceCloudSource: cloudSource }, chat);
+      else conversation.update({ referenceReview: review });
+      if (active.current && currentScope.current === startedScope) setShowReview(true);
     } catch (reason) { if (active.current && currentScope.current === startedScope) setError(reason instanceof Error ? reason.message : 'The sample could not be prepared. Please retry.'); }
     finally { if (active.current && currentScope.current === startedScope) { planningLock.current = false; setPlanning(false); conversation.setMediaPreparing(false); } }
   };
@@ -133,11 +145,11 @@ export function CompanionReferenceBrief({ conversation, userId, loadVoices = fet
         {error && <p role="alert" className="flex items-start gap-3 text-sm text-amber-500"><AlertTriangle className="h-5 w-5 shrink-0" />{error}</p>}
         {planning && <p role="status" className="text-sm text-zinc-300">Checking your saved brief and files… No generation or spending.</p>}
         {showFixtureJob ? fixtureJobClient ? <CompanionFixtureJob conversation={conversation} userId={userId} client={fixtureJobClient} onBack={() => { setShowFixtureJob(false); setShowReview(true); }} /> : <GlassPanel className="space-y-4 p-4 sm:p-5"><h2 className="!text-lg !font-semibold !normal-case !tracking-normal">Saved background fixture job</h2><p className="text-sm leading-relaxed text-zinc-300">Open the local background fixture preview to observe or stop this job. This view has no worker connection. Editing stays locked until the worker acknowledges stopping the plan.</p><p className="text-sm text-zinc-300">Original plan revision {fixtureLink?.intent.plan.revision}. Actual spend: PHP 0.00.</p></GlassPanel> : showQueue && !fixtureJobClient ? <CompanionReferenceQueue key={`${scope}:${conversation.chat.referenceQueue?.id ?? 'new'}`} conversation={conversation} userId={userId} onBack={() => { setShowQueue(false); setShowReview(true); }} /> : showReview && conversation.chat.referenceReview ? <CompanionReferenceReview review={conversation.chat.referenceReview} busy={planning || uploading || fixtureLocked} saved={conversation.saved && !conversation.saving && !conversation.saveConflict}
-          onChange={review => conversation.update({ referenceReview: review })} onBack={() => setShowReview(false)} onPrepare={() => void reviewAction()} onConfirm={() => void reviewAction(true)} onQueue={() => fixtureJobClient ? setShowFixtureJob(true) : setShowQueue(true)} hasQueue={!!conversation.chat.referenceQueue || !!fixtureLink} queueLabel={fixtureJobClient ? 'Open background fixture job' : undefined} /> : <>
+          onChange={review => conversation.update({ referenceReview: review })} onBack={() => setShowReview(false)} onPrepare={() => void reviewAction()} onConfirm={() => void reviewAction(true)} onQueue={() => cloudMode ? conversation.openCloudJobs!() : fixtureJobClient ? setShowFixtureJob(true) : setShowQueue(true)} hasQueue={cloudMode ? !!conversation.chat.referenceCloudJob || !!conversation.chat.referenceCloudObservation : !!conversation.chat.referenceQueue || !!fixtureLink} queueLabel={cloudMode ? 'Open cloud fixture job' : fixtureJobClient ? 'Open background fixture job' : undefined} cloudMode={cloudMode} cloudLinked={cloudReferenceMatchesReview(conversation.chat.referenceCloudSource, conversation.chat.referenceReview, conversation.chat.referenceInputRevision ?? 0)} /> : <>
         <GlassPanel className="space-y-4 p-4 sm:p-5" aria-label="Reference brief">
           <h2 className="!text-lg !font-semibold !normal-case !tracking-normal">Reference brief</h2>
           <p className="text-sm leading-relaxed text-zinc-300">Save your brief and assets, then try an editable sample plan. Real analysis and generation are not available here.</p>
-          <p className="text-xs leading-relaxed text-zinc-400">Saved only in this browser on this device, under your account. Clearing browser data removes these drafts and files. Keep your originals.</p>
+          <p className="text-xs leading-relaxed text-zinc-400">{cloudMode ? 'Prepare saves the exact current brief, files and selected voice to private cloud storage before review. Review edits stay on this device until Start cloud fixture job is accepted. Cloud files must be 6 MB or smaller each. Keep your originals.' : 'Saved only in this browser on this device, under your account. Clearing browser data removes these drafts and files. Keep your originals.'}</p>
           <GoldButton className={`${control} w-full disabled:opacity-50 disabled:hover:scale-100`} disabled={planning || uploading || !conversation.saved || conversation.saving || conversation.saveConflict} onClick={() => void reviewAction()}>{planning ? 'Preparing sample…' : conversation.chat.referenceReview ? 'Prepare updated sample plan' : 'Prepare sample plan'}</GoldButton>
           <p className="text-xs text-zinc-400">Fixture example only, with English sample copy and invented PHP estimates. Actual spend is zero. Incomplete briefs are allowed for this demo.</p>
           {conversation.chat.referenceReview && <><Button variant="ghost" className={ghost} onClick={() => setShowReview(true)}>View previous sample plan</Button>{conversation.chat.referenceReview.stale && <p className="flex items-start gap-3 text-xs text-amber-500"><AlertTriangle className="h-5 w-5 shrink-0" />Your previous sample is stale. Preparing an updated sample replaces its edits and demo confirmation.</p>}</>}
@@ -155,7 +167,7 @@ export function CompanionReferenceBrief({ conversation, userId, loadVoices = fet
           <p className="text-sm text-zinc-300">Your reference can be in any language. Its edit can guide an ad in your chosen output language.</p>
           <input ref={videoInput} aria-label="Reference video" className="hidden" type="file" accept="video/mp4,video/webm,video/quicktime" disabled={uploading || planning} onChange={event => { void attach(Array.from(event.target.files ?? []), 'video'); event.target.value = ''; }} />
           <Button variant="secondary" className={dropzone} disabled={uploading || planning} onClick={() => videoInput.current?.click()}>{draft.referenceVideo ? 'Replace reference video' : 'Add reference video'}</Button>
-          <p className="text-xs text-zinc-400">MP4, WebM or MOV supported by your browser. Up to 100 MB and 3 minutes. Video stays on this device.</p>
+          <p className="text-xs text-zinc-400">MP4, WebM or MOV supported by your browser. Up to 100 MB and 3 minutes locally.{cloudMode ? ' Cloud fixture save requires 6 MB or smaller.' : ' Video stays on this device.'}</p>
           {draft.referenceVideo && <div className="space-y-2"><MediaPreview media={draft.referenceVideo} video /><div className="flex items-center gap-2"><p className="min-w-0 flex-1 truncate text-xs text-zinc-300">{draft.referenceVideo.name}</p><Button variant="ghost" className={ghost} disabled={uploading || planning} onClick={() => update({ referenceVideo: null })}>Remove video</Button></div></div>}
           <Input id="reference-link" label="Reference link (optional)" value={draft.referenceLink} maxLength={4000} aria-invalid={!!linkError} aria-describedby="reference-link-help" onChange={event => update({ referenceLink: event.target.value })} placeholder="https://…" />
           <p id="reference-link-help" className={`text-xs ${linkError ? 'text-amber-500' : 'text-zinc-400'}`}>{linkError || 'Links are saved as text. Grifon does not fetch or analyze them in this build.'}</p>
@@ -177,7 +189,7 @@ export function CompanionReferenceBrief({ conversation, userId, loadVoices = fet
       </div>
     </div>
     <footer className="shrink-0 border-t border-white/10 bg-zinc-950 px-4 py-3 pb-[max(12px,env(safe-area-inset-bottom))] sm:px-8">
-      <div className="mx-auto max-w-2xl"><p role="status" id="companion-save-status" className="text-xs leading-relaxed text-zinc-400">{planning ? 'Preparing this sample locally. No generation or spending.' : uploading ? 'Media is still being checked. Keep this chat open until it is attached and saved.' : conversation.saveConflict ? 'Another tab saved newer chats. Save this chat as a copy to preserve both versions.' : conversation.saving ? 'Saving on this device…' : conversation.saved ? showFixtureJob ? 'Job link saved in this browser. Worker status is shown separately.' : showQueue ? 'Demo queue saved on this device. No generation started.' : showReview ? 'Sample review saved on this device. No generation started.' : 'Reference brief saved on this device. No generation started.' : 'Draft could not be saved. Keep this tab open and retry.'}</p><Button variant={conversation.saved ? 'ghost' : 'secondary'} className={`${ghost} mt-2 w-full`} disabled={planning || uploading || conversation.saving} onClick={conversation.saveConflict ? conversation.recoverCopy : conversation.retrySave}>{conversation.saveConflict ? 'Save this chat as a copy' : conversation.saved ? showFixtureJob ? 'Save background fixture job link' : showQueue ? 'Save demo queue' : showReview ? 'Save review' : 'Save brief' : 'Retry saving'}</Button></div>
+      <div className="mx-auto max-w-2xl"><p role="status" id="companion-save-status" className="text-xs leading-relaxed text-zinc-400">{planning ? cloudMode ? 'Saving or verifying private cloud inputs before sample review. No generation or spending.' : 'Preparing this sample locally. No generation or spending.' : uploading ? 'Media is still being checked. Keep this chat open until it is attached and saved.' : conversation.saveConflict ? 'Another tab saved newer chats. Save this chat as a copy to preserve both versions.' : conversation.saving ? 'Saving on this device…' : conversation.saved ? showFixtureJob ? 'Job link saved in this browser. Worker status is shown separately.' : showQueue ? 'Demo queue saved on this device. No generation started.' : showReview ? 'Sample review saved on this device. No generation started.' : 'Reference brief saved on this device. No generation started.' : 'Draft could not be saved. Keep this tab open and retry.'}</p><Button variant={conversation.saved ? 'ghost' : 'secondary'} className={`${ghost} mt-2 w-full`} disabled={planning || uploading || conversation.saving} onClick={conversation.saveConflict ? conversation.recoverCopy : conversation.retrySave}>{conversation.saveConflict ? 'Save this chat as a copy' : conversation.saved ? showFixtureJob ? 'Save background fixture job link' : showQueue ? 'Save demo queue' : showReview ? 'Save review' : 'Save brief' : 'Retry saving'}</Button></div>
     </footer>
   </div>;
 }
