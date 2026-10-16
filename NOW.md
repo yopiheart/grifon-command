@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-16; pre-asset fixture foundation complete, normal sleep scheduled**
+**Stamped: 2026-10-16; pre-asset fixture foundation complete, morning UGC walkthrough PASS**
 
 ## Authorization and boundary
 Neil authorized autonomous pre-asset fixture builds, reviewed fixture activation/
@@ -53,8 +53,11 @@ Unknown run094886bc-abec-4f8c-833f-498b96300f0e held12 aftercancel+reload;
 explicit synthetic recovery settled12/held0 once,oneattempt. Video worker unaffected.
 Native UGC/motion/spec editable copies reopen; UGC/spec reload PASS, approvals clear.
 Spec samev1result playedfull8s360x640 in Assets/chat;4receiptentries,390pxnooverflow.
-Totals10jobs/89events/2commands/4results/4snapshots/24objects370732bytes,spend0.
+Overnight totals10jobs/89events/2commands/4results/4snapshots/24objects370732bytes,spend0.
 Original7jobs/62events/2commands/1result/1snapshot/6objects92683B unchanged.
+Morning walkthrough: saved UGC inputs -> confirmed copy -> one new COMPLETE job
+ab8afbdeeef2b48b2cbfc35e80e60eca7f88b4c25172fcfe8110aad4a382d0f9,8steps/oneattempt/PHP0.
+Same result playedfull8s in chat/Assets;5fixture entries. morning-ugc-walkthrough.json.
 Evidence .tmp/overnight-fixture-run/ and .tmp/preasset-final-smoke/workflow/.
 
 ## Activated exact migrations and preserved baseline
@@ -77,8 +80,7 @@ identity/edit/audio acceptance, paid-providerintegration and nativeconcurrency/l
 remain unproven. No physicalshutdown/seconddevice was tested in this iteration.
 Next: exact three references/brandassets and scoped provider/quality pilot approvals.
 Task-owned isolated5194host stopped; existing5173/session untouched. Displaynotheld.
-One-time normalS3sleep scheduled 2026-10-16 02:24:18 PHT, task
-Codex-Grifon-Fixture-Sleep-20261016-021818; readback Ready, Limited/Interactive,
-no repeat/wake/catchup. After this backup release powerhold PID19236/active.marker;
-fresh ready-to-sleep.json gates checks/backup. No force-close/shutdown/hibernate.
+One-time normalS3sleep task Codex-Grifon-Fixture-Sleep-20261016-021818 completed;
+Sleep API returned accepted=true at 08:34:42 PHT. Powerhold released, no repeat,
+force-close/shutdown/hibernate. Evidence .tmp/overnight-fixture-run/sleep-status.json.
 Roadmaps: workflows/ugc_reference_implementation_plan.md, creative_library_roadmap.md.
