@@ -14,6 +14,9 @@ based on fe942fab from codex/ugc-fixture-delivery (draft PR197). No services,
 prompts, models, provider knobs, migrations, credentials or production data changed.
 No deploy/merge requested. Existing fixture foundation below is retained.
 
+Draft PR199: https://github.com/yopiheart/grifon-command/pull/199
+Application commit041f136b is pushed; independent review and all checks below pass.
+
 Implemented: shell-local persisted appearance, light token coverage including
 reference/cloud/Assets/settings portal, refractive functional chrome with bounded
 resize maps/cleanup, horizontal live mascot identity, 16px mobile input, logo-only
