@@ -10,16 +10,20 @@ async function geometry(page: Page) {
   const composer = await page.locator('.companion-composer').boundingBox();
   const transcript = await page.getByTestId('conversation-scroll').boundingBox();
   const header = await page.locator('.companion-header').boundingBox();
-  if (!avatar || !composer || !transcript || !header) throw new Error('Missing visible avatar, composer, header or transcript');
-  return { avatar, composer, transcript, header,
-    centerOffset: Math.abs(avatar.x + avatar.width / 2 - composer.x - composer.width / 2),
+  const identity = await page.locator('.companion-identity').boundingBox();
+  const appearance = await page.getByRole('group', { name: 'Chat appearance', exact: true }).boundingBox();
+  if (!avatar || !composer || !transcript || !header || !identity || !appearance) throw new Error('Missing visible avatar, composer, header, identity, appearance or transcript');
+  return { avatar, composer, transcript, header, identity, appearance,
+    identityContainsAvatar: avatar.x >= identity.x - 1 && avatar.x + avatar.width <= identity.x + identity.width + 1
+      && avatar.y >= identity.y - 1 && avatar.y + avatar.height <= identity.y + identity.height + 1,
+    toolbarGap: appearance.x - identity.x - identity.width,
     avatarBottom: avatar.y + avatar.height,
     overflow: await page.evaluate(() => document.documentElement.scrollWidth - innerWidth),
   };
 }
 
-for (const [width, height] of [[1280, 900], [375, 667], [390, 844]]) {
-  test(`centered companion geometry and reachable controls at ${width}x${height}`, async ({ page }) => {
+for (const [width, height] of [[1280, 900], [1024, 768], [768, 900], [375, 667], [390, 844]]) {
+  test(`horizontal companion geometry and reachable controls at ${width}x${height}`, async ({ page }) => {
     await page.setViewportSize({ width, height });
     const unexpected: string[] = [];
     await page.route('**/*', route => {
@@ -37,9 +41,10 @@ for (const [width, height] of [[1280, 900], [375, 667], [390, 844]]) {
     const initial = await geometry(page);
     fs.writeFileSync(path.join(QA, `${phase}-geometry-${width}.json`), JSON.stringify(initial, null, 2));
     await page.screenshot({ path: path.join(QA, `${phase}-initial-${width}.png`), fullPage: true });
-    // Floating chrome shares the composer center line; the scroll area runs below
-    // it while newly opened content clears the header. Allow2px layout rounding.
-    expect.soft(initial.centerOffset, 'avatar must share the composer center line').toBeLessThanOrEqual(2);
+    // Approved horizontal identity contains the live mascot and stays clear of
+    // appearance controls. The transcript still extends beneath floating chrome.
+    expect.soft(initial.identityContainsAvatar, 'live mascot stays inside its identity pill').toBe(true);
+    expect.soft(initial.toolbarGap, 'identity and appearance controls do not overlap').toBeGreaterThanOrEqual(4);
     expect.soft(initial.transcript.y, 'transcript extends beneath floating mascot').toBeLessThan(initial.avatarBottom);
     expect.soft((await page.locator('.companion-message').first().boundingBox())!.y, 'initial content clears floating chrome').toBeGreaterThanOrEqual(initial.header.y + initial.header.height - 2);
     expect(initial.overflow).toBeLessThanOrEqual(0);
@@ -54,7 +59,8 @@ for (const [width, height] of [[1280, 900], [375, 667], [390, 844]]) {
     await input.fill('North Coffee');
     await page.screenshot({ path: path.join(QA, `${phase}-active-${width}.png`), fullPage: true });
     const active = await geometry(page);
-    expect.soft(active.centerOffset).toBeLessThanOrEqual(2);
+    expect.soft(active.identityContainsAvatar).toBe(true);
+    expect.soft(active.toolbarGap).toBeGreaterThanOrEqual(4);
     expect.soft(active.transcript.y).toBeLessThan(active.avatarBottom);
     await expect(page.getByRole('button', { name: /^(Pause|Resume) companion motion$/ })).toHaveCount(0);
     for (const name of [width < 768 ? 'Open conversations' : 'Collapse conversations', 'Attach product photo', 'Send']) {
@@ -86,6 +92,20 @@ for (const [width, height] of [[1280, 900], [375, 667], [390, 844]]) {
     await expect(page.getByTestId('companion-chat')).toHaveAttribute('data-companion-state', 'ready');
     await page.waitForTimeout(600);
     await expect(page.getByRole('heading', { name: 'Your scenes, before we film.', exact: true })).toBeInViewport({ ratio: 1 });
+    const sceneGrid = await page.locator('[data-companion-review="storyboard"] .grid').evaluate(node => ({
+      width: node.getBoundingClientRect().width, columns: getComputedStyle(node).gridTemplateColumns,
+      cardWidths: Array.from(node.children).map(card => card.getBoundingClientRect().width),
+    }));
+    fs.writeFileSync(path.join(QA, `${phase}-scene-grid-${width}.json`), JSON.stringify(sceneGrid, null, 2));
+    for (const button of await page.getByRole('button', { name: /^Regenerate scene \d+$/ }).all()) {
+      const fit = await button.evaluate(node => {
+        const card = node.closest('.overflow-hidden')!.getBoundingClientRect(), rect = node.getBoundingClientRect();
+        return { width: node.clientWidth, content: node.scrollWidth, left: rect.left, right: rect.right, cardLeft: card.left, cardRight: card.right };
+      });
+      expect(fit.content, 'the complete scene action label fits its button').toBeLessThanOrEqual(fit.width);
+      expect(fit.left).toBeGreaterThanOrEqual(fit.cardLeft);
+      expect(fit.right, 'the whole scene action stays inside its card').toBeLessThanOrEqual(fit.cardRight);
+    }
     await page.screenshot({ path: path.join(QA, `${phase}-ready-${width}.png`), fullPage: true });
     await page.getByRole('button', { name: 'Close viewer', exact: true }).click();
     await page.evaluate(() => (window as any).companionFixture.emit('result'));

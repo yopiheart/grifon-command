@@ -455,7 +455,7 @@ for (const destination of ['account', 'chat']) test(`a late fixture media respon
   cloud.tick(intent.requestId, 20); cloud.holdNext('fixture-video'); await resultCard(page).getByRole('button', { name: 'Refresh result', exact: true }).click();
   await expect.poll(() => cloud.held).toBe(true);
   if (destination === 'account') await account(page, OTHER);
-  else { await page.getByRole('button', { name: 'Open conversations', exact: true }).click(); await page.getByRole('button', { name: 'New chat', exact: true }).click(); }
+  else { await page.getByRole('button', { name: 'Open conversations', exact: true }).click(); await page.getByRole('dialog', { name: 'Chat navigation', exact: true }).getByRole('button', { name: 'New chat', exact: true }).click(); }
   cloud.release(); await expect(page.getByRole('button', { name: 'Reference brief', exact: true })).toBeVisible();
   await expect(resultCard(page)).toHaveCount(0); await expect(page.getByLabel('Fixture sample video player')).toHaveCount(0);
   const current = selectedChat(await book(page, destination === 'account' ? OTHER : OWNER)); expect(current.referenceCloudJob).toBeUndefined(); expect(current.referenceCloudObservation).toBeUndefined();
@@ -480,7 +480,7 @@ test('a late Assets list cannot show another account its saved fixture result', 
 test('a delayed result opening cannot replace the newer selected Asset', async ({ page, browser, cloud }) => {
   await reference(page, 1, 'First saved sample'); await prepare(page, cloud); await confirm(page);
   const first = await start(page, cloud), firstIntent = JSON.parse(first.intentText); cloud.tick(firstIntent.requestId, 20);
-  await page.getByRole('button', { name: 'Open conversations', exact: true }).click(); await page.getByRole('button', { name: 'New chat', exact: true }).click();
+  await page.getByRole('button', { name: 'Open conversations', exact: true }).click(); await page.getByRole('dialog', { name: 'Chat navigation', exact: true }).getByRole('button', { name: 'New chat', exact: true }).click();
   await reference(page, 1, 'Second saved sample'); await prepare(page, cloud); await confirm(page);
   await page.getByRole('button', { name: 'Open cloud fixture job', exact: true }).click(); await page.getByRole('button', { name: 'Start cloud fixture job', exact: true }).click();
   await expect.poll(() => cloud.jobs.size).toBe(2);
@@ -766,7 +766,7 @@ test('late start acknowledgement cannot replace a different chat or create anoth
   await page.getByText('Checking your cloud request…', { exact: true }).scrollIntoViewIfNeeded();
   await page.screenshot({ path: testInfo.outputPath('linked-start-busy-390.png'), fullPage: true });
   const intent = JSON.parse([...cloud.jobs.values()][0].intentText);
-  await page.getByRole('button', { name: 'Open conversations', exact: true }).click(); await page.getByRole('button', { name: 'New chat', exact: true }).click();
+  await page.getByRole('button', { name: 'Open conversations', exact: true }).click(); await page.getByRole('dialog', { name: 'Chat navigation', exact: true }).getByRole('button', { name: 'New chat', exact: true }).click();
   cloud.release(); await expect(page.getByRole('button', { name: 'Reference brief', exact: true })).toBeVisible();
   const newChat = selectedChat(await book(page)); expect(newChat.id).not.toBe(intent.ownerChatId); expect(newChat.referenceCloudJob).toBeUndefined(); expect(newChat.referenceReview).toBeUndefined();
   await openCloud(page); await selectJob(page, intent.requestId); await expect(status(page)).toContainText(/running/i); expect(cloud.startCalls()).toHaveLength(1);

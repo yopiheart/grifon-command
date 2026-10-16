@@ -1,5 +1,62 @@
 # NOW - the resume doc
-**Stamped: 2026-10-16; pre-asset fixture foundation complete, morning UGC walkthrough PASS**
+**Stamped: 2026-10-16; chat appearance and website wordmark verified for review**
+
+## Ready for review: chat appearance and website wordmark
+
+Neil approved Study02 Messages/Liquid Glass light/dark design for the actual chat,
+with theme toggle and preservation of all existing features. Chat sidebar is
+logo-only. He additionally requested an Oxanium, slanted metallic-gold website
+wordmark beside the unchanged mark, and explicitly chose open-source Oxanium
+instead of the commercially licensed Roadster font.
+
+Workspace F:/CodexWorktrees/61f5/grifon-command; branch codex/chat-liquid-glass,
+based on fe942fab from codex/ugc-fixture-delivery (draft PR197). No services,
+prompts, models, provider knobs, migrations, credentials or production data changed.
+No deploy/merge requested. Existing fixture foundation below is retained.
+
+Implemented: shell-local persisted appearance, light token coverage including
+reference/cloud/Assets/settings portal, refractive functional chrome with bounded
+resize maps/cleanup, horizontal live mascot identity, 16px mobile input, logo-only
+sidebar, shared public website wordmark, self-hosted Oxanium+OFL. Dark saved-list
+backing and selected preview ink preserve contrast over the wallpaper. Narrow
+desktop storyboard grids fit their pane, preserving complete action labels.
+
+Verification passed:
+- TSC/Vite production build, including PowerShell ASCII prebuild check.
+- Full serial Vitest:1931 passed,32 existing skips;156 files passed,9 skipped.
+- Fresh bundle-leak check:11 bundles,0 crown-jewel markers. Voice-sync,
+  eval-prompt sync, domain-language, artifact-anchor and diff whitespace checks pass.
+- Appearance persistence/draft/mascot/storage-failure/contrast checks, layout and
+  reachable actions at375/390/768/1024/1280, existing core chat/account/navigation/
+  typing/reference/review regressions pass through narrow and targeted reruns.
+- All38 cloud-workflow cases pass using their dedicated Edge setup, workers1.
+  Broad root5s expectations and temporary trace-file HMR caused setup failures;
+  final helper excludes temporary evidence.827 loopback requests across the
+  cloud batch and reruns,0 forbidden requests/provider calls/runtime errors.
+- New contrast verifier demonstrated RED4.167:1 against the initial sidebar CSS,
+  then GREEN5.963:1 inactive/hover and6.385:1 selected. Clipped scene-action
+  verifier demonstrated RED75px content in42px button, then GREEN at768/1024.
+- Raw scrollTop changed54px on typing in both current and fe942fab baseline;
+  the same visible message stayed exactly stationary. The test now verifies that
+  anchor plus strict raw position when layout stops changing.
+- Mobile navigation's existing inert background is confirmed in runtime traces
+  and native AX (only one drawer New chat, no background appearance controls).
+  Three cloud selectors now target the open dialog; all race assertions remain.
+
+Independent Codex source/React and actual visual review: PASS,0 findings.
+BRAND_PASS: chat42/50, website45/50. Final768/1024 screenshots show one scene
+column with136.938px/252.141px computed widths and complete Regenerate actions.
+Evidence: .tmp/chat-liquid-glass-qa, plus actual light/dark desktop/mobile and
+website screenshots in the calling task's export directory:
+C:/Users/ADMIN/.codex/visualizations/2026/10/16/01a14376-6524-7a70-a771-dde1bca5e50b/grifon-glass.
+
+Task-owned local Vite server5194 (exec session35439) uses dummy public auth values
+for component fixture and website inspection. Prototype4178 remains separate.
+Only test-owned5173 helpers were stopped. Owner review of codex/chat-liquid-glass
+is next; PR base is codex/ugc-fixture-delivery. No merge or production release
+was requested, and no paid generation ran.
+
+## Retained fixture foundation (verified before this design task)
 
 ## Authorization and boundary
 Neil authorized autonomous pre-asset fixture builds, reviewed fixture activation/
