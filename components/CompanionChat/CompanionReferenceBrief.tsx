@@ -1,9 +1,10 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { AlertTriangle, PanelLeft, Plus, X } from 'lucide-react';
+import { AlertTriangle, PanelLeft, X } from 'lucide-react';
 import Button from '../ui/Button';
 import Input from '../ui/Input';
 import Textarea from '../ui/Textarea';
 import { GlassPanel } from '../ui/GlassPanel';
+import { LiquidGlass } from '../ui/LiquidGlass';
 import { GoldButton } from '../ui/GoldButton';
 import type { VoiceLibrary } from '../../types';
 import { fetchVoices } from '../../services/voiceService';
@@ -138,11 +139,10 @@ export function CompanionReferenceBrief({ conversation, userId, loadVoices = fet
   let linkError = '';
   try { validateReferenceLink(draft.referenceLink); } catch (reason) { linkError = (reason as Error).message; }
   const selectedAvailable = !draft.voice || voices.some(voice => voice.id === draft.voice!.id && voice.source === draft.voice!.source);
-  return <div ref={section} data-testid="companion-chat" data-chat-id={conversation.chat.id} className="flex h-full min-h-0 flex-col text-white [&_input::placeholder]:text-zinc-400 [&_textarea::placeholder]:text-zinc-400">
-    <header className="relative shrink-0 border-b border-white/10 px-4 py-3 sm:px-8">
-      <Button variant="ghost" aria-label="Open conversations" className={`${ghost} absolute left-3 top-3 !p-3 md:!hidden`} onClick={conversation.openNavigation}><PanelLeft className="h-4 w-4" /></Button>
-      <div className="mx-auto flex w-fit flex-col items-center"><div ref={slot} aria-hidden="true" className="h-14 w-14" /><h1 className="!text-base !font-semibold !normal-case !tracking-normal">Grifon</h1></div>
-      <Button variant="ghost" aria-label="New chat" className={`${ghost} absolute right-3 top-3 !p-3 md:!hidden`} disabled={uploading || planning} onClick={conversation.newChat}><Plus className="h-4 w-4" /></Button>
+  return <div ref={section} data-testid="companion-chat" data-chat-id={conversation.chat.id} className="companion-reference-surface flex h-full min-h-0 flex-col text-white [&_input::placeholder]:text-zinc-400 [&_textarea::placeholder]:text-zinc-400">
+    <header className="companion-reference-header relative flex shrink-0 items-center gap-2 px-4 py-4 sm:px-8">
+      <Button variant="ghost" aria-label="Open conversations" className={`${control} !p-3 md:!hidden`} onClick={conversation.openNavigation}><PanelLeft className="h-4 w-4" /></Button>
+      <LiquidGlass data-companion-glass className="companion-identity companion-identity-badge flex min-w-0 w-fit items-center gap-2 rounded-full p-1 pr-5"><div ref={slot} aria-hidden="true" data-companion-avatar-slot className="h-14 w-14 shrink-0 sm:h-16 sm:w-16" /><div className="companion-identity-copy min-w-0"><h1 className="companion-display !normal-case !tracking-tight">Grifon</h1><p className="companion-identity-status truncate text-xs text-zinc-400">Reference brief</p></div></LiquidGlass>
     </header>
     <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-5 sm:px-8">
       <div className="mx-auto max-w-2xl space-y-5">

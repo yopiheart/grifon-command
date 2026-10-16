@@ -3,6 +3,7 @@ import { Loader2, Lock } from 'lucide-react';
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import { GrifonMark } from './ui/GrifonMark';
+import { GrifonWordmark } from './ui/GrifonWordmark';
 import { CONTACT } from '../config/contact';
 import { OrderSummary } from './checkout/OrderSummary';
 import { PaymentMethodTabs, type PaymentMethod } from './checkout/PaymentMethodTabs';
@@ -285,7 +286,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ email, onBack, onViewLegal 
       <div className="relative max-w-6xl mx-auto flex items-center justify-between mb-6 lg:mb-10">
         <div className="flex items-center gap-2">
           <GrifonMark className="h-9 w-9" />
-          <span className="text-white font-black italic text-lg tracking-tight">GRIFON</span>
+          <GrifonWordmark className="text-lg" />
         </div>
         <p className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.25em] text-on-surface-sublabel">
           <Lock className="w-3.5 h-3.5 shrink-0 text-[#FFCC00]" />

@@ -75,9 +75,14 @@ for (const [width, height] of [[375, 667], [390, 844], [1280, 900]]) {
     await openFixture(page);
     await expect(page.locator('iframe:visible')).toHaveAttribute('data-ready', 'true');
     const avatar = (await page.locator('iframe:visible').boundingBox())!;
-    const composer = (await page.locator('.companion-composer').boundingBox())!;
+    const identity = (await page.locator('.companion-identity').boundingBox())!;
+    const appearance = (await page.getByRole('group', { name: 'Chat appearance', exact: true }).boundingBox())!;
     expect(avatar.width).toBe(width < 768 ? 56 : 64);
-    expect(Math.abs(avatar.x + avatar.width / 2 - composer.x - composer.width / 2)).toBeLessThanOrEqual(2);
+    expect(avatar.x).toBeGreaterThanOrEqual(identity.x - 1);
+    expect(avatar.x + avatar.width).toBeLessThanOrEqual(identity.x + identity.width + 1);
+    expect(avatar.y).toBeGreaterThanOrEqual(identity.y - 1);
+    expect(avatar.y + avatar.height).toBeLessThanOrEqual(identity.y + identity.height + 1);
+    expect(appearance.x - identity.x - identity.width).toBeGreaterThanOrEqual(4);
     await send(page, 'Coffee navigation');
     await noSmallTargets(page);
     fs.mkdirSync(QA, { recursive: true });

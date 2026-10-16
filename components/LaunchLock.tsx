@@ -4,6 +4,7 @@ import { AlertTriangle, ArrowLeft, ArrowRight, Check, KeyRound, Loader2, Mail } 
 import { GlassPanel } from './ui/GlassPanel';
 import { GoldButton } from './ui/GoldButton';
 import { GrifonMark } from './ui/GrifonMark';
+import { GrifonWordmark } from './ui/GrifonWordmark';
 import { DUR, EASE, SPRING, reducedMotion } from './ui/motionTokens';
 import {
   redeemInvite,
@@ -213,9 +214,7 @@ const LaunchLock: React.FC<LaunchLockProps> = ({ onUnlock, onBackToSite, onNavig
           transition={reducedMotion(reduce, { duration: DUR.entrance, ease: EASE.expressive })}
         >
           <GrifonMark className="h-9 w-9 md:h-11 md:w-11" />
-          <span className="text-xl md:text-2xl font-[900] italic uppercase tracking-tighter text-white">
-            GRIFON
-          </span>
+          <GrifonWordmark className="text-xl md:text-2xl" />
         </motion.div>
 
         <motion.div

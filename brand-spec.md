@@ -15,6 +15,12 @@ This file is the **frozen asset inventory**. [DESIGN.md](DESIGN.md) is the syste
 
 **Anti-patterns:** never redraw the logo inline as SVG; never recolor; never apply gradients or filters to it.
 
+**Website wordmark (Neil approved, 2026-10-16):** public-site header/auth/legal/
+checkout text beside the existing mark uses self-hosted Oxanium with a restrained
+oblique metallic-gold highlight. The logo image remains unchanged. Font source:
+`assets/fonts/oxanium/` with its SIL OFL. This website-only exception does not
+alter the ad-creative lockup below. Companion Chat navigation uses the logo alone.
+
 **Ad-creative lockup (canonical, per Neil 2026-07-13):** ONE lockup on every ad creative — the **GrifonMark** ([components/ui/GrifonMark.tsx](components/ui/GrifonMark.tsx)): CSS-drawn transparent circle with a thin `#FFCC00` hairline ring (no glow, no fill), [public/logo.png](public/logo.png) griffin at ~74% height inside + **GRIFON** in Inter Black *italic* (`font-black italic tracking-tight`), exactly matching the site header. Do NOT use [public/logo-badge.png](public/logo-badge.png) in creatives — it is a square raster with a baked black background that shows around the ring. This lockup applies to BOTH the Grifon AI page and the Zam Grifon personal page — no "Zam Grifon" or "GRIFON AI" text lockups inside creatives (the FB page chrome already names the page; identical mark everywhere compounds S13 recall). Reference implementations: `assets/ad-samples/ready/*.html`.
 
 ---

@@ -64,7 +64,7 @@ export const CompanionComposer = forwardRef<CompanionComposerHandle, Props>(func
   };
 
   return <>
-  <LiquidGlass className="companion-composer flex items-end gap-1 rounded-2xl border border-white/10 p-2 sm:gap-2">
+  <LiquidGlass data-companion-glass className="companion-composer flex items-end gap-1 rounded-full border border-white/10 p-2 sm:gap-2">
     {allowAttachment && <Button variant="ghost" className="companion-icon-button min-h-11 min-w-11 !rounded-xl !p-3" aria-label="Attach product photo" disabled={disabled} onClick={onAttach}>
       {uploading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Plus className="h-5 w-5" />}
     </Button>}

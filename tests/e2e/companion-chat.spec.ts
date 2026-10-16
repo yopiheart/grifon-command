@@ -217,7 +217,7 @@ test('allowance and preset gates dispatch no generation or revision until permit
   await emit(page, 'result');
   await page.evaluate(() => (window as any).companionFixture.presets(false));
   await composer(page).fill('style clean'); await page.getByRole('button', { name: 'Send', exact: true }).click();
-  await expect(page.getByText(/Clean requires Pro/i)).toBeVisible();
+  await expect(page.getByTestId('conversation-scroll').getByText(/Clean requires Pro/i)).toBeVisible();
   expect((await snapshot(page)).calls.filter((c: any) => c.name === 'choosePreset')).toHaveLength(0);
 });
 

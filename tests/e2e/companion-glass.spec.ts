@@ -144,9 +144,33 @@ for (const [width, height] of [[375, 667], [390, 844], [1280, 900], [320, 667]])
       fs.writeFileSync(path.join(QA, `${phase}-overlap-pixel-${width}.json`), JSON.stringify({ point: overlap.pixelPoint, rgb: color }, null, 2));
       expect.soft(color, 'older bubble pixels are visible through the header outside its controls').not.toEqual([9, 9, 11]);
     } else expect.soft(overlap.pixelPoint, 'a bubble crosses the sampled header strip').not.toBeNull();
-    const remembered = await scroller.evaluate(node => node.scrollTop);
+    const readingPosition = (anchorIndex = -1) => scroller.evaluate((node, index) => {
+      const messages = Array.from(node.querySelectorAll('.companion-message'));
+      const header = document.querySelector('.companion-header')!.getBoundingClientRect();
+      const selected = index >= 0 ? index : messages.findIndex(message => message.getBoundingClientRect().bottom > header.bottom + 20);
+      const anchor = messages[selected];
+      const shortcut = Array.from(node.querySelectorAll('button')).find(button => button.textContent === 'Reference brief');
+      return { anchorIndex: selected, text: anchor?.textContent, y: anchor?.getBoundingClientRect().y! - node.getBoundingClientRect().y,
+        top: node.scrollTop, height: node.scrollHeight, shortcutHeight: shortcut?.getBoundingClientRect().height ?? 0,
+        headerOffset: getComputedStyle(node).paddingTop, footerOffset: getComputedStyle(node).paddingBottom };
+    }, anchorIndex);
+    const beforeTyping = await readingPosition();
+    expect(beforeTyping.anchorIndex).toBeGreaterThanOrEqual(0);
     await input(page).fill('Draft while reading history');
-    expect(await scroller.evaluate(node => node.scrollTop)).toBe(remembered);
+    const afterTyping = await readingPosition(beforeTyping.anchorIndex);
+    fs.writeFileSync(path.join(QA, `${phase}-history-reading-${width}.json`), JSON.stringify({ before: beforeTyping, after: afterTyping }, null, 2));
+    // Typing removes the introductory shortcut above seeded history. Native
+    // anchoring adjusts scrollTop to keep the same message visually stationary.
+    expect(afterTyping.text).toBe(beforeTyping.text);
+    expect(Math.abs(afterTyping.y - beforeTyping.y)).toBeLessThanOrEqual(1);
+    // Once layout is unchanged, ordinary draft edits also preserve raw position.
+    await input(page).fill('Draft while reading history!');
+    const afterEdit = await readingPosition(beforeTyping.anchorIndex);
+    expect(afterEdit.headerOffset).toBe(afterTyping.headerOffset);
+    expect(afterEdit.footerOffset).toBe(afterTyping.footerOffset);
+    expect(afterEdit.top).toBe(afterTyping.top);
+    expect(afterEdit.text).toBe(beforeTyping.text);
+    expect(Math.abs(afterEdit.y - beforeTyping.y)).toBeLessThanOrEqual(1);
     await page.getByRole('button', { name: 'Send', exact: true }).click();
     await expect(page.getByRole('status', { name: 'Grifon is typing', exact: true })).toHaveCount(0);
     await expect(page.locator('.companion-message-assistant').last()).toBeInViewport({ ratio: 1 });

@@ -5,6 +5,7 @@ import Button from '../ui/Button';
 import { MAT_PLATE, MAT_PLATE_INSET } from '../ui/materialTokens';
 import type { PlanId } from '../../utils/planGate';
 import { grant as grantConsent, withdraw as withdrawConsent, getMarketingConsent } from '../../services/consentService';
+import { CompanionAppearanceChoices, type CompanionAppearance } from '../CompanionChat/CompanionAppearance';
 
 interface SettingsModalProps {
   open: boolean;
@@ -20,6 +21,8 @@ interface SettingsModalProps {
   onNavigate?: (href: string) => void | Promise<void>;
   preview?: boolean;
   restoreFocus?: () => HTMLElement | null;
+  appearance?: CompanionAppearance;
+  onAppearanceChange?: (appearance: CompanionAppearance) => void;
 }
 const PLAN_LABEL: Record<PlanId, string> = { free: 'Free Edition', starter: 'Starter Edition', pro: 'Pro Edition', business: 'Business Edition' };
 const control = 'min-h-11 min-w-11 !rounded-xl !text-sm !font-semibold !normal-case !tracking-normal';
@@ -32,7 +35,7 @@ const Row: React.FC<{ label: string; sub?: string; right?: React.ReactNode; onCl
 };
 
 /** Account settings expose confirmed server preferences and existing destinations. */
-export const SettingsModal: React.FC<SettingsModalProps> = ({ open, onClose, userEmail, userName, plan, planLoading = false, planError = false, onRetryPlan, onUpgrade, onLogout, onNavigate, preview = false, restoreFocus }) => {
+export const SettingsModal: React.FC<SettingsModalProps> = ({ open, onClose, userEmail, userName, plan, planLoading = false, planError = false, onRetryPlan, onUpgrade, onLogout, onNavigate, preview = false, restoreFocus, appearance, onAppearanceChange }) => {
   const overlay = useRef<HTMLDivElement>(null);
   const dialog = useRef<HTMLDivElement>(null);
   const consentEpoch = useRef(0);
@@ -114,7 +117,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ open, onClose, use
   };
   const navigate = (href: string) => void runAction('Opening page', () => onNavigate ? onNavigate(href) : window.location.assign(href));
   if (!open) return null;
-  return createPortal(<div ref={overlay} className="companion-settings fixed inset-0 z-[80] flex items-center justify-center bg-zinc-950/80 p-3 font-sans text-sm text-white sm:p-4" onClick={close}>
+  return createPortal(<div ref={overlay} data-companion-theme={appearance} className="companion-settings fixed inset-0 z-[80] flex items-center justify-center bg-zinc-950/80 p-3 font-sans text-sm text-white sm:p-4" onClick={close}>
     <div ref={dialog} role="dialog" aria-modal="true" aria-labelledby="account-settings-title" aria-busy={!!actionBusy} tabIndex={-1} className={`${MAT_PLATE} relative flex max-h-[calc(100dvh-24px)] w-full max-w-lg flex-col overflow-hidden rounded-2xl ring-1 ring-white/10`} onClick={event => event.stopPropagation()}>
       <div className="flex shrink-0 items-center justify-between border-b border-white/[0.06] px-5 py-3"><h2 id="account-settings-title" className="!text-base !font-semibold !normal-case !tracking-tight">Settings</h2><Button type="button" variant="ghost" disabled={!!actionBusy} onClick={close} aria-label="Close settings" className={`${control} !p-3`}><X className="h-4 w-4" /></Button></div>
       <div className="companion-settings-scroll min-h-0 overflow-y-auto overscroll-contain space-y-5 px-5 py-5">
@@ -129,7 +132,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ open, onClose, use
             {marketingError && <div className="px-4 pb-3"><p role="alert" className="text-sm text-zinc-300">{marketingError}</p><Button variant="secondary" className={`${control} mt-2 !px-3`} disabled={marketingBusy || !!actionBusy} onClick={() => void (marketingAds === null ? loadConsent() : toggleMarketing())}>Retry ad preference</Button></div>}
           </>}
         </Section>
-        <Section icon={<Palette className="h-4 w-4" />} title="Appearance"><Row label="Dark appearance" sub="Grifon uses a dark interface." right={<Check className="h-4 w-4 text-[#FFCC00]" />} /></Section>
+        <Section icon={<Palette className="h-4 w-4" />} title="Appearance">{appearance && onAppearanceChange ? <div className="p-3"><CompanionAppearanceChoices appearance={appearance} onChange={onAppearanceChange} /></div> : <Row label="Dark appearance" sub="Grifon uses a dark interface." right={<Check className="h-4 w-4 text-[#FFCC00]" />} />}</Section>
         <Section icon={<LifeBuoy className="h-4 w-4" />} title="Help & legal">{[['Help & support', '/support'], ['Terms of service', '/terms'], ['Privacy policy', '/privacy']].map(([label, href]) => <Row key={href} label={label} disabled={!!actionBusy} onClick={() => navigate(href)} right={<ArrowRight className="h-4 w-4 text-zinc-300" />} />)}{preview && <Row label="Sign in to Grifon" sub="Open the real login page" disabled={!!actionBusy} onClick={() => navigate('/login')} right={<ArrowRight className="h-4 w-4 text-zinc-300" />} />}</Section>
         {onLogout && <Section icon={<User className="h-4 w-4" />} title="Account"><Row label={actionBusy === 'Sign out' ? 'Signing out…' : preview ? 'Simulate sign out' : 'Sign out'} disabled={!!actionBusy || (marketingBusy && marketingAds !== null)} onClick={() => void runAction('Sign out', onLogout)} right={<LogOut className="h-4 w-4 text-zinc-300" />} /></Section>}
         {actionBusy && <p role="status" className="text-sm text-zinc-300">{actionBusy === 'Sign out' ? 'Saving your chat and signing out…' : 'Saving your chat…'}</p>}

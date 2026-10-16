@@ -22,6 +22,7 @@ import { GlassPanel } from './components/ui/GlassPanel';
 import { GatewayReel } from './components/ui/GatewayReel';
 import { GoldButton } from './components/ui/GoldButton';
 import { GrifonMark } from './components/ui/GrifonMark';
+import { GrifonWordmark } from './components/ui/GrifonWordmark';
 import { BootScreen } from './components/ui/BootScreen';
 import Input from './components/ui/Input';
 import { ErrorBoundary } from './components/ui/ErrorBoundary';
@@ -1472,9 +1473,7 @@ const App: React.FC = () => {
             <div className="mb-6 md:mb-8 text-center flex flex-col items-center max-w-lg">
               <div className="mb-1 md:mb-3 flex items-center gap-2.5">
                 <GrifonMark className="h-8 w-8 md:h-14 md:w-14" />
-                <p className="text-2xl font-bold italic text-white tracking-tighter">
-                  GRIFON
-                </p>
+                <GrifonWordmark className="text-2xl" />
               </div>
               {/* Outcome-first gateway copy — what the visitor GETS, not what the engine does */}
               <h1 className="purchase-display text-3xl md:text-4xl tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-zinc-100 to-zinc-500 mt-4 mb-3">

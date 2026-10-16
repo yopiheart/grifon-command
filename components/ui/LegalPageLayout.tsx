@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { ChevronLeft } from 'lucide-react';
 import { GrifonMark } from './GrifonMark';
+import { GrifonWordmark } from './GrifonWordmark';
 import { MAT_CHROME } from './materialTokens';
 
 type Props = {
@@ -30,9 +31,7 @@ const LegalPageLayout: React.FC<Props> = ({ title, effectiveDate, onBack, backLa
           </button>
           <div className="flex items-center gap-2">
             <GrifonMark className="h-9 w-9" />
-            <span className="text-white font-black italic text-lg tracking-tight">
-              GRIFON
-            </span>
+            <GrifonWordmark className="text-lg" />
           </div>
         </div>
       </header>

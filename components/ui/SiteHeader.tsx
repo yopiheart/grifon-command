@@ -5,6 +5,7 @@ import { DUR, EASE } from './motionTokens';
 import { Menu, X, Volume2, VolumeX } from 'lucide-react';
 import { useUiSound } from '../../services/uiSoundService';
 import { GrifonMark } from './GrifonMark';
+import { GrifonWordmark } from './GrifonWordmark';
 import { MAT_CHROME, MAT_SLAB, SCROLL_EDGE } from './materialTokens';
 
 export interface SiteNavLink {
@@ -151,9 +152,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
       onClick={handleLogo}
     >
       <GrifonMark className="h-10 w-10" />
-      <span className="font-black text-xl tracking-tighter text-white italic">
-        GRIFON
-      </span>
+      <GrifonWordmark />
     </div>
   );
 

@@ -1,7 +1,7 @@
 ---
 version: alpha
 name: Grifon.AI
-description: Cinematic, premium AI marketing SaaS. Dark mode only (one documented marketing light band excepted).
+description: Cinematic, premium AI marketing SaaS. Dark-first, with approved light/dark Companion Chat and one marketing light band.
 colors:
   primary: "#FFCC00"
   surface: "#09090B"
@@ -85,7 +85,7 @@ components:
 
 ## Overview
 
-Cinematic, high-end, premium SaaS. Dark mode only. **Unreal Engine meets Hollywood production studio.**
+Cinematic, high-end, premium SaaS. Dark-first, with the owner-approved Companion Chat appearance exception below. **Unreal Engine meets Hollywood production studio.**
 
 Every surface should feel like a floating panel in a sci-fi interface: deep OLED black canvas, frosted glass with heavy backdrop blur, gold as the single electrifying accent. The goal is that a user opening the app feels they've entered a premium production environment, not a corporate dashboard.
 
@@ -128,6 +128,46 @@ Marketing pages (landing, pricing, sales) MAY include **at most ONE** full-width
 - Cards are **solid** (`bg-white border border-zinc-900/10 rounded-2xl/3xl`) — no glass, no `backdrop-blur` on the band.
 - The band must be fully opaque and sit above global chrome (flashlight/grid): `relative z-10`.
 - Never propagate `proof-band` into the app shell, wizard, dashboard, or modules. One band per page, marketing only.
+
+### Companion Chat appearance (Neil approved, 2026-10-16)
+
+Companion Chat supports **Obsidian Gold** and **Pearl Gold**, based on the approved
+Messages/Liquid Glass/Roadster study. This is a local chat appearance preference,
+not a global theme change for the Studio, wizard, or marketing pages. The chat
+sidebar shows the approved griffin mark alone, without a text wordmark.
+
+- Light surfaces use neutral pearl, dark zinc text, and dark gold for readable
+  accent text; `#FFCC00` stays the action fill. Light appearance includes chat
+  navigation, reference briefs, review cards, cloud jobs, Assets, the viewer,
+  loading/error states, and the chat account-settings portal.
+- The approved appearance selector uses a raised neutral pill for its selected
+  state, with clear pressed semantics and brighter readable text. Gold remains
+  the action fill and keyboard-focus accent.
+- Self-hosted **Oxanium**, licensed under the adjacent SIL OFL, provides the
+  angular display register for the companion identity and conversation titles.
+  Ordinary messages, controls, and form content retain Inter at 14px. Mobile
+  message input is 16px to avoid input zoom. The commercial Hyperspace Race font
+  used in the local study is not distributed with the application.
+- Functional chrome can use a bounded refractive backdrop with a thin specular
+  edge. Message bubbles and content cards remain readable PLATE surfaces.
+  Preserve selectable messages, 44px targets, and the live 56px mobile / 64px
+  desktop companion. Theme changes must not remount the chat or companion.
+- The horizontal identity, composer, appearance control, and navigation follow
+  the approved study. Header/footer clearances remain measured so every message,
+  review heading, and action is reachable at 375px and desktop widths.
+- Use one backdrop layer per chrome surface, without a second rim filter or
+  animated blur. Generate displacement maps only when geometry changes. Reduced
+  transparency and increased contrast use solid fills, readable text, and no
+  optical decoration; reduced motion disables motion.
+
+### Website wordmark (Neil approved, 2026-10-16)
+
+Public website brand lockups use a modestly oblique **Oxanium** wordmark with a
+static metallic gold/cream highlight, beside the unchanged approved griffin
+mark. Keep the plain accessible text and the caller's navigation behavior. The
+effect belongs to the text only, adds no backdrop-filter, and falls back to a
+solid readable color in forced-colors mode. This exception does not restyle
+approved ad artwork, export lockups, or the Studio rail.
 
 ### Per-module identity (in-app)
 
@@ -194,9 +234,10 @@ layer. Grifon had it inverted — 105 `backdrop-filter`s, most of them wrapping 
   [`<LiquidGlass>`](components/ui/LiquidGlass.tsx) is CHROME (functional layer). Both take a `tier` prop.
 - **Scroll edge effect** (`SCROLL_EDGE`) on any sticky bar — content grades out beneath it instead
   of colliding with its labels.
-- **Companion chat glass (owner-approved scope):** the compact centered identity and message
+- **Companion chat glass (owner-approved scope):** the compact horizontal identity and message
   composer float above the scrolling conversation. Use local neutral CHROME treatment with
-  restrained tint, blur and edge highlights; messages and output cards stay PLATE. Keep the
+  restrained tint, refraction and edge highlights; messages and output cards stay PLATE. See the
+  2026-10-16 appearance exception for the approved navigation/appearance controls. Keep the
   area around the identity transparent so history remains visible beneath it. This explicit
   scope permits the two functional surfaces to add bounded blur passes; it does not relax
   the filter budget elsewhere. Do not add a second rim filter or animate blur strength.
