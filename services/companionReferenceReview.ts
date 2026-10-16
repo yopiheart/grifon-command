@@ -1,4 +1,5 @@
 import type { CompanionReferenceDraft, ReferenceMedia, ReferenceVoice } from './companionReferenceDraft';
+import { isCreativePlan, type CreativePlan } from './companionCreativePlan.js';
 
 // A device-local fixture review. It cannot authorize, enqueue or price production.
 export interface SampleScene { id: string; start: string; end: string; script: string; visual: string }
@@ -24,6 +25,7 @@ export interface ReferenceReview {
   scenes: SampleScene[];
   audio: { speech: string; music: string; sfx: string };
   quote: SampleQuote;
+  creativePlan?: CreativePlan;
   confirmation: { revision: number; inputRevision: number; inputHash: string; planSnapshot: string; lowCents: number; highCents: number; capCents: number } | null;
 }
 const mediaHashes = new WeakMap<Blob, Promise<string>>();
@@ -121,6 +123,7 @@ function planSnapshot(review: ReferenceReview): string {
 }
 export function confirmSampleReview(review: ReferenceReview, inputHash: string, inputRevision: number): ReferenceReview {
   const errors = reviewErrors(review);
+  if (!isReferenceReview({ ...review, confirmation: null })) throw new Error('The sample plan is invalid. Prepare an updated sample plan.');
   if (errors.length || inputHash !== review.inputHash || inputRevision !== review.inputRevision) throw new Error(errors[0] || 'The brief changed. Prepare an updated sample plan.');
   return { ...review, confirmation: { revision: review.revision, inputRevision, inputHash, planSnapshot: planSnapshot(review), ...sampleQuoteTotals(review.quote) } };
 }
@@ -144,6 +147,20 @@ export function isReferenceReview(value: unknown): value is ReferenceReview {
     || new Set(value.quote.items.map(item => item.id)).size !== 6
     || (value.voice !== null && (!record(value.voice) || !text(value.voice.id, 200) || !value.voice.id || !text(value.voice.name, 200) || !value.voice.name || !['curated', 'private'].includes(value.voice.source as string)))) return false;
   const review = value as unknown as ReferenceReview;
+  if (Object.prototype.hasOwnProperty.call(value, 'creativePlan')) {
+    if (!isCreativePlan(value.creativePlan)) return false;
+    const creative = value.creativePlan;
+    if (creative.inputHash !== review.inputHash || creative.inputRevision !== review.inputRevision
+      || creative.adaptationMode !== review.adaptationMode || creative.speechMode !== review.speechMode
+      || creative.brandStrategy.facts.length !== review.facts.length
+      || creative.brandStrategy.facts.some((fact, index) => Object.keys(review.facts[index]).length !== 2
+        || fact.label !== review.facts[index].label || fact.value !== review.facts[index].value)
+      || (creative.audio.selectedVoice === null ? review.voice !== null : review.voice === null
+        || Object.keys(review.voice).length !== 3 || creative.audio.selectedVoice.id !== review.voice.id
+        || creative.audio.selectedVoice.name !== review.voice.name || creative.audio.selectedVoice.source !== review.voice.source)
+      || creative.editDNA.shots.length !== review.scenes.length
+      || creative.editDNA.shots.some((shot, index) => shot.id !== review.scenes[index].id)) return false;
+  }
   if (review.confirmation === null) return true;
   if (!record(review.confirmation) || reviewErrors(review).length) return false;
   const confirmation = review.confirmation;

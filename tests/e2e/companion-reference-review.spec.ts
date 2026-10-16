@@ -1,9 +1,10 @@
 import { test, expect, type Page } from '@playwright/test';
+import { readFileSync } from 'node:fs';
 
 const photo = { name: 'product.png', mimeType: 'image/png', buffer: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aEocAAAAASUVORK5CYII=', 'base64') };
 const saved = (page: Page) => expect(page.locator('#companion-save-status')).toContainText('saved on this device.');
 async function open(page: Page, width = 375) {
-  await page.setViewportSize({ width, height: width === 375 ? 667 : 900 });
+  await page.setViewportSize({ width, height: width === 375 ? 667 : width === 390 ? 844 : 900 });
   const calls: string[] = [];
   await page.route('**/*', route => {
     const request = route.request(), url = new URL(request.url());
@@ -121,4 +122,91 @@ test('conflict copy preserves edited review and failed writes do not claim a sav
   await other.evaluate(() => (window as any).restoreStorage());
   await other.getByRole('button', { name: 'Retry saving', exact: true }).click(); await saved(other);
   await expect(other.getByText(/Sample plan confirmed for revision/)).toBeVisible();
+});
+
+for (const width of [375, 390, 1280]) test(`fixture creative choices preserve assets and reopen a review at ${width}px without provider calls`, async ({ page }) => {
+  const calls = await open(page, width);
+  await page.getByLabel('// Brand name').fill('North Coffee');
+  await page.getByLabel('// Product or service').fill('Cold brew');
+  await page.getByLabel('// Audience').fill('Busy coffee drinkers');
+  await page.getByLabel('// Call to action').fill('Explore the coffee');
+  await page.getByLabel('Reference video', { exact: true }).setInputFiles({ name: 'reference.webm', mimeType: 'video/webm', buffer: readFileSync('tests/e2e/fixtures/recovery.webm') });
+  await expect(page.getByLabel('Reference video preview', { exact: true })).toBeVisible();
+  await page.getByLabel('Add photos').setInputFiles([photo, { ...photo, name: 'creator.png' }]);
+  await expect(page.getByRole('img', { name: 'creator.png', exact: true })).toBeVisible();
+  await page.getByLabel('Role for creator.png', { exact: true }).selectOption('character');
+  await page.getByLabel('Saved voice', { exact: true }).selectOption('private:fixture-private');
+  await page.getByLabel('Creative source', { exact: true }).selectOption('fixture-recipe');
+  await expect(page.getByText('Production Auto is unavailable. Fixture Auto does not predict sales.')).toBeVisible();
+  await page.getByLabel('Creative category', { exact: true }).selectOption('ugc');
+  await page.getByLabel('Fixture recipe', { exact: true }).selectOption('fixture-ugc-detail-v1');
+  await expect(page.getByRole('img', { name: 'product.png', exact: true })).toBeVisible();
+  await expect(page.getByLabel('Saved voice', { exact: true })).toHaveValue('private:fixture-private');
+  await expect(page.getByText('reference.webm', { exact: true })).toBeVisible();
+  await page.getByRole('heading', { name: 'Creative source', exact: true }).scrollIntoViewIfNeeded();
+  await page.screenshot({ path: `.tmp/creative-fixture-source-${width}.png`, fullPage: true });
+  await saved(page); await prepare(page);
+  await expect(page.getByRole('heading', { name: 'Creative plan guidance', exact: true })).toBeVisible();
+  await expect(page.getByText('Original synthetic fixture. Uploaded media has not been analyzed.')).toBeVisible();
+  await expect(page.getByLabel('Creative plan guidance')).toContainText('Fixture private voice');
+  await expect(page.getByLabel('Creative plan guidance')).toContainText('product.png');
+  await expect(page.getByLabel('Creative plan guidance')).toContainText('creator.png');
+  await expect(page.getByText('The scenes below are the current editable timeline. Blueprint guidance stays unchanged when you edit them.')).toBeVisible();
+  await page.getByLabel('// Scene 1 sample speech').fill('Explore North Coffee cold brew.');
+  await page.getByLabel('// Scene 1 end (seconds)').fill('3');
+  await page.getByLabel('// Scene 2 start (seconds)').fill('3'); await saved(page);
+  await page.getByText('Blueprint and audio details', { exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Blueprint shot 1 · 0–4s', exact: true })).toBeVisible();
+  await page.getByText('Blueprint and audio details', { exact: true }).click();
+  await page.getByRole('button', { name: 'Confirm sample plan', exact: true }).click(); await saved(page);
+  const confirmed = await page.getByText(/Sample plan confirmed for revision/).textContent();
+  await page.getByText('Preview a targeted change', { exact: true }).click();
+  await page.getByLabel('Change to preview', { exact: true }).selectOption('voice');
+  await page.getByRole('button', { name: 'Preview affected work', exact: true }).click();
+  await expect(page.getByLabel('Targeted change preview')).toContainText('No changes applied. No work has run.');
+  await expect(page.getByText(/Sample plan confirmed for revision/)).toHaveText(confirmed!);
+  await page.reload();
+  await expect(page.getByLabel('Creative plan guidance')).toContainText('Fixture private voice');
+  await expect(page.getByLabel('// Scene 1 sample speech')).toHaveValue('Explore North Coffee cold brew.');
+  await expect(page.getByLabel('// Scene 1 end (seconds)')).toHaveValue('3');
+  await expect(page.getByText(/Sample plan confirmed for revision/)).toBeVisible();
+  await page.getByRole('button', { name: 'Edit brief', exact: true }).click();
+  await page.getByLabel('Creative source', { exact: true }).selectOption('fixture-auto'); await saved(page);
+  await expect(page.getByLabel('Saved voice', { exact: true })).toHaveValue('private:fixture-private');
+  await expect(page.getByText('reference.webm', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'View previous sample plan', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Confirm sample plan', exact: true })).toBeDisabled();
+  await expect(page.getByText(/Sample plan confirmed for revision/)).toHaveCount(0);
+  await page.getByRole('button', { name: 'Prepare updated sample plan', exact: true }).click(); await saved(page);
+  await expect(page.getByLabel('Creative plan guidance')).toContainText('Fixture Auto');
+  expect(calls).toEqual([]);
+  expect(await page.evaluate(() => (window as any).companionFixture.snapshot().calls)).toEqual([]);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await page.getByRole('heading', { name: 'Creative plan guidance', exact: true }).scrollIntoViewIfNeeded();
+  await page.screenshot({ path: `.tmp/creative-fixture-review-${width}.png`, fullPage: true });
+});
+
+test('motion and cinematic fixture plans keep a silent voice selection and never invent an eligible UGC recipe', async ({ page }) => {
+  const calls = await open(page, 390);
+  await page.getByLabel('Creative source', { exact: true }).selectOption('fixture-auto'); await saved(page);
+  await page.getByRole('button', { name: 'Prepare sample plan', exact: true }).click();
+  await expect(page.getByRole('alert')).toContainText('No eligible');
+  await expect(page.getByRole('heading', { name: 'Sample plan review', exact: true })).toHaveCount(0);
+  await page.getByLabel('Add photos').setInputFiles(photo);
+  await expect(page.getByRole('img', { name: 'product.png', exact: true })).toBeVisible();
+  await page.getByLabel('Saved voice', { exact: true }).selectOption('curated:fixture-curated');
+  await page.getByLabel('Speech mode', { exact: true }).selectOption('silent');
+  for (const category of ['motion-launch', 'cinematic-spec']) {
+    await page.getByLabel('Creative category', { exact: true }).selectOption(category); await saved(page);
+    await page.getByRole('button', { name: /Prepare (updated )?sample plan/ }).click();
+    await expect(page.getByLabel('Creative plan guidance')).toBeVisible(); await saved(page);
+    await expect(page.getByLabel('Creative plan guidance')).toContainText('unused');
+    await expect(page.getByLabel('// Scene 1 sample speech')).toHaveCount(0);
+    await page.getByRole('button', { name: 'Edit brief', exact: true }).click();
+    await expect(page.getByLabel('Saved voice', { exact: true })).toHaveValue('curated:fixture-curated');
+  }
+  await page.getByLabel('Creative source', { exact: true }).selectOption('uploaded-reference'); await saved(page);
+  await page.getByRole('button', { name: 'Prepare updated sample plan', exact: true }).click();
+  await expect(page.getByLabel('Creative plan guidance')).toHaveCount(0);
+  expect(calls).toEqual([]);
 });

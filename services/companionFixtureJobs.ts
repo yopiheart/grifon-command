@@ -1,5 +1,5 @@
-import { isReferenceReview, type ReferenceReview } from './companionReferenceReview';
-import { isReferenceQueue, type QueueScenario, type ReferenceQueue } from './companionReferenceQueue';
+import { isReferenceReview, type ReferenceReview } from './companionReferenceReview.js';
+import { isReferenceQueue, type QueueScenario, type ReferenceQueue } from './companionReferenceQueue.js';
 
 // Local fixture identity only. This protocol grants no provider or spending authority.
 export interface CloudReferenceLink { version: 1; saveId: string; inputHash: string }

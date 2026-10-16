@@ -287,6 +287,35 @@ npx.cmd vitest run tests/unit/companionLinkedCloudFlow.test.ts tests/unit/compan
 npm.cmd run test:e2e -- --config tests/e2e/companion-cloud-workflow.config.ts
 ```
 
+### Fixture video delivery and Grifon Assets
+
+The next fixture slice gives NEW linked jobs a private, durable result receipt at
+acceptance. Existing cloud-worker completion atomically makes that same receipt
+READY. Failed/cancelled jobs have no ready asset; historical jobs are not backfilled.
+The receipt binds the original job, reviewed plan and cloud input snapshot. It
+does not grant generation or spending authority. READY records remain historical
+outputs after later edits, and reopening inputs still clears the copy's approval.
+
+Chat, cloud job details and the new read-only Grifon Assets view use the same
+request/version identity. Assets also reads the existing private video library.
+Opening, refreshing, playing and downloading do not write results or start jobs.
+Pending and unavailable media have explicit states, without substituting an older
+result. Reads remain bounded and recover when completion occurs between status
+reads; account/chat changes discard late responses.
+
+The playable output is a generic silent eight-second sample, explicitly NOT an ad
+generated from user inputs. Its immutable v1 bytes ship server-side and are served
+only after current-user JWT and READY-receipt checks. No signed URLs are persisted;
+client MIME/size/SHA checks precede temporary object URLs. This fixture path adds
+no per-user media upload, object-store cleanup exception, provider or scheduler.
+Retain shipped versions while saved receipts reference them. Real generated video
+storage, voice/music and creative quality remain separate future work.
+
+Reviewed activation requires `supabase/companion_cloud_fixture_results.sql` after
+the linked-input migration. Local SQL/browser fixtures are evidence for this
+build; hosted activation and signed-in chat/Assets playback need separate native
+evidence recorded in NOW.md. No paid generation is authorized.
+
 ### Existing local intake and review checks
 
 For a free fixture check, start the existing isolated frontend server in one
@@ -606,9 +635,38 @@ Do not claim sales lift from production acceptance alone.
 ## Next implementation task
 
 Local S0 intake, S1 sample review, browser-independent fixture execution and private
-cloud fixture input save/reopen are implemented. Continue S2 with authoritative
-paid-input integrity, atomic spend reservations and provider submission
-reconciliation. Neil is still
-gathering the three references and brand assets. Real analysis, creative tuning
-and paid tests wait for exact inputs and their required approvals. This document
-authorizes none of those operations.
+cloud fixture input save/reopen are implemented. The pre-asset foundation adds
+three original synthetic Recipes and deterministic fixture Auto for UGC, motion
+launch and cinematic spec. These are editable examples, not validated creator
+styles or sales predictions. Supplied facts, photo roles and the selected voice
+bind the illustrative plan. The uploaded reference remains saved but unanalyzed.
+The original blueprint and the edited review timeline remain distinguishable.
+
+Source selection and the rich plan travel through the existing private snapshot,
+confirmed review, frozen job and generic sample-result flow. Reopening an editable
+copy clears approval and rebases its local input revision; the original accepted
+plan remains immutable. Revision impact is a metadata preview, not an executor.
+Production Auto has no eligible Recipes until real evidence and transfer tests
+are recorded. Older source-absent drafts keep their existing planner and hashes.
+
+The separate **Budget and recovery check** exercises server-owned TEST_UNIT
+allowance, fixed quote expiry, attempt limits, atomic reservation and stable
+submission identities. Unknown submissions retain their hold through cancellation
+until explicit synthetic reconciliation. This sidecar does not gate or dispatch
+the existing video worker and does not authorize money or provider calls.
+
+The separate **Saved input file check** uses an endpoint that authenticates the caller and derives
+private Storage paths from the owner's frozen linked job. It checks file size,
+MIME, SHA, bounded full decode and the original input fingerprint, then records
+an immutable server receipt. Preflight supports small identity-orientation media
+only: 6 MB/file, 16 MP/frame, 30-second reference and 60 fps/1800 frames maximum.
+Unsupported orientation, animation, codecs or a decode deadline fail explicitly.
+These preflight limits do not alter the earlier cloud save limits. A receipt
+proves integrity of those fixture bytes, not creative quality or paid readiness.
+
+Continue S2 with paid-provider contracts, native concurrency evidence, authoritative
+spending integration and unknown-provider reconciliation before enabling paid
+execution. Neil is gathering three references and brand assets. Real analysis,
+creative tuning, voice/audio acceptance and paid tests wait for exact inputs and
+their required approvals. Actual rollout and verification status belong in NOW.md;
+this document authorizes none of those operations.

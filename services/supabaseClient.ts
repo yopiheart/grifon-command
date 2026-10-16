@@ -1,5 +1,5 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { POLICY_VERSION } from './consentConstants';
+import { POLICY_VERSION } from './consentConstants.js';
 
 let _client: SupabaseClient | null = null;
 

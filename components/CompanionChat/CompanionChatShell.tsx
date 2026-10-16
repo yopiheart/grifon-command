@@ -1,16 +1,21 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
-import { PanelLeft, PanelLeftClose, Plus, Search, X, Clapperboard, Settings, Cloud } from 'lucide-react';
+import { PanelLeft, PanelLeftClose, Plus, Search, X, Clapperboard, Settings, Cloud, FolderOpen } from 'lucide-react';
 import Button from '../ui/Button';
 import SettingsModal from '../dashboard/SettingsModal';
 import type { PlanId } from '../../utils/planGate';
 import { CompanionAvatarLayer, type CompanionAvatarPresentation } from './CompanionAvatarLayer';
 import { clearCloudCopyApproval, ConversationConflictError, createConversation, loadConversations, saveConversationCopy, saveConversations, updateConversation, type CompanionConversation, type CompanionConversations, type ConversationPatch } from '../../services/companionConversations';
 import type { CloudFixtureClient } from '../../services/companionCloudFixtures';
-import { CompanionCloudFixtureJobs } from './CompanionCloudFixtureJobs';
+import { CompanionCloudFixtureJobs, type FixtureInputVerificationClient } from './CompanionCloudFixtureJobs';
+import type { FixtureExecutionSafetyClient } from '../../services/companionExecutionSafetyClient';
 import { cloudReferenceLink, verifyCloudReferenceDraft, type CloudReferenceClient, type CloudReferenceReceipt } from '../../services/companionCloudReferences';
 import { verifyFixtureJobIntent, type FixtureJobIntent } from '../../services/companionFixtureJobs';
 import { isReferenceDraft, type CompanionReferenceDraft } from '../../services/companionReferenceDraft';
 import { CompanionCloudReferences } from './CompanionCloudReferences';
+import type { VideoLibraryItem } from '../../types';
+import type { CloudFixtureResultClient, CloudFixtureResultReceipt } from '../../services/companionFixtureResults';
+import type { FixtureVideoLoader } from './CompanionFixtureResult';
+import { CompanionAssets } from './CompanionAssets';
 import './companionChat.css';
 
 export interface ConversationBinding {
@@ -18,6 +23,10 @@ export interface ConversationBinding {
   update: (patch: ConversationPatch) => void;
   updateSaved: (patch: ConversationPatch, expectedChat: CompanionConversation) => Promise<void>;
   cloudReferenceClient?: CloudReferenceClient;
+  cloudFixtureClient?: CloudFixtureClient;
+  fixtureResultClient?: CloudFixtureResultClient;
+  loadFixtureVideo?: FixtureVideoLoader;
+  viewFixtureInAssets?: (receipt: CloudFixtureResultReceipt) => void;
   openCloudJobs?: () => void;
   queueIsCurrent: (id: string, revision: number) => boolean;
   fixtureJobIsCurrent: (requestId: string, invalidated: boolean) => boolean;
@@ -47,11 +56,16 @@ interface Props {
   preview?: boolean;
   cloudFixtureClient?: CloudFixtureClient;
   cloudReferenceClient?: CloudReferenceClient;
+  fixtureResultClient?: CloudFixtureResultClient;
+  executionSafetyClient?: FixtureExecutionSafetyClient;
+  inputVerificationClient?: FixtureInputVerificationClient;
+  loadFixtureVideo?: FixtureVideoLoader;
+  loadVideoLibrary?: () => Promise<VideoLibraryItem[]>;
   children: (binding: ConversationBinding) => ReactNode;
 }
 const button = 'min-h-11 min-w-11 !rounded-xl !text-sm !font-semibold !normal-case !tracking-normal';
 
-export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Account', plan = 'free', planLoading = false, planError = false, onRetryPlan, onLogout, onUpgrade, onNavigate, preview = false, cloudFixtureClient, cloudReferenceClient, children }: Props) {
+export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Account', plan = 'free', planLoading = false, planError = false, onRetryPlan, onLogout, onUpgrade, onNavigate, preview = false, cloudFixtureClient, cloudReferenceClient, fixtureResultClient, executionSafetyClient, inputVerificationClient, loadFixtureVideo, loadVideoLibrary, children }: Props) {
   const [book, setBook] = useState<CompanionConversations | null>(null);
   const current = useRef<CompanionConversations | null>(null);
   const writes = useRef<Promise<void>>(Promise.resolve());
@@ -69,6 +83,8 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
   const [mobileOpen, setMobileOpen] = useState(false);
   const [cloudOpen, setCloudOpen] = useState(false);
   const [referencesOpen, setReferencesOpen] = useState(false);
+  const [assetsOpen, setAssetsOpen] = useState(false);
+  const [selectedAssetId, setSelectedAssetId] = useState<string | null>(null);
   const [search, setSearch] = useState('');
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [navigationError, setNavigationError] = useState('');
@@ -203,37 +219,59 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
       if (studio) { onStudio(); return; }
       const chat = id ? null : createConversation();
       const next = { ...current.current!, selectedId: id ?? chat!.id, chats: chat ? [chat, ...current.current!.chats] : current.current!.chats };
-      current.current = next; setBook(next); setSaved(true); setMobileOpen(false); setCloudOpen(false); setReferencesOpen(false); setSearch('');
+      current.current = next; setBook(next); setSaved(true); setMobileOpen(false); setCloudOpen(false); setReferencesOpen(false); setAssetsOpen(false); setSearch('');
       void persist(next);
     }); } catch { /* The save/action error stays visible without discarding the chat. */ }
   };
   const openCloud = async () => {
     if (!cloudFixtureClient) return;
-    try { await leave(() => { setCloudOpen(true); setReferencesOpen(false); setMobileOpen(false); setAvatar(null); }); }
+    try { await leave(() => { setCloudOpen(true); setReferencesOpen(false); setAssetsOpen(false); setMobileOpen(false); setAvatar(null); }); }
     catch { /* The existing save error remains visible without discarding the chat. */ }
   };
   const openReferences = async () => {
     if (!cloudReferenceClient) return;
-    try { await leave(() => { setReferencesOpen(true); setCloudOpen(false); setMobileOpen(false); setAvatar(null); }); }
+    try { await leave(() => { setReferencesOpen(true); setCloudOpen(false); setAssetsOpen(false); setMobileOpen(false); setAvatar(null); }); }
     catch { /* The existing save error remains visible without discarding the chat. */ }
   };
-  const importReference = async (draft: CompanionReferenceDraft, sourceLocalChatId: string, receipt: CloudReferenceReceipt, job?: FixtureJobIntent) => {
-    if (!isReferenceDraft(draft) || !mounted.current || current.current?.userId !== userId || current.current.selectedId !== sourceLocalChatId) throw new Error('The account or selected chat changed. Open the cloud copy again from the current chat.');
+  const openAssets = async (receipt?: CloudFixtureResultReceipt) => {
+    if (!loadFixtureVideo || !loadVideoLibrary || (receipt && receipt.ownerId !== userId)) return;
+    try { await leave(() => { setSelectedAssetId(receipt ? `${receipt.requestId}:${receipt.fixtureVersion}` : null); setAssetsOpen(true); setReferencesOpen(false); setCloudOpen(false); setMobileOpen(false); setAvatar(null); }); }
+    catch { /* The existing save error remains visible without discarding the chat. */ }
+  };
+  const importReference = async (draft: CompanionReferenceDraft, sourceLocalChatId: string, receipt: CloudReferenceReceipt, job?: FixtureJobIntent, requestIsCurrent?: () => boolean) => {
+    if (!isReferenceDraft(draft) || !mounted.current || current.current?.userId !== userId || current.current.selectedId !== sourceLocalChatId || (requestIsCurrent && !requestIsCurrent())) throw new Error('The account or selected chat changed. Open the cloud copy again from the current chat.');
     const source = await cloudReferenceLink(receipt, userId);
     if (!await verifyCloudReferenceDraft(draft, source) || (job && (!await verifyFixtureJobIntent(job) || job.ownerId !== userId || JSON.stringify(job.cloudReference) !== JSON.stringify(source)))) throw new Error('The cloud job does not match these verified saved inputs. Your current chat is kept.');
+    if (requestIsCurrent && !requestIsCurrent()) throw new Error('The selected result changed. Open it again from the current view.');
     await leave(async () => {
       const before = current.current!;
       if (before.userId !== userId || before.selectedId !== sourceLocalChatId) throw new Error('The selected chat changed before the cloud copy could be opened.');
       const copy = { ...createConversation(), referenceDraft: draft, referenceInputRevision: 0, referenceCloudSource: source,
-        ...(job ? { referenceReview: { ...structuredClone(job.plan), inputRevision: 0, stale: false, confirmation: null }, referenceCloudObservation: job } : {}) };
+        ...(job ? { referenceReview: { ...structuredClone(job.plan), inputRevision: 0, ...(job.plan.creativePlan ? { creativePlan: { ...structuredClone(job.plan.creativePlan), inputRevision: 0 } } : {}), stale: false, confirmation: null }, referenceCloudObservation: job } : {}) };
       const next = { ...before, chats: [copy, ...before.chats], selectedId: copy.id, revision: revision.current };
       // Persist the entire new copy with the existing CAS before selecting it in the UI.
       const savedRevision = await saveConversations(next);
       if (!mounted.current || current.current?.userId !== userId) return;
       if (current.current !== before) throw new ConversationConflictError();
       revision.current = savedRevision; current.current = { ...next, revision: savedRevision }; setBook(current.current);
-      setSaved(true); setSaving(false); setSaveConflict(false); setReferencesOpen(false); setCloudOpen(false); setMobileOpen(false); setSearch(''); setAvatar(null);
+      setSaved(true); setSaving(false); setSaveConflict(false); setReferencesOpen(false); setCloudOpen(false); setAssetsOpen(false); setMobileOpen(false); setSearch(''); setAvatar(null);
     });
+  };
+  const openResultChat = async (intent: FixtureJobIntent, requestIsCurrent: () => boolean) => {
+    const before = current.current;
+    if (!before || before.userId !== userId || intent.ownerId !== userId || !intent.cloudReference || !requestIsCurrent() || !await verifyFixtureJobIntent(intent)) throw new Error('The saved result has an invalid account or job identity.');
+    if (!mounted.current || current.current !== before || !requestIsCurrent()) throw new Error('The selected chat changed. Open the result again from the current chat.');
+    const matches = (item: CompanionConversation) => JSON.stringify(item.referenceCloudJob ?? item.referenceCloudObservation) === JSON.stringify(intent);
+    const original = before.chats.find(item => item.id === intent.ownerChatId && matches(item)) ?? before.chats.find(matches);
+    if (original) {
+      await navigate(original.id);
+      if (current.current?.selectedId !== original.id) throw new Error('The chat could not be opened. Keep this tab open and try again.');
+      return;
+    }
+    if (!cloudReferenceClient) throw new Error('The saved inputs cannot be opened in this view.');
+    const opened = await cloudReferenceClient.openSnapshot(intent.cloudReference.saveId);
+    if (!mounted.current || current.current !== before || !requestIsCurrent()) throw new Error('The selected chat changed while opening the saved inputs.');
+    await importReference(opened.draft, before.selectedId, opened.receipt, intent, requestIsCurrent);
   };
   const openSettings = (trigger: HTMLElement) => { settingsTrigger.current = trigger; setMobileOpen(false); setSettingsOpen(true); };
   const restoreSettingsFocus = useCallback(() => settingsTrigger.current?.isConnected ? settingsTrigger.current : main.current?.querySelector<HTMLElement>('button[aria-label="Open conversations"]') ?? null, []);
@@ -243,13 +281,14 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
   const navigation = <>
     <div className="flex items-center justify-between px-2 py-2"><span className="px-2 text-sm font-semibold">Chats</span><Button variant="ghost" className={`${button} !p-3`} aria-label={mobileOpen ? 'Close conversations' : 'Collapse conversations'} onClick={() => mobileOpen ? setMobileOpen(false) : setCollapsed(true)}>{mobileOpen ? <X className="h-4 w-4" /> : <PanelLeftClose className="h-4 w-4" />}</Button></div>
     <Button variant="ghost" className={`${button} mx-2 flex items-center justify-start gap-3 !px-3`} onClick={() => void navigate()}><Plus className="h-5 w-5 shrink-0" />New chat</Button>
+    {loadFixtureVideo && loadVideoLibrary && <Button variant="ghost" aria-current={assetsOpen ? 'page' : undefined} className={`${button} mx-2 flex items-center justify-start gap-3 !px-3 ${assetsOpen ? '!text-[#FFCC00]' : ''}`} onClick={() => void openAssets()}><FolderOpen className="h-5 w-5 shrink-0" />Grifon Assets</Button>}
     {cloudFixtureClient && <Button variant="ghost" aria-current={cloudOpen ? 'page' : undefined} className={`${button} mx-2 flex items-center justify-start gap-3 !px-3 ${cloudOpen ? '!text-[#FFCC00]' : ''}`} onClick={() => void openCloud()}><Cloud className="h-5 w-5 shrink-0" />Cloud fixture jobs</Button>}
     {cloudReferenceClient && <Button variant="ghost" aria-current={referencesOpen ? 'page' : undefined} className={`${button} mx-2 flex items-center justify-start gap-3 !px-3 ${referencesOpen ? '!text-[#FFCC00]' : ''}`} onClick={() => void openReferences()}><Cloud className="h-5 w-5 shrink-0" />Cloud reference briefs</Button>}
     <label className="mx-2 mt-2 flex min-h-11 items-center gap-3 rounded-xl bg-zinc-950 px-3 focus-within:ring-1 focus-within:ring-[#FFCC00]"><Search className="h-4 w-4 shrink-0 text-zinc-400" /><input aria-label="Search chats" placeholder="Search" value={search} onChange={event => setSearch(event.target.value)} className="min-w-0 w-full bg-transparent text-sm outline-none" /></label>
     <nav aria-label="Conversations" className="companion-sidebar-scroll min-h-0 flex-1 space-y-1 overflow-y-auto px-2 py-3">{book.chats.filter(item => title(item).toLowerCase().includes(search.toLowerCase())).map(item => <button key={item.id} data-chat-id={item.id} aria-label={`Open chat: ${title(item)}`} aria-current={item.id === chat.id ? 'page' : undefined} onClick={() => void navigate(item.id)} className={`min-h-11 w-full truncate rounded-xl px-3 text-left text-sm font-semibold ${item.id === chat.id ? 'bg-[#FFCC00]/10 text-[#FFCC00]' : 'text-zinc-300 hover:bg-white/5'}`}>{title(item)}</button>)}{!book.chats.some(item => title(item).toLowerCase().includes(search.toLowerCase())) && <p className="px-3 py-3 text-sm text-zinc-400">No matching chats</p>}</nav>
     <div className="border-t border-white/10 p-2"><Button variant="ghost" className={`${button} flex w-full items-center justify-start gap-3 !px-3`} onClick={() => void navigate(undefined, true)}><Clapperboard className="h-5 w-5 shrink-0" />Studio</Button><Button variant="ghost" className={`${button} flex w-full items-center gap-3 !px-3 text-left`} aria-label="Account settings" onClick={event => openSettings(event.currentTarget)}><Settings className="h-5 w-5 shrink-0" /><span className="min-w-0 flex-1 truncate">{userName}</span></Button><p className="px-3 py-2 text-xs text-zinc-400">{preview ? 'Preview · simulated output' : 'Saved on this device'}</p>{navigationError && <p role="alert" className="px-3 pb-2 text-sm text-zinc-300">{navigationError}</p>}</div>
   </>;
-  const binding: ConversationBinding = { chat, update: patch => update(chat.id, patch), updateSaved, cloudReferenceClient, openCloudJobs: cloudFixtureClient ? () => void openCloud() : undefined, queueIsCurrent: (id, queueRevision) => {
+  const binding: ConversationBinding = { chat, update: patch => update(chat.id, patch), updateSaved, cloudReferenceClient, cloudFixtureClient, fixtureResultClient, loadFixtureVideo, viewFixtureInAssets: loadFixtureVideo && loadVideoLibrary ? receipt => void openAssets(receipt) : undefined, openCloudJobs: cloudFixtureClient ? () => void openCloud() : undefined, queueIsCurrent: (id, queueRevision) => {
     const selected = current.current?.chats.find(item => item.id === current.current?.selectedId);
     return mounted.current && !navigating.current && !recovering.current && current.current?.userId === userId && selected?.id === chat.id && selected.referenceQueue?.id === id && selected.referenceQueue.revision === queueRevision;
   }, fixtureJobIsCurrent: (requestId, invalidated) => {
@@ -259,9 +298,9 @@ export function CompanionChatShell({ userId, onStudio, userEmail, userName = 'Ac
   }, saved, saving, saveConflict, recoverCopy: () => void recoverCopy(), retrySave: () => { if (current.current) void persist(current.current); }, openNavigation: () => { setMobileOpen(true); setCollapsed(false); }, newChat: () => void navigate(), presentAvatar, leave, setMediaPreparing };
   return <div className="companion-chat companion-shell flex h-dvh min-h-0 overflow-hidden bg-zinc-950 font-sans text-white">
     {!collapsed && <aside className="hidden w-60 shrink-0 flex-col border-r border-white/10 bg-zinc-900/40 md:flex">{navigation}</aside>}
-    {collapsed && <aside className="hidden w-14 shrink-0 flex-col items-center border-r border-white/10 pt-3 md:flex"><Button variant="ghost" className={`${button} !p-3`} aria-label="Open conversations" onClick={() => setCollapsed(false)}><PanelLeft className="h-4 w-4" /></Button><Button variant="ghost" className={`${button} !p-3`} aria-label="New chat" onClick={() => void navigate()}><Plus className="h-4 w-4" /></Button>{cloudFixtureClient && <Button variant="ghost" className={`${button} !p-3 ${cloudOpen ? '!text-[#FFCC00]' : ''}`} aria-label="Cloud fixture jobs" onClick={() => void openCloud()}><Cloud className="h-4 w-4 shrink-0" /></Button>}{cloudReferenceClient && <Button variant="ghost" className={`${button} !p-3 ${referencesOpen ? '!text-[#FFCC00]' : ''}`} aria-label="Cloud reference briefs" onClick={() => void openReferences()}><Cloud className="h-4 w-4 shrink-0" /></Button>}<Button variant="ghost" className={`${button} mt-auto mb-3 !p-3`} aria-label="Account settings" onClick={event => openSettings(event.currentTarget)}><Settings className="h-4 w-4" /></Button></aside>}
+    {collapsed && <aside className="hidden w-14 shrink-0 flex-col items-center border-r border-white/10 pt-3 md:flex"><Button variant="ghost" className={`${button} !p-3`} aria-label="Open conversations" onClick={() => setCollapsed(false)}><PanelLeft className="h-4 w-4" /></Button><Button variant="ghost" className={`${button} !p-3`} aria-label="New chat" onClick={() => void navigate()}><Plus className="h-4 w-4" /></Button>{loadFixtureVideo && loadVideoLibrary && <Button variant="ghost" className={`${button} !p-3 ${assetsOpen ? '!text-[#FFCC00]' : ''}`} aria-label="Grifon Assets" onClick={() => void openAssets()}><FolderOpen className="h-4 w-4 shrink-0" /></Button>}{cloudFixtureClient && <Button variant="ghost" className={`${button} !p-3 ${cloudOpen ? '!text-[#FFCC00]' : ''}`} aria-label="Cloud fixture jobs" onClick={() => void openCloud()}><Cloud className="h-4 w-4 shrink-0" /></Button>}{cloudReferenceClient && <Button variant="ghost" className={`${button} !p-3 ${referencesOpen ? '!text-[#FFCC00]' : ''}`} aria-label="Cloud reference briefs" onClick={() => void openReferences()}><Cloud className="h-4 w-4 shrink-0" /></Button>}<Button variant="ghost" className={`${button} mt-auto mb-3 !p-3`} aria-label="Account settings" onClick={event => openSettings(event.currentTarget)}><Settings className="h-4 w-4" /></Button></aside>}
     {mobileOpen && <div className="fixed inset-0 z-50 bg-zinc-950/80 md:hidden" onClick={() => setMobileOpen(false)}><aside ref={drawer} role="dialog" aria-modal="true" aria-label="Chat navigation" className="flex h-full w-[min(320px,85vw)] flex-col border-r border-white/10 bg-zinc-900" onClick={event => event.stopPropagation()}>{navigation}</aside></div>}
-    <div ref={main} className="relative min-h-0 min-w-0 flex-1">{referencesOpen && cloudReferenceClient ? <CompanionCloudReferences key={userId} userId={userId} conversation={binding} client={cloudReferenceClient} onBack={() => setReferencesOpen(false)} onOpen={importReference} /> : cloudOpen && cloudFixtureClient ? <CompanionCloudFixtureJobs key={userId} userId={userId} conversation={binding} client={cloudFixtureClient} onBack={() => setCloudOpen(false)} onOpenInputs={importReference} /> : children(binding)}{!cloudOpen && !referencesOpen && <CompanionAvatarLayer presentation={avatar} />}{navigationError && collapsed && <p role="alert" className="absolute bottom-4 left-4 right-4 z-30 rounded-xl bg-zinc-900 p-3 text-sm text-zinc-300">{navigationError}</p>}</div>
+    <div ref={main} className="relative min-h-0 min-w-0 flex-1">{assetsOpen && loadFixtureVideo && loadVideoLibrary ? <CompanionAssets key={userId} userId={userId} conversation={binding} client={fixtureResultClient} loadVideo={loadFixtureVideo} loadLibrary={loadVideoLibrary} selectedId={selectedAssetId} onSelect={setSelectedAssetId} onBack={() => setAssetsOpen(false)} onOpenChat={openResultChat} /> : referencesOpen && cloudReferenceClient ? <CompanionCloudReferences key={userId} userId={userId} conversation={binding} client={cloudReferenceClient} onBack={() => setReferencesOpen(false)} onOpen={importReference} /> : cloudOpen && cloudFixtureClient ? <CompanionCloudFixtureJobs key={userId} userId={userId} conversation={binding} client={cloudFixtureClient} executionSafetyClient={executionSafetyClient} inputVerificationClient={inputVerificationClient} onBack={() => setCloudOpen(false)} onOpenInputs={importReference} onOpenChat={openResultChat} /> : children(binding)}{!cloudOpen && !referencesOpen && !assetsOpen && <CompanionAvatarLayer presentation={avatar} />}{navigationError && collapsed && <p role="alert" className="absolute bottom-4 left-4 right-4 z-30 rounded-xl bg-zinc-900 p-3 text-sm text-zinc-300">{navigationError}</p>}</div>
     <SettingsModal open={settingsOpen} onClose={() => setSettingsOpen(false)} userEmail={userEmail} userName={userName} plan={plan} planLoading={planLoading} planError={planError} onRetryPlan={onRetryPlan} preview={preview} restoreFocus={restoreSettingsFocus}
       onLogout={onLogout ? () => leave(onLogout) : undefined} onUpgrade={onUpgrade ? () => leave(onUpgrade) : undefined} onNavigate={href => leave(() => onNavigate ? onNavigate(href) : window.location.assign(href))} />
   </div>;

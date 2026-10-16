@@ -9,12 +9,15 @@ import type { VoiceLibrary } from '../../types';
 import { fetchVoices } from '../../services/voiceService';
 import { prepareReferenceMedia, validateReferenceLink, type CompanionReferenceDraft, type ReferenceMedia, type ReferencePhoto, type ReferenceVoice } from '../../services/companionReferenceDraft';
 import type { ConversationBinding } from './CompanionChatShell';
-import { confirmSampleReview, createSampleReview, fingerprintReferenceDraft } from '../../services/companionReferenceReview';
+import { confirmSampleReview, fingerprintReferenceDraft } from '../../services/companionReferenceReview';
+import { createCreativeSampleReview } from '../../services/companionCreativePlanner.js';
+import { CompanionCreativeSource } from './CompanionCreativeSource';
 import { CompanionReferenceReview } from './CompanionReferenceReview';
 import { CompanionReferenceQueue } from './CompanionReferenceQueue';
 import { CompanionFixtureJob } from './CompanionFixtureJob';
 import { cloudReferenceMatchesReview, type FixtureJobClient } from '../../services/companionFixtureJobs';
 import { ensureCloudReference } from '../../services/companionCloudReferences';
+import { CompanionFixtureResult } from './CompanionFixtureResult';
 
 const control = 'min-h-11 min-w-11 !rounded-xl !text-sm !font-semibold !normal-case !tracking-normal';
 const ghost = `${control} !bg-zinc-950 border border-white/10 !text-zinc-400 hover:!text-white hover:!border-[#FFCC00]`;
@@ -40,6 +43,7 @@ export function CompanionReferenceBrief({ conversation, userId, loadVoices = fet
 }) {
   const draft = conversation.chat.referenceDraft!;
   const cloudMode = !!conversation.cloudReferenceClient && !!conversation.openCloudJobs;
+  const cloudResultIntent = conversation.chat.referenceCloudJob ?? conversation.chat.referenceCloudObservation;
   const latest = useRef(draft); latest.current = draft;
   const latestChat = useRef(conversation.chat); latestChat.current = conversation.chat;
   const [showReview, setShowReview] = useState(!!conversation.chat.referenceReview);
@@ -110,7 +114,7 @@ export function CompanionReferenceBrief({ conversation, userId, loadVoices = fet
       }
       const review = confirm && chat.referenceReview
         ? confirmSampleReview(chat.referenceReview, hash, chat.referenceInputRevision ?? 0)
-        : createSampleReview(snapshot, hash, chat.referenceInputRevision ?? 0, chat.referenceReview?.revision ?? 0);
+        : createCreativeSampleReview(snapshot, hash, chat.referenceInputRevision ?? 0, chat.referenceReview?.revision ?? 0);
       if (cloudMode) await conversation.updateSaved({ referenceReview: review, referenceCloudSource: cloudSource }, chat);
       else conversation.update({ referenceReview: review });
       if (active.current && currentScope.current === startedScope) setShowReview(true);
@@ -142,9 +146,10 @@ export function CompanionReferenceBrief({ conversation, userId, loadVoices = fet
     </header>
     <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-5 sm:px-8">
       <div className="mx-auto max-w-2xl space-y-5">
+        {cloudResultIntent && conversation.fixtureResultClient && conversation.loadFixtureVideo && <CompanionFixtureResult key={`${userId}:${conversation.chat.id}:${cloudResultIntent.requestId}`} userId={userId} chatId={conversation.chat.id} intent={cloudResultIntent} client={conversation.fixtureResultClient} cloudClient={conversation.cloudFixtureClient} loadVideo={conversation.loadFixtureVideo} onViewAssets={conversation.viewFixtureInAssets} />}
         {error && <p role="alert" className="flex items-start gap-3 text-sm text-amber-500"><AlertTriangle className="h-5 w-5 shrink-0" />{error}</p>}
         {planning && <p role="status" className="text-sm text-zinc-300">Checking your saved brief and files… No generation or spending.</p>}
-        {showFixtureJob ? fixtureJobClient ? <CompanionFixtureJob conversation={conversation} userId={userId} client={fixtureJobClient} onBack={() => { setShowFixtureJob(false); setShowReview(true); }} /> : <GlassPanel className="space-y-4 p-4 sm:p-5"><h2 className="!text-lg !font-semibold !normal-case !tracking-normal">Saved background fixture job</h2><p className="text-sm leading-relaxed text-zinc-300">Open the local background fixture preview to observe or stop this job. This view has no worker connection. Editing stays locked until the worker acknowledges stopping the plan.</p><p className="text-sm text-zinc-300">Original plan revision {fixtureLink?.intent.plan.revision}. Actual spend: PHP 0.00.</p></GlassPanel> : showQueue && !fixtureJobClient ? <CompanionReferenceQueue key={`${scope}:${conversation.chat.referenceQueue?.id ?? 'new'}`} conversation={conversation} userId={userId} onBack={() => { setShowQueue(false); setShowReview(true); }} /> : showReview && conversation.chat.referenceReview ? <CompanionReferenceReview review={conversation.chat.referenceReview} busy={planning || uploading || fixtureLocked} saved={conversation.saved && !conversation.saving && !conversation.saveConflict}
+        {showFixtureJob ? fixtureJobClient ? <CompanionFixtureJob conversation={conversation} userId={userId} client={fixtureJobClient} onBack={() => { setShowFixtureJob(false); setShowReview(true); }} /> : <GlassPanel className="space-y-4 p-4 sm:p-5"><h2 className="!text-lg !font-semibold !normal-case !tracking-normal">Saved background fixture job</h2><p className="text-sm leading-relaxed text-zinc-300">Open the local background fixture preview to observe or stop this job. This view has no worker connection. Editing stays locked until the worker acknowledges stopping the plan.</p><p className="text-sm text-zinc-300">Original plan revision {fixtureLink?.intent.plan.revision}. Actual spend: PHP 0.00.</p></GlassPanel> : showQueue && !fixtureJobClient ? <CompanionReferenceQueue key={`${scope}:${conversation.chat.referenceQueue?.id ?? 'new'}`} conversation={conversation} userId={userId} onBack={() => { setShowQueue(false); setShowReview(true); }} /> : showReview && conversation.chat.referenceReview ? <CompanionReferenceReview review={conversation.chat.referenceReview} photos={draft.photos} busy={planning || uploading || fixtureLocked} saved={conversation.saved && !conversation.saving && !conversation.saveConflict}
           onChange={review => conversation.update({ referenceReview: review })} onBack={() => setShowReview(false)} onPrepare={() => void reviewAction()} onConfirm={() => void reviewAction(true)} onQueue={() => cloudMode ? conversation.openCloudJobs!() : fixtureJobClient ? setShowFixtureJob(true) : setShowQueue(true)} hasQueue={cloudMode ? !!conversation.chat.referenceCloudJob || !!conversation.chat.referenceCloudObservation : !!conversation.chat.referenceQueue || !!fixtureLink} queueLabel={cloudMode ? 'Open cloud fixture job' : fixtureJobClient ? 'Open background fixture job' : undefined} cloudMode={cloudMode} cloudLinked={cloudReferenceMatchesReview(conversation.chat.referenceCloudSource, conversation.chat.referenceReview, conversation.chat.referenceInputRevision ?? 0)} /> : <>
         <GlassPanel className="space-y-4 p-4 sm:p-5" aria-label="Reference brief">
           <h2 className="!text-lg !font-semibold !normal-case !tracking-normal">Reference brief</h2>
@@ -162,6 +167,12 @@ export function CompanionReferenceBrief({ conversation, userId, loadVoices = fet
           <label className="block text-sm text-zinc-400">Reference adaptation<select aria-label="Reference adaptation" className={selectStyle} value={draft.adaptationMode ?? 'adapt'} onChange={event => update({ adaptationMode: event.target.value as CompanionReferenceDraft['adaptationMode'] })}><option value="adapt">Adapt for brand</option><option value="close">Match closely</option></select></label>
           <label className="block text-sm text-zinc-400">Speech mode<select aria-label="Speech mode" className={selectStyle} value={draft.speechMode ?? 'spoken'} onChange={event => update({ speechMode: event.target.value as CompanionReferenceDraft['speechMode'] })}><option value="spoken">Spoken ad</option><option value="silent">No voiceover</option></select></label>
         </GlassPanel>
+        <CompanionCreativeSource source={draft.creativeSource} disabled={uploading || planning || fixtureLocked} onChange={source => {
+          if (source) { update({ creativeSource: source }); return; }
+          if (fixtureLocked) return;
+          const { creativeSource: _, ...next } = latest.current; latest.current = next;
+          conversation.update({ referenceDraft: next });
+        }} />
         <GlassPanel className="space-y-4 p-4 sm:p-5" aria-label="Reference and photos">
           <h2 className="!text-base !font-semibold !normal-case !tracking-normal">Reference and photos</h2>
           <p className="text-sm text-zinc-300">Your reference can be in any language. Its edit can guide an ad in your chosen output language.</p>

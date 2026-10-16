@@ -1,6 +1,8 @@
 import { test as base, expect, type Browser, type BrowserContext, type Page, type Route, type TestInfo } from '@playwright/test';
 import { createHash, randomUUID } from 'node:crypto';
 import { readFileSync, writeFileSync } from 'node:fs';
+import { createServer, type Server } from 'node:http';
+import { FIXTURE_VIDEO_MANIFEST } from '../../services/companionFixtureVideo';
 
 // Shared simulated HTTP RPC/object store, owned by the test process rather than any browser.
 // Native client decoding remains active. No provider, real cloud/auth or worker request is allowed.
@@ -10,17 +12,23 @@ const JOBS = '/__fixture-cloud-workflow';
 const OWNER = 'fixture-user-a', OTHER = 'fixture-user-b';
 const photoBytes = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aEocAAAAASUVORK5CYII=', 'base64');
 const videoBytes = readFileSync('tests/e2e/fixtures/recovery.webm');
+const resultVideoBytes = readFileSync('api/_lib/assets/fixtures/companion-video-v1.mp4');
 const hash = (bytes: Buffer | string) => createHash('sha256').update(bytes).digest('hex');
 type Receipt = { runtime: string; ownerId: string; saveId: string; sourceChatId: string; manifestText: string; createdAt: number; committed: boolean };
 type StoredMedia = { bytes: Buffer; type: string };
 type Call = { ownerId: string; method: string; name: string; path?: string; args?: Record<string, any> };
 type ServerJob = { runtime: string; intentText: string; queue: any; updatedAt: number; nextDueAt: null };
+type ResultReceipt = { version: 1; fixture: true; runtime: 'supabase-cloud-fixture-result-v1'; fixtureVersion: 'v1'; manifestId: string; ownerId: string; ownerChatId: string; requestId: string; jobId: string; sourceSaveId: string; inputHash: string; intentText: string; status: 'PENDING' | 'READY'; actualCents: 0; createdAt: number; readyAt: number | null };
+type FixtureRequest = { url: () => string; method: () => string; headers: () => Record<string, string>; postDataBuffer: () => Buffer; postDataJSON: () => Record<string, any> };
+type FixtureResponse = { abort: (reason?: string) => Promise<void>; fulfill: (options: { status?: number; body?: Buffer | string; contentType?: string }) => Promise<void> };
 
 class SharedWorkflow {
   receipts = new Map<string, Receipt>(); objects = new Map<string, StoredMedia>(); jobs = new Map<string, ServerJob>();
   calls: Call[] = []; forbidden: string[] = []; errors: string[] = []; pages: Page[] = []; contexts: BrowserContext[] = [];
   loseCommitAck = false; loseStartAck = false; offline = false; rejectStart = false;
   unknownJobs = new Set<string>();
+  results = new Map<string, ResultReceipt>(); resultUnavailable = false; resultCorrupt = false; resultPartial = false; libraryUnavailable = false;
+  private server: Server | undefined; serverURL = ''; serverRequests = 0;
   held = false; private heldName = ''; private releaseHeld: (() => void) | undefined;
   constructor(readonly baseURL: string, readonly testInfo: TestInfo) {}
   key(ownerId: string, saveId: string) { return `${ownerId}:${saveId}`; }
@@ -28,6 +36,24 @@ class SharedWorkflow {
   startCalls() { return this.calls.filter(call => call.name === 'grifon_fixture_start'); }
   holdNext(name: string) { this.heldName = name; this.held = false; }
   release() { this.releaseHeld?.(); this.releaseHeld = undefined; }
+  async listen() {
+    this.server = createServer(async (incoming, response) => {
+      this.serverRequests++;
+      const bytes: Buffer[] = []; for await (const chunk of incoming) bytes.push(Buffer.from(chunk));
+      const body = Buffer.concat(bytes), url = new URL(incoming.url!, this.serverURL);
+      if (url.pathname === JOBS + '/health') { response.setHeader('content-type', 'application/json'); response.end(JSON.stringify({ alive: true, jobs: this.jobs.size, results: this.results.size })); return; }
+      const headers = Object.fromEntries(Object.entries(incoming.headers).map(([name, value]) => [name, Array.isArray(value) ? value.join(',') : value ?? '']));
+      try {
+        await this.backend({ url: () => url.href, method: () => incoming.method!, headers: () => headers, postDataBuffer: () => body, postDataJSON: () => JSON.parse(body.toString() || '{}') }, {
+          abort: async () => { response.destroy(); },
+          fulfill: async options => { response.statusCode = options.status ?? 200; if (options.contentType) response.setHeader('content-type', options.contentType); response.end(options.body ?? ''); },
+        });
+      } catch (error) { this.errors.push(String(error)); response.statusCode = 500; response.end('Fixture backend error'); }
+    });
+    await new Promise<void>(resolve => this.server!.listen(0, '127.0.0.1', resolve));
+    this.serverURL = `http://127.0.0.1:${(this.server.address() as { port: number }).port}`;
+  }
+  async closeServer() { if (this.server) await new Promise<void>((resolve, reject) => { this.server!.close(error => error ? reject(error) : resolve()); this.server!.closeAllConnections(); }); }
   // Deliberate worker events. Reads and browser-open events never mutate progress.
   tick(requestId: string, count = 1) {
     for (let index = 0; index < count; index++) {
@@ -42,7 +68,10 @@ class SharedWorkflow {
       if (fails) queue.status = 'failed';
       else if (running === queue.steps.length - 1) queue.status = 'complete';
       else { queue.steps[running + 1].status = 'running'; queue.steps[running + 1].attempts = 1; }
-      this.jobs.set(requestId, { ...job, queue, updatedAt: job.updatedAt + 5000 });
+      const updatedAt = job.updatedAt + 5000;
+      this.jobs.set(requestId, { ...job, queue, updatedAt });
+      const result = this.results.get(requestId);
+      if (queue.status === 'complete' && result?.status === 'PENDING') this.results.set(requestId, { ...result, status: 'READY', readyAt: updatedAt });
     }
   }
   async route(route: Route) {
@@ -52,10 +81,25 @@ class SharedWorkflow {
       this.forbidden.push(`${request.method()} ${url.origin}${url.pathname}`); return route.abort();
     }
     if (!url.pathname.startsWith(REFERENCES + '/') && !url.pathname.startsWith(JOBS + '/')) return route.continue();
+    try { return await route.fulfill({ response: await route.fetch({ url: this.serverURL + url.pathname + url.search, maxRetries: 0 }) }); }
+    catch { return route.abort('failed'); }
+  }
+  async backend(request: FixtureRequest, route: FixtureResponse) {
+    const url = new URL(request.url());
     const ownerId = request.headers()['x-fixture-owner'];
     if (![OWNER, OTHER].includes(ownerId)) return route.fulfill({ status: 403, body: 'Invalid fixture owner' });
     const json = (value: unknown) => route.fulfill({ contentType: 'application/json', body: JSON.stringify(value) });
     if (this.offline) return route.abort('failed');
+    if (url.pathname === JOBS + '/video') {
+      const requestId = url.searchParams.get('p_request_id') ?? '', result = this.results.get(requestId);
+      this.calls.push({ ownerId, method: request.method(), name: 'fixture-video', args: { p_request_id: requestId } });
+      const held = this.heldName === 'fixture-video';
+      if (held) { this.heldName = ''; this.held = true; await new Promise<void>(resolve => { this.releaseHeld = resolve; }); }
+      if (!result || result.ownerId !== ownerId || result.status !== 'READY' || this.resultUnavailable) return route.fulfill({ status: 404, body: 'Fixture video unavailable' });
+      const bytes = this.resultCorrupt ? Buffer.from(resultVideoBytes).fill(0) : this.resultPartial ? resultVideoBytes.subarray(0, 96) : resultVideoBytes;
+      return route.fulfill({ contentType: FIXTURE_VIDEO_MANIFEST.mimeType, body: bytes });
+    }
+    if (url.pathname === JOBS + '/library') { this.calls.push({ ownerId, method: request.method(), name: 'video-library' }); return this.libraryUnavailable ? route.fulfill({ status: 503, body: 'Existing video library unavailable' }) : json([]); }
     if (url.pathname.startsWith(REFERENCES + '/storage/')) {
       const path = decodeURIComponent(url.pathname.slice((REFERENCES + '/storage/').length));
       this.calls.push({ ownerId, method: request.method(), name: 'storage', path });
@@ -94,6 +138,10 @@ class SharedWorkflow {
       if (name === 'grifon_reference_get') return respond({ data: existing?.committed ? existing : null, error: null });
       if (name === 'grifon_reference_list') return respond({ data: this.committed(ownerId), error: null });
     } else {
+      // New optional safety panel reopens existing checks without creating one.
+      if (name === 'grifon_fixture_execution_find') return respond({ data: null, error: null });
+      if (name === 'grifon_fixture_result_list') return respond({ data: [...this.results.values()].filter(result => result.ownerId === ownerId && result.status === 'READY'), error: null });
+      if (name === 'grifon_fixture_result_get') { const result = this.results.get(args.p_request_id); return respond({ data: result?.ownerId === ownerId ? result : null, error: null }); }
       if (name === 'grifon_fixture_list') return respond({ data: [...this.jobs.entries()].filter(([id, job]) => !this.unknownJobs.has(id) && JSON.parse(job.intentText).ownerId === ownerId).map(([, job]) => job), error: null });
       if (name === 'grifon_fixture_start') {
         if (this.rejectStart) { this.rejectStart = false; return respond({ data: null, error: { code: '22023' } }); }
@@ -109,6 +157,7 @@ class SharedWorkflow {
           const kinds = [...intent.plan.scenes.map((_: any, index: number) => ({ id: `clip-${index + 1}`, kind: 'clip' })), ...(intent.plan.speechMode === 'spoken' ? [{ id: 'voice', kind: 'voice' }] : []), ...['music', 'sfx', 'assembly', 'quality'].map(kind => ({ id: kind, kind }))];
           job = { runtime: 'supabase-cloud-fixture-v1', intentText: args.p_intent_text, queue: { version: 1, fixture: true, id: randomUUID(), revision: 2, status: 'running', invalidated: false, scenario: intent.scenario, steps: kinds.map((step, index) => ({ ...step, status: index ? 'queued' : 'running', attempts: index ? 0 : 1 })), actualCents: 0 }, updatedAt: 1_792_015_300_000, nextDueAt: null };
           this.jobs.set(intent.requestId, job);
+          if (link) this.results.set(intent.requestId, { version: 1, fixture: true, runtime: 'supabase-cloud-fixture-result-v1', fixtureVersion: 'v1', manifestId: FIXTURE_VIDEO_MANIFEST.id, ownerId, ownerChatId: intent.ownerChatId, requestId: intent.requestId, jobId: job.queue.id, sourceSaveId: link.saveId, inputHash: link.inputHash, intentText: args.p_intent_text, status: 'PENDING', actualCents: 0, createdAt: job.updatedAt, readyAt: null });
         }
         if (this.loseStartAck) { this.loseStartAck = false; return route.abort('failed'); }
         return respond({ data: job, error: null });
@@ -147,7 +196,7 @@ class SharedWorkflow {
     const clients = [];
     for (const page of this.pages) if (!page.isClosed()) clients.push(await page.evaluate(() => ({ providerCalls: (window as any).companionFixture?.snapshot().calls ?? [], pageMemoryJobCalls: (window as any).companionCloudFixture?.snapshot().calls ?? [] })));
     const path = this.testInfo.outputPath('shared-workflow-boundary.json');
-    writeFileSync(path, JSON.stringify({ simulated: true, runtime: 'shared HTTP fixture backend; native production client decoder', forbidden: this.forbidden, errors: this.errors, calls: this.calls, receipts: [...this.receipts.values()], objects: [...this.objects].map(([path, media]) => ({ path, type: media.type, size: media.bytes.length, sha256: hash(media.bytes) })), jobs: [...this.jobs.values()], clients }, null, 2));
+    writeFileSync(path, JSON.stringify({ simulated: true, runtime: 'independent loopback HTTP fixture backend; native production client decoder', serverRequests: this.serverRequests, forbidden: this.forbidden, errors: this.errors, calls: this.calls, receipts: [...this.receipts.values()], results: [...this.results.values()], resultMedia: { ...FIXTURE_VIDEO_MANIFEST, servedSha256: hash(resultVideoBytes) }, objects: [...this.objects].map(([path, media]) => ({ path, type: media.type, size: media.bytes.length, sha256: hash(media.bytes) })), jobs: [...this.jobs.values()], clients }, null, 2));
     await this.testInfo.attach('shared-workflow-boundary', { path, contentType: 'application/json' });
     expect(this.forbidden).toEqual([]); expect(this.errors).toEqual([]);
     for (const client of clients) { expect(client.providerCalls).toEqual([]); expect(client.pageMemoryJobCalls).toEqual([]); }
@@ -155,8 +204,8 @@ class SharedWorkflow {
 }
 const test = base.extend<{ cloud: SharedWorkflow }>({
   cloud: [async ({ context, baseURL }, use, testInfo) => {
-    const cloud = new SharedWorkflow(baseURL!, testInfo); await cloud.install(context);
-    try { await use(cloud); } finally { try { await cloud.finish(); } finally { for (const extra of cloud.contexts.slice(1)) await extra.close(); } }
+    const cloud = new SharedWorkflow(baseURL!, testInfo); await cloud.listen(); await cloud.install(context);
+    try { await use(cloud); } finally { try { await cloud.finish(); } finally { for (const extra of cloud.contexts.slice(1)) await extra.close(); await cloud.closeServer(); } }
   }, { auto: true }],
 });
 const panel = (page: Page) => page.getByTestId('cloud-fixture-panel');
@@ -222,6 +271,227 @@ async function layout(page: Page, testInfo: TestInfo, name: string) {
   for (const item of metrics.controls) { expect(item.height, item.label).toBeGreaterThanOrEqual(44); expect(item.width, item.label).toBeGreaterThanOrEqual(44); expect(parseFloat(item.font), item.label).toBeGreaterThanOrEqual(12); }
   await page.screenshot({ path: testInfo.outputPath(`${name}.png`), fullPage: true }); const path = testInfo.outputPath(`${name}.json`); writeFileSync(path, JSON.stringify(metrics, null, 2)); await testInfo.attach(name, { path, contentType: 'application/json' });
 }
+
+const resultCard = (page: Page) => page.getByTestId('fixture-result-card');
+async function openAssets(page: Page) {
+  const button = page.getByRole('button', { name: 'Grifon Assets', exact: true });
+  if (!await button.isVisible()) await page.getByRole('button', { name: 'Open conversations', exact: true }).click();
+  await button.click(); await expect(page.getByTestId('companion-assets')).toBeVisible();
+}
+async function playable(page: Page) {
+  const video = resultCard(page).getByLabel('Fixture sample video player', { exact: true });
+  await expect(video).toBeVisible();
+  await expect.poll(() => video.evaluate((element: HTMLVideoElement) => ({ width: element.videoWidth, height: element.videoHeight, duration: element.duration, decoded: element.readyState >= 2 })) ).toEqual({ width: 360, height: 640, duration: 8, decoded: true });
+  await video.evaluate((element: HTMLVideoElement) => element.play());
+  await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.currentTime)).toBeGreaterThan(0.25);
+  await video.evaluate((element: HTMLVideoElement) => element.pause());
+}
+async function resultLayout(page: Page, testInfo: TestInfo, name: string) {
+  await resultCard(page).scrollIntoViewIfNeeded();
+  const metrics = await resultCard(page).evaluate(element => ({ width: innerWidth, documentWidth: document.documentElement.scrollWidth, cardWidth: element.clientWidth, cardScrollWidth: element.scrollWidth,
+    controls: Array.from(element.querySelectorAll<HTMLElement>('button,a,summary')).filter(control => control.getClientRects().length).map(control => ({ label: control.textContent?.trim(), width: control.getBoundingClientRect().width, height: control.getBoundingClientRect().height, font: parseFloat(getComputedStyle(control).fontSize) })) }));
+  expect(metrics.documentWidth).toBeLessThanOrEqual(metrics.width); expect(metrics.cardScrollWidth).toBeLessThanOrEqual(metrics.cardWidth + 1);
+  for (const control of metrics.controls) { expect(control.width, control.label).toBeGreaterThanOrEqual(44); expect(control.height, control.label).toBeGreaterThanOrEqual(44); expect(control.font, control.label).toBeGreaterThanOrEqual(12); }
+  await page.screenshot({ path: testInfo.outputPath(`${name}.png`), fullPage: true });
+  const path = testInfo.outputPath(`${name}.json`); writeFileSync(path, JSON.stringify(metrics, null, 2)); await testInfo.attach(name, { path, contentType: 'application/json' });
+}
+
+test('completed fixture delivers its video in the real chat', async ({ page, cloud }) => {
+  await reference(page, 1); await prepare(page, cloud); await confirm(page);
+  const job = await start(page, cloud), intent = JSON.parse(job.intentText);
+  cloud.tick(intent.requestId, 20); await refresh(page);
+  await expect(status(page)).toContainText(/complete/i);
+  await page.getByRole('button', { name: 'Back to chat', exact: true }).click();
+  await expect(page.getByTestId('fixture-result-card')).toBeVisible();
+});
+
+for (const [category, mode, recipeId] of [
+  ['ugc', 'fixture-recipe', 'fixture-ugc-detail-v1'],
+  ['motion-launch', 'fixture-auto', 'fixture-motion-launch-v1'],
+  ['cinematic-spec', 'fixture-auto', 'fixture-cinematic-spec-v1'],
+] as const) test(`creative ${category} ${mode} keeps exact cloud plan and generic result after fresh-browser reopen`, async ({ page, browser, cloud }) => {
+  await reference(page, 3);
+  await page.getByLabel('Creative source', { exact: true }).selectOption(mode);
+  await page.getByLabel('Creative category', { exact: true }).selectOption(category); await saved(page);
+  await prepare(page, cloud); await confirm(page);
+  const original = selectedChat(await book(page)), job = await start(page, cloud), intent = JSON.parse(job.intentText);
+  const source = original.referenceDraft.creativeSource;
+  const manifest = JSON.parse(cloud.committed()[0].manifestText);
+  expect(manifest.draft.creativeSource).toEqual(source);
+  expect(intent.plan.creativePlan.source).toMatchObject({ mode, category, recipeId, provenance: 'original-synthetic-fixture', referenceAnalysis: 'not-run' });
+  expect(intent.plan.creativePlan.execution).toMatchObject({ mode: 'metadata-only', providerCalls: 0, actualCents: 0 });
+  expect(intent.plan.creativePlan.audio.selectedVoice).toEqual(intent.plan.voice);
+  expect(intent.plan.creativePlan.bindings.map((item: any) => item.photoId)).toEqual(original.referenceDraft.photos.map((item: any) => item.id));
+  await page.context().close(); cloud.tick(intent.requestId, 20);
+  const reopened = await cloud.device(browser); await openCloud(reopened); await selectJob(reopened, intent.requestId);
+  await expect(resultCard(reopened)).toHaveAttribute('data-result-id', `${intent.requestId}:v1`);
+  await playable(reopened);
+  await expect(resultCard(reopened)).toContainText('This sample was not generated from your brief, reference, photos or selected voice.');
+  const frozen = JSON.stringify({ jobs: [...cloud.jobs], receipts: [...cloud.receipts], results: [...cloud.results], objects: cloud.objects.size });
+  await reopened.getByRole('button', { name: 'Open saved inputs/review in chat', exact: true }).click();
+  await expect(reopened.getByRole('heading', { name: 'Sample plan review', exact: true })).toBeVisible(); await saved(reopened);
+  const copy = selectedChat(await book(reopened));
+  expect(copy.referenceDraft).toEqual(original.referenceDraft);
+  // The editable copy starts a local input revision at zero. The frozen job
+  // retains its original revision and approval, only the copy is rebased.
+  const copiedPlan = { ...intent.plan.creativePlan, inputRevision: 0 };
+  expect(copy.referenceReview.creativePlan).toEqual(copiedPlan);
+  expect(copy.referenceCloudObservation.plan).toEqual(intent.plan);
+  expect(copy.referenceReview.confirmation).toBeNull();
+  await reopened.reload(); await expect(reopened.getByRole('heading', { name: 'Sample plan review', exact: true })).toBeVisible();
+  expect(selectedChat(await book(reopened)).referenceReview.creativePlan).toEqual(copiedPlan);
+  expect(cloud.startCalls()).toHaveLength(1);
+  expect(cloud.calls.filter(call => call.name === 'grifon_fixture_command')).toEqual([]);
+  expect(JSON.stringify({ jobs: [...cloud.jobs], receipts: [...cloud.receipts], results: [...cloud.results], objects: cloud.objects.size })).toBe(frozen);
+});
+
+test('completion between result and job reads becomes ready automatically in chat', async ({ page, cloud }) => {
+  await reference(page, 1); await prepare(page, cloud); await confirm(page);
+  const job = await start(page, cloud), intent = JSON.parse(job.intentText);
+  await expect(resultCard(page).getByTestId('fixture-result-status')).toContainText(/in progress/i);
+  cloud.holdNext('grifon_fixture_result_get'); await page.getByRole('button', { name: 'Back to chat', exact: true }).click();
+  await expect.poll(() => cloud.held).toBe(true);
+  cloud.tick(intent.requestId, 20); cloud.release();
+  // The held result read returns its prior PENDING receipt; the following job
+  // read sees COMPLETE. No user refresh or extra worker event resolves this gap.
+  await expect(resultCard(page).getByTestId('fixture-result-status')).toContainText(/sample ready.*saved in Grifon Assets/i);
+  await playable(page); expect(cloud.results.size).toBe(1); expect(cloud.startCalls()).toHaveLength(1);
+  expect(cloud.calls.filter(call => call.name === 'grifon_fixture_command')).toEqual([]);
+});
+
+for (const width of [375, 390, 1280]) test(`fixture result survives every browser closing and plays the same saved asset at ${width}px`, async ({ page, browser, cloud }, testInfo) => {
+  await page.setViewportSize({ width, height: width === 1280 ? 900 : width === 375 ? 667 : 844 });
+  await reference(page, 1); await prepare(page, cloud); await confirm(page);
+  const job = await start(page, cloud), intent = JSON.parse(job.intentText), resultId = `${intent.requestId}:v1`;
+  await expect(resultCard(page).getByTestId('fixture-result-status')).toContainText(/in progress/i);
+  await expect(resultCard(page).locator('video')).toHaveCount(0); await expect(resultCard(page).getByRole('link', { name: 'Download fixture video' })).toHaveCount(0);
+  expect(cloud.results.size).toBe(1); expect(cloud.results.get(intent.requestId)?.status).toBe('PENDING');
+  await page.context().close(); expect(browser.contexts()).toHaveLength(0);
+  expect(await (await fetch(cloud.serverURL + JOBS + '/health')).json()).toEqual({ alive: true, jobs: 1, results: 1 });
+  cloud.tick(intent.requestId, 20);
+  const ready = structuredClone(cloud.results.get(intent.requestId)!); expect(ready.status).toBe('READY'); expect(ready.readyAt).toBeGreaterThan(ready.createdAt);
+  const beforeReads = JSON.stringify({ jobs: [...cloud.jobs], results: [...cloud.results], inputs: [...cloud.receipts], objects: cloud.objects.size });
+  const reopened = await cloud.device(browser, width); await openCloud(reopened); await selectJob(reopened, intent.requestId);
+  await expect(resultCard(reopened)).toHaveAttribute('data-result-id', resultId); await expect(resultCard(reopened).getByTestId('fixture-result-status')).toContainText(/sample ready.*Grifon Assets/i);
+  await expect(resultCard(reopened)).toContainText('Actual spend: PHP 0.00.'); await expect(resultCard(reopened)).toContainText('This sample was not generated from your brief, reference, photos or selected voice.');
+  await playable(reopened); await resultCard(reopened).getByRole('button', { name: 'Open in chat', exact: true }).click();
+  await expect(reopened.getByTestId('companion-chat')).toBeVisible(); await expect(resultCard(reopened)).toHaveAttribute('data-result-id', resultId);
+  expect(selectedChat(await book(reopened)).referenceCloudObservation.requestId).toBe(intent.requestId);
+  await playable(reopened); await resultLayout(reopened, testInfo, `fixture-ready-chat-${width}`);
+  if (width === 375) {
+    await resultCard(reopened).getByRole('link', { name: 'Download fixture video', exact: true }).scrollIntoViewIfNeeded();
+    await reopened.screenshot({ path: testInfo.outputPath('fixture-ready-chat-controls-375.png'), fullPage: true });
+    await resultCard(reopened).getByText('Sample details', { exact: true }).click();
+    await resultCard(reopened).getByText(`Input snapshot: ${ready.sourceSaveId}`, { exact: true }).scrollIntoViewIfNeeded();
+    await reopened.screenshot({ path: testInfo.outputPath('fixture-ready-chat-details-375.png'), fullPage: true });
+    await resultCard(reopened).getByText('Sample details', { exact: true }).click();
+  }
+  const [download] = await Promise.all([reopened.waitForEvent('download'), resultCard(reopened).getByRole('link', { name: 'Download fixture video', exact: true }).click()]);
+  expect(download.suggestedFilename()).toBe(`fixture-sample-${intent.requestId}-v1.mp4`);
+  const downloadPath = testInfo.outputPath(`fixture-result-${width}.mp4`); await download.saveAs(downloadPath);
+  const bytes = readFileSync(downloadPath); expect(bytes.byteLength).toBe(FIXTURE_VIDEO_MANIFEST.sizeBytes); expect(hash(bytes)).toBe(FIXTURE_VIDEO_MANIFEST.sha256);
+  await testInfo.attach('verified-fixture-video', { path: downloadPath, contentType: 'video/mp4' });
+  await resultCard(reopened).getByRole('button', { name: 'View in Assets', exact: true }).click();
+  await expect(reopened.getByRole('heading', { name: 'Grifon Assets', exact: true })).toBeVisible();
+  await expect(reopened.getByRole('button', { name: `Open fixture sample: ${resultId}`, exact: true })).toHaveCount(1);
+  await expect(resultCard(reopened)).toHaveAttribute('data-result-id', resultId); await playable(reopened); await resultLayout(reopened, testInfo, `fixture-ready-assets-${width}`);
+  await reopened.getByRole('button', { name: 'Refresh Assets', exact: true }).click();
+  await expect(reopened.getByRole('button', { name: `Open fixture sample: ${resultId}`, exact: true })).toHaveCount(1);
+  await expect(reopened.getByText('No saved videos are currently available.', { exact: true })).toBeVisible();
+  await resultCard(reopened).getByRole('button', { name: 'Refresh result', exact: true }).click();
+  await expect(resultCard(reopened).getByTestId('fixture-result-status')).toContainText(/sample ready/i);
+  await resultCard(reopened).getByRole('button', { name: 'Open in chat', exact: true }).click();
+  await expect(resultCard(reopened)).toHaveAttribute('data-result-id', resultId); await reopened.reload();
+  await expect(resultCard(reopened)).toHaveAttribute('data-result-id', resultId); await playable(reopened);
+  expect(cloud.startCalls()).toHaveLength(1); expect(cloud.calls.filter(call => call.name === 'grifon_fixture_command')).toEqual([]);
+  expect(JSON.stringify({ jobs: [...cloud.jobs], results: [...cloud.results], inputs: [...cloud.receipts], objects: cloud.objects.size })).toBe(beforeReads);
+});
+
+for (const problem of ['unavailable', 'corrupt', 'partial']) test(`${problem} fixture media keeps the exact saved result truthful and retryable`, async ({ page, cloud }, testInfo) => {
+  await reference(page, 1); await prepare(page, cloud); await confirm(page); const job = await start(page, cloud), intent = JSON.parse(job.intentText);
+  cloud.resultUnavailable = problem === 'unavailable'; cloud.resultCorrupt = problem === 'corrupt'; cloud.resultPartial = problem === 'partial';
+  cloud.tick(intent.requestId, 20); await resultCard(page).getByRole('button', { name: 'Refresh result', exact: true }).click();
+  await expect(resultCard(page).getByRole('alert')).toContainText(/unavailable|match|incomplete/i);
+  await expect(resultCard(page).locator('video')).toHaveCount(0); await expect(resultCard(page).getByRole('link', { name: 'Download fixture video' })).toHaveCount(0);
+  await expect(resultCard(page)).toHaveAttribute('data-result-id', `${intent.requestId}:v1`); await resultLayout(page, testInfo, `fixture-media-${problem}-390`);
+  expect(cloud.results.get(intent.requestId)?.status).toBe('READY'); const receipt = structuredClone(cloud.results.get(intent.requestId));
+  cloud.resultUnavailable = false; cloud.resultCorrupt = false; cloud.resultPartial = false;
+  await resultCard(page).getByRole('button', { name: 'Retry video', exact: true }).click(); await playable(page);
+  expect(cloud.results.get(intent.requestId)).toEqual(receipt); expect(cloud.startCalls()).toHaveLength(1); expect(cloud.calls.filter(call => call.name === 'grifon_fixture_command')).toEqual([]);
+});
+
+for (const state of ['failed', 'cancelled']) test(`${state} fixture has no ready video or Assets entry`, async ({ page, cloud }) => {
+  await reference(page, 1); await prepare(page, cloud); await confirm(page); const job = await start(page, cloud, state === 'failed' ? 'second-clip-fails-once' : 'normal'), intent = JSON.parse(job.intentText);
+  if (state === 'failed') cloud.tick(intent.requestId, 2); else await page.getByRole('button', { name: 'Cancel cloud fixture job', exact: true }).click();
+  await refresh(page); await resultCard(page).getByRole('button', { name: 'Refresh result', exact: true }).click();
+  await expect(resultCard(page).getByTestId('fixture-result-status')).toContainText(/stopped.*no sample is ready/i);
+  await expect(resultCard(page).locator('video')).toHaveCount(0); await expect(resultCard(page).getByRole('link', { name: 'Download fixture video' })).toHaveCount(0);
+  await openAssets(page);
+  await expect(page.getByRole('button', { name: `Open fixture sample: ${intent.requestId}:v1`, exact: true })).toHaveCount(0);
+  await expect(page.getByText('No fixture sample receipts found.', { exact: true })).toBeVisible();
+  expect(cloud.results.get(intent.requestId)?.status).toBe('PENDING'); expect(cloud.startCalls()).toHaveLength(1);
+});
+
+test('legacy completed jobs never receive a substituted fixture video', async ({ page, cloud }) => {
+  await reference(page, 1); await prepare(page, cloud); await confirm(page); const job = await start(page, cloud), intent = JSON.parse(job.intentText);
+  cloud.results.delete(intent.requestId); cloud.tick(intent.requestId, 20); await refresh(page);
+  await resultCard(page).getByRole('button', { name: 'Refresh result', exact: true }).click();
+  await expect(resultCard(page).getByTestId('fixture-result-status')).toContainText('No sample result is available for this request.');
+  await expect(resultCard(page).locator('video')).toHaveCount(0); await expect(resultCard(page).getByRole('link', { name: 'Download fixture video' })).toHaveCount(0);
+  await openAssets(page); await expect(page.getByText('No fixture sample receipts found.', { exact: true })).toBeVisible();
+  expect(cloud.results.size).toBe(0); expect(cloud.startCalls()).toHaveLength(1); expect(cloud.calls.filter(call => call.name === 'fixture-video')).toEqual([]);
+});
+
+test('unavailable existing video library does not hide or replace the saved fixture asset', async ({ page, cloud }) => {
+  await reference(page, 1); await prepare(page, cloud); await confirm(page); const job = await start(page, cloud), intent = JSON.parse(job.intentText);
+  cloud.tick(intent.requestId, 20); cloud.libraryUnavailable = true; await openAssets(page);
+  await expect(page.getByRole('alert')).toContainText('The existing video library is unavailable.');
+  await page.getByRole('button', { name: `Open fixture sample: ${intent.requestId}:v1`, exact: true }).click(); await playable(page);
+  await expect(resultCard(page)).toHaveAttribute('data-result-id', `${intent.requestId}:v1`); expect(cloud.startCalls()).toHaveLength(1);
+});
+
+for (const destination of ['account', 'chat']) test(`a late fixture media response cannot enter another ${destination}`, async ({ page, cloud }) => {
+  await reference(page, 1); await prepare(page, cloud); await confirm(page); const job = await start(page, cloud), intent = JSON.parse(job.intentText);
+  cloud.tick(intent.requestId, 20); cloud.holdNext('fixture-video'); await resultCard(page).getByRole('button', { name: 'Refresh result', exact: true }).click();
+  await expect.poll(() => cloud.held).toBe(true);
+  if (destination === 'account') await account(page, OTHER);
+  else { await page.getByRole('button', { name: 'Open conversations', exact: true }).click(); await page.getByRole('button', { name: 'New chat', exact: true }).click(); }
+  cloud.release(); await expect(page.getByRole('button', { name: 'Reference brief', exact: true })).toBeVisible();
+  await expect(resultCard(page)).toHaveCount(0); await expect(page.getByLabel('Fixture sample video player')).toHaveCount(0);
+  const current = selectedChat(await book(page, destination === 'account' ? OTHER : OWNER)); expect(current.referenceCloudJob).toBeUndefined(); expect(current.referenceCloudObservation).toBeUndefined();
+  if (destination === 'account') {
+    await openAssets(page); await expect(page.getByText('No fixture sample receipts found.', { exact: true })).toBeVisible();
+    const foreign = await fetch(cloud.serverURL + JOBS + '/rpc/grifon_fixture_result_get', { method: 'POST', headers: { 'x-fixture-owner': OTHER, 'content-type': 'application/json' }, body: JSON.stringify({ p_request_id: intent.requestId }) });
+    expect(await foreign.json()).toEqual({ data: null, error: null });
+    expect((await fetch(cloud.serverURL + JOBS + '/video?p_request_id=' + intent.requestId, { headers: { 'x-fixture-owner': OTHER } })).status).toBe(404);
+  }
+  expect(cloud.results.size).toBe(1); expect(cloud.startCalls()).toHaveLength(1);
+});
+
+test('a late Assets list cannot show another account its saved fixture result', async ({ page, cloud }) => {
+  await reference(page, 1); await prepare(page, cloud); await confirm(page); const job = await start(page, cloud), intent = JSON.parse(job.intentText);
+  cloud.tick(intent.requestId, 20); cloud.holdNext('grifon_fixture_result_list'); await openAssets(page); await expect.poll(() => cloud.held).toBe(true);
+  await account(page, OTHER); cloud.release(); await openAssets(page);
+  await expect(page.getByText('No fixture sample receipts found.', { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: `Open fixture sample: ${intent.requestId}:v1`, exact: true })).toHaveCount(0);
+  await expect(resultCard(page)).toHaveCount(0); expect(cloud.results.size).toBe(1); expect(cloud.startCalls()).toHaveLength(1);
+});
+
+test('a delayed result opening cannot replace the newer selected Asset', async ({ page, browser, cloud }) => {
+  await reference(page, 1, 'First saved sample'); await prepare(page, cloud); await confirm(page);
+  const first = await start(page, cloud), firstIntent = JSON.parse(first.intentText); cloud.tick(firstIntent.requestId, 20);
+  await page.getByRole('button', { name: 'Open conversations', exact: true }).click(); await page.getByRole('button', { name: 'New chat', exact: true }).click();
+  await reference(page, 1, 'Second saved sample'); await prepare(page, cloud); await confirm(page);
+  await page.getByRole('button', { name: 'Open cloud fixture job', exact: true }).click(); await page.getByRole('button', { name: 'Start cloud fixture job', exact: true }).click();
+  await expect.poll(() => cloud.jobs.size).toBe(2);
+  const secondIntent = JSON.parse([...cloud.jobs.values()].find(job => JSON.parse(job.intentText).requestId !== firstIntent.requestId)!.intentText); cloud.tick(secondIntent.requestId, 20);
+  await page.context().close(); const fresh = await cloud.device(browser); await openAssets(fresh); const original = await book(fresh);
+  await fresh.getByRole('button', { name: `Open fixture sample: ${firstIntent.requestId}:v1`, exact: true }).click(); await playable(fresh);
+  cloud.holdNext('grifon_reference_get'); await resultCard(fresh).getByRole('button', { name: 'Open in chat', exact: true }).click(); await expect.poll(() => cloud.held).toBe(true);
+  await fresh.getByRole('button', { name: `Open fixture sample: ${secondIntent.requestId}:v1`, exact: true }).click();
+  cloud.release(); await expect(resultCard(fresh)).toHaveAttribute('data-result-id', `${secondIntent.requestId}:v1`); await playable(fresh);
+  expect(await book(fresh)).toEqual(original); expect(cloud.results.size).toBe(2); expect(cloud.startCalls()).toHaveLength(2);
+});
 
 test('preparing review commits exact cloud inputs before confirmation and job dispatch', async ({ page, cloud }) => {
   await reference(page); const original = selectedChat(await book(page)); await prepare(page, cloud);
@@ -322,8 +592,9 @@ for (const width of [390, 375, 1280]) test(`linked job restores exact inputs and
   cloud.tick(intent.requestId, 6); await refresh(recovered); await expect(status(recovered)).toContainText(/complete/i);
   expect(cloud.jobs.get(intent.requestId)!.intentText).toBe(job.intentText);
   expect(cloud.jobs.get(intent.requestId)!.queue.steps.map((step: any) => step.attempts)).toEqual([1, 1, 1, 1, 1, 1, 1, 1]);
-  await expect(panel(recovered).getByText(/Actual spend: PHP 0.00/)).toBeVisible();
-  await expect(recovered.locator('video')).toHaveCount(0); await expect(recovered.getByRole('link', { name: /download.*video|download.*ad/i })).toHaveCount(0);
+  await expect(panel(recovered).getByText('Actual spend: PHP 0.00. No spending is authorized.', { exact: true })).toBeVisible();
+  await expect(resultCard(recovered)).toHaveAttribute('data-result-id', `${intent.requestId}:v1`); await playable(recovered);
+  await expect(resultCard(recovered).getByRole('link', { name: 'Download fixture video', exact: true })).toBeVisible();
   await layout(recovered, testInfo, `linked-complete-${width}`);
   await recovered.getByRole('button', { name: 'Open saved inputs/review in chat', exact: true }).scrollIntoViewIfNeeded();
   await recovered.screenshot({ path: testInfo.outputPath(`linked-reopen-control-${width}.png`), fullPage: true });
