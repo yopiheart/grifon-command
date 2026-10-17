@@ -1,4 +1,4 @@
-import { expect, type Page } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { transpileModule, ModuleKind, ScriptTarget } from 'typescript';
@@ -8,6 +8,8 @@ export const ACCOUNT_EMAIL = 'account-smoke@example.test';
 
 /** Runs the real App, auth helpers, settings and IndexedDB against a mock SDK. */
 export async function installAccountApp(page: Page, signedIn = true, holdCheckoutAuth = false) {
+  const localURL = new URL(test.info().project.use.baseURL ?? 'http://127.0.0.1:5173');
+  if (!['127.0.0.1', 'localhost'].includes(localURL.hostname)) throw new Error('Account fixture requires a local test baseURL.');
   const evidence = { unexpected: [] as string[], pageErrors: [] as string[], consentWrites: [] as string[] };
   (page as any).accountEvidence = evidence;
   page.on('pageerror', error => evidence.pageErrors.push(error.message));
@@ -175,7 +177,7 @@ export async function installAccountApp(page: Page, signedIn = true, holdCheckou
   await page.route('**/*', async route => {
     const request = route.request(), url = new URL(request.url());
     if (request.method() === 'GET' && ['fonts.googleapis.com', 'fonts.gstatic.com'].includes(url.hostname)) return route.continue();
-    if (!['http://127.0.0.1:5173', 'http://localhost:5173'].includes(url.origin)) {
+    if (url.origin !== localURL.origin) {
       if (['fetch', 'xhr'].includes(request.resourceType())) evidence.unexpected.push(`Blocked external ${request.method()} ${url.pathname}`);
       return route.abort('blockedbyclient');
     }

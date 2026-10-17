@@ -1,57 +1,80 @@
 # NOW - the resume doc
-**Stamped: 2026-10-14; recovery contract regressions verified for draft review**
+**Stamped: 2026-10-17; approved chat release and Gemini Live staging in progress**
 
-## Active task and boundary
-Checkout: F:/CodexWorktrees/efe4/grifon-command.
-Branch: codex/recovery-contract-gaps; base 3fec65156ace4a9b17b432ae05f8e9bae4a6427e.
-Neil approved missing crash-window and malformed-response tests first, followed
-by minimal fixes for reproduced defects. Keep the existing architecture.
-Draft PR lookup: gh pr view codex/recovery-contract-gaps --repo yopiheart/grifon-command.
-No merge, manual deployment, paid generation, live billing or production writes.
+## Workspace and authorization
+Active: F:/CodexWorktrees/chat-voice-release/grifon-command, codex/chat-voice-release.
+Base: confirmed production/main 18d6d169; initial implementation f727f3a pushed.
+Attached draft PR201: https://github.com/yopiheart/grifon-command/pull/201.
+Neil authorized deployment and live mobile/desktop checks, then live voice first.
+Exact configuration/exceptions and USD2 bounded spec approved October 17. No merge.
+Original dirty design/UGC candidate is preserved at F:/CodexWorktrees/61f5/
+grifon-command, branch codex/chat-liquid-glass, 26a44a27, PR199. Do not deploy it.
+Release includes only approved chat/voice. Production App/index/conversations,
+types, dependencies, tuned generation prompts and website wordmarks are unchanged.
+Dependencies reused via ignored junction; no installation or auth-state copying.
 
-## Implementation
-Scene handle/completion write errors previously vanished in the video pool,
-which persisted video as done and skipped unfinished scenes on resume.
-Workers now drain siblings, retain completed clips and fail the stage so Retry
-can reach recorded handles. Fresh handle-less claims remain recoverable.
-Saved-run load validates control structures, identities, approval flags/gates
-and core stages before rehydration. Malformed responses retain the run and
-show Retry/Back. Supported older snapshots and reference fallbacks are retained.
-Two runtime files: services/producerOrchestrator.ts and producerRunService.ts.
-Seven crash cases + 36 response/compatibility cases; malformed browser flow
-loops eleven response variants at 375px and 1280px. Map now has 20 browser cases.
-No tuned content, models, provider settings, dependencies or migrations changed.
+## Approved voice
+Model models/gemini-3.8-live, Charon, AUDIO, 512 output tokens, default VAD/language,
+input/output transcription, empty tools; no resumption/search/video/extra knobs.
+Server prompt: 1490 UTF8 bytes, SHA256
+3fc2f084a0bd8105232222c588711cd486d680c15dec600b25ed0f92557935c3.
+Frozen packet: original worktree/.tmp/companion-live-voice-approval/.
+Token uses 1, message expiry 300s, new-session 60s, user lease 330s. Durable
+fail-closed claims: 3/60s burst, 3/user/day, 30/global/day. Mint 15s/request 45s,
+one attempt. No client master key. Issuance limits are not a hard dollar budget.
+Live mute/End, reviewed transcript to draft; no automatic messages or production
+actions. No saved history/media sent; no app raw audio archive. Existing dictation
+is separate. Hidden page/navigation/account change release audio and transport.
 
-## Current evidence
-Red before green: five initial crash failures plus immediate-retry failure;
-29 malformed-response unit failures, two browser failures and two additional
-review/error missing-core-stage failures before their corresponding fixes.
-Build PASS; full Vitest PASS 1,616 / 32 existing default skips.
-After final assertion additions, affected suites PASS 152/152; runtime unchanged.
-Mapped browser recovery PASS 20/20, zero retries.
-Strengthened malformed Retry PASS 2/2; exact saved script/image restored.
-Companion Stop/Resume + competing-tab checks PASS 2/2, no flaky/skipped cases.
-Fresh independent diff review clean, including final test-only recheck.
-Independent smoke critic ran browser checks; its helper servers exited.
-Codex contracts PASS 26; bundle-leak, voice-sync, eval-prompts, domain,
-artifact anchors, PowerShell ASCII via build, and diff whitespace PASS.
-Local-only evidence: .tmp/recovery-* logs/JSON and .tmp/recovery-verification/.
-Full map report: 2026-10-14T02-21-59-952Z-6qhBDf/summary.md.
-Strengthened report: 2026-10-14T02-25-52-972Z-dFXb2f/summary.md.
-Tests ran on base plus task diff; reviewed runtime hashes match delivery.
-Hosted CI is separate; inspect the draft PR for current status.
+## Deployment
+Production grifon.ai remains Ready DFT1T71yMxgyqMnAwwCVDGGaTqri/main 18d6d169.
+Preview DfHbpcrvQ3rnDiVZRWKntwixkW2d is Ready from f727f3a (older composer).
+Host: grifon-command-af5875inn-neilmaglayabusiness22-2085s-projects.vercel.app.
+User signed in normally there; app and voice-check.html work. Stable branch alias:
+grifon-command-git-c06c70-neilmaglayabusiness22-2085s-projects.vercel.app.
+Vercel connector 403; CLI lacks credentials. Reuse signed-in browser; no auth reads.
+Production promotion must rebuild with production environment, never directly
+alias preview bytes. QA HTML/WAV/test text must be absent from production.
 
-## Remaining limits and next action
-Stale claims without recorded handles can submit again. Repeated lost handle
-writes can cause repeated provider submissions; credit dedupe is not a spend cap.
-Real claim RPC/concurrency, live billing, paid quality and browser-storage-loss
-recovery remain unverified. Review the draft; merging needs Neil's instruction.
-Recovery flow reference: workflows/recovery-feature-map.md.
+## Paid tests STOPPED
+Original spec: USD2 total, up to 3 sessions, 45s each, 2 exact turns/2 responses,
+no retries/substitutions. Fixture hashes and current prices verified before case 1.
+Case 1 Chromium155 on f727: setup ready, first 185920 PCM bytes enqueued, no
+application transcript/audio/usage, 45s deadline cleaned audio/socket once. FAIL.
+Actual billing unknown; USD1 conservatively reserved. Estimate 0 is not zero-charge
+proof. Cases 2 Firefox and 3 actual Android NOT RUN. Missing-usage STOP active.
+Optional numeric/null wire observer closes an observation gap, with unchanged
+inputs/configuration/timing/bounds; it does not fix or explain provider silence.
+Evidence/ledger: F:/CodexQA/grifon-live-voice-20261017/paid-test-ledger.json.
+Specific one-time Firefox continuation approval requested in chat, unanswered.
+Same original inputs/configuration/bounds, same USD2 total, USD1 reserve for case 1,
+at most USD1 continuation; no Chromium retry/fourth/automatic Android case.
 
-## Preserved prior delivery
-CI optimization merged as PR184; current task base is main 3fec6515.
-Accepted film: workflows/assets/grifon-orbital-music-v2_5/grifon-orbital-launch-music-v2_5-v2.mp4.
-SHA256 4040ba1763aeb415b8d79a3b9d914959149b11fc89eed52489652da0e69d6405.
-Editable score: continuous-fit-plan.json, mix-continuous.mjs, continuous-mix-receipt.json.
-Editable picture: workflows/assets/grifon-pluto-adaptation/orbital.json/js/html.
-Accepted film/source assets untouched. All historical paid approvals consumed.
+## Latest verified revision
+Composer: empty/whitespace shows waveform only; text shows Send only; fixed 44px.
+Compact hover/focus tooltips dismiss on Escape/blur/click; no sticky touch labels.
+Separate dictation, attachments, IME/Enter and drafts preserved. DESIGN updated.
+Optional sanitized protocol diagnostics in service/QA with regression coverage.
+Five stale chat/beta/polish CI assertions corrected to current content/font 16px.
+Keyboard geometry reads batched; every assertion, cycle, real tap, motion setting
+and timeout preserved. Independent source review PASS, frozen hash A727B334...40B0F.
+Default Chromium dark/light 2-answer cases PASS 42.3s/41.3s under original 60s.
+Old-resize negative control rejects original overlap (-297.734375px vs >=8px).
+Initial unchanged test timed out twice; real Chromium channel launch spawn blocked.
+No product/config/time-limit workaround. Full latest keyboard matrix not rerun.
+UI 15 mocked E2E PASS; diagnostic 133 focused unit PASS. Independent actual-App
+delta review PASS/BRAND45/50 at 375x667/1280x900, both themes and touch contexts.
+Latest serial full Vitest: 1817 PASS, 32 existing skips; 134 files PASS/9 skip.
+Preview and production builds PASS. Production QA HTML/WAV/text absent, server
+markers 0, bundle-leak 0. Snapshot LF-only churn archived/restored after diff exit 0.
+Codex 26/static voice-sync/eval/domain/anchors/design/ASCII/whitespace checks PASS.
+Initial release 95 scoped browser cases, 68 server mocks and 97 QA regressions PASS.
+Cloud f727 CI: five stale assertions (fixed), three jobs reached 15-minute cap.
+Evidence root: F:/CodexQA/grifon-live-voice-20261017/ (composer-swap, ci-assertions).
+
+## Remaining
+Push latest reviewed revision, verify new preview and CI. Paid STOP persists until
+specific resume approval. Finish required audio proof before production; no gate
+bypass. Then authorized production rebuild and live mobile/desktop checks.
+Earlier Android qa5 keyboard/search manual PASS in both themes; old HTTP5197 stopped.
+Actual Safari unavailable on Android/Windows; WebKit coverage is engine-only.

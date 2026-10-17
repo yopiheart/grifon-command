@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/logo-badge.png" />
     <link rel="apple-touch-icon" href="/logo-badge.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content" />
     <title>Grifon AI — Ad creation for Filipino business owners</title>
     <meta name="description" content="Plan and create video ads for your business with AI research, scripts, and storyboards. Preview an ad plan free. Finished video creation requires a paid plan." />
 
@@ -193,7 +193,7 @@
       }
 
       /* Calm app headings; technical metadata and marketing keep their own type. */
-      :is(h1, h2, h3, h4, h5, h6):not(.font-mono, .tech-data):not(.landing-page *, .public-purchase *, [data-ad-artwork] *) {
+      :is(h1, h2, h3, h4, h5, h6):not(.font-mono, .tech-data):not(.landing-page *, .public-purchase *, [data-ad-artwork] *, .companion-chat *, :where(.companion-settings[data-companion-theme]) *) {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
         font-weight: 600 !important;
         text-transform: none !important;
@@ -209,19 +209,19 @@
       }
 
       /* Human-readable controls; monospace is reserved for explicit technical data. */
-      :is(label, input, textarea, select):not(.tech-data):not(.landing-page *, .public-purchase *),
-      button:not(.tech-data):not(.landing-page *, .public-purchase *) {
+      :is(label, input, textarea, select):not(.tech-data):not(.landing-page *, .public-purchase *, .companion-chat *, :where(.companion-settings[data-companion-theme]) *),
+      button:not(.tech-data):not(.landing-page *, .public-purchase *, .companion-chat *, :where(.companion-settings[data-companion-theme]) *) {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
         font-size: 14px !important;
         text-transform: none !important;
         letter-spacing: normal !important;
       }
 
-      :is(input, textarea, select):not(.tech-data):not(.landing-page *, .public-purchase *) {
+      :is(input, textarea, select):not(.tech-data):not(.landing-page *, .public-purchase *, .companion-chat *, :where(.companion-settings[data-companion-theme]) *) {
         font-weight: 400 !important;
       }
 
-      button:not(.tech-data):not(.landing-page *, .public-purchase *) {
+      button:not(.tech-data):not(.landing-page *, .public-purchase *, .companion-chat *, :where(.companion-settings[data-companion-theme]) *) {
         font-weight: 600 !important;
       }
 

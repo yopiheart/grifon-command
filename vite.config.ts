@@ -124,6 +124,13 @@ export default defineConfig(({ mode }) => {
       },
     },
     build: {
+      // The approved bounded voice checks are available only on HTTPS previews.
+      rollupOptions: process.env.VERCEL_ENV === 'preview' ? {
+        input: {
+          app: path.resolve(process.cwd(), 'index.html'),
+          voiceCheck: path.resolve(process.cwd(), 'voice-check.html'),
+        },
+      } : undefined,
       // Originally set because Vite 8 defaults to lightningcss, which warned on
       // every @tailwind directive it didn't recognize — back when nothing
       // processed them and they reached the minifier intact. The 2026-07-25
