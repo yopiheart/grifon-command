@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { CompanionVoiceClient, connectCompanionVoice, createBrowserVoiceAudio, requestCompanionVoiceSession, type CompanionVoiceAudio, type CompanionVoiceEvent, type CompanionVoiceTransport } from '../services/companionVoiceSession';
+import { CompanionVoiceClient, connectCompanionVoice, createBrowserVoiceAudio, requestCompanionVoiceSession, type CompanionVoiceAudio, type CompanionVoiceDiagnostics, type CompanionVoiceEvent, type CompanionVoiceTransport } from '../services/companionVoiceSession';
 import { createCompanionVoiceCheckBounds } from './companionVoiceCheckBounds';
 import '../assets/fonts/oxanium/oxanium.css';
 
@@ -55,6 +55,7 @@ export function createApprovedVoiceCheck(mode: Mode, dependencies: CheckDependen
   let active = true, ready = false, inputOpen = false, responseActive = false, firstAudio = false, firstFixtureDone = false;
   let inputTurns = 0, completedTurns = 0, audioChunks = 0, playbackCompletions = 0, interruptions = 0, mutedDrops = 0, audioClosed = 0, transportClosed = 0;
   let receivedInput = '', outputTranscript = false, outcome = 'running', modelConfirmed = false;
+  let wireDiagnostics: CompanionVoiceDiagnostics | null = null;
   let awaitingUsage = false;
   let usageTimer: ReturnType<typeof setTimeout> | undefined, interruptionTimer: ReturnType<typeof setTimeout> | undefined, awaitingInterruptedTurn = false;
   const listeners = new Set<() => void>();
@@ -153,7 +154,7 @@ export function createApprovedVoiceCheck(mode: Mode, dependencies: CheckDependen
         if (event.type === 'audio') { firstAudio = true; if (mode === 'fixture' && firstFixtureDone && inputTurns === 1) void sendFixture(1); }
         if (event.type === 'error') stop('provider-error');
         notify();
-      }, usage => { if (active) enforce(guard.recordUsage(usage)); });
+      }, usage => { if (active) enforce(guard.recordUsage(usage)); }, diagnostics => { if (active) { wireDiagnostics = diagnostics; notify(); } });
       transport = {
         sendAudio: data => {
           if (!active || !ready || !inputOpen || inputTurns > 2 || client.snapshot().muted || (awaitingUsage && (inputTurns !== 2 || guard.snapshot().responseStarts !== 1))) return;
@@ -174,8 +175,8 @@ export function createApprovedVoiceCheck(mode: Mode, dependencies: CheckDependen
     nextLine: () => { if (!active || awaitingUsage || mode !== 'microphone' || inputTurns !== 1 || completedTurns !== 1) return; inputTurns = 2; inputOpen = true; client.setMuted(false); notify(); },
     mute: () => { if (active && ready && inputOpen && !awaitingUsage) client.setMuted(!client.snapshot().muted); },
     subscribe: (listener: () => void) => { listeners.add(listener); return () => { listeners.delete(listener); }; },
-    view: () => ({ active, ready, mode, status: client.snapshot().status, muted: client.snapshot().muted, awaitingUsage, inputOpen, inputTurns, completedTurns, outcome, bounds: guard.snapshot(), audioChunks, playbackCompletions, interruptions, mutedDrops, audioClosed, transportClosed, inputLinesMatch: lines.map(line => normalize(receivedInput).includes(normalize(line))), outputTranscript, modelConfirmed }),
-    evidence: () => ({ version: 1, testOnly: true, model: modelConfirmed ? expectedModel : null, approvedPromptHash: promptHash, operatorAttested, userAgent: typeof navigator === 'undefined' ? 'unit-test' : navigator.userAgent, mode, outcome, bounds: guard.snapshot(), inputTurns, completedTurns, audioChunks, playbackCompletions, interruptions, mutedDrops, audioClosed, transportClosed, inputLinesMatch: lines.map(line => normalize(receivedInput).includes(normalize(line))), outputTranscript }),
+    view: () => ({ active, ready, mode, status: client.snapshot().status, muted: client.snapshot().muted, awaitingUsage, inputOpen, inputTurns, completedTurns, outcome, bounds: guard.snapshot(), audioChunks, playbackCompletions, interruptions, mutedDrops, audioClosed, transportClosed, inputLinesMatch: lines.map(line => normalize(receivedInput).includes(normalize(line))), outputTranscript, modelConfirmed, wireDiagnostics: wireDiagnostics ? { ...wireDiagnostics } : null }),
+    evidence: () => ({ version: 1, testOnly: true, model: modelConfirmed ? expectedModel : null, approvedPromptHash: promptHash, operatorAttested, userAgent: typeof navigator === 'undefined' ? 'unit-test' : navigator.userAgent, mode, outcome, bounds: guard.snapshot(), inputTurns, completedTurns, audioChunks, playbackCompletions, interruptions, mutedDrops, audioClosed, transportClosed, inputLinesMatch: lines.map(line => normalize(receivedInput).includes(normalize(line))), outputTranscript, wireDiagnostics: wireDiagnostics ? { ...wireDiagnostics } : null }),
     output: () => {
       if (mode !== 'fixture' || active || !archive.length) return null;
       const size = archive.reduce((sum, chunk) => sum + chunk.length, 0), data = new Uint8Array(44 + size), view = new DataView(data.buffer);
@@ -216,6 +217,7 @@ function VoiceCheck() {
       {state.active && state.mode === 'microphone' && <><p>{!state.ready ? 'Wait for Listening before speaking.' : state.inputOpen ? `Read line ${state.inputTurns}, then finish that line.` : state.awaitingUsage ? 'Wait. The microphone is paused while usage is checked.' : state.completedTurns === 1 ? 'When you hear Grifon, start line 2 to check interruption.' : 'Both microphone windows are closed.'}</p><div className="actions"><button disabled={!state.ready || !state.inputOpen} onClick={run!.finishLine}>Finish line {state.inputTurns}</button><button disabled={state.completedTurns !== 1 || state.inputTurns !== 1 || state.awaitingUsage} onClick={run!.nextLine}>Speak second line</button></div></>}
       {state.active && <div className="actions"><button disabled={!state.ready || !state.inputOpen || state.awaitingUsage} onClick={run!.mute}>{state.muted ? 'Unmute' : 'Mute'}</button><button onClick={run!.stop}>End check</button></div>}
       <p>{state.bounds.pcmBytes} PCM bytes · {state.bounds.transcriptBytes} transcription bytes · {state.bounds.usageReports} usage reports · Output tokens {state.bounds.outputTokensAvailable ? state.bounds.outputTokens : 'unavailable'} · conservative ${state.bounds.estimatedCostUsd.toFixed(6)} · {(state.bounds.elapsedMs / 1000).toFixed(1)}s /45s</p>
+      {state.wireDiagnostics && <><p>Wire messages {state.wireDiagnostics.incomingMessages} · Interim input {state.wireDiagnostics.interimInputTranscriptionMessages} · Waiting for input {state.wireDiagnostics.waitingForInputMessages} · Interaction status {state.wireDiagnostics.interactionStatusMessages} · Voice activity start/end {state.wireDiagnostics.voiceActivityStartMessages}/{state.wireDiagnostics.voiceActivityEndMessages}</p><p>Inline audio seen/supported/unsupported {state.wireDiagnostics.inlineAudioPartsSeen}/{state.wireDiagnostics.inlineAudioPartsSupported}/{state.wireDiagnostics.inlineAudioPartsUnsupported} · Audio/end frames enqueued {state.wireDiagnostics.audioFramesEnqueued}/{state.wireDiagnostics.audioEndFramesEnqueued} (socket enqueue, no provider acknowledgement) · Errors {state.wireDiagnostics.errors} · Close code {state.wireDiagnostics.closeCode ?? 'unavailable'}</p></>}
       {!state.active && <div className="actions"><button onClick={() => download(new Blob([JSON.stringify(run!.evidence(), null, 2)], { type: 'application/json' }), 'grifon-voice-check-evidence.json')}>Download sanitized evidence</button>{state.mode === 'fixture' && <button onClick={() => { const blob = run!.output(); if (blob) download(blob, 'grifon-voice-check-output.wav'); }}>Download model output audio</button>}</div>}
     </>}
     <p>Stop automatically if time, bytes, responses, output tokens or conservative cost reach their bounds, or usage is missing or uninterpretable. Microphone audio is never saved. The Android test uses exactly two explicitly opened microphone windows.</p>

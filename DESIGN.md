@@ -169,6 +169,10 @@ static monochrome grain sit on a separate decorative layer, quieter behind text.
   375px and desktop widths. A restrained progressive blur at the top scroll edge
   separates moving content from the fixed identity and appears only when there
   is content above. Decorative effects never intercept input.
+- The composer uses one 44px right action: live-voice waveform for an empty or
+  whitespace-only draft, Send for text. Dictation and attachment stay separate.
+  Compact neutral tooltips explain icon actions on mouse hover and keyboard
+  focus, dismiss on Escape, and do not persist after touch interaction.
 - Use one backdrop layer per chrome surface, without a second rim filter or
   animated blur. Generate displacement maps only when geometry changes. Reduced
   transparency and increased contrast use solid fills, readable text, and no

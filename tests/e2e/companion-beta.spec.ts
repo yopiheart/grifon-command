@@ -155,7 +155,7 @@ test('guided intake accepts a long brief and corrections use Edit brief without 
   await expect(page.getByLabel('Review your brief', { exact: true })).toContainText('Evening brew');
   await input(page).fill('Book a restaurant for me'); await input(page).press('Enter');
   await expect(page.getByRole('status', { name: 'Grifon is typing', exact: true })).toHaveCount(0);
-  await expect(page.getByText(/Your brief is ready. Use Edit brief/)).toBeVisible();
+  await expect(page.getByTestId('conversation-scroll').getByText(/Your brief is ready. Use Edit brief/)).toBeVisible();
   expect(await page.evaluate(() => (window as any).companionFixture.snapshot().calls)).toEqual([]);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });

@@ -1,7 +1,21 @@
 import { test, expect, type Page } from '@playwright/test';
 
 const input = (page: Page) => page.getByRole('textbox', { name: 'Message Grifon', exact: true });
-const lastReply = (page: Page) => page.locator('.companion-message-assistant').last();
+
+async function chatGeometry(page: Page) {
+  return page.evaluate(() => {
+    const bounds = (selector: string, last = false) => {
+      const nodes = document.querySelectorAll<HTMLElement>(selector);
+      if (!nodes.length || (!last && nodes.length !== 1)) throw new Error(`Expected ${last ? 'at least one' : 'one'} ${selector}`);
+      const node = nodes[last ? nodes.length - 1 : 0];
+      if (!node.getClientRects().length) throw new Error(`Missing layout box for ${selector}`);
+      return node.getBoundingClientRect();
+    };
+    const reply = bounds('.companion-message-assistant', true), composer = bounds('.companion-composer'), header = bounds('.companion-header');
+    return { replyTop: reply.y, clearance: composer.y - reply.y - reply.height, composerBottom: composer.y + composer.height,
+      headerTop: header.y, headerBottom: header.y + header.height, overflow: document.documentElement.scrollWidth - innerWidth };
+  });
+}
 
 async function openChat(page: Page, theme: string, width = 390, height = 844, answers = ['Cold brew for busy parents.', 'North Coffee', 'Morning brew'], reducedMotion: 'reduce' | 'no-preference' = 'reduce') {
   await page.setViewportSize({ width, height });
@@ -40,8 +54,8 @@ async function openChat(page: Page, theme: string, width = 390, height = 844, an
   }
   await page.evaluate(() => document.fonts.ready);
   await expect.poll(async () => {
-    const reply = await lastReply(page).boundingBox(), composer = await page.locator('.companion-composer').boundingBox();
-    return composer!.y - reply!.y - reply!.height;
+    const geometry = await chatGeometry(page);
+    return geometry.clearance;
   }).toBeGreaterThanOrEqual(8);
 }
 
@@ -58,23 +72,26 @@ async function resizeVisualViewport(page: Page, height: number) {
     target.keyboardViewport.height = height;
     window.visualViewport!.dispatchEvent(new Event('resize'));
   }, height);
-  await expect.poll(async () => (await page.locator('.companion-shell').boundingBox())!.height).toBeCloseTo(height, 0);
+  await expect.poll(() => page.evaluate(() => {
+    const shells = document.querySelectorAll('.companion-shell');
+    if (shells.length !== 1 || !shells[0].getClientRects().length) throw new Error('Expected one laid-out companion shell');
+    return shells[0].getBoundingClientRect().height;
+  })).toBeCloseTo(height, 0);
   await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
 }
 
 async function expectVisibleLatest(page: Page, bottom: number, top = 0) {
   await expect.poll(async () => {
-    const composer = await page.locator('.companion-composer').boundingBox();
-    return composer!.y + composer!.height;
+    return (await chatGeometry(page)).composerBottom;
   }, { message: 'composer stays above the keyboard boundary' }).toBeLessThanOrEqual(bottom + .5);
   await expect.poll(async () => {
-    const reply = await lastReply(page).boundingBox(), composer = await page.locator('.companion-composer').boundingBox();
-    return composer!.y - reply!.y - reply!.height;
+    const geometry = await chatGeometry(page);
+    return geometry.clearance;
   }, { message: 'latest reply remains above composer while following the conversation' }).toBeGreaterThanOrEqual(8);
-  const reply = await lastReply(page).boundingBox(), header = await page.locator('.companion-header').boundingBox();
-  expect(reply!.y).toBeGreaterThanOrEqual(header!.y + header!.height - .5);
-  expect(header!.y).toBeGreaterThanOrEqual(top - .5);
-  expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBe(0);
+  const geometry = await chatGeometry(page);
+  expect(geometry.replyTop).toBeGreaterThanOrEqual(geometry.headerBottom - .5);
+  expect(geometry.headerTop).toBeGreaterThanOrEqual(top - .5);
+  expect(geometry.overflow).toBe(0);
   await expect(input(page)).toBeFocused();
 }
 
@@ -137,13 +154,16 @@ for (const theme of ['dark', 'light']) {
         await input(page).fill(draft);
         await resizeVisualViewport(page, 456.73);
         await expectVisibleLatest(page, 456.73);
-        const scrollTop = await scroller.evaluate(node => node.scrollTop);
-        const header = await page.locator('.companion-header').boundingBox();
-        const y = header!.y + header!.height + 40;
-        expect(await scroller.evaluate((node, y) => document.elementFromPoint(2, y) === node, y)).toBe(true);
+        const gutter = await scroller.evaluate(node => {
+          const headers = document.querySelectorAll('.companion-header');
+          if (headers.length !== 1 || !headers[0].getClientRects().length) throw new Error('Expected one laid-out companion header');
+          const header = headers[0].getBoundingClientRect(), y = header.y + header.height + 40;
+          return { scrollTop: node.scrollTop, y, clear: document.elementFromPoint(2, y) === node };
+        });
+        expect(gutter.clear).toBe(true);
         // A real pointer tap dismisses the keyboard without scrolling history.
-        await page.mouse.click(2, y);
-        expect(await scroller.evaluate(node => node.scrollTop)).toBeCloseTo(scrollTop, 0);
+        await page.mouse.click(2, gutter.y);
+        expect(await scroller.evaluate(node => node.scrollTop)).toBeCloseTo(gutter.scrollTop, 0);
         await resizeVisualViewport(page, 742.55);
         await input(page).click();
         await resizeVisualViewport(page, 456.73);

@@ -282,12 +282,60 @@ export interface CompanionVoiceUsage {
   thoughtsTokenCount?: number;
   cachedContentTokenCount?: number;
 }
-export function connectCompanionVoice(session: CompanionVoiceBootstrap, receive: (event: CompanionVoiceEvent) => void, observeUsage?: (usage: CompanionVoiceUsage | null) => void): CompanionVoiceTransport {
+export interface CompanionVoiceDiagnostics {
+  incomingMessages: number;
+  setupCompleteMessages: number;
+  serverContentMessages: number;
+  usageMetadataMessages: number;
+  errorMessages: number;
+  goAwayMessages: number;
+  toolCallMessages: number;
+  toolCallCancellationMessages: number;
+  sessionResumptionUpdateMessages: number;
+  voiceActivityMessages: number;
+  voiceActivityDetectionSignalMessages: number;
+  inputTranscriptionMessages: number;
+  outputTranscriptionMessages: number;
+  interimInputTranscriptionMessages: number;
+  waitingForInputMessages: number;
+  interactionStatusMessages: number;
+  modelTurnMessages: number;
+  interruptedMessages: number;
+  turnCompleteMessages: number;
+  generationCompleteMessages: number;
+  voiceActivityStartMessages: number;
+  voiceActivityEndMessages: number;
+  inlineAudioPartsSeen: number;
+  inlineAudioPartsSupported: number;
+  inlineAudioPartsUnsupported: number;
+  inlinePcmParts: number;
+  inlineOtherAudioParts: number;
+  inlineNonAudioParts: number;
+  audioFramesEnqueued: number;
+  audioEndFramesEnqueued: number;
+  errors: number;
+  closeCode: number | null;
+}
+export function connectCompanionVoice(session: CompanionVoiceBootstrap, receive: (event: CompanionVoiceEvent) => void, observeUsage?: (usage: CompanionVoiceUsage | null) => void, observeDiagnostics?: (diagnostics: CompanionVoiceDiagnostics) => void): CompanionVoiceTransport {
   const socket = new WebSocket(`wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContentConstrained?access_token=${encodeURIComponent(session.credential)}`);
   let closed = false, ready = false;
   let incoming = Promise.resolve();
+  const diagnostics: CompanionVoiceDiagnostics | null = observeDiagnostics ? {
+    incomingMessages: 0, setupCompleteMessages: 0, serverContentMessages: 0, usageMetadataMessages: 0, errorMessages: 0, goAwayMessages: 0,
+    toolCallMessages: 0, toolCallCancellationMessages: 0, sessionResumptionUpdateMessages: 0, voiceActivityMessages: 0, voiceActivityDetectionSignalMessages: 0,
+    inputTranscriptionMessages: 0, outputTranscriptionMessages: 0, interimInputTranscriptionMessages: 0, waitingForInputMessages: 0, interactionStatusMessages: 0,
+    modelTurnMessages: 0, interruptedMessages: 0, turnCompleteMessages: 0, generationCompleteMessages: 0, voiceActivityStartMessages: 0, voiceActivityEndMessages: 0,
+    inlineAudioPartsSeen: 0, inlineAudioPartsSupported: 0, inlineAudioPartsUnsupported: 0, inlinePcmParts: 0, inlineOtherAudioParts: 0, inlineNonAudioParts: 0,
+    audioFramesEnqueued: 0, audioEndFramesEnqueued: 0, errors: 0, closeCode: null,
+  } : null;
+  const reportDiagnostics = () => {
+    if (closed || !diagnostics) return;
+    try { observeDiagnostics?.({ ...diagnostics }); } catch { /* Observation must not affect transport. */ }
+  };
   socket.onopen = () => { if (!closed) socket.send(JSON.stringify({ setup: { model: session.model } })); };
   socket.onmessage = event => {
+    if (closed) return;
+    if (diagnostics) { diagnostics.incomingMessages++; reportDiagnostics(); if (closed) return; }
     // Blob conversion is async; serial parsing preserves provider message order.
     incoming = incoming.then(async () => {
       if (closed) return;
@@ -296,6 +344,35 @@ export function connectCompanionVoice(session: CompanionVoiceBootstrap, receive:
       if (!text || text.length > 2000000) throw new Error('connection');
       const message = JSON.parse(text);
       if (!message || typeof message !== 'object') throw new Error('connection');
+      if (diagnostics) {
+        for (const [key, counter] of [
+          ['setupComplete', 'setupCompleteMessages'], ['serverContent', 'serverContentMessages'], ['usageMetadata', 'usageMetadataMessages'], ['error', 'errorMessages'], ['goAway', 'goAwayMessages'],
+          ['toolCall', 'toolCallMessages'], ['toolCallCancellation', 'toolCallCancellationMessages'], ['sessionResumptionUpdate', 'sessionResumptionUpdateMessages'], ['voiceActivity', 'voiceActivityMessages'], ['voiceActivityDetectionSignal', 'voiceActivityDetectionSignalMessages'],
+        ] as const) if (key in message) diagnostics[counter]++;
+        if (message.voiceActivity?.type === 'ACTIVITY_START') diagnostics.voiceActivityStartMessages++;
+        if (message.voiceActivity?.type === 'ACTIVITY_END') diagnostics.voiceActivityEndMessages++;
+        const content = message.serverContent;
+        if (content && typeof content === 'object') {
+          for (const [key, counter] of [
+            ['inputTranscription', 'inputTranscriptionMessages'], ['outputTranscription', 'outputTranscriptionMessages'], ['interimInputTranscription', 'interimInputTranscriptionMessages'], ['waitingForInput', 'waitingForInputMessages'], ['interactionStatus', 'interactionStatusMessages'],
+            ['modelTurn', 'modelTurnMessages'], ['interrupted', 'interruptedMessages'], ['turnComplete', 'turnCompleteMessages'], ['generationComplete', 'generationCompleteMessages'],
+          ] as const) if (key in content) diagnostics[counter]++;
+          if (Array.isArray(content.modelTurn?.parts)) for (const part of content.modelTurn.parts) {
+            const audio = part?.inlineData;
+            if (!audio || typeof audio !== 'object') continue;
+            const mime = typeof audio.mimeType === 'string' ? audio.mimeType : '';
+            if (!mime.startsWith('audio/')) { diagnostics.inlineNonAudioParts++; continue; }
+            diagnostics.inlineAudioPartsSeen++;
+            if (/^audio\/pcm(?:;|$)/.test(mime)) diagnostics.inlinePcmParts++;
+            else diagnostics.inlineOtherAudioParts++;
+            if (typeof audio.data === 'string' && /^audio\/pcm(?:;rate=24000)?$/.test(mime)) diagnostics.inlineAudioPartsSupported++;
+            else diagnostics.inlineAudioPartsUnsupported++;
+          }
+        }
+        if (message.error || message.goAway) diagnostics.errors++;
+        reportDiagnostics();
+        if (closed) return;
+      }
       if (observeUsage && 'usageMetadata' in message) {
         const raw = message.usageMetadata;
         const usage: CompanionVoiceUsage = {};
@@ -326,17 +403,22 @@ export function connectCompanionVoice(session: CompanionVoiceBootstrap, receive:
         }
       }
       if (content.turnComplete) receive({ type: 'turn-complete' });
-    }).catch(() => { if (!closed) receive({ type: 'error', code: 'connection' }); });
+    }).catch(() => { if (!closed) { if (diagnostics) { diagnostics.errors++; reportDiagnostics(); } if (!closed) receive({ type: 'error', code: 'connection' }); } });
   };
-  socket.onerror = () => { if (!closed) receive({ type: 'error', code: 'connection' }); };
-  socket.onclose = () => { if (!closed) receive({ type: 'error', code: 'connection' }); };
+  socket.onerror = () => { if (!closed) { if (diagnostics) { diagnostics.errors++; reportDiagnostics(); } if (!closed) receive({ type: 'error', code: 'connection' }); } };
+  socket.onclose = event => {
+    if (!closed) {
+      if (diagnostics) { diagnostics.errors++; diagnostics.closeCode = Number.isSafeInteger(event.code) && event.code >= 1000 && event.code <= 4999 ? event.code : null; reportDiagnostics(); }
+      if (!closed) receive({ type: 'error', code: 'connection' });
+    }
+  };
   const send = (value: object) => {
     if (closed || !ready || socket.readyState !== WebSocket.OPEN || socket.bufferedAmount > 512000) throw new Error('connection');
     socket.send(JSON.stringify(value));
   };
   return {
-    sendAudio: data => send({ realtimeInput: { audio: { data, mimeType: 'audio/pcm;rate=16000' } } }),
-    audioEnd: () => send({ realtimeInput: { audioStreamEnd: true } }),
+    sendAudio: data => { send({ realtimeInput: { audio: { data, mimeType: 'audio/pcm;rate=16000' } } }); if (diagnostics) { diagnostics.audioFramesEnqueued++; reportDiagnostics(); } },
+    audioEnd: () => { send({ realtimeInput: { audioStreamEnd: true } }); if (diagnostics) { diagnostics.audioEndFramesEnqueued++; reportDiagnostics(); } },
     close: () => { closed = true; ready = false; socket.onopen = null; socket.onmessage = null; socket.onerror = null; socket.onclose = null; socket.close(); },
   };
 }
