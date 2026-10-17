@@ -151,17 +151,34 @@ for (const [width, height] of [[375, 667], [390, 844], [1280, 900]]) {
       return { user: css('.companion-message-user'), assistant: css('article .companion-message-assistant'), input: css('.companion-message-input'), button: css('.companion-shell button'), timestamp: css('[data-testid="conversation-time-divider"] time'), overflow: document.documentElement.scrollWidth - innerWidth };
     });
     fs.writeFileSync(path.join(QA, `${phase}-typography-${width}.json`), JSON.stringify(metrics, null, 2));
-    for (const metric of [metrics.user, metrics.assistant, metrics.input]) {
-      expect(metric.font.split(',')[0].replaceAll('"', '').trim()).toBe('Inter');
+    for (const metric of [metrics.user, metrics.assistant]) {
+      expect(metric.font.split(',')[0].replaceAll('"', '').trim()).toBe('Oxanium');
       expect(metric.size).toBe('14px');
     }
+    expect(metrics.input.font.split(',')[0].replaceAll('"', '').trim()).toBe('Oxanium');
+    expect(metrics.input.size).toBe(width < 768 ? '16px' : '14px');
     expect(metrics.user.weight).toBe('400'); expect(metrics.input.weight).toBe('400');
-    expect(metrics.button.font.split(',')[0].replaceAll('"', '').trim()).toBe('Inter');
+    expect(metrics.button.font.split(',')[0].replaceAll('"', '').trim()).toBe('Oxanium');
     expect(metrics.button.size).toBe('14px');
     expect(metrics.button.weight).toBe('600');
     expect(metrics.timestamp.font).toContain('JetBrains Mono');
     expect(metrics.overflow).toBeLessThanOrEqual(0);
-    expect(`${metrics.user.background} ${metrics.user.image} ${metrics.user.border}`).toContain('255, 204, 0');
+    // Warm tonal glass can use opaque or translucent stops. Verify the same
+    // readable-ink and warm-channel requirements for either CSS serialization.
+    const channels = (color: string) => color.match(/\d+(?:\.\d+)?/g)!.slice(0, 3).map(Number);
+    const luminance = (rgb: number[]) => rgb.map(value => {
+      const channel = value / 255;
+      return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+    }).reduce((sum, value, index) => sum + value * [0.2126, 0.7152, 0.0722][index], 0);
+    const stops = metrics.user.image.match(/rgba?\([^)]+\)/g) || [];
+    expect(stops.length).toBeGreaterThanOrEqual(2);
+    for (const stop of stops) {
+      const [red, green, blue] = channels(stop);
+      expect(red).toBeGreaterThan(green);
+      expect(green).toBeGreaterThan(blue);
+      const ink = luminance(channels(metrics.user.color)), fill = luminance(channels(stop));
+      expect((Math.max(ink, fill) + 0.05) / (Math.min(ink, fill) + 0.05)).toBeGreaterThanOrEqual(4.5);
+    }
     expect(metrics.user.background + metrics.user.image).not.toBe(metrics.assistant.background + metrics.assistant.image);
     await page.screenshot({ path: path.join(QA, `${phase}-delivered-${width}.png`) });
     await page.emulateMedia({ contrast: 'more' });

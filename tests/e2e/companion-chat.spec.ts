@@ -50,7 +50,8 @@ test('brief, explicit start, truthful callbacks, storyboard approval, video and 
   expect((await snapshot(page)).calls.filter((c: any) => c.name === 'start')).toHaveLength(0);
   await page.getByRole('button', { name: 'Generate storyboard', exact: true }).dblclick();
   await expect.poll(async () => (await snapshot(page)).calls.filter((c: any) => c.name === 'start')).toHaveLength(1);
-  await expect(page.getByText('Researching your product', { exact: true }).first()).toBeVisible();
+  await expect(page.getByLabel('Production progress', { exact: true }).getByRole('status')).toHaveText('Researching your product…');
+  await expect(page.getByLabel('Production progress', { exact: true }).getByRole('status')).toBeVisible();
   await expect(page.getByTestId('companion-chat')).toHaveAttribute('data-companion-state', 'working');
   await emit(page, 'script');
   await expect(page.getByText(/writing your script/i).first()).toBeVisible();
@@ -103,7 +104,8 @@ test('draft reload/account isolation, error retry and fixture checkpoint restore
   await expect(page.getByRole('button', { name: 'Generate storyboard', exact: true })).toBeEnabled();
   await page.getByRole('button', { name: 'Generate storyboard', exact: true }).click();
   await expect.poll(async () => (await snapshot(page)).calls.filter((c: any) => c.name === 'start')).toHaveLength(1);
-  await expect(page.getByText('Researching your product', { exact: true }).first()).toBeVisible();
+  await expect(page.getByLabel('Production progress', { exact: true }).getByRole('status')).toHaveText('Researching your product…');
+  await expect(page.getByLabel('Production progress', { exact: true }).getByRole('status')).toBeVisible();
   await emit(page, 'error');
   await page.getByRole('button', { name: 'Resume saved progress', exact: true }).click();
   await expect.poll(async () => (await snapshot(page)).calls.filter((c: any) => c.name === 'retry')).toEqual([{ name: 'retry' }]);
@@ -217,7 +219,7 @@ test('allowance and preset gates dispatch no generation or revision until permit
   await emit(page, 'result');
   await page.evaluate(() => (window as any).companionFixture.presets(false));
   await composer(page).fill('style clean'); await page.getByRole('button', { name: 'Send', exact: true }).click();
-  await expect(page.getByText(/Clean requires Pro/i)).toBeVisible();
+  await expect(page.getByTestId('conversation-scroll').getByText(/Clean requires Pro/i)).toBeVisible();
   expect((await snapshot(page)).calls.filter((c: any) => c.name === 'choosePreset')).toHaveLength(0);
 });
 

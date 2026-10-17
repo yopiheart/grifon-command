@@ -132,14 +132,14 @@ test('workflow preserves native shards and uploads only compact timing alongside
     ['verify', 'e2e', 'artifacts', 'database', 'main-status']);
   const e2e = jobs.match(/^  e2e:[\s\S]*?(?=^  artifacts:)/m)[0];
   const shards = e2e.match(/shard: \[([^\]]+)\]/)[1].split(',').map(Number);
-  assert.deepEqual(shards, Array.from({ length: 32 }, (_, i) => i + 1));
+  assert.deepEqual(shards, Array.from({ length: 40 }, (_, i) => i + 1));
   assert.match(e2e, /fail-fast: false/);
   assert.match(e2e, /timeout-minutes: 15/);
   assert.equal((source.match(/sparse-checkout-cone-mode:/g) || []).length, 1);
   assert.match(e2e, /sparse-checkout-cone-mode: false\r?\n\s+sparse-checkout: \|\r?\n\s+\/\*\r?\n\s+!\/clients\/\r?\n\s+!\/workflows\/assets\/\r?\n\s+!\/artifacts\/\r?\n\s+!\/baselines\//);
   assert.doesNotMatch(e2e, /\bfilter:|continue-on-error:|--retries|--timeout|--test-list/);
   assert.ok(e2e.indexOf('run: node tools/check-ci-e2e-inputs.mjs') < e2e.indexOf('run: npm ci'));
-  assert.match(e2e, /run: npm run test:e2e -- --shard=\$\{\{ matrix\.shard \}\}\/32 --reporter=github,list,\.\/tools\/ci-e2e-timing-reporter\.mjs/);
+  assert.match(e2e, /run: npm run test:e2e -- --shard=\$\{\{ matrix\.shard \}\}\/40 --reporter=github,list,\.\/tools\/ci-e2e-timing-reporter\.mjs/);
   assert.match(e2e, /name: Upload screenshots\r?\n\s+if: always\(\)\r?\n\s+uses: actions\/upload-artifact@v4\r?\n\s+with:\r?\n\s+name: boot-smoke-screenshots-\$\{\{ matrix\.shard \}\}\r?\n\s+path: test-results\/\r?\n\s+if-no-files-found: ignore\r?\n\s+retention-days: 7/);
   assert.match(e2e, /name: Upload E2E timing\r?\n\s+if: always\(\)\r?\n\s+uses: actions\/upload-artifact@v4\r?\n\s+with:\r?\n\s+name: boot-smoke-timing-\$\{\{ matrix\.shard \}\}\r?\n\s+path: \.tmp\/ci-e2e-timing\/report\.json\r?\n\s+include-hidden-files: true\r?\n\s+if-no-files-found: ignore\r?\n\s+retention-days: 7/);
   assert.match(source, /run: node --test tools\/check-ci-e2e-inputs\.test\.mjs tools\/ci-e2e-timing-reporter\.test\.mjs/);

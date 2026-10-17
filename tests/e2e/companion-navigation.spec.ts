@@ -75,9 +75,20 @@ for (const [width, height] of [[375, 667], [390, 844], [1280, 900]]) {
     await openFixture(page);
     await expect(page.locator('iframe:visible')).toHaveAttribute('data-ready', 'true');
     const avatar = (await page.locator('iframe:visible').boundingBox())!;
-    const composer = (await page.locator('.companion-composer').boundingBox())!;
+    const identity = (await page.locator('.companion-identity').boundingBox())!;
+    await expect(page.locator('.companion-shell').getByRole('group', { name: 'Chat appearance', exact: true })).toHaveCount(0);
     expect(avatar.width).toBe(width < 768 ? 56 : 64);
-    expect(Math.abs(avatar.x + avatar.width / 2 - composer.x - composer.width / 2)).toBeLessThanOrEqual(2);
+    expect(avatar.x).toBeGreaterThanOrEqual(identity.x - 1);
+    expect(avatar.x + avatar.width).toBeLessThanOrEqual(identity.x + identity.width + 1);
+    expect(avatar.y).toBeGreaterThanOrEqual(identity.y - 1);
+    expect(avatar.y + avatar.height).toBeLessThanOrEqual(identity.y + identity.height + 1);
+    const inlineNewChat = page.locator('.companion-main > button[aria-label="New chat"]:visible');
+    if (width < 768) {
+      const newChat = (await inlineNewChat.boundingBox())!;
+      expect(newChat.x - identity.x - identity.width, 'mobile New chat clears the bare identity').toBeGreaterThanOrEqual(4);
+    } else {
+      await expect(inlineNewChat, 'desktop has no inline toolbar').toHaveCount(0);
+    }
     await send(page, 'Coffee navigation');
     await noSmallTargets(page);
     fs.mkdirSync(QA, { recursive: true });
@@ -304,7 +315,7 @@ for (const allowance of ['pending', 'denied'] as const) {
       await page.goto('http://localhost:5173/app?experience=companion');
       await expect.poll(() => backend.reads.length).toBeGreaterThan(0);
       const resume = page.getByRole('button', { name: 'Resume saved progress', exact: true });
-      await expect(page.getByText(/Saved conversation/)).toBeVisible();
+      await expect(page.getByTestId('conversation-scroll').getByText(/Saved conversation/)).toBeVisible();
       if (await resume.isVisible() && await resume.isEnabled()) await resume.click();
       await page.waitForTimeout(700);
       expect(backend.actions).toEqual([]); expect(backend.submissions).toEqual([]); expect(backend.checkpoints).toEqual([]); expect(backend.finalStarts).toEqual([]);

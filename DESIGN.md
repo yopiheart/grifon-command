@@ -1,7 +1,7 @@
 ---
 version: alpha
 name: Grifon.AI
-description: Cinematic, premium AI marketing SaaS. Dark mode only (one documented marketing light band excepted).
+description: Cinematic, premium AI marketing SaaS. Dark-first, with approved light/dark Companion Chat and one marketing light band.
 colors:
   primary: "#FFCC00"
   surface: "#09090B"
@@ -85,7 +85,7 @@ components:
 
 ## Overview
 
-Cinematic, high-end, premium SaaS. Dark mode only. **Unreal Engine meets Hollywood production studio.**
+Cinematic, high-end, premium SaaS. Dark-first, with the owner-approved Companion Chat appearance exception below. **Unreal Engine meets Hollywood production studio.**
 
 Every surface should feel like a floating panel in a sci-fi interface: deep OLED black canvas, frosted glass with heavy backdrop blur, gold as the single electrifying accent. The goal is that a user opening the app feels they've entered a premium production environment, not a corporate dashboard.
 
@@ -128,6 +128,63 @@ Marketing pages (landing, pricing, sales) MAY include **at most ONE** full-width
 - Cards are **solid** (`bg-white border border-zinc-900/10 rounded-2xl/3xl`) — no glass, no `backdrop-blur` on the band.
 - The band must be fully opaque and sit above global chrome (flashlight/grid): `relative z-10`.
 - Never propagate `proof-band` into the app shell, wizard, dashboard, or modules. One band per page, marketing only.
+
+### Companion Chat appearance (Neil approved, 2026-10-16)
+
+Companion Chat supports **Obsidian Gold** and **Pearl Gold**, based on the approved
+Messages/Liquid Glass/Roadster study and charcoal/ivory refinement. This is a local
+chat appearance preference, not a global theme change for the Studio, wizard, or
+marketing pages. The chat sidebar shows the approved griffin mark alone, without a text wordmark. The chat
+fills the viewport without an outer frame. Soft neutral light pools and fine,
+static monochrome grain sit on a separate decorative layer, quieter behind text.
+
+- Light surfaces use neutral pearl, dark zinc text, and dark gold for readable
+  accent text; `#FFCC00` stays the action fill. Light appearance includes chat
+  navigation, messages and output cards, the viewer, loading/error states,
+  and the chat account-settings portal.
+- Appearance lives in account Settings. Its selector uses a raised neutral pill
+  for its selected state, with clear pressed semantics and brighter readable text.
+  Gold remains the action fill and keyboard-focus accent.
+- Self-hosted **Oxanium**, licensed under the adjacent SIL OFL, provides the
+  angular register for the companion identity, conversation titles, user and
+  bot messages, composer, chat navigation, and chat account settings. Mobile
+  message input is 16px to avoid input zoom. The commercial Hyperspace Race font
+  used in the local study is not distributed with the application.
+- Functional chrome can use a bounded refractive backdrop with a thin specular
+  edge. Message bubbles and content cards remain readable PLATE surfaces.
+  Preserve selectable messages, 44px targets, and the live 56px mobile / 64px
+  desktop companion. Theme changes must not remount the chat or companion.
+- The mascot identity stays centered above the conversation on desktop and
+  mobile, separate from its scroll area: avatar, then name, then status. A soft,
+  bounded spotlight behind the bare avatar improves its visibility; light mode
+  uses a subtle charcoal shadow instead. The high-contrast gold name uses a soft,
+  bounded glow behind sharp letters and a thin text-width underline, without
+  a glass capsule. Light mode uses deep antique gold (`#6B4E00`) for the name and
+  deep charcoal (`#211D16`) for user-message ink. A visible label reflects actual activity.
+  Saved chats show relative last-activity times. Replies and composer share
+  outer gutters; individual bubbles retain a readable width. Glass fits
+  the composer and navigation with thin silver edges and localized light catches;
+  the composer has 4px padding around 44px controls. Header/footer clearances
+  remain measured so every message, review heading, and action is reachable at
+  375px and desktop widths. A restrained progressive blur at the top scroll edge
+  separates moving content from the fixed identity and appears only when there
+  is content above. Decorative effects never intercept input.
+- The empty or whitespace-only composer shows attachment and existing browser
+  dictation controls. A 44px Send action appears only when the draft has text.
+  Compact neutral tooltips explain icon actions on mouse hover and keyboard
+  focus, dismiss on Escape, and do not persist after touch interaction.
+- Use one backdrop layer per chrome surface, without a second rim filter or
+  animated blur. Generate displacement maps only when geometry changes. Reduced
+  transparency and increased contrast use solid fills, readable text, and no
+  optical decoration; reduced motion disables motion.
+
+### Website wordmark (Neil approved, 2026-10-16)
+
+Public website brand lockups retain their original white **Inter italic**
+wordmark beside the unchanged approved griffin mark. Preserve each surface's
+existing size, weight, tracking, accessible text, and navigation behavior.
+Oxanium remains scoped to Companion Chat. Approved ad artwork, export lockups,
+and the Studio rail retain their existing typography.
 
 ### Per-module identity (in-app)
 
@@ -194,16 +251,18 @@ layer. Grifon had it inverted — 105 `backdrop-filter`s, most of them wrapping 
   [`<LiquidGlass>`](components/ui/LiquidGlass.tsx) is CHROME (functional layer). Both take a `tier` prop.
 - **Scroll edge effect** (`SCROLL_EDGE`) on any sticky bar — content grades out beneath it instead
   of colliding with its labels.
-- **Companion chat glass (owner-approved scope):** the compact centered identity and message
-  composer float above the scrolling conversation. Use local neutral CHROME treatment with
-  restrained tint, blur and edge highlights; messages and output cards stay PLATE. Keep the
-  area around the identity transparent so history remains visible beneath it. This explicit
+- **Companion chat glass (owner-approved scope):** the compact message composer and navigation
+  use local neutral CHROME treatment with restrained tint, refraction and edge highlights;
+  messages and output cards stay PLATE. See the
+  2026-10-16 appearance exception for the approved navigation/appearance controls. Keep the
+  bare identity transparent so history remains visible beneath it. This explicit
   scope permits the two functional surfaces to add bounded blur passes; it does not relax
   the filter budget elsewhere. Do not add a second rim filter or animate blur strength.
   Measure header/footer clearance so new messages and review headings stay fully reachable.
   Keep 44px controls, 14px text, normal message selection, and the approved 56/64px mascot;
-  disable selection and image dragging only on the decorative identity. Reduced transparency
-  and higher contrast use solid compact controls with the same layout and safe clearances.
+  disable selection and image dragging only on the decorative identity. Reduced transparency,
+  higher contrast and forced colors remove grain and blur, using solid compact controls
+  with the same layout and safe clearances.
 - **Accessibility is not optional.** `prefers-reduced-transparency` and `prefers-contrast: more`
   collapse every glass surface to a solid tonal fill (rim + specular off, contrast ring on). Any new
   material must carry the same guards — same standing as `prefers-reduced-motion`.
