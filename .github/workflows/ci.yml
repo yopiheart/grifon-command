@@ -108,12 +108,12 @@ jobs:
   e2e:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    # The complete Companion suite outgrew one runner's time budget. Keep every
-    # case and the existing per-job cap; independent shards use one worker each.
+    # Forty native shards separate the long Companion journeys while retaining
+    # every case, the existing time limits, and one worker per runner.
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
+        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -157,7 +157,7 @@ jobs:
 
       - name: Boot/render smoke
         # The installed CLI has no --add-reporter; retain both CI reporters.
-        run: npm run test:e2e -- --shard=${{ matrix.shard }}/32 --reporter=github,list,./tools/ci-e2e-timing-reporter.mjs
+        run: npm run test:e2e -- --shard=${{ matrix.shard }}/40 --reporter=github,list,./tools/ci-e2e-timing-reporter.mjs
 
       - name: Upload screenshots
         if: always()
