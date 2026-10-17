@@ -28,6 +28,11 @@ that an edit is structural before touching this file.
 
 - Browser-side Gemini calls go through `api/gemini/*`; never import
   `@google/genai` into client code.
+  Exception for the approved Companion Live voice transport: obtain a one-use,
+  short-lived, fully constrained credential from authenticated
+  `api/gemini/live-session`, then stream raw audio over Google's constrained WSS
+  endpoint. The master Gemini key, system instructions, model configuration,
+  and token minting stay server-side. No browser SDK or reusable API key.
 - Preserve the 55-second client abort before Vercel's 60-second ceiling.
 - Preserve structured error metadata, including status/body and retry timing.
 - Initialize environment-dependent external clients lazily. Preserve existing

@@ -1,7 +1,6 @@
 import { test, expect, type Page } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
-import sharp from 'sharp';
 
 const QA = path.resolve(process.env.COMPANION_QA_DIR || 'assets/design/companion-glass/qa');
 const phase = process.env.COMPANION_GLASS_PHASE || 'current';
@@ -112,41 +111,60 @@ for (const [width, height] of [[375, 667], [390, 844], [1280, 900], [320, 667]])
     });
     await evidence(page, `initial-${width}`, initial);
     expect.soft(initial.background, 'ordinary floating header has no opaque fill').toMatch(/rgba\([^)]*,\s*0\)|transparent/);
-    expect.soft(initial.transcript.y, 'conversation scroll area extends beneath the mascot').toBeLessThan(initial.avatar.y + initial.avatar.height);
+    expect.soft(initial.transcript.y, 'conversation scroll area clears the fixed identity').toBeGreaterThanOrEqual(initial.header.y + initial.header.height - 1);
     expect.soft(initial.first.y, 'initial message clears the floating header').toBeGreaterThanOrEqual(initial.header.y + initial.header.height - 1);
     expect(initial.overflow).toBeLessThanOrEqual(0);
     await seedHistory(page);
     const scroller = page.getByTestId('conversation-scroll');
     await scroller.evaluate(node => {
       node.scrollTop = node.scrollHeight * .45;
-      // Anchor the pixel probe inside a real bubble; a percentage alone can
-      // land between messages when disclosure copy changes transcript height.
-      const sampleY = document.querySelector('.companion-header')!.getBoundingClientRect().bottom - 8;
-      const bubble = Array.from(node.querySelectorAll('.companion-message')).find(message => message.getBoundingClientRect().bottom > sampleY)!;
-      const bounds = bubble.getBoundingClientRect();
-      node.scrollTop += bounds.y + bounds.height / 2 - sampleY;
       node.dispatchEvent(new Event('scroll'));
     });
     const overlap = await page.evaluate(() => {
       const header = document.querySelector('.companion-header')!.getBoundingClientRect();
-      const messages = Array.from(document.querySelectorAll('.companion-message')).map(node => ({ text: node.textContent, rect: node.getBoundingClientRect().toJSON() }));
-      const crossing = messages.filter(m => m.rect.y < header.bottom && m.rect.bottom > header.top);
-      const sampleY = header.bottom - 8;
-      const sample = crossing.find(m => m.rect.y + 8 < sampleY && m.rect.bottom - 8 > sampleY);
-      return { header: header.toJSON(), crossing, pixelPoint: sample ? { x: Math.ceil(sample.rect.x + 8), y: Math.floor(sampleY) } : null, top: (document.querySelector('[data-testid="conversation-scroll"]') as HTMLElement).scrollTop };
+      const scroll = document.querySelector('[data-testid="conversation-scroll"]') as HTMLElement;
+      const identity = document.querySelector('.companion-identity')!.getBoundingClientRect();
+      // Child rectangles can extend beyond a clipped scroller. Hit-testing at
+      // the fixed name/mascot proves message content cannot cover that region.
+      const samples = [identity.left + 4, identity.right - 4].map(x =>
+        !!document.elementFromPoint(x, header.bottom - 4)?.closest('.companion-message'));
+      return { header: header.toJSON(), transcript: scroll.getBoundingClientRect().toJSON(), samples, top: scroll.scrollTop };
     });
     await evidence(page, `history-overlap-${width}`, overlap);
-    expect.soft(overlap.crossing.length, 'real persisted older messages pass beneath the floating header').toBeGreaterThan(0);
-    if (overlap.pixelPoint) {
-      const clip = await page.screenshot({ clip: { ...overlap.pixelPoint, width: 2, height: 2 } });
-      const { data, info } = await sharp(clip).raw().toBuffer({ resolveWithObject: true });
-      const color = Array.from(data.subarray(0, Math.min(3, info.channels)));
-      fs.writeFileSync(path.join(QA, `${phase}-overlap-pixel-${width}.json`), JSON.stringify({ point: overlap.pixelPoint, rgb: color }, null, 2));
-      expect.soft(color, 'older bubble pixels are visible through the header outside its controls').not.toEqual([9, 9, 11]);
-    } else expect.soft(overlap.pixelPoint, 'a bubble crosses the sampled header strip').not.toBeNull();
-    const remembered = await scroller.evaluate(node => node.scrollTop);
+    expect.soft(overlap.transcript.y, 'scrolled content stays clipped below the identity').toBeGreaterThanOrEqual(overlap.header.bottom - 1);
+    expect.soft(overlap.samples, 'messages cannot cover the fixed identity').toEqual([false, false]);
+    expect(overlap.top, 'the non-overlap check exercises real older history').toBeGreaterThan(0);
+    const readingPosition = (anchorIndex = -1) => scroller.evaluate((node, index) => {
+      const messages = Array.from(node.querySelectorAll('.companion-message'));
+      const header = document.querySelector('.companion-header')!.getBoundingClientRect();
+      const selected = index >= 0 ? index : messages.findIndex(message => message.getBoundingClientRect().bottom > header.bottom + 20);
+      const anchor = messages[selected];
+      const shortcut = Array.from(node.querySelectorAll('button')).find(button => button.textContent === 'Reference brief');
+      return { anchorIndex: selected, text: anchor?.textContent, y: anchor?.getBoundingClientRect().y! - node.getBoundingClientRect().y,
+        top: node.scrollTop, height: node.scrollHeight, shortcutHeight: shortcut?.getBoundingClientRect().height ?? 0,
+        headerOffset: getComputedStyle(node).paddingTop, footerOffset: getComputedStyle(node).paddingBottom };
+    }, anchorIndex);
+    const beforeTyping = await readingPosition();
+    expect(beforeTyping.anchorIndex).toBeGreaterThanOrEqual(0);
     await input(page).fill('Draft while reading history');
-    expect(await scroller.evaluate(node => node.scrollTop)).toBe(remembered);
+    await expect(page.locator('#companion-save-status')).toContainText('Draft saved on this device.');
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    const afterTyping = await readingPosition(beforeTyping.anchorIndex);
+    fs.writeFileSync(path.join(QA, `${phase}-history-reading-${width}.json`), JSON.stringify({ before: beforeTyping, after: afterTyping }, null, 2));
+    // Typing removes the introductory shortcut above seeded history. Native
+    // anchoring adjusts scrollTop to keep the same message visually stationary.
+    expect(afterTyping.text).toBe(beforeTyping.text);
+    expect(Math.abs(afterTyping.y - beforeTyping.y)).toBeLessThanOrEqual(1);
+    // Once layout is unchanged, ordinary draft edits also preserve raw position.
+    await input(page).fill('Draft while reading history!');
+    await expect(page.locator('#companion-save-status')).toContainText('Draft saved on this device.');
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    const afterEdit = await readingPosition(beforeTyping.anchorIndex);
+    expect(afterEdit.headerOffset).toBe(afterTyping.headerOffset);
+    expect(afterEdit.footerOffset).toBe(afterTyping.footerOffset);
+    expect(afterEdit.top).toBe(afterTyping.top);
+    expect(afterEdit.text).toBe(beforeTyping.text);
+    expect(Math.abs(afterEdit.y - beforeTyping.y)).toBeLessThanOrEqual(1);
     await page.getByRole('button', { name: 'Send', exact: true }).click();
     await expect(page.getByRole('status', { name: 'Grifon is typing', exact: true })).toHaveCount(0);
     await expect(page.locator('.companion-message-assistant').last()).toBeInViewport({ ratio: 1 });

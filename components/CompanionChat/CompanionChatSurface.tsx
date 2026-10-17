@@ -4,7 +4,6 @@ import type { ProducerSurfaceController } from '../OneShotAd/ProducerFlow';
 import type { LockablePresetId } from '../../types';
 import Button from '../ui/Button';
 import { GlassPanel } from '../ui/GlassPanel';
-import { LiquidGlass } from '../ui/LiquidGlass';
 import { DUR, EASE } from '../ui/motionTokens';
 import type { CompanionReaction } from './CompanionAvatar';
 import type { CompanionAvatarPresentation } from './CompanionAvatarLayer';
@@ -12,6 +11,9 @@ import { CompanionComposer, type CompanionComposerHandle } from './CompanionComp
 import './companionChat.css';
 import type { ConversationBinding } from './CompanionChatShell';
 import { CompanionOutputViewer } from './CompanionOutputViewer';
+import { CompanionScrollEdge } from './CompanionScrollEdge';
+import { CompanionVoiceSession, companionVoiceLabel } from './CompanionVoiceSession';
+import { useCompanionVoiceSession } from './useCompanionVoiceSession';
 import { RECOMMENDED_VOICES } from '../SignalModulator/pinoyReady';
 import { compressImageForUpload } from '../../utils/imageCompression';
 import {
@@ -54,8 +56,8 @@ const Transcript = memo(function Transcript({ messages, hiddenMessageId }: { mes
   const latestUser = [...messages].reverse().find(message => message.role === 'user')?.id;
   return <>{messages.map((message, index) => message.id === hiddenMessageId ? null : <Fragment key={message.id}>
     {(index === 0 || message.at - messages[index-1].at > 30*60*1000) && <p data-testid="conversation-time-divider" className="text-center font-mono text-[11px] text-on-surface-sublabel"><time dateTime={new Date(message.at).toISOString()}>{new Date(message.at).toLocaleDateString([], { month: 'short', day: 'numeric' })} · {time(message.at)}</time></p>}
-    <article className={message.role === 'user' ? 'ml-auto w-fit max-w-[88%]' : 'w-fit max-w-[92%]'}>
-    <p className={`companion-message whitespace-pre-wrap break-words rounded-2xl px-4 py-3 ${message.role === 'user' ? 'companion-message-user rounded-br-sm' : 'companion-message-assistant rounded-bl-sm text-zinc-200'}`}>{message.text}</p>
+    <article className={message.role === 'user' ? 'companion-user-row ml-auto w-fit max-w-[88%]' : 'companion-assistant-row w-fit max-w-[92%]'}>
+    <p className={`companion-message whitespace-pre-wrap break-words rounded-2xl px-4 py-3 ${message.role === 'user' ? 'companion-message-user' : 'companion-message-assistant rounded-bl-sm text-zinc-200'}`}>{message.text}</p>
     {message.id === latestUser && <p className="mt-2 text-right font-mono text-[11px] text-on-surface-sublabel"><time dateTime={new Date(message.at).toISOString()}>{time(message.at)}</time> · Received</p>}
   </article></Fragment>)}</>;
 });
@@ -85,6 +87,7 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
   const uploadEpoch = useRef(0);
   const owner = useRef(userId);
   const nearBottom = useRef(true);
+  const measuredViewportHeight = useRef(0);
   const firstScroll = useRef(true);
   const shownReview = useRef<string | null>(null);
   const scrollFrame = useRef(0);
@@ -100,6 +103,8 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
   const visibleLastMessageId = draft.messages[draft.messages.length - (replyPending ? 2 : 1)]?.id;
   const busy = controller.busy || actionPending;
   const disabled = busy || loadingRun || uploading || readOnly;
+  const liveVoice = useCompanionVoiceSession(surface, disabled || viewer || replyPending, `${userId}:${conversation?.chat.id ?? 'draft'}:${run?.runId ?? 'brief'}`);
+  const voiceShown = liveVoice.active || liveVoice.status === 'error' || (liveVoice.status === 'ended' && liveVoice.transcripts.some(transcript => transcript.role === 'user'));
   const field = nextCompanionField(draft);
   const atStoryboard = run?.gate === 'storyboard';
   const atResult = run?.gate === 'first_cut' || !!run?.finalVideoUrl;
@@ -108,11 +113,14 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
   const readyToApprove = !!run?.scenes.length && run.scenes.every(scene => scene.imageUrl && scene.status !== 'flagged');
   const retryNeedsAllowance = !run?.gate && (!quotaReady || quotaBlocked || (!!run?.storyboardApproved && videoAllowed !== true));
   const activeStage = run?.stages.find(stage => stage.status === 'running');
-  const avatarState: CompanionReaction = failed ? 'idle' : busy || loadingRun || replyPending ? 'working'
+  const avatarState: CompanionReaction = liveVoice.active ? liveVoice.status === 'listening' ? 'reading' : 'working' : failed ? 'idle' : busy || loadingRun || replyPending ? 'working'
     : uploading || (!run && hasText) ? 'reading' : atStoryboard || (atResult && !!run?.finalVideoUrl) ? 'ready' : 'idle';
-  const stateLabel = failed ? 'Ready when you are' : loadingRun ? 'Opening your saved ad'
-    : busy ? controller.phase === 'researching' ? 'Researching your product' : activeStage?.label ?? 'Updating your ad'
-      : uploading ? 'Preparing your photo' : atStoryboard ? 'Your storyboard is ready' : atResult ? 'Your first cut is ready' : 'Let’s make something good';
+  const stateLabel = liveVoice.active ? companionVoiceLabel(liveVoice) : readOnly ? 'Saved conversation · read-only' : failed || localError ? 'Needs attention'
+    : loadingRun ? 'Opening your saved ad…' : uploading ? 'Preparing your photo…' : replyPending ? 'Replying…'
+      : busy ? controller.phase === 'researching' ? 'Researching your product…'
+        : controller.approving ? 'Starting production…' : controller.reshooting !== null ? `Updating scene ${controller.reshooting + 1}…`
+          : controller.presetBusy ? 'Applying edit style…' : activeStage?.label ?? 'Working…'
+        : atStoryboard ? 'Waiting for storyboard review' : atResult ? 'First cut ready' : 'Ready';
   const clearPendingReply = useCallback(() => {
     if (replyTimer.current !== null) window.clearTimeout(replyTimer.current);
     replyTimer.current = null; pendingReply.current = null; setPendingReplyId(null);
@@ -120,7 +128,7 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
   const measureClearance = useCallback(() => {
     const node = scroller.current;
     if (!node || !header.current || !footer.current) return { top: 24, bottom: 24 };
-    const top = Math.ceil(header.current.getBoundingClientRect().height) + 16;
+    const top = 16;
     const bottom = Math.ceil(footer.current.getBoundingClientRect().height) + 24;
     node.style.setProperty('--companion-header-offset', `${top}px`);
     node.style.setProperty('--companion-footer-offset', `${bottom}px`);
@@ -151,14 +159,22 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
   useLayoutEffect(() => {
     const node = scroller.current;
     if (!node || !header.current || !footer.current) return;
+    let frame = 0;
     const measure = () => {
       measureClearance();
+      measuredViewportHeight.current = node.clientHeight;
+      if (node.scrollHeight <= node.clientHeight) nearBottom.current = true;
       if (nearBottom.current) node.scrollTo({ top: node.scrollHeight, behavior: 'auto' });
     };
+    const schedule = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => { frame = 0; measure(); });
+    };
     measure();
-    const observer = new ResizeObserver(measure);
+    const observer = new ResizeObserver(schedule);
     observer.observe(header.current); observer.observe(footer.current);
-    return () => observer.disconnect();
+    observer.observe(node, { box: 'border-box' });
+    return () => { observer.disconnect(); if (frame) window.cancelAnimationFrame(frame); };
   }, [measureClearance]);
   useLayoutEffect(() => {
     const slot = avatarSlot.current;
@@ -200,7 +216,7 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
       const instant = firstScroll.current || window.matchMedia('(prefers-reduced-motion: reduce)').matches
         || node.scrollHeight - node.scrollTop - node.clientHeight > node.clientHeight;
       firstScroll.current = false;
-      followingScroll.current = !instant;
+      followingScroll.current = !instant && node.scrollHeight-node.scrollTop-node.clientHeight > 1;
       node.scrollTo({ top: node.scrollHeight, behavior: instant ? 'auto' : 'smooth' });
     });
     return () => { if (scrollFrame.current) window.cancelAnimationFrame(scrollFrame.current); };
@@ -208,10 +224,10 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
   useEffect(() => { setArmedScene(null); setArmedPreset(null); }, [run?.runId, run?.gate]);
 
   const stopFollowing = () => {
-    if (scrollFrame.current) window.cancelAnimationFrame(scrollFrame.current);
-    scrollFrame.current = 0; nearBottom.current = false; followingScroll.current = false;
-    shownReview.current = reviewKey;
     const node = scroller.current;
+    if (scrollFrame.current) window.cancelAnimationFrame(scrollFrame.current);
+    scrollFrame.current = 0; nearBottom.current = !!node && node.scrollHeight <= node.clientHeight; followingScroll.current = false;
+    shownReview.current = reviewKey;
     if (node) node.scrollTo({ top: node.scrollTop, behavior: 'auto' });
   };
 
@@ -226,7 +242,7 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
   };
 
   const send = (text: string) => {
-    if (!text.trim() || disabled || pendingReply.current) return false;
+    if (!text.trim() || disabled || liveVoice.active || pendingReply.current) return false;
     try {
       if (!run && field) {
         const next = acceptCompanionAnswer(draft, text);
@@ -298,28 +314,32 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
   return <div ref={surface} className={`companion-chat relative flex h-full min-h-0 flex-col overflow-hidden bg-zinc-950 font-sans font-normal tracking-normal text-white ${viewer ? "companion-viewer-open" : ""}`} style={motionStyle} data-testid="companion-chat" data-chat-id={conversation?.chat.id} data-companion-state={avatarState}>
     <div className="mx-auto flex min-h-0 w-full max-w-6xl flex-1">
       <section className="relative flex min-h-0 min-w-0 flex-1 flex-col" aria-label="Conversation with Grifon">
-        <header ref={header} className="companion-header pointer-events-none absolute inset-x-0 top-0 z-20 px-4 pb-3 pt-1 sm:px-8">
-          <div className="pointer-events-auto absolute left-4 top-3 sm:left-8">{conversation ? <Button variant="ghost" className={control + ' !p-3 md:!hidden'} aria-label="Open conversations" onClick={conversation.openNavigation}><PanelLeft className="h-4 w-4" /></Button> : <Button variant="ghost" className={control + ' !p-3'} aria-label="Back to dashboard" onClick={exit}><ArrowLeft className="h-4 w-4" /></Button>}</div>
-          <div className="pointer-events-auto absolute right-4 top-3 sm:right-8"><Button variant="ghost" className={control + ' !p-3 ' + (conversation ? 'md:!hidden' : '')} aria-label={conversation ? 'New chat' : 'New ad'} disabled={!conversation && disabled} onClick={conversation?.newChat ?? reset}><Plus className="h-4 w-4" /></Button></div>
-          <div className="companion-identity mx-auto flex w-fit max-w-[calc(100%-88px)] flex-col items-center text-center">
+        <header ref={header} className={`companion-header pointer-events-none relative z-20 flex shrink-0 items-center justify-center px-4 py-4 sm:px-8 ${conversation ? 'companion-bound-header' : ''}`}>
+          <div className="companion-header-navigation pointer-events-auto">{conversation ? <Button variant="ghost" className={control + ' !p-3 md:!hidden'} aria-label="Open conversations" onClick={conversation.openNavigation}><PanelLeft className="h-4 w-4" /></Button> : <Button variant="ghost" className={control + ' !p-3'} aria-label="Back to dashboard" onClick={exit}><ArrowLeft className="h-4 w-4" /></Button>}</div>
+          {!conversation && <div className="pointer-events-auto absolute right-4 top-3 sm:right-8"><Button variant="ghost" className={control + ' !p-3'} aria-label="New ad" disabled={disabled} onClick={reset}><Plus className="h-4 w-4" /></Button></div>}
+          <div className="companion-identity companion-identity-badge flex min-w-0 w-fit items-center gap-2">
             <div ref={avatarSlot} aria-hidden="true" data-companion-avatar-slot className="h-14 w-14 shrink-0 sm:h-16 sm:w-16" />
-            <LiquidGlass className="companion-identity-badge rounded-xl px-3 py-1">
-              <h1 className="!text-base !font-semibold !normal-case !tracking-tight sm:!text-lg">Grifon</h1>
-              {!failed && (busy || loadingRun || uploading || atStoryboard || atResult) && <p className="text-xs leading-relaxed text-zinc-100">{stateLabel}</p>}
-            </LiquidGlass>
+            <div className="companion-identity-copy min-w-0">
+              <h1 className="companion-display !normal-case !tracking-tight"><span aria-hidden="true" className="companion-name-glow">Grifon</span><span>Grifon</span></h1>
+              <p role="status" aria-live="polite" aria-atomic="true" className="companion-identity-status truncate text-xs leading-relaxed text-zinc-100">{stateLabel}</p>
+            </div>
           </div>
+          <CompanionScrollEdge scroller={scroller} />
         </header>
         <div ref={scroller}
           onScroll={event => {
             const node = event.currentTarget;
+            // A viewport resize changes the bottom gap before its observer runs.
+            // Preserve following intent until that resize has been measured.
+            if (node.clientHeight !== measuredViewportHeight.current) return;
             if (node.scrollHeight-node.scrollTop-node.clientHeight < 24) { nearBottom.current = true; followingScroll.current = false; }
             else if (!followingScroll.current) nearBottom.current = false;
           }}
-          onPointerDown={event => { if (event.target === event.currentTarget) stopFollowing(); }}
+          onPointerDown={event => { if (event.target === event.currentTarget && followingScroll.current) stopFollowing(); }}
           onWheel={event => { if (event.deltaY < 0 || followingScroll.current || !nearBottom.current) stopFollowing(); }} onTouchMove={stopFollowing}
           onKeyDown={event => { if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key) && !(event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement || event.target instanceof HTMLSelectElement)) stopFollowing(); }}
           className="companion-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 sm:px-8" data-testid="conversation-scroll">
-          <div className="mx-auto flex min-h-full max-w-2xl flex-col justify-end">
+          <div className="companion-transcript mx-auto flex min-h-full flex-col justify-end">
             <div className="shrink-0 space-y-5">
             <div aria-label="Beta limits" className="space-y-2 text-xs leading-relaxed text-zinc-400">
               <p>Beta · guided ad brief. Each answer fills the field Grifon asks for. Use Edit brief at review to make corrections.</p>
@@ -356,19 +376,22 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
           </div>
         </div>
         <footer ref={footer} className="companion-footer pointer-events-none absolute inset-x-0 bottom-0 z-20 px-4 pb-[max(16px,env(safe-area-inset-bottom))] pt-3 sm:px-8">
-          <div className="pointer-events-auto mx-auto max-w-2xl">
+          <div className="companion-composer-wrap pointer-events-auto mx-auto">
             {draft.heroImageBase64 && !run && <div className="mb-2 flex items-center gap-3 rounded-xl border border-white/10 p-2"><img src={draft.heroImageBase64} alt="Attached product" className="h-12 w-12 shrink-0 rounded-lg object-cover" /><p className="min-w-0 flex-1 truncate text-xs text-zinc-300">{draft.imageName || 'Product photo'}</p><Button variant="ghost" className={`${control} !p-3`} disabled={disabled} aria-label="Remove product photo" onClick={() => { uploadEpoch.current++; setDraft({ ...draft, heroImageBase64: '', imageName: '' }); }}><X className="h-4 w-4" /></Button></div>}
             <input ref={upload} type="file" accept="image/jpeg,image/png,image/webp" aria-label="Product photo" className="hidden" disabled={disabled || !!run} onChange={event => { void attach(event.target.files?.[0]); event.target.value = ''; }} />
-            <CompanionComposer ref={composer} initialText={conversation?.chat.composer} onTextChange={text => conversation?.update({ composer: text })} disabled={disabled} voiceDisabled={disabled || viewer} voiceScope={`${userId}:${conversation?.chat.id ?? 'draft'}:${run?.runId ?? 'brief'}`} sendDisabled={replyPending} uploading={uploading} allowAttachment={!run}
+            {voiceShown && <CompanionVoiceSession state={liveVoice} onMuted={liveVoice.setMuted} onEnd={liveVoice.end} onRetry={liveVoice.start} onDismiss={liveVoice.dismiss} onTranscript={text => { liveVoice.dismiss(); composer.current?.useVoiceDraft(text); }} />}
+            <div hidden={voiceShown}>
+            <CompanionComposer ref={composer} initialText={conversation?.chat.composer} onTextChange={text => conversation?.update({ composer: text })} disabled={disabled || liveVoice.active} voiceDisabled={disabled || viewer || liveVoice.active} voiceScope={`${userId}:${conversation?.chat.id ?? 'draft'}:${run?.runId ?? 'brief'}`} onLiveVoice={liveVoice.start} liveVoiceDisabled={disabled || viewer || replyPending} sendDisabled={replyPending} uploading={uploading} allowAttachment={!run}
               placeholder={run ? atResult ? 'Try “reshoot scene 2” or “style clean”…' : 'Use the review controls above…' : field || replyPending ? 'Tell Grifon…' : 'Anything to change? Edit your brief above.'}
               onAttach={() => upload.current?.click()} onSend={send} onDraftPresence={setHasText} />
+            </div>
             <p id="companion-save-status" className="companion-footer-note mt-3 text-center text-xs leading-relaxed">{conversation?.saveConflict ? 'Another tab saved newer chats. Keep this tab open. Save this chat as a copy to preserve both versions.' : conversation?.saving ? 'Saving on this device…' : (conversation?.saved ?? saved) ? 'Draft saved on this device.' : 'Draft could not be saved on this device. Keep this tab open.'} {fixtureLabel ?? 'No generation starts until you confirm.'}</p>{conversation && !conversation.saved && !conversation.saving && <Button variant="secondary" className={control + " mt-2 w-full"} onClick={conversation.saveConflict ? conversation.recoverCopy : conversation.retrySave}>{conversation.saveConflict ? 'Save this chat as a copy' : 'Retry saving'}</Button>}
           </div>
         </footer>
       </section>
     </div>
     {viewer && <CompanionOutputViewer onClose={closeViewer} title={atStoryboard ? "Storyboard" : "First cut"}>
-            {atStoryboard && (!failed || readOnly) && <GlassPanel className="p-4 sm:p-5" aria-label="Storyboard review" data-companion-review="storyboard"><h2 className="!text-lg !font-semibold !normal-case !tracking-normal">Your scenes, before we film.</h2><p className="mt-2 text-sm leading-relaxed text-zinc-400">Check the product, presenter and script. You can regenerate an image before approving.</p><div className="mt-4 grid grid-cols-2 gap-3">{run!.scenes.map(scene => <div key={scene.sceneIdx} className="min-w-0 overflow-hidden rounded-xl border border-white/10"><div className="aspect-[3/4] bg-zinc-900">{scene.imageUrl ? <a href={scene.imageUrl} target="_blank" rel="noreferrer" aria-label={`Open scene ${scene.sceneIdx+1} image`}><img src={scene.imageUrl} alt={`Scene ${scene.sceneIdx+1}`} className="h-full w-full object-contain" /></a> : <p className="p-3 text-xs text-zinc-400">Image not ready</p>}</div><div className="p-3"><p className="text-xs font-semibold">Scene {scene.sceneIdx+1}</p><p className="mt-2 text-xs leading-relaxed text-zinc-400">{run!.storyboard?.[scene.sceneIdx]?.scriptLine}</p>{run!.storyboard?.[scene.sceneIdx]?.endFrameImageUrl && <a href={run!.storyboard![scene.sceneIdx].endFrameImageUrl} target="_blank" rel="noreferrer" className="mt-2 inline-flex min-h-11 items-center text-xs text-[#FFCC00]">View end frame</a>}{scene.flaggedReason && <p className="mt-2 flex items-start gap-2 text-xs text-amber-500"><AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />{scene.flaggedReason}</p>}<Button variant="secondary" className={`${control} mt-3 !w-full !px-2 !text-xs`} aria-label={`Regenerate scene ${scene.sceneIdx+1}`} disabled={busy || readOnly} onClick={() => void call(() => controller.regenScene(scene.sceneIdx))}>{controller.reshooting === scene.sceneIdx ? 'Updating…' : 'Regenerate'}</Button></div></div>)}</div><p className="mt-4 text-xs leading-relaxed text-zinc-400">Approval uses 1 video ad from your plan, or 1 purchased video credit if your plan allowance is used up. Regenerated images use image allowance.</p><p id="storyboard-approval-help" className="mt-3 text-xs leading-relaxed text-zinc-400">{readOnly ? 'Resume editing in the conversation before changing or approving this storyboard.' : busy ? 'Wait for the current update to finish before approving.' : !readyToApprove ? 'Every scene needs an image without a flag before approval. Regenerate incomplete or flagged scenes.' : ''}</p><Button aria-describedby="storyboard-approval-help" className={`${control} mt-4 w-full`} disabled={busy || readOnly || !readyToApprove || videoAllowed === null} onClick={() => videoAllowed === false ? onUpgrade() : void call(controller.approve)}>{videoAllowed === null ? allowanceLoading ? 'Checking video allowance…' : 'Video allowance unavailable' : videoAllowed === false ? 'Unlock video production' : 'Approve storyboard'}</Button>{videoAllowed === null && !allowanceLoading && <Button variant="secondary" className={`${control} mt-2 w-full`} onClick={onRetryAllowance}>Retry allowance</Button>}</GlassPanel>}
+            {atStoryboard && (!failed || readOnly) && <GlassPanel className="p-4 sm:p-5" aria-label="Storyboard review" data-companion-review="storyboard"><h2 className="!text-lg !font-semibold !normal-case !tracking-normal">Your scenes, before we film.</h2><p className="mt-2 text-sm leading-relaxed text-zinc-400">Check the product, presenter and script. You can regenerate an image before approving.</p><div className="companion-scene-grid mt-4 grid grid-cols-2 gap-3">{run!.scenes.map(scene => <div key={scene.sceneIdx} className="min-w-0 overflow-hidden rounded-xl border border-white/10"><div className="aspect-[3/4] bg-zinc-900">{scene.imageUrl ? <a href={scene.imageUrl} target="_blank" rel="noreferrer" aria-label={`Open scene ${scene.sceneIdx+1} image`}><img src={scene.imageUrl} alt={`Scene ${scene.sceneIdx+1}`} className="h-full w-full object-contain" /></a> : <p className="p-3 text-xs text-zinc-400">Image not ready</p>}</div><div className="p-3"><p className="text-xs font-semibold">Scene {scene.sceneIdx+1}</p><p className="mt-2 text-xs leading-relaxed text-zinc-400">{run!.storyboard?.[scene.sceneIdx]?.scriptLine}</p>{run!.storyboard?.[scene.sceneIdx]?.endFrameImageUrl && <a href={run!.storyboard![scene.sceneIdx].endFrameImageUrl} target="_blank" rel="noreferrer" className="mt-2 inline-flex min-h-11 items-center text-xs text-[#FFCC00]">View end frame</a>}{scene.flaggedReason && <p className="mt-2 flex items-start gap-2 text-xs text-amber-500"><AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />{scene.flaggedReason}</p>}<Button variant="secondary" className={`${control} mt-3 !w-full !px-2 !text-xs`} aria-label={`Regenerate scene ${scene.sceneIdx+1}`} disabled={busy || readOnly} onClick={() => void call(() => controller.regenScene(scene.sceneIdx))}>{controller.reshooting === scene.sceneIdx ? 'Updating…' : 'Regenerate'}</Button></div></div>)}</div><p className="mt-4 text-xs leading-relaxed text-zinc-400">Approval uses 1 video ad from your plan, or 1 purchased video credit if your plan allowance is used up. Regenerated images use image allowance.</p><p id="storyboard-approval-help" className="mt-3 text-xs leading-relaxed text-zinc-400">{readOnly ? 'Resume editing in the conversation before changing or approving this storyboard.' : busy ? 'Wait for the current update to finish before approving.' : !readyToApprove ? 'Every scene needs an image without a flag before approval. Regenerate incomplete or flagged scenes.' : ''}</p><Button aria-describedby="storyboard-approval-help" className={`${control} mt-4 w-full`} disabled={busy || readOnly || !readyToApprove || videoAllowed === null} onClick={() => videoAllowed === false ? onUpgrade() : void call(controller.approve)}>{videoAllowed === null ? allowanceLoading ? 'Checking video allowance…' : 'Video allowance unavailable' : videoAllowed === false ? 'Unlock video production' : 'Approve storyboard'}</Button>{videoAllowed === null && !allowanceLoading && <Button variant="secondary" className={`${control} mt-2 w-full`} onClick={onRetryAllowance}>Retry allowance</Button>}</GlassPanel>}
             {atResult && <GlassPanel className="p-4 sm:p-5" aria-label="Your first cut" data-companion-review="result"><h2 className="!text-lg !font-semibold !normal-case !tracking-normal">Your first cut.</h2>{run!.finalVideoUrl ? <video controls playsInline preload="metadata" src={run!.finalVideoUrl} poster={run!.thumbnailUrl} className="mt-4 max-h-[440px] w-full rounded-xl bg-zinc-950" aria-label="Generated ad video" /> : <p className="mt-4 text-sm text-zinc-400">The final video is not available yet.</p>}{run!.finalDownloadUrl && <a href={run!.finalDownloadUrl} download target="_blank" rel="noreferrer" className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-[#FFCC00]">Download video</a>}<p className="mt-4 text-sm leading-relaxed text-zinc-400">Keep the cut, reshoot a scene, or apply an edit style. Custom free-form edits are not supported here yet.</p><div className="mt-3 flex flex-wrap gap-2">{run!.scenes.map(scene => <Button key={scene.sceneIdx} variant="secondary" className={`${control} !px-3`} disabled={busy || readOnly} onClick={() => { setArmedScene(scene.sceneIdx); setArmedPreset(null); }}>Reshoot scene {scene.sceneIdx+1}</Button>)}</div>{armedScene !== null && <div className="mt-3 rounded-xl border border-white/10 p-3"><p className="text-xs leading-relaxed text-zinc-300">Scene {armedScene+1}: {run!.scenes.find(scene => scene.sceneIdx === armedScene)?.status === 'flagged' ? 'this regenerates the flagged scene. Plan limits still apply.' : 'additional generation may use your plan allowance or credits.'}</p><Button className={`${control} mt-3`} disabled={busy || readOnly} onClick={() => { const index = armedScene; setArmedScene(null); void call(() => controller.reshoot(index)); }}>Confirm reshoot</Button></div>}<label className="mt-5 block text-xs text-zinc-400">Edit style<select aria-label="Edit style" className={`${inputStyle} mt-1`} disabled={busy || readOnly} value={armedPreset ? armedPreset.value ?? 'auto' : run!.presetId ?? 'auto'} onChange={event => { const selected = styles.find(style => (style.value ?? 'auto') === event.target.value)!; if (selected.locked && !presetUnlocked) onUpgrade(); else { setArmedPreset(selected); setArmedScene(null); } }}>{styles.map(style => <option key={style.label} value={style.value ?? 'auto'}>{style.label}{style.locked && !presetUnlocked ? ' · Pro' : ''}</option>)}</select></label>{armedPreset && <Button className={`${control} mt-3`} disabled={busy || readOnly} onClick={() => { const preset = armedPreset.value; setArmedPreset(null); void call(() => controller.choosePreset(preset)); }}>Apply style</Button>}</GlassPanel>}
     </CompanionOutputViewer>}
   </div>;

@@ -56,6 +56,10 @@ eight-stage Director wizard, storyboards, image/video generation, ElevenLabs
 voice, FFmpeg rendering, dashboard tools, Supabase auth/data, PayMongo billing,
 and Vercel API functions. Gemini, Kling, and ElevenLabs credentials belong only
 in server handlers; browser code calls the `api/*` proxies.
+The approved Companion Live voice exception permits only a one-use, short-lived,
+fully constrained Gemini Live credential in browser memory for raw audio WSS.
+The authenticated `api/gemini/live-session` handler mints it; master provider keys,
+system instructions and model configuration remain server-only. No browser SDK.
 
 - `App.tsx` owns manual URL routing, auth state, wizard state, and dashboard
   module selection. There is no React Router or global state framework.

@@ -1,12 +1,14 @@
 import { forwardRef, useImperativeHandle, useLayoutEffect, useRef, useState } from 'react';
-import { ArrowUp, Loader2, Mic, Plus, Square } from 'lucide-react';
+import { ArrowUp, AudioLines, Loader2, Mic, Plus, Square } from 'lucide-react';
 import Button from '../ui/Button';
 import { LiquidGlass } from '../ui/LiquidGlass';
+import { GlassPanel } from '../ui/GlassPanel';
 import { useCompanionDictation } from './useCompanionDictation';
 
 export interface CompanionComposerHandle {
   clear: () => void;
   focus: () => void;
+  useVoiceDraft: (text: string) => void;
 }
 
 interface Props {
@@ -15,6 +17,8 @@ interface Props {
   disabled: boolean;
   voiceDisabled?: boolean;
   voiceScope?: string;
+  onLiveVoice?: () => void;
+  liveVoiceDisabled?: boolean;
   sendDisabled: boolean;
   uploading: boolean;
   allowAttachment: boolean;
@@ -26,9 +30,10 @@ interface Props {
 
 // Keystrokes stay here; the conversation only needs the empty/nonempty reaction edge.
 export const CompanionComposer = forwardRef<CompanionComposerHandle, Props>(function CompanionComposer(
-  { initialText = '', onTextChange, disabled, voiceDisabled = disabled, voiceScope = '', sendDisabled, uploading, allowAttachment, placeholder, onAttach, onSend, onDraftPresence }, ref,
+  { initialText = '', onTextChange, disabled, voiceDisabled = disabled, voiceScope = '', onLiveVoice, liveVoiceDisabled = voiceDisabled, sendDisabled, uploading, allowAttachment, placeholder, onAttach, onSend, onDraftPresence }, ref,
 ) {
   const [text, setText] = useState(initialText);
+  const [voiceDraft, setVoiceDraft] = useState<string | null>(null);
   const input = useRef<HTMLTextAreaElement>(null);
   const present = useRef(!!initialText.trim());
   const composing = useRef(false);
@@ -56,7 +61,16 @@ export const CompanionComposer = forwardRef<CompanionComposerHandle, Props>(func
     observer.observe(node);
     return () => observer.disconnect();
   }, [text]);
-  useImperativeHandle(ref, () => ({ clear: () => { voice.abort(); update(''); }, focus: () => input.current?.focus() }));
+  useImperativeHandle(ref, () => ({
+    clear: () => { voice.abort(); setVoiceDraft(null); update(''); },
+    focus: () => input.current?.focus(),
+    useVoiceDraft: value => {
+      voice.abort();
+      if (!value.trim() || value.length > 4000) return;
+      if (text.trim()) setVoiceDraft(value);
+      else { update(value); window.requestAnimationFrame(() => input.current?.focus()); }
+    },
+  }));
   const send = () => {
     if (disabled || sendDisabled || composing.current || !text.trim()) return;
     voice.abort();
@@ -64,7 +78,7 @@ export const CompanionComposer = forwardRef<CompanionComposerHandle, Props>(func
   };
 
   return <>
-  <LiquidGlass className="companion-composer flex items-end gap-1 rounded-2xl border border-white/10 p-2 sm:gap-2">
+  <LiquidGlass data-companion-glass className="companion-composer flex items-end gap-1 rounded-full border border-white/10 p-1.5">
     {allowAttachment && <Button variant="ghost" className="companion-icon-button min-h-11 min-w-11 !rounded-xl !p-3" aria-label="Attach product photo" disabled={disabled} onClick={onAttach}>
       {uploading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Plus className="h-5 w-5" />}
     </Button>}
@@ -80,11 +94,17 @@ export const CompanionComposer = forwardRef<CompanionComposerHandle, Props>(func
     <Button variant="ghost" className="companion-icon-button min-h-11 min-w-11 !rounded-xl !p-3" aria-label={voice.listening ? 'Stop voice input' : 'Start voice input'} aria-describedby="companion-voice-help" aria-pressed={voice.listening} disabled={voiceDisabled || uploading || voice.stopping} onClick={voice.listening ? voice.stop : voice.start}>
       {voice.listening ? <Square className="h-4 w-4 text-[#FFCC00]" /> : <Mic className="h-5 w-5" />}
     </Button>
+    {onLiveVoice && <Button variant="ghost" className="companion-icon-button companion-live-start min-h-11 min-w-11 !rounded-xl !p-3" aria-label="Start live voice chat" disabled={liveVoiceDisabled || uploading} onClick={() => { voice.abort(); input.current?.blur(); onLiveVoice(); }}><AudioLines className="h-5 w-5" /></Button>}
     <Button className="companion-send min-h-11 min-w-11 !rounded-xl !p-3" aria-label="Send" disabled={disabled || sendDisabled || !text.trim()} onClick={send}>
       <ArrowUp className="h-5 w-5" />
     </Button>
   </LiquidGlass>
   <p id="companion-voice-help" className={voice.used ? 'companion-footer-note mt-2 text-center text-xs leading-relaxed' : 'sr-only'}>Voice input uses your browser and may be processed online. Review before sending.</p>
   {voice.notice && <p role={voice.notice.error ? 'alert' : 'status'} className="companion-footer-note mt-1 text-center text-xs leading-relaxed">{voice.notice.text}</p>}
+  {voiceDraft !== null && <GlassPanel role="region" aria-label="Review voice draft" className="companion-voice-draft mt-2 p-3">
+    <p className="text-xs leading-relaxed text-zinc-300">Replace your typed draft with this voice transcript? Nothing is sent yet.</p>
+    <p className="mt-2 max-h-24 overflow-y-auto whitespace-pre-wrap break-words text-sm">{voiceDraft}</p>
+    <div className="mt-2 flex flex-wrap gap-2"><Button variant="secondary" className="min-h-11 !rounded-xl !px-3 !text-sm" onClick={() => { update(voiceDraft); setVoiceDraft(null); input.current?.focus(); }}>Replace draft</Button><Button variant="ghost" className="min-h-11 !rounded-xl !px-3 !text-sm" onClick={() => { setVoiceDraft(null); input.current?.focus(); }}>Keep typed draft</Button></div>
+  </GlassPanel>}
   </>;
 });
