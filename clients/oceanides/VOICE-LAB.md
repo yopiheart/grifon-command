@@ -173,6 +173,11 @@ scheduled tone does not prove the physical speaker is audible. Stop the local
 check with **Stop local audio check** when finished; it remains available with
 the paid allowance exhausted.
 
+On 2026-10-18 Neil confirmed that the meter moves and the quiet test tone is
+audible in his separate Chrome/Edge window. This establishes basic capture and
+output routing on his hardware. It does not establish Grok connectivity, speech
+understanding, voice quality or interruption behavior.
+
 The updated client waits for a running AudioContext and a real worklet frame,
 within a bounded preflight, before its paid REST/WebSocket start. Permission
 denial, a stalled permission dialog, no frames, Stop, late permission grants,
@@ -210,6 +215,65 @@ allowance. Preserve all ten old reservations. Use the existing scenario inputs:
 The original ten-attempt / US$5 cap is exhausted. No new live listening result
 has been established by the local checks or synthetic browser tests. Export any
 future approved session report before a new session replaces displayed evidence.
+
+### Proposed single recovery probe: NOT APPROVED
+
+With the human local audio check passed, the smallest useful next step is one
+additional **Natural inquiry** session. This is a proposal only; live access
+remains blocked. Do not apply the allowance changes or initiate this test until
+Neil approves this exact proposal.
+
+Keep the exact opening, `grok-voice-3.0`, `eve`, server VAD, PCM24k, instructions,
+tools, all existing scenario inputs and the synthetic Alex Test / Quezon City
+lead from the currently approved specification. Select `natural-inquiry` and
+speak only its existing first line:
+
+> Hi, magkano po magpa-siphon sa Quezon City?
+
+Listen to the opening, ask that question, listen to the relevant answer, then
+Stop. Do not use dispatch approval, booking actions, extra caller lines, new
+voice settings, deliberate interruptions or emotion tests in this recovery
+probe. Those evaluations remain pending after end-to-end audio is established.
+
+Pass requires Neil to hear both the exact opening and the response, with the
+transcript reflecting the spoken question, a successful `lookup_rate`, and an
+answer that states PHP5,000 **per truckload**, up to4,000L. No final-total or
+confirmed-booking promise is allowed. Fail and Stop if the opening is still
+inaudible 10 seconds after Active/readiness, or a relevant reply is still
+inaudible 10 seconds after the question ends. Also Stop on connection, tool or
+microphone failure. No automatic or manual retry is included.
+
+Maximum: **one additional attempt, three minutes, USD0.50 additional local
+allowance**. Stop after the first complete reply even if time remains. Preserve
+all ten old reservations in the same ledger. The cumulative cap would become
+11 attempts / USD5.50; this is not a ledger reset, confirmed provider bill or
+authorization to buy credits or enable auto-recharge.
+
+The exact proposed budget-only delta is:
+
+| Location | Current | Proposed |
+| --- | --- | --- |
+| `ledger.ts` HARD_LIMITS.maxAttempts | 10 | 11 |
+| `ledger.ts` HARD_LIMITS.maxUsd | 5 | 5.5 |
+| Paid spec limits.maxAttempts | 10 | 11 |
+| Paid spec limits.maxUsd | 5 | 5.5 |
+| Paid spec costBasis.maximumVoiceMinutes | 30 | 33 |
+| Paid spec costBasis.maximumVoiceUsd | 2.4 | 2.64 |
+| Paid spec costBasis.note | `USD 5 local allowance` | `USD 5.50 local allowance` |
+
+All remaining spec bytes stay identical. The candidate raw spec is saved locally
+at `.tmp/oceanides-voice-lab/paid-probe-PROPOSED.json`, SHA256
+`3c2077baa62f6eddcc70a90f4253af847163cede28659c0683ee0e0202c7e663`.
+It is not loaded by the runtime. Approval would also authorize updating the
+server/launcher exact-hash metadata to this identity after the budget checks
+pass; never read or copy the existing key to accomplish that. The current
+process approves the old hash and cannot automatically accept this proposal.
+
+Evidence: local report/transcript, tool log, safe lifecycle flags/counts, raw
+timing samples/count and Neil's audible-opening/audible-reply judgment. No raw
+audio recording is needed. One probe cannot establish response-time statistics,
+natural Taglish quality, emotion, thinking pauses or reliable interruption.
+Read available xAI credit before the paid start; no funding action is included.
 
 ### Later comparison: ElevenLabs v4 Turbo
 

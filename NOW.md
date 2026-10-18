@@ -1,9 +1,9 @@
 # NOW - the resume doc
-**Stamped: 2026-10-18; silent-session fix verified locally, hardware check pending**
+**Stamped: 2026-10-18; human mic/speaker check passed, next paid probe proposed**
 
 ## Active task and boundary
 Checkout F:/CodexWorktrees/7471/grifon-command, branch codex/oceanides-voice-lab.
-Silent-session fix follows7776508f; draftPR206:
+Silent-session fix committed/pushed at5877cb3a; draftPR206:
 https://github.com/yopiheart/grifon-command/pull/206.
 Neil approved10 sessions x3minutes, one active, USD5 total local allowance.
 CURRENT LEDGER IS10 ATTEMPTS / USD5 RESERVED, inactive, liveReady=false/exhausted.
@@ -12,7 +12,7 @@ Reservation is not confirmed provider billing; actual xAI charges not establishe
 User reports after new opening: Live Active/Collecting details, no speech/no hearing.
 He uses separate Chrome/Edge; root CUA sees only a stale idle Codex browser tab.
 Further paid/listening work needs a fresh concrete user-approved test/budget;
-finish the zero-cost fix and physical mic/speaker check before proposing that.
+local check is now user-confirmed; one recovery probe is proposed, not approved.
 No merge/deploy/customer calls/ad actions/production writes authorized.
 
 ## Exact approved generation inputs remain unchanged
@@ -21,7 +21,7 @@ RawSHA2566d66cbfe539b9dc6fc5aa35193511e1378d51245d7a147c7cd6f0f4c2769e0cf.
 Exact approved opening:
 Magandang araw po! Ako si Michael, AI assistant ng Oceanides. Anong service po ang kailangan n’yo?
 grok-voice-3.0, eve, server_vad, PCM24k, same instructions/tools/scenarios/limits.
-Initial SHA09fc7b4f15acb4b327016c36fc4f31d173030f96647c5050f07a7221653eaeee.
+Proposed next specSHA3c2077baa62f6eddcc70a90f4253af847163cede28659c0683ee0e0202c7e663.
 Only earlier spec change was openingMessage; this transport fix must not change it.
 Original paid-approval.json preserved; revised ignored receipt is
 .tmp/oceanides-voice-lab/paid-approval-opening-2026-10-18.json.
@@ -86,5 +86,5 @@ is applied but accent/emotion/interruption/thinking-pause quality still unverifi
 After Grok, ElevenLabs eleven_v4_turbo is the verified realtime candidate;
 no adapter/account access/exact voice/budget approved or generation started yet.
 Runbook clients/oceanides/VOICE-LAB.md; evidence ignored .tmp/oceanides-voice-lab/.
-Chrome/Edge user asked to Ctrl+Shift+R, run local check, report meter+tone then Stop.
-Human hardware/audio answer pending. No new live quality result established.
+Neil confirmed moving mic meter + audible test tone in Chrome/Edge on2026-10-18.
+Proposed1natural-inquiry probe, +1attempt/+USD0.50; see runbook. Not yet approved.
