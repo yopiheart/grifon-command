@@ -111,7 +111,7 @@ export const CompanionAvatar = memo(function CompanionAvatar({ state, className 
   const retry = () => { setReady(false); setFailed(false); setAttempt(value => value + 1); };
   return (
     <div ref={host} className={`companion-avatar relative isolate ${className}`} style={motionStyle} data-companion-state={state}>
-      <img src={`${base}startup.png`} alt="" aria-hidden="true" draggable={false} loading="eager" fetchPriority="high" width={512} height={512}
+      <img src={`${base}startup.png`} alt="" aria-hidden="true" draggable={false} loading="eager" width={512} height={512}
         data-ready={ready ? 'true' : undefined} className="pointer-events-none absolute inset-0 h-full w-full object-contain"
         style={{ opacity: ready ? 0 : 1 }} />
       <iframe

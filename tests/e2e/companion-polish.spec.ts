@@ -67,10 +67,33 @@ test('polish: capped120 transcript explicitly follows a sent message from far hi
   await page.getByRole('textbox', { name: 'Message Grifon' }).waitFor();
   await page.evaluate(() => (window as any).companionFixture.emit('result'));
   const scroller = page.getByTestId('conversation-scroll');
+  // Reading history is a user gesture, which also cancels any pending smooth follow.
+  await scroller.hover();
+  await page.mouse.wheel(0, -150);
   await scroller.evaluate(element => { element.scrollTop = element.scrollHeight * .4; element.dispatchEvent(new Event('scroll')); });
   await page.getByRole('textbox', { name: 'Message Grifon' }).fill('style clean');
+  await scroller.evaluate(element => {
+    (window as any).polishAnchorReceipt = null;
+    // Capping the transcript can emit an anchoring scroll before the follow RAF.
+    // Reproduce that ordering at DOM commit, without a protocol-speed deadline.
+    const observer = new MutationObserver(() => {
+      const latest = Array.from(element.querySelectorAll('.companion-message-user')).at(-1);
+      if (latest?.textContent?.trim() !== 'style clean') return;
+      observer.disconnect();
+      (window as any).polishAnchorReceipt = {
+        distance: element.scrollHeight - element.clientHeight - element.scrollTop,
+        height: element.clientHeight, messages: element.querySelectorAll('article').length,
+      };
+      element.dispatchEvent(new Event('scroll'));
+    });
+    observer.observe(element, { childList: true, subtree: true });
+  });
   await page.getByRole('button', { name: 'Send', exact: true }).click();
-  await expect.poll(() => scroller.evaluate(element => element.scrollHeight - element.clientHeight - element.scrollTop), { timeout: 500 }).toBeLessThanOrEqual(24);
+  await expect.poll(() => page.evaluate(() => (window as any).polishAnchorReceipt)).not.toBeNull();
+  const anchoring = await page.evaluate(() => (window as any).polishAnchorReceipt);
+  expect(anchoring.distance).toBeGreaterThan(anchoring.height);
+  expect(anchoring.messages).toBe(120);
+  await expect.poll(() => scroller.evaluate(element => element.scrollHeight - element.clientHeight - element.scrollTop)).toBeLessThanOrEqual(24);
   expect(await page.locator('article').count()).toBe(120);
   await expect.poll(() => page.evaluate(async () => {
     const db = await new Promise<IDBDatabase>((resolve, reject) => { const request = indexedDB.open('grifon_companion', 1); request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error); });
