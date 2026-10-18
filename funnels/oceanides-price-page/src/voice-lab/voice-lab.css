@@ -1,0 +1,183 @@
+.vl-shell { --brand-danger: #D7263D; max-width: 1440px; margin: 0 auto; padding: 0 32px; color: var(--brand-on-surface-muted); }
+.vl-shell *, .vl-shell *::before, .vl-shell *::after { box-sizing: border-box; }
+.vl-shell button, .vl-shell input, .vl-shell select, .vl-shell textarea { font: inherit; font-size: 14px; }
+.vl-shell button { min-height: 44px; padding: 10px 14px; border: 1px solid rgba(255,255,255,.28); border-radius: 4px; background: var(--brand-surface-void); color: white; line-height: 1.35; font-weight: 700; cursor: pointer; transition: background-color .15s, border-color .15s; }
+.vl-shell button:hover:enabled { border-color: var(--brand-primary); background: var(--brand-surface); }
+.vl-shell button:disabled { color: var(--brand-on-surface-dim); border-color: rgba(255,255,255,.14); background: var(--brand-surface-elevated); cursor: not-allowed; opacity: .7; }
+.vl-shell button.vl-primary { background: var(--brand-primary); border-color: var(--brand-primary); color: var(--brand-surface-elevated); }
+.vl-shell button.vl-primary:hover:enabled { background: var(--brand-on-surface); border-color: var(--brand-on-surface); }
+.vl-shell button.vl-primary:disabled { background: var(--brand-surface); color: var(--brand-on-surface-dim); border-color: rgba(255,255,255,.16); }
+.vl-shell input, .vl-shell select, .vl-shell textarea { width: 100%; min-width: 0; min-height: 44px; padding: 10px 11px; border: 1px solid rgba(255,255,255,.28); border-radius: 4px; color: var(--brand-on-surface); background: var(--brand-surface-void); line-height: 1.4; color-scheme: dark; }
+.vl-shell input:disabled, .vl-shell select:disabled, .vl-shell textarea:disabled { color: var(--brand-on-surface-dim); opacity: .7; }
+.vl-shell textarea { resize: vertical; }
+.vl-shell input::placeholder, .vl-shell textarea::placeholder { color: var(--brand-on-surface-dim); opacity: .85; }
+.vl-shell h1, .vl-shell h2, .vl-shell h3, .vl-shell p { margin: 0; }
+.vl-shell h2 { color: white; font-size: 25px; line-height: 1.05; }
+.vl-shell small { font-size: 12px; line-height: 1.5; }
+.vl-shell summary { min-height: 44px; padding: 12px 0; cursor: pointer; font-size: 13px; }
+.vl-shell pre { white-space: pre-wrap; overflow-wrap: anywhere; padding: 12px; margin: 6px 0 12px; font-family: var(--brand-font-accent); font-size: 12px; line-height: 1.55; background: var(--brand-surface-void); border-radius: 3px; }
+.vl-skip { position: absolute; top: -100px; padding: 12px; background: var(--brand-primary); color: var(--brand-surface-elevated); z-index: 10; }
+.vl-skip:focus { top: 12px; }
+.vl-masthead { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 74px; border-bottom: 1px solid var(--brand-hairline); }
+.vl-wordmark { font-family: var(--brand-font-display); font-size: 25px; letter-spacing: 1.5px; color: white; }
+.vl-masthead-note { color: var(--brand-on-surface-dim); font-size: 12px; }
+.vl-title-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 34px 0 28px; }
+.vl-chip { display: inline-block; padding: 5px 8px; margin-bottom: 15px; border-radius: 3px; background: var(--brand-primary); color: var(--brand-surface-elevated); font-weight: 800; font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; }
+.vl-shell h1 { color: var(--brand-on-surface); font-size: clamp(42px, 5vw, 64px); }
+.vl-shell h1 span { color: var(--brand-primary); }
+.vl-intro { margin-top: 12px !important; color: var(--brand-on-surface-dim); font-size: 15px; line-height: 1.65; }
+.vl-local { display: flex; align-items: center; gap: 12px; color: white; font-family: var(--brand-font-accent); font-size: 12px; line-height: 1.8; }
+.vl-local small { font-family: var(--brand-font-body); color: var(--brand-on-surface-dim); }
+.vl-status-dot { display: inline-block; flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: var(--brand-on-surface-dim); }
+.vl-status-dot.is-active { background: var(--brand-good); }
+.vl-boundary { display: flex; align-items: center; gap: 18px; border: 1px solid var(--brand-danger); border-left-width: 5px; border-radius: 3px; padding: 14px 18px; background: var(--brand-danger); color: var(--brand-on-surface); font-size: 13px; line-height: 1.65; }
+.vl-boundary strong { flex: 0 0 auto; color: var(--brand-on-surface); font-family: var(--brand-font-accent); font-size: 12px; letter-spacing: .4px; }
+.vl-facts { display: grid; grid-template-columns: 1.1fr .8fr 1.4fr 1fr; margin: 22px 0; border-bottom: 1px dashed rgba(255,255,255,.25); padding-bottom: 22px; gap: 20px; }
+.vl-label { color: var(--brand-on-surface-dim); font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px; line-height: 1.5; }
+.vl-facts > div > p:last-child { margin-top: 6px; color: var(--brand-on-surface); font-size: 15px; font-weight: 700; line-height: 1.5; }
+.vl-facts small { font-weight: 400; color: var(--brand-on-surface-dim); display: block; }
+.vl-workspace { display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: 22px; align-items: start; }
+.vl-controls, .vl-main-column { display: grid; gap: 22px; min-width: 0; }
+.vl-panel { min-width: 0; padding: 22px; border: 1px solid rgba(255,255,255,.15); border-top: 3px solid rgba(255,255,255,.22); border-radius: 4px; background: var(--brand-surface-elevated); }
+.vl-panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 20px; }
+.vl-ticket { font-family: var(--brand-font-accent); color: var(--brand-on-surface-dim); font-size: 12px; }
+.vl-tag { font-size: 11px; color: var(--brand-on-surface-dim); border: 1px solid var(--brand-hairline); border-radius: 3px; padding: 4px 7px; line-height: 1.5; }
+.vl-field { display: grid; gap: 7px; margin: 15px 0 0; font-size: 13px; font-weight: 600; color: var(--brand-on-surface-muted); }
+.vl-panel-heading + .vl-field { margin-top: 0; }
+.vl-help { color: var(--brand-on-surface-dim); font-size: 12px; line-height: 1.7; margin-top: 10px !important; }
+.vl-button-row { display: flex; gap: 8px; margin-top: 16px; }
+.vl-button-row > :first-child { flex: 1; }
+.vl-full { display: block; width: 100%; margin-top: 16px; }
+.vl-session-line { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 13px; color: white; margin-top: 19px !important; line-height: 1.6; }
+.vl-countdown { margin-left: auto; font-family: var(--brand-font-accent); color: var(--brand-on-surface-dim); }
+.vl-budget { margin-top: 17px; padding-top: 15px; border-top: 1px dashed rgba(255,255,255,.23); }
+.vl-budget > p:nth-child(2) { color: white; margin-top: 6px; font-size: 12px; line-height: 1.7; }
+.vl-accept { margin-top: 20px; padding-top: 20px; border-top: 1px dashed rgba(255,255,255,.23); }
+.vl-accept .vl-full { margin-top: 10px; }
+.vl-error { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 16px; margin: 16px 0; background: var(--brand-surface-void); border: 2px solid var(--brand-danger); border-radius: 3px; color: white; font-size: 14px; line-height: 1.6; overflow-wrap: anywhere; }
+.vl-error button { flex-shrink: 0; }
+.vl-conversation { border-top-color: var(--brand-primary); }
+.vl-transcript { min-height: 260px; max-height: 470px; overflow: auto; overscroll-behavior: contain; display: flex; flex-direction: column; gap: 12px; padding: 16px; background: var(--brand-surface-void); border: 1px solid var(--brand-hairline); border-radius: 3px; scrollbar-color: var(--brand-on-surface-dim) var(--brand-surface-void); }
+.vl-empty { margin: auto; padding: 36px 16px; text-align: center; }
+.vl-empty > p:last-child { font-size: 14px; line-height: 1.9; margin-top: 12px; color: var(--brand-on-surface-dim); }
+.vl-message { min-width: 0; border-left: 2px solid var(--brand-on-surface-dim); padding: 11px 13px; border-radius: 0 3px 3px 0; background: var(--brand-surface-elevated); }
+.vl-message-assistant { border-color: var(--brand-primary); }
+.vl-message-caller { border-color: var(--brand-on-surface-dim); }
+.vl-message-system { border-color: rgba(255,255,255,.25); }
+.vl-message-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; color: var(--brand-on-surface-dim); font-size: 11px; }
+.vl-message-meta strong { font-size: 11px; font-weight: 700; }
+.vl-message p { font-size: 14px; line-height: 1.8; margin-top: 5px; overflow-wrap: anywhere; }
+.vl-message time { font-family: var(--brand-font-accent); font-size: 10px; }
+.vl-caller-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 12px; }
+.vl-caller-form .vl-field { margin-top: 16px; }
+.vl-caller-form button { margin-bottom: 1px; }
+.vl-suggestions { margin-top: 18px; }
+.vl-suggestions > div { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 7px; }
+.vl-suggestions button { min-height: 44px; padding: 8px 11px; text-align: left; font-size: 12px; font-weight: 400; }
+.vl-test-actions { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 16px; margin-top: 16px; border-top: 1px dashed rgba(255,255,255,.23); }
+.vl-test-actions button { padding: 8px 10px; font-size: 12px; font-weight: 600; }
+.vl-request-status { padding: 5px 8px; border: 1px solid rgba(255,255,255,.3); border-radius: 3px; color: white; font-size: 12px; line-height: 1.4; }
+.vl-request-status.is-good { border-color: var(--brand-good); color: var(--brand-good); }
+.vl-record { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px 22px; margin: 0; }
+.vl-record div { min-width: 0; }
+.vl-record dt { color: var(--brand-on-surface-dim); font-size: 11px; line-height: 1.5; }
+.vl-record dd { color: white; font-size: 13px; line-height: 1.7; margin: 3px 0 0; overflow-wrap: anywhere; }
+.vl-record-wide { grid-column: 1 / -1; }
+.vl-approval-record { border-top: 1px dashed rgba(255,255,255,.23); padding-top: 14px; margin-top: 18px; font-size: 13px; line-height: 1.9; overflow-wrap: anywhere; }
+.vl-tool-log { max-height: 400px; overflow: auto; }
+.vl-tool-log details { border-top: 1px solid var(--brand-hairline); }
+.vl-tool-log details:first-child { border-top: 0; }
+.vl-tool-log summary { overflow-wrap: anywhere; }
+.vl-tool-log summary time { color: var(--brand-on-surface-dim); float: right; margin-left: 10px; font-size: 11px; }
+.vl-text-good { color: var(--brand-good); font-family: var(--brand-font-accent); font-size: 11px; }
+.vl-text-danger { color: white; background: var(--brand-danger); padding: 2px 4px; font-family: var(--brand-font-accent); font-size: 11px; }
+.vl-evidence { margin-top: 40px; }
+.vl-section-intro { display: flex; align-items: baseline; justify-content: space-between; gap: 15px; margin-bottom: 17px; }
+.vl-section-intro h2 { font-size: 32px; }
+.vl-section-intro > p { font-size: 12px; color: var(--brand-on-surface-dim); line-height: 1.7; }
+.vl-metrics { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
+.vl-metric { padding: 20px; background: var(--brand-surface-void); border: 1px solid rgba(255,255,255,.2); border-radius: 4px; }
+.vl-metric-value { color: white; font-family: var(--brand-font-accent); font-size: clamp(17px, 2vw, 24px); margin-top: 16px !important; }
+.vl-small { color: var(--brand-on-surface-dim); font-size: 12px; line-height: 1.7; margin-top: 7px !important; }
+.vl-metric-detail { display: grid; gap: 5px; margin: 15px 0 11px; padding-top: 12px; border-top: 1px solid var(--brand-hairline); }
+.vl-metric-detail div { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; font-size: 12px; }
+.vl-metric-detail dt { color: var(--brand-on-surface-dim); }
+.vl-metric-detail dd { margin: 0; }
+.vl-metric details summary { font-size: 12px; color: var(--brand-on-surface-dim); padding-bottom: 0; }
+.vl-provenance { color: var(--brand-on-surface-dim); font-size: 12px; line-height: 1.8; margin: 14px 0 26px !important; max-width: 1100px; }
+.vl-review-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 22px; align-items: start; }
+.vl-check { display: grid; grid-template-columns: minmax(0,1fr) 120px; align-items: center; gap: 16px; padding: 13px 0; border-top: 1px solid var(--brand-hairline); font-size: 13px; line-height: 1.7; }
+.vl-check small { display: block; color: var(--brand-on-surface-dim); font-size: 12px; }
+.vl-check select { font-size: 12px; }
+.vl-expected { padding-top: 18px; margin-top: 5px; border-top: 1px dashed rgba(255,255,255,.23); }
+.vl-expected ul { font-size: 12px; color: var(--brand-on-surface-dim); line-height: 1.9; margin-bottom: 0; padding-left: 18px; }
+.vl-ratings { display: grid; gap: 10px; margin-top: 18px; }
+.vl-rating { display: grid; grid-template-columns: 1fr 130px; align-items: center; gap: 18px; font-size: 13px; }
+.vl-score { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 20px !important; font-size: 14px; }
+.vl-score strong { color: white; }
+.vl-score small { display: block; flex-basis: 100%; color: var(--brand-on-surface-dim); }
+.vl-footer { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-top: 32px; padding: 22px 0; border-top: 1px solid var(--brand-hairline); font-size: 10px; line-height: 1.8; color: var(--brand-on-surface-dim); }
+.vl-footer span:first-child { font-family: var(--brand-font-accent); letter-spacing: .5px; }
+@media (max-width: 1040px) {
+  .vl-shell { padding: 0 22px; }
+  .vl-workspace { grid-template-columns: 300px minmax(0,1fr); gap: 16px; }
+  .vl-panel { padding: 18px; }
+  .vl-controls, .vl-main-column { gap: 16px; }
+  .vl-caller-form { grid-template-columns: 1fr; gap: 10px; }
+  .vl-caller-form button { justify-self: end; }
+  .vl-facts { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .vl-review-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .vl-check { grid-template-columns: minmax(0,1fr) 110px; gap: 10px; }
+}
+@media (max-width: 760px) {
+  .vl-shell { padding: 0 16px; }
+  .vl-masthead { min-height: 64px; gap: 12px; }
+  .vl-wordmark { font-size: 22px; }
+  .vl-masthead-note { max-width: 120px; text-align: right; font-size: 11px; line-height: 1.5; }
+  .vl-title-row { padding: 27px 0 23px; display: block; }
+  .vl-shell h1 { font-size: 46px; }
+  .vl-intro { font-size: 14px; line-height: 1.7; max-width: 310px; }
+  .vl-local { margin-top: 15px; font-size: 11px; }
+  .vl-local br { display: none; }
+  .vl-local small { margin-left: 12px; font-size: 11px; }
+  .vl-boundary { display: block; padding: 13px 14px; font-size: 12px; }
+  .vl-boundary strong { display: block; margin-bottom: 4px; }
+  .vl-facts { margin: 20px 0; padding-bottom: 20px; gap: 18px 12px; }
+  .vl-facts > div > p:last-child { font-size: 13px; }
+  .vl-facts small { font-size: 11px; }
+  .vl-workspace, .vl-review-grid { grid-template-columns: 1fr; gap: 18px; }
+  .vl-controls { display: contents; }
+  .vl-main-column { display: contents; }
+  .vl-workspace > .vl-controls > .vl-panel:first-child { grid-row: 1; }
+  .vl-workspace > .vl-main-column > .vl-conversation { grid-row: 2; }
+  .vl-workspace > .vl-controls > .vl-panel:nth-child(2) { grid-row: 4; }
+  .vl-panel { padding: 18px; }
+  .vl-panel-heading { gap: 10px; margin-bottom: 17px; }
+  .vl-shell h2 { font-size: 23px; }
+  .vl-transcript { padding: 10px; min-height: 260px; max-height: 420px; }
+  .vl-message { padding: 10px; }
+  .vl-message p { font-size: 13px; }
+  .vl-message-meta { font-size: 10px; }
+  .vl-message-meta strong { font-size: 10px; }
+  .vl-caller-form button { justify-self: stretch; }
+  .vl-suggestions button { font-size: 12px; max-width: 100%; overflow-wrap: anywhere; }
+  .vl-test-actions { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .vl-test-actions button { font-size: 12px; padding: 8px; }
+  .vl-record { gap: 15px; }
+  .vl-record dd { font-size: 12px; }
+  .vl-request-status { font-size: 11px; }
+  .vl-section-intro { display: block; }
+  .vl-section-intro h2 { font-size: 29px; }
+  .vl-section-intro > p { margin-top: 8px; }
+  .vl-metrics { grid-template-columns: 1fr; gap: 12px; }
+  .vl-metric { padding: 18px; }
+  .vl-metric-value { font-size: 22px; margin-top: 12px !important; }
+  .vl-evidence { margin-top: 30px; }
+  .vl-check { grid-template-columns: minmax(0,1fr) 106px; gap: 13px; font-size: 12px; }
+  .vl-check select { padding: 9px 7px; }
+  .vl-review-grid { gap: 18px; }
+  .vl-footer { display: block; }
+  .vl-footer span { display: block; }
+  .vl-footer span + span { margin-top: 5px; }
+  .vl-error { align-items: flex-start; font-size: 12px; padding: 12px; gap: 10px; }
+}

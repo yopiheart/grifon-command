@@ -1,57 +1,60 @@
 # NOW - the resume doc
-**Stamped: 2026-10-13; local CI optimization verified, not pushed**
+**Stamped: 2026-10-18; Oceanides Voice Lab mock build verified**
 
 ## Active task and boundary
-Chat: 01a11748-4bfb-7582-9c06-826e9667b5fd.
-Checkout: C:/Users/ADMIN/.codex/worktrees/grifon-shader-launch/grifon-command.
-Branch: codex/ci-runtime-optimization; base 82e2c52e9d577a6da7de58a7cd3daee28b8053da.
-Neil requested CI optimization preserving all tests and required checks, local first.
-No new hosted CI run, push, PR, Vercel build, deployment or provider call this task.
-Local checkpoint only; opening a PR triggers hosted CI. Hosted measurement remains pending.
-Do not modify the unrelated primary Desktop checkout or its original proposal.
+Checkout: F:/CodexWorktrees/7471/grifon-command.
+Branch: codex/oceanides-voice-lab; base 3fec6515 (main, PR184).
+Neil approved implementing the internal browser lab and mock failure tests.
+Draft PR is the review handoff; use `gh pr view` on this branch.
+No deployment, merge, paid provider session, customer call, ad action or production
+data write is authorized or performed. Exact paid test approval remains pending.
 
 ## Implementation
-E2E only: non-cone sparse checkout omits clients/, workflows/assets/, artifacts/,
-and baselines/. All public/, tests/, dev/, app source and Git metadata retained.
-checkout@v4 implicitly uses blob:none when sparse-checkout is configured.
-Other jobs keep full checkout. Matrix IDs 1-32, names, triggers, concurrency,
-permissions, native sharding, retries, timeouts and screenshot upload preserved.
-Input guard validates tracked assets before npm ci, including Companion hashes.
-Additive timing JSON records identities, attempts and outcomes without raw errors,
-stdout, attachments or environment data. Native GitHub/list reporters retained.
-No custom allocator: empty timing weights offered no demonstrated improvement.
-Five implementation files: .github/workflows/ci.yml and four tools/*E2E helper files.
-No app, existing test, Playwright config, dependency or accepted media changes.
+Separate Vite runtime in funnels/oceanides-price-page; `npm.cmd run dev:voice`
+there serves only loopback 127.0.0.1:5184/voice-lab.html (strict port).
+Own entry point, local HTTP/WebSocket bridge, synthetic scenarios, transcript,
+tool log, simulated dispatch, result checklist, JSON export and timing estimates.
+Production lead/ops/tracking bootstraps are excluded. Their API routes return 404.
+Server-only credentials; one-use socket token and same-origin/loopback checks.
+Mock tools never write a production database or contact a person.
+Metro Manila household siphoning: PHP 5,000 per truckload, up to 4,000 L.
+Daily callback window 08:00-17:00 Asia/Manila is not a crew schedule.
+Final price/slot require Neil/Zam checking Boss Jay, then explicit customer
+acceptance of the current version. Corrections invalidate earlier acceptance.
+Refusal, human handoff and workflow failure prevent resuming the selling flow.
+Interrupted responses cancel upstream and queued playback; tool continuation
+waits for response completion and browser drain. No automatic paid retries.
 
-## Current evidence
-Exact sparse clone: F:/GrifonLocalArchives/ci-runtime-optimization-20261013/sparse-validation.
-Full and sparse discovery identical: 225 Chromium tests in 22 files.
-HEAD 2,930,953,299 tracked bytes -> 839,543,400 retained; 71.356% omitted.
-This is working-tree input size, not measured hosted download or billed savings.
-Input guard PASS: 101 inputs, 23 PNG examples, zero errors.
-Helper contracts PASS 17/17, including missing assets and real retry/failure exits.
-Build PASS; unit suite PASS 1,573 tests / 32 existing default skips.
-Codex PASS 26; bundle-leak, voice-sync, eval-prompts, domain, artifact anchors,
-design lint and diff whitespace checks PASS.
-Structural preservation PASS 13 contracts; all 36 emitted job contexts unchanged.
-Branch-protection API returned 403; configured required status rules not inspected.
-Independent source review clean; all 225 browser tests PASS in the exact sparse tree.
-CI semantics and two local workers; 20.7 minutes, zero failures/skips/flaky/retries.
-Native 32-shard inventories PASS: union 225 unique, zero missing/duplicate/extra.
-All 32 inventory commands exit 0; existing tests and Playwright config unchanged.
-Evidence root: F:/GrifonLocalArchives/ci-runtime-optimization-20261013/.
+## Verification
+Root build PASS (existing large-chunk warning); full unit suite 1,626 PASS,
+32 existing skips across 9 files. All 53 new focused tests PASS across 6 files.
+Dedicated Playwright suite 9/9 PASS, independent smoke, live env explicitly off.
+Pending-socket-stop regression: original 1 FAIL/2 PASS -> fixed 3/3 PASS.
+Stale-start browser regression: late A failure closed B before fix; now PASS.
+Funnel typecheck:voice, production build and separate lab build PASS.
+Bundle-leak, voice-sync, eval-prompts, domain, artifact anchors, ps1-ascii,
+Codex controls 26/26 and diff whitespace checks PASS.
+Fresh production dist scans: no lab entry point, model or mock markers.
+Independent source review: no remaining substantive correctness findings.
+Independent mobile/desktop smoke passed; final mobile evidence refreshed.
+Final desktop refresh unavailable because CUA had no browser; earlier checks PASS.
+Brand PASS_WITH_NITS, 0 critical/1 nit: English internal technical chrome vs the
+client Taglish rule. Customer-facing Taglish remains in the approval draft.
+Logs/screenshots are local-only in ignored .tmp/oceanides-voice-lab/.
 
-## Preserved motion delivery and prior external verification
-PR178 -> PR182 -> PR183 merged normally, all final-head CI passed.
-Final main 091e47027c12d56126800cb5d881295e873c2514.
-Prior final-main CI 38353599201 attempt 2 passed 36/36; estimated compute $0.99.
-Neil increased Actions monthly cap $5 -> $10; remaining balance unverified.
-Prior single Vercel Preview F3LQmRLAPf4aTp2mLw69wD9PzeMt READY in 1m55s.
-URL: https://grifon-command-1cn32wmed-neilmaglayabusiness22-2085s-projects.vercel.app/.
-Source 82e2c52e differs from tested main only in NOW.md; authenticated landing PASS.
-Accepted v2 film: workflows/assets/grifon-orbital-music-v2_5/grifon-orbital-launch-music-v2_5-v2.mp4.
-SHA256 4040ba1763aeb415b8d79a3b9d914959149b11fc89eed52489652da0e69d6405.
-Editable score: continuous-fit-plan.json, mix-continuous.mjs, continuous-mix-receipt.json.
-Editable picture: workflows/assets/grifon-pluto-adaptation/orbital.json, orbital.js, orbital.html.
-Nine protected film/source/evidence files freshly hash-exact; private preservation receipt saved.
-Raw native audio remains private on F:. All historical paid approvals consumed; do not reuse.
+## Paid test: review required, NOT RUN
+Runbook: clients/oceanides/VOICE-LAB.md.
+Exact draft: funnels/oceanides-price-page/dev/voice-lab/paid-test-spec.DRAFT.json.
+SHA256: 09fc7b4f15acb4b327016c36fc4f31d173030f96647c5050f07a7221653eaeee.
+Proposed pinned grok-voice-3.0, stock eve, server VAD, ten synthetic scenarios.
+Maximum 10 sessions x 3 minutes, one active, USD 5 local allowance; USD 0.50 reservation
+per attempt, persisted before provider open. Failures retain their reservation.
+Ledger: .tmp/oceanides-voice-lab/budget.json; never reset to gain allowance.
+Crash/unresolved locks fail closed; inspect owner before recovery, keep ledger.
+Local reservations are not a provider billing guarantee or account-wide cap.
+Required server gates: OCEANIDES_VOICE_LIVE=1, exact approved file SHA in
+OCEANIDES_VOICE_APPROVED_SPEC_SHA256, and XAI_API_KEY. Leave unset ordinarily.
+Any instruction/model/voice/scenario/setting change requires fresh approval.
+Real Grok speech, Taglish quality, emotion, acoustic latency, microphone and phone
+performance remain NOT RUN. No claim of voice suitability until approved calls.
+Phone routing/caller ID/transfers/crew timing are a later independently tested step.

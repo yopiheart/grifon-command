@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["src/voice-lab/**/*.ts", "src/voice-lab/**/*.tsx", "src/lib/rates.ts", "dev/voice-lab/**/*.ts", "vite.voice-lab.config.ts"],
+  "exclude": ["node_modules", "dist"]
+}
