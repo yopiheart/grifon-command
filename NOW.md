@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-18; deep test audit merged**
+**Stamped: 2026-10-18; post-merge CI and live smoke passed**
 
 ## Active task and boundary
 Checkout: F:/CodexWorktrees/8710/grifon-command.
@@ -59,6 +59,16 @@ Public telemetry lacks dummy-backend admin credentials as expected. One local
 image-handler auth log appeared during recovery teardown; isolated repeat PASS1
 without that log. Missing mock ruled out; close-before-abort race is unproven.
 No provider execution; paid/live switches remain unset.
+Post-merge main CI39087600268 attempt1 PASS44/44 including main-status.
+Hosted Vitest PASS1681,32 existing skips;40 timing reports cover all327 unique
+cases exactly once:325 first-pass,2 passed unchanged retries after Chromium
+screenshot capture failures. No exhausted/missing/duplicate/skipped browser cases.
+Live https://grifon.ai smoke PASS21/21 at1280x900,375x667,390x844:
+home/pricing/legal/login/app entry, navigation and Annual Starter intent.
+Runtime/console/HTTP/asset errors0; generation/payment/mutation attempts0.
+Read-only GET probes PASS32:7 method405 guards,23 PNG examples,2 MP4 previews.
+No functional regression found in tested paths. Existing invite-only gate keeps
+normal authentication/dashboard flows NOT RUN; no pass/code/storage bypass.
 
 ## Remaining boundaries and next action
 Paid-provider suites need an approved exact test spec; opt-in real-render suites
@@ -69,7 +79,7 @@ approval. Preserve the historical icon wrappers until the legacy instruction
 discrepancy is resolved. No failures were skipped or assertions weakened.
 GitHub Actions budget restored; no gates waived. PR203 is merged and attached.
 Automatic Vercel build for9e3b0996 was accepted; final status is in PR203.
-Post-merge main CI39087600268 was triggered normally; do not cancel it.
+Post-merge CI and live smoke evidence are recorded in PR203 and local .tmp/.
 No implementation remains for PR203.
 Keep this final resume checkpoint on the existing audit branch; it does not
 change production code or require another product merge.
