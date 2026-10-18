@@ -1,4 +1,4 @@
-import type { ServerEvent } from '../../src/voice-lab/contracts';
+import type { ServerEvent, VoiceLifecycle, VoiceStage } from '../../src/voice-lab/contracts';
 import { VoiceDomain } from './domain';
 import type { PaidSpec } from './spec';
 import { diagnosticMessage, safeCloseCode, safeHttpStatus, safeProviderCode, safeTransportCode, type ProviderDiagnostic, type ProviderPhase } from './diagnostics';
@@ -25,6 +25,7 @@ export class RealtimeAdapter {
   private configured = false;
   private audioReady = false;
   private openingSent = false;
+  private openingWritten = false;
   private pendingTurn = false;
   private responseRequested = false;
   private callerSpeaking = false;
@@ -33,12 +34,18 @@ export class RealtimeAdapter {
   private failed = false;
   private phase: ProviderPhase = 'connecting';
   private readonly connectedAt: number;
+  private inputFrames = 0;
+  private outputChunks = 0;
+  private lastStage: VoiceStage = 'connecting';
+
+  lifecycle(): VoiceLifecycle { return { configured: this.configured, audioReady: this.audioReady, openingSent: this.openingWritten, inputFrames: this.inputFrames, outputChunks: this.outputChunks, lastStage: this.lastStage, stopReason: null }; }
 
   constructor(private readonly socket: ProviderSocket, private readonly spec: PaidSpec, private readonly domain: VoiceDomain, private readonly send: (event: ServerEvent) => void, private readonly finish: (reason: string) => void, private readonly now = Date.now, private readonly observeFailure?: (diagnostic: ProviderDiagnostic) => void) {
     this.connectedAt = now();
     socket.on('open', () => {
       if (this.disposed || this.failed) return;
       this.phase = 'socket_open';
+      this.lastStage = 'socket_open';
       this.write({ type: 'session.update', session: { voice: spec.voice, instructions: `${spec.instructions}\n${JSON.stringify({ selectedScenario: domain.state.scenarioId, knownLead: domain.state.details })}`, turn_detection: spec.turnDetection, audio: spec.audio, tools: spec.tools, resumption: { enabled: false } } });
     });
     socket.on('message', raw => {
@@ -64,6 +71,7 @@ export class RealtimeAdapter {
   private fail(code: string, details: Partial<Pick<ProviderDiagnostic, 'httpStatus' | 'closeCode' | 'transportCode' | 'providerCode'>> = {}) {
     if (this.disposed || this.failed) return;
     this.failed = true;
+    this.lastStage = 'provider_error';
     const diagnostic: ProviderDiagnostic = { phase: this.phase, elapsedMs: Math.max(0, Math.min(180000, Math.round(this.now() - this.connectedAt))), httpStatus: null, closeCode: null, transportCode: null, providerCode: null, ...details };
     this.observeFailure?.(diagnostic);
     try { this.send({ type: 'error', code, message: diagnosticMessage(diagnostic) }); }
@@ -82,6 +90,8 @@ export class RealtimeAdapter {
   private greetIfReady() {
     if (this.disposed || this.failed || !this.configured || !this.audioReady || this.openingSent || this.domain.automationStopped()) return;
     this.openingSent = true;
+    this.openingWritten = true;
+    this.lastStage = 'opening_sent';
     this.responseRequested = true;
     this.responseDone = false;
     this.drained = false;
@@ -113,10 +123,11 @@ export class RealtimeAdapter {
   private onEvent(event: Record<string, unknown>) {
     const type = event.type;
     if (type === 'error') return this.fail('provider_rejected_request', { providerCode: safeProviderCode(event.error) });
-    if (type === 'session.created') { this.phase = 'session_created'; return; }
+    if (type === 'session.created') { this.phase = 'session_created'; this.lastStage = 'session_created'; return; }
     if (type === 'session.updated') {
       this.phase = 'configured';
       this.configured = true;
+      this.lastStage = 'configured';
       this.domain.state.phase = 'active';
       this.send({ type: 'state', snapshot: this.domain.snapshot() });
       this.greetIfReady();
@@ -126,6 +137,7 @@ export class RealtimeAdapter {
       const response = event.response as { id?: unknown } | undefined;
       if (typeof response?.id !== 'string') return;
       this.responseId = response.id;
+      this.lastStage = 'response_created';
       this.responseRequested = true;
       this.responseDone = false;
       this.drained = false;
@@ -141,16 +153,17 @@ export class RealtimeAdapter {
     }
     if (type === 'input_audio_buffer.speech_started') {
       this.callerSpeaking = true;
+      this.lastStage = 'caller_speaking';
       // A caller who speaks first owns this turn; never add a late greeting over its VAD response.
       this.openingSent = true;
       this.interrupt(false);
       return;
     }
-    if (type === 'input_audio_buffer.speech_stopped') { this.callerSpeaking = false; this.send({ type: 'speech_stopped', at: this.now() }); return; }
+    if (type === 'input_audio_buffer.speech_stopped') { this.callerSpeaking = false; this.lastStage = 'caller_stopped'; this.send({ type: 'speech_stopped', at: this.now() }); return; }
     const eventResponseId = typeof event.response_id === 'string' ? event.response_id : this.responseId;
     if (this.canceled.has(eventResponseId) && type !== 'response.done') return;
     if (type === 'response.output_audio.delta' || type === 'response.audio.delta') {
-      if (typeof event.delta === 'string' && eventResponseId) this.send({ type: 'audio', data: event.delta, sampleRate: 24000, responseId: eventResponseId });
+      if (typeof event.delta === 'string' && eventResponseId) { this.outputChunks = Math.min(1000000, this.outputChunks + 1); this.lastStage = 'output_audio'; this.send({ type: 'audio', data: event.delta, sampleRate: 24000, responseId: eventResponseId }); }
       return;
     }
     if (type === 'response.output_audio_transcript.done' || type === 'response.audio_transcript.done') {
@@ -185,6 +198,7 @@ export class RealtimeAdapter {
       if (id !== this.responseId) return;
       this.responseRequested = false;
       this.responseDone = true;
+      this.lastStage = 'response_done';
       const hasToolCalls = this.hasTools || Boolean(response?.output?.some(item => item.type === 'function_call'));
       this.send({ type: 'response_end', responseId: id, hasToolCalls });
       this.continueIfReady();
@@ -194,11 +208,14 @@ export class RealtimeAdapter {
   audio(data: string) {
     if (this.domain.automationStopped()) return this.stopTerminalWorkflow();
     if (!this.configured || !this.audioReady) return;
+    this.inputFrames = Math.min(1000000, this.inputFrames + 1);
+    this.lastStage = 'input_audio';
     this.write({ type: 'input_audio_buffer.append', audio: data });
   }
 
   readyAudio() {
     this.audioReady = true;
+    this.lastStage = 'audio_ready';
     this.greetIfReady();
   }
 

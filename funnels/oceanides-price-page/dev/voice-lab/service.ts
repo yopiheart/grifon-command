@@ -4,6 +4,7 @@ import WebSocket from 'ws';
 import { RATE } from '../../src/lib/rates';
 import { SCENARIOS } from '../../src/voice-lab/scenarios';
 import type { BudgetSummary, ClientEvent, LabSnapshot, LabStatus, ServerEvent, SessionMode, SessionResponse } from '../../src/voice-lab/contracts';
+import { VOICE_LAB_PROTOCOL, type VoiceLifecycle } from '../../src/voice-lab/contracts';
 import { VoiceDomain } from './domain';
 import { HARD_LIMITS, VoiceLedger } from './ledger';
 import { RealtimeAdapter, type ProviderSocket } from './realtime';
@@ -44,6 +45,7 @@ export class VoiceLabService {
   private lastProviderCheck: ProviderCheck | null = null;
   private lastProviderFailure: ProviderDiagnostic | null = null;
   private providerCheckInFlight: Promise<ProviderCheck> | null = null;
+  private lastLifecycle: VoiceLifecycle | null = null;
 
   constructor(private readonly options: VoiceLabOptions) {
     this.now = options.now ?? Date.now;
@@ -60,7 +62,7 @@ export class VoiceLabService {
 
   status(): LabStatus & { providerCheck: ProviderCheck | null; providerFailure: ProviderDiagnostic | null } {
     this.expireSessions();
-    return { active: Boolean(this.active), budget: this.budget(), service: { area: 'Metro Manila household septic-tank siphoning', ratePhp: Number(RATE.mmSiphon.replace(/[^0-9]/g, '')), capacityLiters: 4000, callbackHours: 'Daily 08:00–17:00 Asia/Manila' }, mockNotice: 'SCRIPTED MOCK: no microphone, speech recognition, AI generation, naturalness, or latency evidence.', providerCheck: this.lastProviderCheck && { ...this.lastProviderCheck }, providerFailure: this.lastProviderFailure && { ...this.lastProviderFailure } };
+    return { active: Boolean(this.active), protocolVersion: VOICE_LAB_PROTOCOL, lifecycle: this.active?.adapter?.lifecycle() ?? (this.lastLifecycle && { ...this.lastLifecycle }), budget: this.budget(), service: { area: 'Metro Manila household septic-tank siphoning', ratePhp: Number(RATE.mmSiphon.replace(/[^0-9]/g, '')), capacityLiters: 4000, callbackHours: 'Daily 08:00–17:00 Asia/Manila' }, mockNotice: 'SCRIPTED MOCK: no microphone, speech recognition, AI generation, naturalness, or latency evidence.', providerCheck: this.lastProviderCheck && { ...this.lastProviderCheck }, providerFailure: this.lastProviderFailure && { ...this.lastProviderFailure } };
   }
 
   checkProvider(): Promise<ProviderCheck> {
@@ -89,6 +91,7 @@ export class VoiceLabService {
       if (typeof timer !== 'number') timer.unref();
       const session: Session = { id, token, domain: new VoiceDomain(state, this.now), release, timer, attached: false, textInputs: 0, specSha256: config.sha256 };
       this.active = session;
+      if (mode === 'live') this.lastLifecycle = null;
       return { sessionId: id, wsPath: `/voice-lab/ws?token=${token}`, state: session.domain.snapshot() };
     } catch (error) { release(); throw error; }
   }
@@ -218,6 +221,7 @@ export class VoiceLabService {
     if (!session || session.id !== sessionId) return;
     this.active = null;
     (this.options.clearTimer ?? nodeClearTimeout)(session.timer);
+    if (session.adapter) this.lastLifecycle = { ...session.adapter.lifecycle(), stopReason: reason === 'tester_stopped' || reason === 'server_stopped' ? 'operator_stopped' : reason === 'session_time_limit' ? 'time_limit' : reason.startsWith('provider_') || reason === 'live_start_failed' ? 'provider_failed' : reason.startsWith('browser_') ? 'connection_closed' : 'workflow_stopped' };
     session.adapter?.dispose();
     session.domain.state.phase = 'closed';
     const failed = !['tester_stopped', 'server_stopped'].includes(reason);

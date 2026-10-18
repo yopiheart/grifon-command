@@ -114,8 +114,11 @@ details during evaluation. Review any exported transcript before sharing it.
 The first four manual live starts failed before a conversation. A free preflight
 found that the loaded credential did not have the basic raw xAI key format.
 Human re-entry passed validation; a fifth lab attempt has since been reserved.
-The ledger retains five reservations totaling US$2.50; these are not confirmed
-xAI charges. Never put a key in chat, command arguments, a browser form, or a file.
+Subsequent silent-session attempts reached the original limit: **ten reservations
+totaling US$5.00**. Live access is exhausted and must remain blocked. These are
+not confirmed xAI charges. Do not reset/refund/reclassify the ledger or increase
+the cap to continue. Never put a key in chat, command arguments, a browser form,
+or a file.
 
 An explicit `POST /api/voice-lab/check-provider` with JSON `{}` performs a single
 read-only `GET https://api.x.ai/v1/api-key`. It creates no voice session or budget
@@ -151,8 +154,42 @@ It uses TTS synthesis, so replay the actual opening to assess its accent rather
 than assuming it matches the model-generated greeting heard in the playground.
 No fixed response delay or emotion parameter has been added.
 
-Use three existing scenarios, each with its existing three-minute limit and
-US$0.50 reservation; start each manually, stop when done and never auto-retry:
+### Silent-session recovery: local checks before paid connections
+
+The original opening implementation could label a session Active after connecting
+audio nodes without receiving any microphone/worklet frames. A stale browser
+page also lacked the new `audio_ready` message but could still reserve a paid
+connection; the server then suppressed greeting and input while waiting for it.
+These are reproducible integration gaps. Historical silent sessions did not
+retain enough stage information to prove the exact cause on Neil's separate
+Chrome/Edge tab. A null provider error is not evidence that browser audio worked.
+
+Use **Check microphone & speaker · no spend** after a hard refresh of the desktop browser. This
+is local only: no service session, provider call, budget reservation, saved audio
+or upload. Allow the microphone, speak while watching the level/frame indicator,
+and confirm whether the quiet test tone is audible. Receiving frames establishes
+capture activity; zero-level frames may still be silence or a muted input. A
+scheduled tone does not prove the physical speaker is audible. Stop the local
+check with **Stop local audio check** when finished; it remains available with
+the paid allowance exhausted.
+
+The updated client waits for a running AudioContext and a real worklet frame,
+within a bounded preflight, before its paid REST/WebSocket start. Permission
+denial, a stalled permission dialog, no frames, Stop, late permission grants,
+processor failure and interrupted browser audio must not silently become paid
+sessions. The REST start requires the current `audio-first-frame-v1` protocol;
+older cached clients are rejected before allocation/reservation and must reload.
+
+Public local status retains only bounded lifecycle flags, frame/chunk counts and
+fixed event/stage names after the session stops. It must not retain raw audio,
+transcripts, IDs, credentials, headers or provider bodies. These fields help
+distinguish provider configuration, browser readiness, greeting delivery and
+input/output activity during a future explicitly approved test.
+
+The following listening sequence remains pending. It does not authorize an
+additional attempt after exhaustion. Complete the local hardware check first;
+any further paid test needs a fresh, concrete user-approved specification and
+allowance. Preserve all ten old reservations. Use the existing scenario inputs:
 
 1. **Repeated interruptions.** Say `Magkano po yung service?`, then interrupt
    audible speech with `Wait lang, may sasabihin pa ako.` and
@@ -170,9 +207,9 @@ US$0.50 reservation; start each manually, stop when done and never auto-retry:
    discount, inappropriate laughter or continued selling after refusal. Rate
    Warmth and Appropriate tone from 1-5; do not insert speech tags into Grok.
 
-With the current five reservations, these three tests would bring the local
-ledger to eight attempts / US$4.00. The original ten-attempt / US$5 cap remains.
-Export each local report before a new session replaces its displayed evidence.
+The original ten-attempt / US$5 cap is exhausted. No new live listening result
+has been established by the local checks or synthetic browser tests. Export any
+future approved session report before a new session replaces displayed evidence.
 
 ### Later comparison: ElevenLabs v4 Turbo
 
@@ -220,8 +257,9 @@ that folder's ignored `.tmp/voice-lab-build` directory.
 The dedicated browser suite explicitly disables live mode and server credentials.
 Its mock evidence is local under `.tmp/oceanides-voice-lab/`; the ordinary funnel
 build excludes the lab entry point. Current internal technical controls use
-English; customer-facing Taglish instructions and caller lines are proposed in
-the approval draft. That internal-language exception remains a brand-review nit.
+English; customer-facing Taglish instructions and caller lines remain governed
+by the exact approved specification. Independent review of this recovery change
+passed the Oceanides brand checks at desktop and both mobile widths.
 
 If the browser voice evaluation passes, plan the real telephone route separately:
 Philippine carrier and caller ID, incoming calls, outbound dialing, transfers,

@@ -1,3 +1,6 @@
+export const VOICE_LAB_PROTOCOL = 'audio-first-frame-v1';
+export type VoiceStage = 'connecting' | 'socket_open' | 'session_created' | 'configured' | 'audio_ready' | 'opening_sent' | 'input_audio' | 'output_audio' | 'caller_speaking' | 'caller_stopped' | 'response_created' | 'response_done' | 'provider_error' | 'closed';
+export interface VoiceLifecycle { configured: boolean; audioReady: boolean; openingSent: boolean; inputFrames: number; outputChunks: number; lastStage: VoiceStage; stopReason: 'operator_stopped' | 'time_limit' | 'connection_closed' | 'provider_failed' | 'workflow_stopped' | null }
 export type RequestStatus = 'collecting' | 'awaiting_dispatch' | 'dispatch_approved' | 'booked' | 'human_needed' | 'declined' | 'failed';
 export type SessionMode = 'mock' | 'live';
 export interface CriticalDetails {
@@ -57,6 +60,6 @@ export type ServerEvent =
   | { type: 'response_end'; responseId: string; hasToolCalls?: boolean }
   | { type: 'error'; code: string; message: string }
   | { type: 'closed'; reason: string };
-export interface LabStatus { active: boolean; budget: BudgetSummary; service: { area: string; ratePhp: number; capacityLiters: number; callbackHours: string }; mockNotice: string }
+export interface LabStatus { active: boolean; protocolVersion?: string; lifecycle?: VoiceLifecycle | null; budget: BudgetSummary; service: { area: string; ratePhp: number; capacityLiters: number; callbackHours: string }; mockNotice: string }
 export interface SessionResponse { sessionId: string; wsPath: string; state: LabSnapshot }
 export interface LabScenario { id: string; title: string; description: string; callerTurns: string[]; expected: string[]; initial: CriticalDetails }

@@ -1,4 +1,5 @@
 import type { ClientEvent, LabSnapshot, ServerEvent, SessionMode, SessionResponse } from './contracts';
+import { VOICE_LAB_PROTOCOL } from './contracts';
 
 export interface ConnectionCallbacks {
   onSnapshot: (snapshot: LabSnapshot) => void;
@@ -22,10 +23,10 @@ export class LabConnection {
     const response = await fetch('/api/voice-lab/session', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ scenarioId, mode }),
+      body: JSON.stringify({ scenarioId, mode, protocolVersion: VOICE_LAB_PROTOCOL }),
     });
     const body = await response.json();
-    if (!response.ok) throw new Error(typeof body.error === 'string' ? body.error : 'The test session could not start.');
+    if (!response.ok) throw new Error(body.error === 'client_reload_required' ? 'This tab is out of date. Hard reload (Ctrl+Shift+R) before starting. No paid session was opened.' : typeof body.error === 'string' ? body.error : 'The test session could not start.');
     const session = body as SessionResponse;
     const url = new URL(session.wsPath, window.location.href);
     if (url.origin !== window.location.origin) throw new Error('The test socket must stay on this local server.');

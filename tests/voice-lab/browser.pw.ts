@@ -1,5 +1,6 @@
 import { expect, test, type Page, type WebSocketRoute } from '@playwright/test';
 import type { ClientEvent, LabSnapshot, LabStatus } from '../../funnels/oceanides-price-page/src/voice-lab/contracts.js';
+import { VOICE_LAB_PROTOCOL } from '../../funnels/oceanides-price-page/src/voice-lab/contracts.js';
 
 async function fakeLiveAudio(page: Page) {
   const budget = { attempts: 0, reservedUsd: 0, maxAttempts: 10, maxUsd: 5, reservationUsd: 0.5, liveReady: true, blockedReason: null, specSha256: 'fake-browser-only' };
@@ -12,12 +13,14 @@ async function fakeLiveAudio(page: Page) {
   const sent: ClientEvent[] = [];
   let socket: WebSocketRoute | undefined;
   let sessionPosts = 0;
+  await page.route('**/api/voice-lab/**', route => route.abort());
   await page.route('**/api/voice-lab/status', route => route.fulfill({ json: status }));
   await page.route('**/api/voice-lab/session', route => {
     sessionPosts++;
     return route.fulfill({ json: { sessionId: snapshot.sessionId, wsPath: '/voice-lab/ws?token=FAKE', state: { ...snapshot, phase: 'preparing' } } });
   });
-  await page.routeWebSocket('**/voice-lab/ws?token=FAKE', route => {
+  await page.routeWebSocket('**/voice-lab/ws**', route => {
+    if (new URL(route.url()).searchParams.get('token') !== 'FAKE') { route.close(); return; }
     socket = route;
     route.onMessage(message => sent.push(JSON.parse(String(message)) as ClientEvent));
     route.send(JSON.stringify({ type: 'state', snapshot }));
@@ -42,14 +45,18 @@ async function fakeLiveAudio(page: Page) {
       createMediaStreamSource = node;
       createGain() { return { ...node(), gain: { value: 1 } }; }
     }
-    class FakeWorklet { port = { onmessage: null }; connect() {} disconnect() {} }
+    class FakeWorklet {
+      port: { onmessage: ((event: unknown) => void) | null } = { onmessage: null };
+      connect() { queueMicrotask(() => this.port.onmessage?.({ data: { samples: new Float32Array(960).buffer, rms: 0, frames: 960 } })); }
+      disconnect() {}
+    }
     Object.assign(window, { AudioContext: FakeContext, AudioWorkletNode: FakeWorklet });
   });
   await page.goto('/voice-lab.html');
   await page.getByLabel('Session mode', { exact: true }).selectOption('live');
   await page.getByRole('button', { name: 'Start session', exact: true }).click();
   await expect.poll(() => page.evaluate(() => (window as unknown as { __voiceMic: { requested: number } }).__voiceMic.requested)).toBe(1);
-  return { sent, pushState: () => socket!.send(JSON.stringify({ type: 'state', snapshot })), sessionPosts: () => sessionPosts };
+  return { sent, pushState: () => socket?.send(JSON.stringify({ type: 'state', snapshot })), sessionPosts: () => sessionPosts };
 }
 
 test('fake live audio acknowledges readiness once after microphone setup, despite repeated provider state', async ({ page }) => {
@@ -71,7 +78,7 @@ test('Stop during fake microphone permission prevents a late ready signal or aut
   await page.evaluate(() => (window as unknown as { __voiceMic: { resolve: () => void } }).__voiceMic.resolve());
   await expect.poll(() => page.evaluate(() => (window as unknown as { __voiceMic: { stopped: number } }).__voiceMic.stopped)).toBe(1);
   expect(fake.sent.filter(event => event.type === 'audio_ready')).toHaveLength(0);
-  expect(fake.sessionPosts()).toBe(1);
+  expect(fake.sessionPosts()).toBe(0);
   await expect(page.getByRole('button', { name: 'Start session', exact: true })).toBeEnabled();
   await expect(page.getByTestId('session-status')).not.toContainText('Active');
 });
@@ -203,7 +210,7 @@ test('production endpoints and unapproved live sessions are inaccessible', async
     expect((await request.post(path, { data: {}, headers: { Origin: 'http://127.0.0.1:5184' } })).status()).toBe(404);
   }
   const live = await request.post('/api/voice-lab/session', {
-    data: { scenarioId: 'natural-inquiry', mode: 'live' },
+    data: { scenarioId: 'natural-inquiry', mode: 'live', protocolVersion: VOICE_LAB_PROTOCOL },
     headers: { Origin: 'http://127.0.0.1:5184' },
   });
   expect(live.status()).toBeGreaterThanOrEqual(400);

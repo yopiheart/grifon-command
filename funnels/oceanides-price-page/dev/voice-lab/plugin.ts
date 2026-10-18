@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 import type { Plugin } from 'vite';
 import { WebSocketServer } from 'ws';
 import type { ClientEvent } from '../../src/voice-lab/contracts';
+import { VOICE_LAB_PROTOCOL } from '../../src/voice-lab/contracts';
 import { VoiceLabService, type VoiceLabOptions } from './service';
 
 const HOST = '127.0.0.1:5184';
@@ -57,7 +58,8 @@ export function voiceLabPlugin(options?: VoiceLabOptions): Plugin {
           if (pathname === '/api/voice-lab/session' && request.method === 'POST') {
             if (!isLocalRequest(request, true) || !request.headers['content-type']?.startsWith('application/json')) return json(response, 403, { error: 'same_origin_json_required' });
             const value = await body(request);
-            if (!value || typeof value !== 'object' || Array.isArray(value) || typeof value.scenarioId !== 'string' || !['mock', 'live'].includes(String(value.mode)) || Object.keys(value).some(key => !['scenarioId', 'mode'].includes(key))) return json(response, 400, { error: 'invalid_session_input' });
+            if (!value || value.protocolVersion !== VOICE_LAB_PROTOCOL) return json(response, 409, { error: 'client_reload_required' });
+            if (typeof value !== 'object' || Array.isArray(value) || typeof value.scenarioId !== 'string' || !['mock', 'live'].includes(String(value.mode)) || Object.keys(value).some(key => !['scenarioId', 'mode', 'protocolVersion'].includes(key))) return json(response, 400, { error: 'invalid_session_input' });
             return json(response, 201, lab.createSession(value.scenarioId, value.mode as 'mock' | 'live'));
           }
           return json(response, 404, { error: 'not_found' });

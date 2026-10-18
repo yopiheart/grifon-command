@@ -58,6 +58,20 @@ describe('Oceanides mock and live bridge boundaries (fake provider only)', () =>
   const opening = 'Magandang araw po! Ako si Michael, AI assistant ng Oceanides. Anong service po ang kailangan n’yo?';
   const ready: ClientEvent = { type: 'audio_ready' };
 
+  it('retains bounded safe audio lifecycle flags and counts after operator Stop', () => {
+    const value = fixture(true);
+    const { id } = value.start();
+    value.provider.open();
+    value.service.receive(id, ready);
+    value.service.receive(id, { type: 'audio', data: 'AAA=' });
+    value.provider.event({ type: 'response.created', response: { id: 'private-provider-id' } });
+    value.provider.event({ type: 'response.output_audio.delta', response_id: 'private-provider-id', delta: 'PRIVATE-AUDIO-CANARY' });
+    value.service.stop(id);
+    expect(value.service.status().lifecycle).toEqual({ configured: true, audioReady: true, openingSent: true, inputFrames: 1, outputChunks: 1, lastStage: 'output_audio', stopReason: 'operator_stopped' });
+    expect(JSON.stringify(value.service.status())).not.toContain('PRIVATE-AUDIO-CANARY');
+    expect(JSON.stringify(value.service.status())).not.toContain('private-provider-id');
+  });
+
   it('speaks the approved opening verbatim once only after audio and provider readiness', () => {
     const value = fixture(true);
     const { id } = value.start();
@@ -172,6 +186,7 @@ describe('Oceanides mock and live bridge boundaries (fake provider only)', () =>
     value.provider.event({ type: 'response.output_audio.delta', response_id: 'caller-first', delta: 'AAAA' });
     expect(value.provider.sent.filter(event => event.item?.type === 'force_message' || event.type === 'response.create')).toHaveLength(0);
     expect(value.events.filter(event => event.type === 'audio')).toHaveLength(1);
+    expect(value.service.status().lifecycle?.openingSent).toBe(false);
   });
 
   it('does not let staff notifications start a second response during the opening lifecycle', () => {

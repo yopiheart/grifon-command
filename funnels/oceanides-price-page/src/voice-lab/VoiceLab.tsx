@@ -54,6 +54,9 @@ export function VoiceLab() {
   const [notes, setNotes] = useState('');
   const [now, setNow] = useState(Date.now());
   const [observedTimings, setObservedTimings] = useState<TimingSample[]>([]);
+  const [audioCheck, setAudioCheck] = useState<'idle' | 'checking' | 'ready'>('idle');
+  const [captureProof, setCaptureProof] = useState({ frames: 0, level: 0 });
+  const checkAudio = useRef<VoiceAudio | null>(null);
   const connection = useRef<LabConnection | null>(null);
   const audio = useRef<VoiceAudio | null>(null);
   const mounted = useRef(false);
@@ -66,7 +69,6 @@ export function VoiceLab() {
   const currentResponse = useRef<string | null>(null);
   const cancelledResponses = useRef(new Set<string>());
   const drainingResponse = useRef<string | undefined>(undefined);
-  const micStarting = useRef(false);
   const sessionEpoch = useRef(0);
 
   const scenario = SCENARIOS.find((item) => item.id === scenarioId)!;
@@ -88,7 +90,7 @@ export function VoiceLab() {
   useEffect(() => {
     mounted.current = true;
     void refreshStatus();
-    return () => { mounted.current = false; sessionEpoch.current++; connection.current?.stop(); void audio.current?.stop(); };
+    return () => { mounted.current = false; sessionEpoch.current++; connection.current?.stop(); void audio.current?.stop(); void checkAudio.current?.stop(); };
   }, []);
 
   useEffect(() => {
@@ -113,20 +115,7 @@ export function VoiceLab() {
     switch (event.type) {
       case 'snapshot': case 'state':
         setSnapshot(event.snapshot);
-        if (event.snapshot.mode === 'live' && event.snapshot.phase === 'active' && !micStarting.current) {
-          micStarting.current = true;
-          const epoch = sessionEpoch.current;
-          const voice = audio.current;
-          setNotice('Provider ready. Allow the microphone to begin the synthetic voice test.');
-          void voice?.start().then(() => {
-            if (mounted.current && epoch === sessionEpoch.current && audio.current === voice) {
-              if (!connection.current?.send({ type: 'audio_ready' })) throw new Error('audio_ready_not_connected');
-              setConnectionState('active'); setNotice('Live voice connected. Synthetic scenarios only.');
-            }
-          }).catch(() => {
-            if (mounted.current && epoch === sessionEpoch.current) { setError('Microphone could not start. This session has stopped; no automatic retry.'); stopSession(); }
-          });
-        }
+        if (event.snapshot.mode === 'live' && event.snapshot.phase === 'active') { setConnectionState('active'); setNotice('Live voice connected. Synthetic scenarios only.'); }
         break;
       case 'transcript':
         setSnapshot((previous) => previous && !previous.transcript.some((entry) => entry.id === event.entry.id) ? { ...previous, transcript: [...previous.transcript, event.entry] } : previous);
@@ -167,11 +156,11 @@ export function VoiceLab() {
 
   async function startSession() {
     if (busy) return;
+    void checkAudio.current?.stop(); checkAudio.current = null; setAudioCheck('idle');
     setError(''); setNotice('Connecting to the local test server.'); setConnectionState('connecting');
     setSnapshot(null); setObservedTimings([]); setChecks({}); setRatings({}); setNotes(''); setMessage('');
     setSlot(''); setConditions(''); setPrice('5000');
     const epoch = ++sessionEpoch.current;
-    micStarting.current = false;
     speechEndedAt.current = null; toolInTurn.current = false; firstAudio.current.clear(); measuredTurns.current.clear(); currentResponse.current = null; cancelledResponses.current.clear(); drainingResponse.current = undefined;
     activeMode.current = mode;
     let voice: VoiceAudio | null = null;
@@ -179,7 +168,7 @@ export function VoiceLab() {
     const client = new LabConnection({
       onSnapshot: (state) => { if (isCurrent()) setSnapshot(state); },
       onEvent: (event) => { if (isCurrent()) onServerEvent(event); },
-      onOpen: () => { if (isCurrent()) { if (mode === 'mock') setConnectionState('active'); setNotice(mode === 'mock' ? 'Scripted mock connected. No microphone or paid voice.' : 'Local bridge connected. Waiting for the voice provider.'); void refreshStatus(epoch); } },
+      onOpen: () => { if (isCurrent()) { if (mode === 'mock') setConnectionState('active'); else { voice?.enableInput(); client.send({ type: 'audio_ready' }); } setNotice(mode === 'mock' ? 'Scripted mock connected. No microphone or paid voice.' : 'Local bridge connected. Waiting for the voice provider.'); void refreshStatus(epoch); } },
       onClose: (reason) => {
         void voice?.stop();
         if (isCurrent()) {
@@ -201,14 +190,34 @@ export function VoiceLab() {
           onError: (reason) => { if (isCurrent()) { setError(reason); stopSession(); } },
         });
         audio.current = voice;
-        // Unlock audio on the explicit click. Microphone capture waits for provider readiness.
-        await voice.prepare();
+        setNotice('Checking local microphone and audio. No paid session has opened. Allow microphone access in this browser.');
+        // A real worklet frame and running output context are required before paid REST startup.
+        await voice.start();
       }
       if (!isCurrent()) { client.stop(); void voice?.stop(); return; }
       await client.start(scenarioId, mode);
     } catch (failure) {
       client.stop(); void voice?.stop();
       if (isCurrent()) { sessionEpoch.current++; setConnectionState('closed'); setError(failure instanceof Error ? failure.message : 'Could not start this test.'); void refreshStatus(); }
+    }
+  }
+
+  async function runAudioCheck() {
+    if (busy) return;
+    const previous = checkAudio.current;
+    checkAudio.current = null;
+    if (previous) { await previous.stop(); setAudioCheck('idle'); setNotice('Local audio check stopped. No session or provider call.'); return; }
+    setError(''); setCaptureProof({ frames: 0, level: 0 }); setAudioCheck('checking');
+    setNotice('Local audio check: allow microphone access. No session or provider call.');
+    const voice = new VoiceAudio({ onInput: () => {}, onBargeIn: () => {}, onSpeechEnd: () => {}, onAudibleStart: () => {}, onDrained: () => {}, onError: (reason) => { if (mounted.current && checkAudio.current === voice) { checkAudio.current = null; setAudioCheck('idle'); setError(reason); } }, onCapture: (frames, level) => { if (mounted.current && checkAudio.current === voice) setCaptureProof({ frames, level }); } });
+    checkAudio.current = voice;
+    try {
+      await voice.start();
+      if (!mounted.current || checkAudio.current !== voice) return;
+      voice.playCheckTone(); setAudioCheck('ready');
+      setNotice('Local capture is running. Speak and watch the level. Did you hear the short quiet tone? Speaker audibility needs your confirmation. No provider call.');
+    } catch (failure) {
+      if (mounted.current && checkAudio.current === voice) { checkAudio.current = null; setAudioCheck('idle'); setError(failure instanceof Error ? failure.message : 'Local audio check failed. No paid session was opened.'); }
     }
   }
 
@@ -253,7 +262,9 @@ export function VoiceLab() {
           <label className="vl-field">Scenario<select aria-label="Scenario" value={scenarioId} disabled={busy} onChange={(event) => setScenarioId(event.target.value)}>{SCENARIOS.map((item, index) => <option key={item.id} value={item.id}>{String(index + 1).padStart(2, '0')} · {item.title}</option>)}</select></label>
           <p className="vl-help">{scenario.description}</p>
           <label className="vl-field">Session mode<select aria-label="Session mode" value={mode} disabled={busy} onChange={(event) => setMode(event.target.value as SessionMode)}><option value="mock">Scripted mock · no spend</option><option value="live" disabled={!budget?.liveReady}>Live voice{budget?.liveReady ? ' · approved spec required' : ' · blocked'}</option></select></label>
-          <div className="vl-button-row"><button type="button" className="vl-primary" aria-label="Start session" disabled={busy || !status || status.active} onClick={() => void startSession()}>{connectionState === 'connecting' ? 'Connecting…' : `Start ${mode} session`}</button><button type="button" aria-label="Stop session" disabled={!busy} onClick={stopSession}>Stop</button></div>
+          <div className="vl-button-row"><button type="button" className="vl-primary" aria-label="Start session" disabled={busy || !status || status.active || (mode === 'live' && !budget?.liveReady)} onClick={() => void startSession()}>{connectionState === 'connecting' ? 'Connecting…' : `Start ${mode} session`}</button><button type="button" aria-label="Stop session" disabled={!busy} onClick={stopSession}>Stop</button></div>
+          <button type="button" className="vl-full" disabled={busy} onClick={() => void runAudioCheck()}>{audioCheck === 'idle' ? 'Check microphone & speaker · no spend' : 'Stop local audio check'}</button>
+          {audioCheck !== 'idle' && <div data-testid="local-audio-check"><p className="vl-help">{audioCheck === 'checking' ? 'Waiting for microphone permission and first capture frame…' : `Capture running · ${captureProof.frames} frames. Speak to move the level.`}</p><meter aria-label="Local microphone level" min="0" max="0.2" value={captureProof.level} /><p className="vl-help">Local only. No recording saved. The tone checks output routing; only you can confirm hearing it.</p></div>}
           <p className="vl-session-line" aria-label="Session status" data-testid="session-status"><span className={`vl-status-dot ${active ? 'is-active' : ''}`} />{connectionState === 'active' ? 'Active' : connectionState === 'connecting' ? 'Connecting' : connectionState === 'closed' ? 'Stopped' : 'Not started'}{snapshot && <strong>{STATUS_LABEL[snapshot.requestStatus]}</strong>}{remainingSeconds !== null && <span className="vl-countdown">{Math.floor(remainingSeconds / 60)}:{String(remainingSeconds % 60).padStart(2, '0')}</span>}</p>
           <p className="vl-help" role="status">{notice}</p>
           <div className="vl-budget" data-testid="budget"><p className="vl-label">Server spend guard</p><p>{budget ? `${budget.attempts} / ${budget.maxAttempts} paid sessions reserved · $${budget.reservedUsd.toFixed(2)} / $${budget.maxUsd.toFixed(2)}` : 'Checking server allowance…'}</p><p className="vl-help">{budget?.blockedReason || 'Live access follows the server approval state. No automatic retry.'}</p></div>
