@@ -1,60 +1,58 @@
 # NOW - the resume doc
-**Stamped: 2026-10-17; chat-only release in progress**
+**Stamped: 2026-10-18; deep test audit**
 
 ## Active task and boundary
-Checkout: F:/CodexWorktrees/chat-design-release/grifon-command.
-Branch: codex/chat-design-release; base main 18d6d169.
-Release revision f8ae5e69 is pushed; draft PR202:
-https://github.com/yopiheart/grifon-command/pull/202
-Neil explicitly approved merge and deployment of the approved chat design.
-Live voice testing and release are paused at Neil's request. Do not run paid
-voice calls or implement the proposed future Grok provider.
-Preserve voice work in codex/chat-voice-release / draft PR201:
-https://github.com/yopiheart/grifon-command/pull/201
+Checkout: F:/CodexWorktrees/8710/grifon-command.
+Branch: codex/deep-test-audit; base origin/main d79bd602.
+Audit unused legacy code and test relevance; remove only proven obsolete paths,
+fix false-green test behavior, preserve meaningful coverage.
+Keep a draft PR for review. No merge or deployment requested for this work.
+PR202 is already merged in the base. PR201 live voice remains paused;
+do not run paid voice calls or implement the proposed Grok provider.
 
-## Release scope
-Port approved charcoal/ivory, static grain, fitted glass, scoped Oxanium,
-fixed centered mascot/status, relative chat times, account appearance,
-mobile dedicated search and keyboard/scroll/draft corrections.
-Keep existing dictation and chat actions. Empty composer has attachment and
-dictation; nonempty draft reveals Send. Keep mouse/keyboard tooltips.
-Exclude Gemini Live handlers, services, hooks, session UI, config and QA assets.
-App.tsx, CompanionChat/index.tsx, storage, types, dependencies and tuned prompts
-remain unchanged. Preserve the original website wordmark and approved mascot.
+## Changes and removal evidence
+Removed 13 runtime/test-unreferenced feature modules (1,368 lines):
+- DirectorOneShot: sole App caller replaced by OneShotAd in 4fe61ae4.
+- glossyGoldButton: both checkout callers replaced by GoldButton in 46cf803c.
+- AdMontagePhone, ProofGallery, StackReplace, RoiMetrics, Aurora,
+  ExitIntentModal/useExitIntent and UrgencyBar: last callers retired by
+  landing redesign 21005a23 (Aurora dashboard replaced earlier in b36c1757).
+- MessengerFloat and RecentActivityToast: last callers removed in 46cf803c.
+- QuotaMeter: dashboard replaced it with real quota reporting in 8c1b3d32.
+AST/static/dynamic-import tracing and repository searches found no callers.
+All 38 API shared libraries retain non-test consumers.
+Preserved Fable archive, live RunningScreen.fable5, previews, generic Gemini
+LegacyBody, saved-session recovery, reusable primitives and curated records.
+No existing tests, assertions, tuned content, dependencies or lockfile removed.
 
-## Evidence and outstanding gates
-Approved source: e9013bc9 in F:/CodexWorktrees/chat-voice-release/grifon-command.
-Physical Android light/dark keyboard/search/draft checks passed before porting.
-The source glass verifier fixes a 375px textarea-wrap test invariant:
-all original assertions retained; five cases, build and full Vitest passed.
-Prior source CI: 32 passing jobs, footer assertion fixed; layout job-cap and
-screenshot readiness/ordinary browser action latency still require resolution.
-Chat-only final build/full Vitest PASS: 1616 tests, 32 existing skips.
-Codex, domain, voice/eval sync, anchors, design, ASCII and bundle checks PASS.
-New composer browser cases PASS8/8; actual-App typography/settings PASS5/5.
-Independent correctness review clean after fixing Safari URL-filter fallback.
-Fallback RED3/3 and GREEN3/3; UA seam tests, not actual Safari hardware.
-CI39005156930:34 jobs PASS,1 aggregate15min-cap cancellation; not green.
-The cancelled shard grouped five135-145s layout journeys together. Completed
-cases all passed within180s each. Forty native partitions split those2/3;
-discovery proves all327 cases exactlyonce,0missing/duplicates,42CLI exits0.
-CI-only matrix/denominator and strict helper contract updated32->40;17helper
-tests passed after RED old-count detection. Job/test caps and all cases retained.
-One screenshot protocol retry passed; no product assertion failed in that case.
-Full geometry/refinement PASS29/29; glass/appearance/grain PASS32/32.
-Native Firefox152/WebKit26.5 chat fallback/resize smoke PASS2/2.
-Local browser final total86PASS,0retries/skips; keyboard/search10PASS.
-Independent brand review BRAND_PASS_WITH_NITS43/50,0critical/2optional compact
-appearance typography/icon rhythm nits; approved fit preserved.
-No CI gate is waived.
-Paid voice ledger: F:/CodexQA/grifon-live-voice-20261017/paid-test-ledger.json.
-Only first Chromium voice session attempted; no transcript/audio/usage before
-deadline. Billing unknown, USD1 reserved; Android explicitly never started.
-Firefox deferred; actual Safari unavailable on Android/Windows.
+Fixed exact process-flag opt-in before credential loading in four regression
+harnesses; disabled runs neither read .env nor initialize the provider SDK.
+Fixed boot checks hiding app errors and accepting unrelated legal-page content.
+Fixed burn-in PSNR failures masquerading as visible differences; burn-in/demo
+fixture guards permit only their own local server, retaining real SSRF elsewhere.
 
-## ▶ NEXT ACTION
-Finish independent review and hosted CI of the workload correction for PR202;
-merge only after all gates pass,
-then verify the production build on desktop/mobile. Preview Ready fromf8ae5e69:
-https://grifon-command-nuzu1ovur-neilmaglayabusiness22-2085s-projects.vercel.app
-Do not promote the voice preview or merge PR201.
+## Verification
+Baseline Vitest: PASS 1,616; 32 existing opt-in skips.
+Final Vitest: PASS 1,681; same 32 skips; 65 new assertions.
+Machine comparison confirms zero missing tests or changed original outcomes.
+Negative controls: boot RED6/GREEN8, live startup RED22/GREEN24,
+PSNR RED15/GREEN20; fixture guard plus real SSRF checks PASS28.
+Build/PowerShell ASCII, bundle leak, voice/eval parity, domain language,
+artifact anchors, design lint and diff whitespace checks PASS.
+Codex contracts PASS26; legacy permission harness PASS25;
+CI input/timing helper tests PASS17; E2E input guard PASS109 inputs.
+Affected browser smoke PASS68/68 across eight specs at mobile/desktop widths.
+Both legal-page checks reject a nonempty unrelated page (expected exit1).
+Independent correctness review clean; deletion-only brand review BRAND_PASS.
+Local dummy-backend telemetry/interruption logs need no provider credentials;
+paid/live switches remain unset.
+
+## Remaining boundaries and next action
+Paid-provider suites need an approved exact test spec; opt-in real-render suites
+remain unrun under tests/AGENTS.md. Offline helper checks do not prove a render.
+Unused auth wrappers need focused session compatibility verification before
+removal. Test-only tuned script guardrails/generation helpers need exact-diff
+approval. Preserve the historical icon wrappers until the legacy instruction
+discrepancy is resolved. No failures were skipped or assertions weakened.
+Local gates are complete. Commit, push and attach the draft PR for review;
+hosted CI remains a separate gate before any merge decision.

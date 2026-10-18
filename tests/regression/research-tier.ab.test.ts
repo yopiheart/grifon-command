@@ -37,27 +37,11 @@ import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest';
 import { GoogleGenAI } from '@google/genai';
 // Plain server-side COGS helper (no client bundle coupling — safe to import here).
 import { estimateTextCostUsd } from '../../api/_lib/modelCosts.js';
+import { loadLiveTestEnv } from '../support/liveTestEnv.js';
 
-// --- 1. Load .env manually (no dotenv dep) -------------------------------
+// --- 1. Load the live-test environment ----------------------------------
 
-const envPath = resolve(process.cwd(), '.env');
-try {
-  const envText = readFileSync(envPath, 'utf8');
-  for (const rawLine of envText.split(/\r?\n/)) {
-    const line = rawLine.trim();
-    if (!line || line.startsWith('#')) continue;
-    const eqIdx = line.indexOf('=');
-    if (eqIdx === -1) continue;
-    const key = line.slice(0, eqIdx).trim();
-    let val = line.slice(eqIdx + 1).trim();
-    if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
-      val = val.slice(1, -1);
-    }
-    if (!process.env[key]) process.env[key] = val;
-  }
-} catch {
-  // .env missing — the guard below throws with an explicit message.
-}
+const { RUN_AB: SHOULD_RUN } = loadLiveTestEnv(['RUN_AB']);
 
 // --- 2. Mock supabaseClient so proxyCall passes the auth guard -----------
 
@@ -82,7 +66,7 @@ vi.mock('../../services/supabaseClient', () => ({
 //      escape the process.
 
 const apiKey = process.env.GEMINI_API_KEY;
-const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
+const ai = SHOULD_RUN && apiKey ? new GoogleGenAI({ apiKey }) : null;
 const originalFetch = globalThis.fetch.bind(globalThis);
 
 // --- 3a. Arm configuration ------------------------------------------------
@@ -511,8 +495,6 @@ function writeReports() {
 }
 
 // --- 8. Setup: images + Files API video upload ---------------------------
-
-const SHOULD_RUN = !!process.env.RUN_AB;
 
 beforeAll(async () => {
   if (!SHOULD_RUN) return;

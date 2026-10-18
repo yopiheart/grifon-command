@@ -30,31 +30,15 @@
 // Cost: one Files API upload (free) + one EDL generation (~$0.01).
 // Next step per workflows/edl_files_api_plan.md: wire into the Tier 3 nightly loop.
 
-import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, it, expect, vi } from 'vitest';
 import { GoogleGenAI } from '@google/genai';
+import { loadLiveTestEnv } from '../support/liveTestEnv.js';
 
-// --- 1. Load .env manually (no dotenv dep) -------------------------------
+// --- 1. Load the live-test environment ----------------------------------
 
-const envPath = resolve(process.cwd(), '.env');
-try {
-  const envText = readFileSync(envPath, 'utf8');
-  for (const rawLine of envText.split(/\r?\n/)) {
-    const line = rawLine.trim();
-    if (!line || line.startsWith('#')) continue;
-    const eqIdx = line.indexOf('=');
-    if (eqIdx === -1) continue;
-    const key = line.slice(0, eqIdx).trim();
-    let val = line.slice(eqIdx + 1).trim();
-    if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
-      val = val.slice(1, -1);
-    }
-    if (!process.env[key]) process.env[key] = val;
-  }
-} catch {
-  // .env missing — the guard below reports it.
-}
+const { RUN_REGRESSION: SHOULD_RUN, RUN_EDL_FULL_CAP: RUN_FULL_CAP } =
+  loadLiveTestEnv(['RUN_REGRESSION', 'RUN_EDL_FULL_CAP']);
 
 // --- 2. Mock supabaseClient so proxyCall passes the auth guard -----------
 
@@ -70,9 +54,8 @@ vi.mock('../../services/supabaseClient', () => ({
 
 // --- 3. Proxy stubs: files/upload + text, both onto the real SDK ---------
 
-const SHOULD_RUN = !!process.env.RUN_REGRESSION;
 const apiKey = process.env.GEMINI_API_KEY;
-const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
+const ai = (SHOULD_RUN || RUN_FULL_CAP) && apiKey ? new GoogleGenAI({ apiKey }) : null;
 const originalFetch = globalThis.fetch.bind(globalThis);
 
 const FIXTURE = resolve(process.cwd(), 'tests/fixtures/sample-batch/before_after-run1-complete-raw.mp4');
@@ -190,7 +173,6 @@ describe.skipIf(!SHOULD_RUN)('EDL live — one attached video part', () => {
 // necessarily "ten parts is too much" — so on red, re-probe with trimmed clips
 // before lowering the cap.
 
-const RUN_FULL_CAP = !!process.env.RUN_EDL_FULL_CAP;
 const FULL_CAP_SCENES = 10;
 
 describe.skipIf(!RUN_FULL_CAP)('EDL live — a full-cap batch', () => {
