@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-18; credential setup blocked before voice evaluation**
+**Stamped: 2026-10-18; corrected credential validated, desktop live test ready**
 
 ## Active task and boundary
 Checkout: F:/CodexWorktrees/7471/grifon-command.
@@ -73,12 +73,12 @@ Ignored private launcher .tmp/oceanides-voice-lab/start-approved-voice.mjs now
 checks format+free HTTP200+three blocked flags false before arming/spawning.
 No automatic paid session. Syntax, six offline cases, independent review and
 --validate-only PASS: exact SHA,4/USD2, no key/network/spawn during validation.
-New standalone private launcher PID28424 awaiting human raw-key entry.
+New standalone private launcher PID28424: human entered key, free preflight passed.
 User told actual secret starts xai-, no Bearer/quotes/key name, never chat.
 Never inspect private console, clipboard, key page or process secret environment.
 Tool processes do not inherit its private key. Check public status only.
-Next: human enters actual secret; free preflight must pass before server starts.
-Then verify public status/unchanged budget, check desktop mic and one approved
+Public status: liveReady true, inactive,4 attempts/USD2; new owned server is running.
+Lab tab refreshed, Live selected, Start ready; user checks desktop mic and one approved
 manual natural-inquiry session. Do not blindly repeat Start on failure.
 No real conversation has succeeded. Taglish, emotion, microphone, acoustic latency
 and phone/caller-ID/crew response remain unverified until actual tests run.
