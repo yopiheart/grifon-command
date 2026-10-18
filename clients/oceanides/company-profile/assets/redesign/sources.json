@@ -1,0 +1,19 @@
+{
+  "facade-pexels-14765373.jpg": {
+    "creator": "To Tao",
+    "page": "https://www.pexels.com/photo/windows-in-modern-office-building-14765373/",
+    "observedDownload": "https://images.pexels.com/photos/14765373/pexels-photo-14765373.jpeg?cs=srgb&dl=pexels-to-tao-119110580-14765373.jpg&fm=jpg",
+    "license": "https://www.pexels.com/license/",
+    "sourceDimensions": [3649, 6000],
+    "retrievedOn": "2026-10-06",
+    "sourceBytesUnedited": true,
+    "visibleLabel": "Illustrative architecture",
+    "use": "New corporate profile cover. Stock architecture, not an Oceanides facility or completed project. Native layout cropping only."
+  },
+  "actualProofPair": {
+    "workspaceFiles": ["clients/oceanides/assets/before-1.jpg", "clients/oceanides/assets/after-1.jpg"],
+    "sourceManifest": "clients/oceanides/tb2-variants.json, _photoSets_readme and _photoSets.ugc[0]",
+    "sourceDimensions": [1536, 2048],
+    "qualification": "Original real job images; the tb2-ba2 and tb2-ba3 variants are AI recreations and are not used as proof in the redesign."
+  }
+}

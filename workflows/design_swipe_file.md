@@ -1,5 +1,40 @@
 # Design Swipe File
 
+### D19 — Magnific editorial and blue corporate profiles — 2026-10-06
+
+Neil supplied the company-profile gallery and requested comparison across its
+styles. Six public preview layouts were visually inspected, including these:
+
+- Solmedia, clean editorial: https://www.magnific.com/premium-psd/architecture-company-profile-brochure-template_422722673.htm
+- robi123, blue corporate: https://www.magnific.com/premium-vector/modern-company-profile-brochure-template-layout_422990779.htm
+- ArtBoy, photographic corporate: https://www.magnific.com/premium-vector/brochure-template-layout-design-corporate-minimal-company-profile-multipage-brochure-template_49936642.htm
+- creativespacepro, dense blue: https://www.magnific.com/premium-vector/company-profile-minimalist-brochure-template-annual-report-a4-size-with-modern-concept-layout_402587092.htm
+
+Evidence: observed public JPEG previews and screenshots; private comparison files
+under `.tmp/oceanides-premium/`. The gallery UUID did not identify a selected
+template. Exact typefaces and source design files were not extracted.
+
+Mechanisms: the clean editorial layout uses narrow text columns, generous white
+space, fine rules and large rectangular photographs. The blue corporate layout
+adds solid navy/blue panels and a clear two-column service rhythm. Photographic
+corporate supports trust with prominent people imagery. The dense blue variant
+uses small charts, angles and many thumbnails, unsuitable for this compact A5
+brochure. Earlier yellow and blue signage-style variants were also compared.
+
+Application: combine the editorial grid with Oceanides blue headings, a navy
+closing page and large service imagery. Use actual before/after proof; disclose
+generated illustrations. Keep sentence case and editable text. These are layout
+principles, not copied artwork or claimed reference fonts/colors. The supplied
+23-slide Oceanides.pptx adds a supported 2021 founding year; its stale contacts,
+credentials, fleet and client wall are excluded.
+
+Neil's follow-up rejected the first application as too similar to the original.
+Correction: use the blue corporate reference's actual composition mechanisms,
+including asymmetrical color fields, overlapping image/panel placement and
+alternating dark/light sections. Replace the model-home cover and Segoe/Arial
+hierarchy. Do not equate typographic polish or passing layout gates with a
+complete redesign; compare cover, service map and proof spread side by side.
+
 ### D18 — Apple report + OpenAI design guidelines — 2026-10-01
 
 Sources: https://www.apple.com/environment/pdf/Apple_Environmental_Progress_Report_2025.pdf

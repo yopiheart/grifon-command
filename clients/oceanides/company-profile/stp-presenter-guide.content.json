@@ -1,0 +1,105 @@
+{
+  "title": "Oceanides STP presenter guide",
+  "edition": "14 October 2026",
+  "audience": "Gabay ni August • Presenter copy",
+  "presenterNote": "Generic process illustration ang video. Hindi pa final ang supplier, model, site design at costing. Gamitin ang guide para magpaliwanag at makakuha ng site assessment; i-confirm ang technical details bago magbigay ng commitment.",
+  "script": [
+    "Yung napanood ninyo, sample kung paano tine-treat ng STP ang wastewater sa mismong building.",
+    "Sa current setup ninyo, may recurring expense sa paghakot ng wastewater at accumulated solids. Ang gusto nating i-check: puwede bang mabawasan ang kailangang ihakot, at mas maging manageable ang gastos ninyo over time?",
+    "Sa STP, dumadaan sa treatment ang wastewater mula sa toilets, sinks at ibang gamit ng building. Hinihiwalay ang solids at binabawasan ang pollutants sa tubig.",
+    "Kapag angkop ang system sa building at may pinapayagang labasan o reuse ng treated water, posibleng mabawasan ang pagha-haul ng liquid wastewater. Pero may sludge o naipong latak pa ring kailangang alisin, at may regular maintenance ang equipment.",
+    "Kaya ang proposal namin, i-assess muna ang actual building ninyo. Titingnan natin ang dami ng wastewater, available space, existing tank at piping, at kung saan puwedeng mapunta ang treated water.",
+    "Pagkatapos, ikukumpara natin ang current annual siphoning expenses ninyo sa installation at ongoing costs ng STP, kasama ang kuryente, maintenance, testing at sludge removal.",
+    "Doon natin makikita kung magkano ang potential savings at kung gaano katagal bago mabawi ang investment, kung may positive net savings.",
+    "Oceanides ang magiging main contact ninyo sa assessment at coordination sa technical specialists. Ang next step natin: mag-schedule ng site assessment kasama ang facilities team ninyo, para makagawa ng proposal na may malinaw na scope at costing."
+  ],
+  "alternateOpenings": [
+    {
+      "label": "Para sa procurement",
+      "text": "Para makita kung sulit ang STP, ilalatag natin ang buong gastos, installation hanggang operation, katabi ng current siphoning expenses ninyo."
+    },
+    {
+      "label": "Para sa management",
+      "text": "Habang ginagamit ang building, tuloy-tuloy din ang wastewater. Tingnan natin kung mas practical ang sariling treatment system para sa long-term operations ninyo."
+    }
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "question": "Magkano ang magpakabit ng STP?",
+      "answer": "Depende sa dami ng wastewater, available space at installation requirements ng building. Pagkatapos ng assessment, magbibigay tayo ng itemized quotation para malinaw ang kasama at hindi kasama."
+    },
+    {
+      "id": 2,
+      "question": "May gastos pa ba pagkatapos ma-install?",
+      "answer": "Meron pa rin: kuryente, regular servicing, testing, sludge removal at consumables kung kailangan ng system. Isasama natin ang mga iyon sa cost comparison para makita ninyo ang buong gastos."
+    },
+    {
+      "id": 3,
+      "question": "Sigurado bang makakatipid kami?",
+      "answer": "May potential, lalo na kung malaki ang current hauling expenses ninyo. Pero kailangan nating ikumpara ang actual bills sa estimated operating costs ng proposed STP. Doon natin malalaman kung sulit sa building ninyo."
+    },
+    {
+      "id": 4,
+      "question": "Gaano katagal bago mabawi ang investment?",
+      "answer": "Kapag may installation price at estimated yearly savings na, saka natin mako-compute. Ang simple computation: total installation cost, divided by net annual savings. Kung walang net savings, hindi natin dapat tawaging investment na babawi sa siphoning expenses."
+    },
+    {
+      "id": 5,
+      "question": "Maintenance-free ba ito?",
+      "answer": "May maintenance pa rin. Kailangang alagaan ang pumps, blowers at ibang equipment, i-monitor ang treatment, at alisin ang accumulated sludge. Susundin ang maintenance plan ng napiling system."
+    },
+    {
+      "id": 6,
+      "question": "Gaano kadalas ang maintenance? Kailangan ba ng operator?",
+      "answer": "Depende sa system at capacity. Ilalagay sa proposal ang routine checks, service schedule, at kung kailangan ng trained staff o contracted operator para malinaw kung sino ang responsable."
+    },
+    {
+      "id": 7,
+      "question": "Wala na ba kaming siphoning kapag may STP?",
+      "answer": "May sludge removal pa rin. Ang potential na mabawasan ay ang paghakot ng liquid wastewater, kapag angkop ang treatment at may pinapayagang labasan o reuse ng treated water. Hindi automatic na mawawala ang lahat ng siphoning."
+    },
+    {
+      "id": 8,
+      "question": "Kung may siphoning pa rin, bakit kami mag-STP?",
+      "answer": "Ang titingnan natin ay kung mas maliit na ang kailangang ihakot at mas manageable ang total expenses. Kaya ang comparison natin ay buong yearly cost ng current setup laban sa buong yearly cost kapag may STP."
+    },
+    {
+      "id": 9,
+      "question": "Gaano kadalas na lang ang siphoning?",
+      "answer": "Hindi pa natin masasabi ang exact interval. Ibabase iyon sa sludge buildup, actual paggamit at requirements ng system. Dapat may monitoring at malinaw na sludge-removal plan."
+    },
+    {
+      "id": 10,
+      "question": "Puwede bang gamitin ulit ang treated water?",
+      "answer": "Posible sa angkop na gamit, pero kailangan tugma ang treatment at water quality sa paggagamitan. Hindi automatic na puwede sa flushing, gardening o ibang purpose. Kailangan munang i-confirm ang design, testing at applicable requirements."
+    },
+    {
+      "id": 11,
+      "question": "Kailangan bang gibain ang existing septic tank?",
+      "answer": "Iche-check muna ang condition, capacity at piping. Doon malalaman kung may puwedeng gamitin sa existing setup o kailangan ng bagong works. Kasama sa proposal ang installation scope at posibleng abala sa operations."
+    },
+    {
+      "id": 12,
+      "question": "Sino ang tatawagan kapag may problema? May warranty?",
+      "answer": "Oceanides ang main contact para sa coordination. Bago kayo mag-decide, dapat nakasulat kung sino ang supplier at installer, ano ang warranty coverage, at sino ang hahawak sa maintenance at service concerns."
+    }
+  ],
+  "closing": "Para makapag-decide kayo gamit ang actual figures, i-schedule natin ang site assessment kasama ang facilities team ninyo. Ihanda lang ang recent siphoning bills, service records at available tank plans. Doon natin ibabase ang recommendation at written quotation.",
+  "closingCue": "Pagkatapos ng closing, huminto muna at hayaang sumagot sila. Ang unang commitment na hihingin: scheduled site assessment kasama ang facilities team.",
+  "checklist": [
+    "Recent siphoning bills at dami ng hinahaul, kung recorded",
+    "Service records at available tank o piping plans",
+    "Facilities contact at available schedule para sa assessment"
+  ],
+  "sources": [
+    {
+      "label": "EPA - Wastewater Technology Fact Sheet: Package Plants",
+      "url": "https://www.epa.gov/sites/default/files/2015-06/documents/package_plant.pdf"
+    },
+    {
+      "label": "EPA - Basic Information about Water Reuse",
+      "url": "https://www.epa.gov/waterreuse/basic-information-about-water-reuse"
+    }
+  ]
+}
