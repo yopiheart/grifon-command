@@ -1,13 +1,14 @@
 # NOW - the resume doc
-**Stamped: 2026-10-18; Oceanides Voice Lab mock build verified**
+**Stamped: 2026-10-18; paid draft approved, mobile audio/key setup pending**
 
 ## Active task and boundary
 Checkout: F:/CodexWorktrees/7471/grifon-command.
 Branch: codex/oceanides-voice-lab; base 3fec6515 (main, PR184).
-Neil approved implementing the internal browser lab and mock failure tests.
-Draft PR is the review handoff; use `gh pr view` on this branch.
-No deployment, merge, paid provider session, customer call, ad action or production
-data write is authorized or performed. Exact paid test approval remains pending.
+Neil approved the exact paid-test draft in chat: at most 10 sessions x 3 minutes,
+within USD 5. Preserve that approval; do not ask for it again unchanged.
+Draft PR 206: https://github.com/yopiheart/grifon-command/pull/206.
+No deployment, merge, customer call, ad action or production data write authorized.
+No paid provider connection has run; live runtime remains disabled until ready.
 
 ## Implementation
 Separate Vite runtime in funnels/oceanides-price-page; `npm.cmd run dev:voice`
@@ -42,7 +43,7 @@ Brand PASS_WITH_NITS, 0 critical/1 nit: English internal technical chrome vs the
 client Taglish rule. Customer-facing Taglish remains in the approval draft.
 Logs/screenshots are local-only in ignored .tmp/oceanides-voice-lab/.
 
-## Paid test: review required, NOT RUN
+## Paid test: APPROVED, NOT RUN
 Runbook: clients/oceanides/VOICE-LAB.md.
 Exact draft: funnels/oceanides-price-page/dev/voice-lab/paid-test-spec.DRAFT.json.
 SHA256: 09fc7b4f15acb4b327016c36fc4f31d173030f96647c5050f07a7221653eaeee.
@@ -54,6 +55,14 @@ Crash/unresolved locks fail closed; inspect owner before recovery, keep ledger.
 Local reservations are not a provider billing guarantee or account-wide cap.
 Required server gates: OCEANIDES_VOICE_LIVE=1, exact approved file SHA in
 OCEANIDES_VOICE_APPROVED_SPEC_SHA256, and XAI_API_KEY. Leave unset ordinarily.
+Approval verified 2026-10-18 09:19 UTC against the unchanged raw-file SHA above.
+Current process lacks XAI_API_KEY; checked only presence, never secret values.
+Runtime 5184 is running mock-only, attempts 0 / reserved USD 0 / no active session.
+Neil is mobile remote. Awaiting remote app/phone OS and secure API-key location.
+The phone browser cannot reach the PC's 127.0.0.1. Existing remote desktop needs
+PC sound to phone AND phone mic to PC; check both for free before paid Start.
+Current paid Start reserves/connects before requesting mic, so don't use it as
+the first microphone check. Remote audio delay is separate from browser metrics.
 Any instruction/model/voice/scenario/setting change requires fresh approval.
 Real Grok speech, Taglish quality, emotion, acoustic latency, microphone and phone
 performance remain NOT RUN. No claim of voice suitability until approved calls.
