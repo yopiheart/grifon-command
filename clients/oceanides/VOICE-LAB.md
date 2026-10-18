@@ -284,6 +284,13 @@ running; direct Node launch did. Use only the exact hidden-key prompt, never a
 plain `PS ...>` prompt. No new approval source or gate bypass was added. Do not
 read the console while the human enters a credential.
 
+Neil subsequently confirmed private entry succeeded and the Vite URL appeared;
+he also confirmed sufficient available xAI credit for the approved probe. Public
+GET status now reports inactive, `liveReady: true`, the exact new spec hash,
+10/11 attempts and USD5/USD5.50 reserved. The ledger bytes remain unchanged.
+The refreshed browser shows Live voice available. No paid session was initiated
+by the agent. Human listening for this single recovery probe remains pending.
+
 Recovery verification passed: 119 focused tests, full suite1692 passed/32 skipped,
 voice typecheck, root/funnel/lab builds and applicable static checks. Independent
 review passed62 focused tests and the exact budget-only spec/launcher changes.

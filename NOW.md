@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-18; approved recovery checks passed, private entry pending**
+**Stamped: 2026-10-18; approved recovery live-ready, human listening pending**
 
 ## Active task and boundary
 Checkout F:/CodexWorktrees/7471/grifon-command, branch codex/oceanides-voice-lab.
@@ -12,7 +12,7 @@ Reservation is not confirmed provider billing; actual xAI charges not establishe
 User reports after new opening: Live Active/Collecting details, no speech/no hearing.
 He uses separate Chrome/Edge; root CUA sees only a stale idle Codex browser tab.
 Approved natural-inquiry only: existing first caller line, Stop after first reply
-or10s inaudible opening/reply;3min hardcap. Credit check/private rearm pending.
+or10s inaudible opening/reply;3min hardcap. Human credit/private setup confirmed.
 No merge/deploy/customer calls/ad actions/production writes authorized.
 
 ## Exact approved generation inputs remain unchanged
@@ -69,7 +69,7 @@ Evidence1280x900,375x667,390x844 uses synthetic mic; no horizontal overflow.
 Loopback-only127.0.0.1:5184/voice-lab.html, independent Vite in funnel.
 Production lead/ops/tracking excluded; synthetic local dispatch and reports only.
 Owned inactive launcher2324/child5592 safely stopped; port verified free.
-Updated helper validate-only PASS10/11,$5/$5.50. Private Node launcher2512 awaits key.
+Launcher2512 running; human key entry complete, GET liveReady=true10/11,$5/$5.50.
 Tool processes do not inherit key. Never inspect env files, private console,
 clipboard, API-key page, process secret environment or raw provider bodies.
 Ledger .tmp/oceanides-voice-lab/budget.json currentSHA:
