@@ -93,8 +93,8 @@ it does not establish valid provider credentials, credit, or voice access.
 The cumulative limit is eleven sessions of at most three minutes each, with one
 active connection. The spec's voice cost basis is US$2.64 at US$0.08 per minute
 for thirty-three minutes; applicable text/tool charges and a contingency must
-fit within the US$5.50 ceiling. Only one recovery attempt remains authorized;
-stop after its first complete reply. This excludes future telephone-number setup and
+fit within the US$5.50 ceiling. That single recovery attempt has now been used;
+the cumulative allowance is exhausted. This excludes future telephone-number setup and
 customer phone tests, which are outside this milestone.
 
 The server reserves budget before opening a paid connection. Reservations survive
@@ -120,8 +120,9 @@ The first four manual live starts failed before a conversation. A free preflight
 found that the loaded credential did not have the basic raw xAI key format.
 Human re-entry passed validation; a fifth lab attempt has since been reserved.
 Subsequent silent-session attempts reached the original limit: **ten reservations
-totaling US$5.00**. The original allowance was exhausted; Neil has now approved
-only the single recovery extension specified below. These are not confirmed xAI
+totaling US$5.00**. The original allowance was exhausted; Neil approved and used
+the single recovery extension specified below, reaching11 reservations/USD5.50.
+These are not confirmed xAI
 charges. Do not reset/refund/reclassify the ledger or exceed the approved
 extension. Never put a key in chat, command arguments, a browser form,
 or a file.
@@ -288,8 +289,9 @@ Neil subsequently confirmed private entry succeeded and the Vite URL appeared;
 he also confirmed sufficient available xAI credit for the approved probe. Public
 GET status now reports inactive, `liveReady: true`, the exact new spec hash,
 10/11 attempts and USD5/USD5.50 reserved. The ledger bytes remain unchanged.
-The refreshed browser shows Live voice available. No paid session was initiated
-by the agent. Human listening for this single recovery probe remains pending.
+The refreshed browser showed Live voice available. No paid session was initiated
+by the agent. This was the ready-state checkpoint before Neil ran the recovery;
+its observed outcome and exhausted allowance are recorded below.
 
 Recovery verification passed: 119 focused tests, full suite1692 passed/32 skipped,
 voice typecheck, root/funnel/lab builds and applicable static checks. Independent
@@ -302,6 +304,67 @@ timing samples/count and Neil's audible-opening/audible-reply judgment. No raw
 audio recording is needed. One probe cannot establish response-time statistics,
 natural Taglish quality, emotion, thinking pauses or reliable interruption.
 Read available xAI credit before the paid start; no funding action is included.
+
+### Recovery outcome and cancellation follow-up: 2026-10-19
+
+Neil reports no audible opening despite speaking the entire approved price
+question. The transcript showed approximately one word; he refreshed before a
+report was supplied. This is not a successful speech-understanding result.
+
+Before runtime edits, the stopped session's public diagnostics were projected
+into `.tmp/oceanides-voice-lab/recovery-silent-diagnostics-2026-10-19.json`:
+provider configured, audio ready and opening written were true; 575 input-frame
+append attempts and one output chunk were counted, no classified provider error
+was retained, and the operator stopped the session. These counters do not prove
+that the provider recognized the full utterance or that browser audio was heard.
+The current ledger is11 attempts / USD5.50, inactive and exhausted. Preserve all
+reservations; no further paid attempt or allowance extension is authorized.
+
+A zero-network regression reproduced a backend cancellation race: speech while
+an opening lacks a response ID could arm cancellation against the next caller
+answer. The transport fix delegates server-VAD cancellation to the provider,
+clears obsolete deferred client cancellation when VAD takes ownership, and
+preserves cancellation of identified responses and explicit client interrupts.
+It does not change the approved voice, opening, VAD thresholds or other generation
+settings. A related canceled-response filter could also drop a completed caller
+transcription that has no assistant response ID. Caller transcription is routed
+before that assistant cancellation filter, while late canceled assistant audio
+and text remain suppressed. These defects are not proven to be the cause of
+the historical recovery; the one-word display cannot establish whether ASR itself
+recognized only one word or the lab dropped other transcription events.
+
+Additional bounded counters distinguish provider VAD, response creation/completion,
+client interrupts, dropped canceled deltas, forwarded PCM bytes and browser
+received/decoded/scheduled/ended/canceled/dropped chunks. Browser counters also
+include decoded/nonzero sample totals and local/server-notification interruption
+counts (`serverInterruptNotifications`), retained after operator Stop and in the
+local report. Server-notification
+counts can include the acknowledgment of a local interrupt; they are not unique
+speech-onset counts. Only exact numeric fields are accepted, with no IDs, text,
+audio, raw provider events or credential values retained in these diagnostics.
+
+The new guarded native browser fixture injects known PCM through the fake socket
+and actual UI callbacks. A downstream analyser confirms nonzero rendered audio,
+natural playback drain, local/provider interruption, rejection of late canceled
+chunks and playback of a later reply. All APIs and sockets are mocked or blocked
+before navigation; no provider connection is made. This closes the previous gap
+where native browser tests proved a local tone but did not exercise streamed
+bridge audio. It does not establish actual Grok speech or physical audibility.
+
+Final follow-up verification: backend65 and audio/connection22 tests passed;
+full suite1700 passed/32 existing skips; voice typecheck and root/funnel/lab
+builds passed. The new native browser fixture passed1/1, including the echo of
+a local interrupt. Independent review reran53 service/audio tests and resolved
+all three findings. New cancellation and caller-transcript regressions failed
+before their fixes. Static/bundle/exclusion checks passed. No visual layout,
+user-facing copy, approved spec bytes or exhausted ledger bytes changed.
+
+The final runtime check found the private launcher and listener no longer running;
+no active session or unresolved lock remained. The exit cause was not established.
+The lab was restored with the standard local Vite command in mock-only mode,
+explicitly clearing the live flag, approval environment and xAI key in that
+development process. Public GET confirmed inactive,11/11 reservations and live
+blocked; no key re-entry or provider call was needed for this restoration.
 
 ### Later comparison: ElevenLabs v4 Turbo
 

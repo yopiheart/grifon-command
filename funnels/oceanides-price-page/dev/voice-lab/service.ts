@@ -3,7 +3,7 @@ import { setTimeout as nodeSetTimeout, clearTimeout as nodeClearTimeout } from '
 import WebSocket from 'ws';
 import { RATE } from '../../src/lib/rates';
 import { SCENARIOS } from '../../src/voice-lab/scenarios';
-import type { BudgetSummary, ClientEvent, LabSnapshot, LabStatus, ServerEvent, SessionMode, SessionResponse } from '../../src/voice-lab/contracts';
+import type { BudgetSummary, ClientEvent, LabSnapshot, LabStatus, PlaybackDiagnostics, ServerEvent, SessionMode, SessionResponse } from '../../src/voice-lab/contracts';
 import { VOICE_LAB_PROTOCOL, type VoiceLifecycle } from '../../src/voice-lab/contracts';
 import { VoiceDomain } from './domain';
 import { HARD_LIMITS, VoiceLedger } from './ledger';
@@ -36,6 +36,7 @@ interface Session {
 }
 
 const errorMessage = (code: string) => ({ type: 'error' as const, code, message: 'Action rejected. Check the documented inputs and current session state.' });
+const playbackKeys: Array<keyof PlaybackDiagnostics> = ['receivedChunks', 'decodedChunks', 'scheduledChunks', 'endedChunks', 'canceledChunks', 'droppedChunks', 'decodedSamples', 'nonZeroSamples', 'localInterrupts', 'serverInterruptNotifications'];
 
 export class VoiceLabService {
   private readonly ledger: VoiceLedger;
@@ -62,7 +63,7 @@ export class VoiceLabService {
 
   status(): LabStatus & { providerCheck: ProviderCheck | null; providerFailure: ProviderDiagnostic | null } {
     this.expireSessions();
-    return { active: Boolean(this.active), protocolVersion: VOICE_LAB_PROTOCOL, lifecycle: this.active?.adapter?.lifecycle() ?? (this.lastLifecycle && { ...this.lastLifecycle }), budget: this.budget(), service: { area: 'Metro Manila household septic-tank siphoning', ratePhp: Number(RATE.mmSiphon.replace(/[^0-9]/g, '')), capacityLiters: 4000, callbackHours: 'Daily 08:00–17:00 Asia/Manila' }, mockNotice: 'SCRIPTED MOCK: no microphone, speech recognition, AI generation, naturalness, or latency evidence.', providerCheck: this.lastProviderCheck && { ...this.lastProviderCheck }, providerFailure: this.lastProviderFailure && { ...this.lastProviderFailure } };
+    return { active: Boolean(this.active), protocolVersion: VOICE_LAB_PROTOCOL, lifecycle: this.active?.adapter?.lifecycle() ?? (this.lastLifecycle && { ...this.lastLifecycle, playback: this.lastLifecycle.playback && { ...this.lastLifecycle.playback } }), budget: this.budget(), service: { area: 'Metro Manila household septic-tank siphoning', ratePhp: Number(RATE.mmSiphon.replace(/[^0-9]/g, '')), capacityLiters: 4000, callbackHours: 'Daily 08:00–17:00 Asia/Manila' }, mockNotice: 'SCRIPTED MOCK: no microphone, speech recognition, AI generation, naturalness, or latency evidence.', providerCheck: this.lastProviderCheck && { ...this.lastProviderCheck }, providerFailure: this.lastProviderFailure && { ...this.lastProviderFailure } };
   }
 
   checkProvider(): Promise<ProviderCheck> {
@@ -153,6 +154,12 @@ export class VoiceLabService {
           if (domain.state.mode !== 'live' || typeof event.data !== 'string' || event.data.length > 64_000 || !/^[A-Za-z0-9+/]+={0,2}$/.test(event.data) || Buffer.from(event.data, 'base64').length % 2) throw new Error('invalid_audio');
           session.adapter?.audio(event.data); return;
         case 'playback_drained': session.adapter?.drainedPlayback(event.responseId); return;
+        case 'playback_diagnostics': {
+          const counts = event.counts;
+          if (domain.state.mode !== 'live' || Object.keys(event).length !== 2 || !counts || typeof counts !== 'object' || Array.isArray(counts) || Object.keys(counts).length !== playbackKeys.length || playbackKeys.some(key => !Object.prototype.hasOwnProperty.call(counts, key) || !Number.isInteger(counts[key]) || counts[key] < 0 || counts[key] > 1000000000)) throw new Error('invalid_playback_diagnostics');
+          session.adapter?.observePlayback(counts);
+          return;
+        }
         case 'interrupt':
           if (session.adapter) session.adapter.interrupt();
           else send({ type: 'speech_started', at: this.now() });

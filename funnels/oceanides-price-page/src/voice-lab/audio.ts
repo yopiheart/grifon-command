@@ -1,4 +1,5 @@
 import { base64ToFloat32, pcm16ToBase64, PcmResampler, ResponseAudioGate } from './audio-math';
+import type { PlaybackDiagnostics } from './contracts';
 
 interface AudioCallbacks {
   onInput: (base64: string) => void;
@@ -8,6 +9,7 @@ interface AudioCallbacks {
   onDrained: () => void;
   onError: (message: string) => void;
   onCapture?: (frames: number, level: number) => void;
+  onDiagnostics?: (counts: PlaybackDiagnostics) => void;
 }
 
 /** Capture starts only for an explicit live start or local audio check. */
@@ -30,10 +32,15 @@ export class VoiceAudio {
   private inputEnabled = false;
   private captureFrames = 0;
   private cancelPreflight: (() => void) | null = null;
+  private counts: PlaybackDiagnostics = { receivedChunks: 0, decodedChunks: 0, scheduledChunks: 0, endedChunks: 0, canceledChunks: 0, droppedChunks: 0, decodedSamples: 0, nonZeroSamples: 0, localInterrupts: 0, serverInterruptNotifications: 0 };
 
   constructor(private readonly callbacks: AudioCallbacks, private readonly preflightTimeoutMs = 12000) {}
 
   get playing(): boolean { return this.sources.size > 0; }
+  get diagnostics(): PlaybackDiagnostics { return { ...this.counts }; }
+
+  private count(name: keyof PlaybackDiagnostics, amount = 1): void { this.counts[name] = Math.min(1_000_000_000, this.counts[name] + amount); }
+  private publishDiagnostics(): void { this.callbacks.onDiagnostics?.(this.diagnostics); }
 
   async prepare(): Promise<void> {
     if (this.stopped) return;
@@ -107,7 +114,7 @@ export class VoiceAudio {
           this.voicedMs += blockMs;
           if (this.voicedMs >= 60) {
             const onset = this.onset;
-            this.interrupt();
+            this.interrupt('local');
             // AudioContext output latency is an estimate, not an acoustic measurement.
             this.callbacks.onBargeIn(Math.max(0, performance.now() - onset + this.context.baseLatency * 1000));
           }
@@ -131,11 +138,15 @@ export class VoiceAudio {
   }
 
   enqueue(encoded: string, responseId?: string): void {
+    this.count('receivedChunks');
     const context = this.context;
-    if (!context || this.stopped || !this.gate.accept(responseId)) return;
+    if (!context || this.stopped || !this.gate.accept(responseId)) { this.count('droppedChunks'); this.publishDiagnostics(); return; }
     try {
       const samples = base64ToFloat32(encoded);
-      if (!samples.length) return;
+      if (!samples.length) { this.count('droppedChunks'); this.publishDiagnostics(); return; }
+      this.count('decodedChunks');
+      this.count('decodedSamples', samples.length);
+      this.count('nonZeroSamples', samples.reduce((count, sample) => count + (sample === 0 ? 0 : 1), 0));
       const buffer = context.createBuffer(1, samples.length, 24000);
       buffer.getChannelData(0).set(samples);
       const source = context.createBufferSource();
@@ -148,9 +159,13 @@ export class VoiceAudio {
       source.onended = () => {
         this.sources.delete(source);
         source.disconnect();
+        this.count('endedChunks');
+        this.publishDiagnostics();
         if (this.ended && !this.playing) this.callbacks.onDrained();
       };
       source.start(startAt);
+      this.count('scheduledChunks');
+      this.publishDiagnostics();
       const key = responseId ?? 'unidentified';
       if (!this.responseStarts.has(key)) {
         this.responseStarts.add(key);
@@ -158,6 +173,8 @@ export class VoiceAudio {
         this.callbacks.onAudibleStart(responseId, audibleAt);
       }
     } catch {
+      this.count('droppedChunks');
+      this.publishDiagnostics();
       this.callbacks.onError('Invalid voice audio received. Stop and review the session.');
     }
   }
@@ -171,7 +188,9 @@ export class VoiceAudio {
     if (!this.playing) this.callbacks.onDrained();
   }
 
-  interrupt(): void {
+  interrupt(reason?: 'local' | 'server'): void {
+    if (reason) this.count(reason === 'local' ? 'localInterrupts' : 'serverInterruptNotifications');
+    this.count('canceledChunks', this.sources.size);
     this.gate.cancel();
     this.ended = false;
     for (const source of this.sources) {
@@ -183,6 +202,7 @@ export class VoiceAudio {
     this.nextAt = 0;
     this.onset = null;
     this.voicedMs = 0;
+    this.publishDiagnostics();
   }
 
   async stop(): Promise<void> {

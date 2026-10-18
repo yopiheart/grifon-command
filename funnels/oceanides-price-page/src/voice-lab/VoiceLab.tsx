@@ -3,7 +3,7 @@ import { VoiceAudio } from './audio';
 import { timingSummary } from './audio-math';
 import { LabConnection } from './connection';
 import { SCENARIOS } from './scenarios';
-import type { ClientEvent, LabSnapshot, LabStatus, RequestStatus, ServerEvent, SessionMode, TimingSample } from './contracts';
+import type { ClientEvent, LabSnapshot, LabStatus, PlaybackDiagnostics, RequestStatus, ServerEvent, SessionMode, TimingSample } from './contracts';
 
 const STATUS_LABEL: Record<RequestStatus, string> = {
   collecting: 'Collecting details', awaiting_dispatch: 'Awaiting dispatch', dispatch_approved: 'Dispatch approved',
@@ -59,6 +59,7 @@ export function VoiceLab() {
   const checkAudio = useRef<VoiceAudio | null>(null);
   const connection = useRef<LabConnection | null>(null);
   const audio = useRef<VoiceAudio | null>(null);
+  const playbackDiagnostics = useRef<PlaybackDiagnostics | null>(null);
   const mounted = useRef(false);
   const speechEndedAt = useRef<number | null>(null);
   const toolInTurn = useRef(false);
@@ -128,7 +129,7 @@ export function VoiceLab() {
       case 'response_started': currentResponse.current = event.responseId; audio.current?.responseStart(event.responseId); break;
       case 'speech_started':
         if (currentResponse.current) cancelledResponses.current.add(currentResponse.current);
-        audio.current?.interrupt();
+        audio.current?.interrupt('server');
         break;
       case 'speech_stopped': break; // Server timestamps are not the browser's capture clock.
       case 'response_end': {
@@ -163,6 +164,7 @@ export function VoiceLab() {
     const epoch = ++sessionEpoch.current;
     speechEndedAt.current = null; toolInTurn.current = false; firstAudio.current.clear(); measuredTurns.current.clear(); currentResponse.current = null; cancelledResponses.current.clear(); drainingResponse.current = undefined;
     activeMode.current = mode;
+    playbackDiagnostics.current = null;
     let voice: VoiceAudio | null = null;
     const isCurrent = () => mounted.current && epoch === sessionEpoch.current && connection.current === client;
     const client = new LabConnection({
@@ -188,6 +190,7 @@ export function VoiceLab() {
           onAudibleStart: (responseId, at) => { if (isCurrent()) { const key = responseId ?? `turn-${turnSerial.current}`; if (!firstAudio.current.has(key)) firstAudio.current.set(key, at); } },
           onDrained: () => { if (isCurrent()) client.send({ type: 'playback_drained', responseId: drainingResponse.current }); },
           onError: (reason) => { if (isCurrent()) { setError(reason); stopSession(); } },
+          onDiagnostics: (counts) => { if (mounted.current && audio.current === voice) playbackDiagnostics.current = counts; if (isCurrent()) client.send({ type: 'playback_diagnostics', counts }); },
         });
         audio.current = voice;
         setNotice('Checking local microphone and audio. No paid session has opened. Allow microphone access in this browser.');
@@ -222,8 +225,10 @@ export function VoiceLab() {
   }
 
   function stopSession() {
+    void audio.current?.stop();
+    if (audio.current) connection.current?.send({ type: 'playback_diagnostics', counts: audio.current.diagnostics });
     sessionEpoch.current++;
-    connection.current?.stop(); void audio.current?.stop();
+    connection.current?.stop();
     setConnectionState('closed'); setNotice('Stopped by operator. Start a new session explicitly.');
     setSnapshot((previous) => previous ? { ...previous, phase: 'closed' } : previous);
     void refreshStatus();
@@ -237,7 +242,7 @@ export function VoiceLab() {
   function exportReport() {
     const report = {
       generatedAt: new Date().toISOString(), evidence: isLive ? 'Live browser test; timing estimates require listening review' : 'SCRIPTED MOCK ONLY. No voice-quality or latency evidence.',
-      session: snapshot, observedTimings, checklist: checks, voiceRatings: isLive ? ratings : null, operatorNotes: notes,
+      session: snapshot, playbackDiagnostics: playbackDiagnostics.current, observedTimings, checklist: checks, voiceRatings: isLive ? ratings : null, operatorNotes: notes,
       timingProvenance: 'Estimated local microphone speech-energy end to scheduled AudioContext playback plus baseLatency. Interruption uses local sustained-energy onset to queue cancellation plus baseLatency. Not an acoustic measurement. Pre-tool and cancelled responses excluded; relevance needs human review.',
     };
     const url = URL.createObjectURL(new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' }));

@@ -1,6 +1,7 @@
 export const VOICE_LAB_PROTOCOL = 'audio-first-frame-v1';
 export type VoiceStage = 'connecting' | 'socket_open' | 'session_created' | 'configured' | 'audio_ready' | 'opening_sent' | 'input_audio' | 'output_audio' | 'caller_speaking' | 'caller_stopped' | 'response_created' | 'response_done' | 'provider_error' | 'closed';
-export interface VoiceLifecycle { configured: boolean; audioReady: boolean; openingSent: boolean; inputFrames: number; outputChunks: number; lastStage: VoiceStage; stopReason: 'operator_stopped' | 'time_limit' | 'connection_closed' | 'provider_failed' | 'workflow_stopped' | null }
+export interface PlaybackDiagnostics { receivedChunks: number; decodedChunks: number; scheduledChunks: number; endedChunks: number; canceledChunks: number; droppedChunks: number; decodedSamples: number; nonZeroSamples: number; localInterrupts: number; serverInterruptNotifications: number }
+export interface VoiceLifecycle { configured: boolean; audioReady: boolean; openingSent: boolean; inputFrames: number; outputChunks: number; serverSpeechStarts: number; serverSpeechStops: number; responsesCreated: number; responsesDone: number; clientInterrupts: number; canceledAudioChunks: number; outputPcmBytes: number; playback?: PlaybackDiagnostics | null; lastStage: VoiceStage; stopReason: 'operator_stopped' | 'time_limit' | 'connection_closed' | 'provider_failed' | 'workflow_stopped' | null }
 export type RequestStatus = 'collecting' | 'awaiting_dispatch' | 'dispatch_approved' | 'booked' | 'human_needed' | 'declined' | 'failed';
 export type SessionMode = 'mock' | 'live';
 export interface CriticalDetails {
@@ -43,6 +44,7 @@ export type ClientEvent =
   | { type: 'audio'; data: string }
   | { type: 'interrupt' }
   | { type: 'playback_drained'; responseId?: string }
+  | { type: 'playback_diagnostics'; counts: PlaybackDiagnostics }
   | { type: 'dispatch'; decision: 'pending' | 'approved' | 'rejected'; pricePhp?: number; slot?: string; conditions?: string }
   | { type: 'customer_accept'; version: number }
   | { type: 'human_request' }

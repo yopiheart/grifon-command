@@ -60,7 +60,7 @@ function createStream() {
 }
 
 function createAudio() {
-  const callbacks = { onInput: vi.fn(), onBargeIn: vi.fn(), onSpeechEnd: vi.fn(), onAudibleStart: vi.fn(), onDrained: vi.fn(), onError: vi.fn() };
+  const callbacks = { onInput: vi.fn(), onBargeIn: vi.fn(), onSpeechEnd: vi.fn(), onAudibleStart: vi.fn(), onDrained: vi.fn(), onError: vi.fn(), onDiagnostics: vi.fn() };
   return { audio: new VoiceAudio(callbacks), callbacks };
 }
 
@@ -283,5 +283,53 @@ describe('Oceanides microphone and playback resource boundaries', () => {
     await expect(audio.start()).rejects.toThrow('Audio output unavailable');
     expect(context.close).toHaveBeenCalledOnce();
     expect(media.getUserMedia).not.toHaveBeenCalled();
+  });
+
+  it('retains copied numeric playback counts after drain, invalid audio, interruption and Stop', async () => {
+    media.getUserMedia.mockResolvedValue(createStream().stream);
+    const { audio, callbacks } = createAudio();
+    await startWithFrame(audio);
+    const encoded = pcm16ToBase64(new Int16Array([0, 1000, -1000, 0]));
+    audio.responseStart('finished');
+    audio.enqueue(encoded, 'finished');
+    audio.responseEnd();
+    FakeAudioContext.instances[0].sources[0].onended?.();
+    audio.enqueue('invalid base64!', 'invalid');
+    audio.responseStart('cancelled');
+    audio.enqueue(encoded, 'cancelled');
+    audio.interrupt('server');
+    audio.enqueue(encoded, 'cancelled');
+    await audio.stop();
+    expect(audio.diagnostics).toEqual({ receivedChunks: 4, decodedChunks: 2, scheduledChunks: 2, endedChunks: 1, canceledChunks: 1, droppedChunks: 2, decodedSamples: 8, nonZeroSamples: 4, localInterrupts: 0, serverInterruptNotifications: 1 });
+    const copy = audio.diagnostics;
+    copy.receivedChunks = 999;
+    expect(audio.diagnostics.receivedChunks).toBe(4);
+    expect(callbacks.onDiagnostics).toHaveBeenLastCalledWith(audio.diagnostics);
+    expect(Object.values(audio.diagnostics).every(value => Number.isSafeInteger(value) && value >= 0 && value <= 1_000_000_000)).toBe(true);
+  });
+
+  it('keeps sustained-energy interruption thresholds unchanged and distinguishes local interruptions from server notifications', async () => {
+    media.getUserMedia.mockResolvedValue(createStream().stream);
+    const { audio, callbacks } = createAudio();
+    await startWithFrame(audio);
+    audio.enableInput();
+    audio.responseStart('opening');
+    audio.enqueue(pcm16ToBase64(new Int16Array(24000).fill(1000)), 'opening');
+    const frame = (rms: number) => FakeWorklet.instances[0].port.onmessage?.({ data: { samples: new Float32Array(960).buffer, rms, frames: 960 } });
+    for (let index = 0; index < 10; index++) frame(0.024);
+    expect(audio.playing).toBe(true);
+    frame(0.03); frame(0.03);
+    expect(audio.playing).toBe(true);
+    frame(0.03);
+    expect(audio.playing).toBe(false);
+    expect(callbacks.onBargeIn).toHaveBeenCalledOnce();
+    expect(audio.diagnostics.localInterrupts).toBe(1);
+    expect(audio.diagnostics.serverInterruptNotifications).toBe(0);
+    expect(audio.diagnostics.canceledChunks).toBe(1);
+    audio.interrupt('server');
+    expect(audio.diagnostics.serverInterruptNotifications).toBe(1);
+    await audio.stop();
+    expect(audio.diagnostics.localInterrupts).toBe(1);
+    expect(audio.diagnostics.serverInterruptNotifications).toBe(1);
   });
 });

@@ -7,7 +7,7 @@ import { join, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { VoiceLabService } from '../../funnels/oceanides-price-page/dev/voice-lab/service';
 import { VoiceLedger } from '../../funnels/oceanides-price-page/dev/voice-lab/ledger';
-import type { ClientEvent, ServerEvent } from '../../funnels/oceanides-price-page/src/voice-lab/contracts';
+import type { ClientEvent, PlaybackDiagnostics, ServerEvent } from '../../funnels/oceanides-price-page/src/voice-lab/contracts';
 
 const specPath = fileURLToPath(new URL('../../funnels/oceanides-price-page/dev/voice-lab/paid-test-spec.DRAFT.json', import.meta.url));
 const hash = createHash('sha256').update(readFileSync(specPath)).digest('hex');
@@ -67,9 +67,72 @@ describe('Oceanides mock and live bridge boundaries (fake provider only)', () =>
     value.provider.event({ type: 'response.created', response: { id: 'private-provider-id' } });
     value.provider.event({ type: 'response.output_audio.delta', response_id: 'private-provider-id', delta: 'PRIVATE-AUDIO-CANARY' });
     value.service.stop(id);
-    expect(value.service.status().lifecycle).toEqual({ configured: true, audioReady: true, openingSent: true, inputFrames: 1, outputChunks: 1, lastStage: 'output_audio', stopReason: 'operator_stopped' });
+    expect(value.service.status().lifecycle).toEqual({ configured: true, audioReady: true, openingSent: true, inputFrames: 1, outputChunks: 1, serverSpeechStarts: 0, serverSpeechStops: 0, responsesCreated: 1, responsesDone: 0, clientInterrupts: 0, canceledAudioChunks: 0, outputPcmBytes: Buffer.from('PRIVATE-AUDIO-CANARY', 'base64').byteLength, playback: null, lastStage: 'output_audio', stopReason: 'operator_stopped' });
     expect(JSON.stringify(value.service.status())).not.toContain('PRIVATE-AUDIO-CANARY');
     expect(JSON.stringify(value.service.status())).not.toContain('private-provider-id');
+  });
+
+  it('retains useful response and VAD milestones while microphone input continues', () => {
+    const value = fixture(true);
+    const { id } = value.start();
+    value.provider.open();
+    value.service.receive(id, ready);
+    value.provider.event({ type: 'response.created', response: { id: 'private-response' } });
+    value.service.receive(id, { type: 'audio', data: 'AAA=' });
+    expect(value.service.status().lifecycle?.lastStage).toBe('response_created');
+    value.provider.event({ type: 'input_audio_buffer.speech_started' });
+    value.service.receive(id, { type: 'audio', data: 'AAA=' });
+    expect(value.service.status().lifecycle?.lastStage).toBe('caller_speaking');
+    value.provider.event({ type: 'response.output_audio.delta', response_id: 'private-response', delta: 'AAAA' });
+    value.provider.event({ type: 'input_audio_buffer.speech_stopped' });
+    value.provider.event({ type: 'response.done', response: { id: 'private-response' } });
+    value.service.stop(id);
+    expect(value.service.status().lifecycle).toMatchObject({ inputFrames: 2, serverSpeechStarts: 1, serverSpeechStops: 1, responsesCreated: 1, responsesDone: 1, canceledAudioChunks: 1, outputChunks: 0, outputPcmBytes: 0, lastStage: 'response_done' });
+    expect(JSON.stringify(value.service.status())).not.toContain('private-response');
+  });
+
+  it('copies allowlisted playback counters into retained status without provider traffic or mutable aliases', () => {
+    const value = fixture(true);
+    const { id } = value.start();
+    value.provider.open();
+    const counts: PlaybackDiagnostics = { receivedChunks: 3, decodedChunks: 3, scheduledChunks: 2, endedChunks: 1, canceledChunks: 1, droppedChunks: 1, decodedSamples: 4800, nonZeroSamples: 1200, localInterrupts: 1, serverInterruptNotifications: 2 };
+    const expected = { ...counts };
+    const writes = value.provider.sent.length;
+    value.service.receive(id, { type: 'playback_diagnostics', counts });
+    expect(value.provider.sent).toHaveLength(writes);
+    counts.receivedChunks = 100;
+    expect(value.service.status().lifecycle?.playback).toEqual(expected);
+    const activeCopy = value.service.status().lifecycle?.playback;
+    if (!activeCopy) throw new Error('Playback counts missing');
+    activeCopy.decodedChunks = 100;
+    value.service.stop(id);
+    expect(value.service.status().lifecycle?.playback).toEqual(expected);
+    const stoppedCopy = value.service.status().lifecycle?.playback;
+    if (!stoppedCopy) throw new Error('Stopped playback counts missing');
+    stoppedCopy.scheduledChunks = 100;
+    expect(value.service.status().lifecycle?.playback).toEqual(expected);
+  });
+
+  it('rejects missing, extra, raw, nonnumeric and out-of-bound playback metadata without poisoning retained counts', () => {
+    const value = fixture(true);
+    const { id } = value.start();
+    value.provider.open();
+    const counts: PlaybackDiagnostics = { receivedChunks: 1000000000, decodedChunks: 0, scheduledChunks: 0, endedChunks: 0, canceledChunks: 0, droppedChunks: 0, decodedSamples: 0, nonZeroSamples: 0, localInterrupts: 0, serverInterruptNotifications: 0 };
+    value.service.receive(id, { type: 'playback_diagnostics', counts });
+    const { receivedChunks: _received, ...missing } = counts;
+    const invalid = [null, [], missing, { ...counts, rawAudio: 'PRIVATE-RAW-AUDIO' }, ...[-1, 0.5, NaN, Infinity, 1000000001, 'PRIVATE-RAW-AUDIO'].map(receivedChunks => ({ ...counts, receivedChunks }))];
+    const writes = value.provider.sent.length;
+    for (const metadata of invalid) {
+      value.service.receive(id, { type: 'playback_diagnostics', counts: metadata } as ClientEvent);
+      expect(value.service.status().lifecycle?.playback).toEqual(counts);
+      expect(value.events.at(-2)).toMatchObject({ type: 'error', code: 'invalid_playback_diagnostics' });
+    }
+    value.service.receive(id, { type: 'playback_diagnostics', counts, rawAudio: 'PRIVATE-RAW-AUDIO' } as ClientEvent);
+    expect(value.events.at(-2)).toMatchObject({ type: 'error', code: 'invalid_playback_diagnostics' });
+    expect(JSON.stringify(value.service.status())).not.toContain('PRIVATE-RAW-AUDIO');
+    expect(JSON.stringify(value.events)).not.toContain('PRIVATE-RAW-AUDIO');
+    expect(value.provider.sent).toHaveLength(writes);
+    expect(value.service.status().active).toBe(true);
   });
 
   it('speaks the approved opening verbatim once only after audio and provider readiness', () => {
@@ -152,15 +215,85 @@ describe('Oceanides mock and live bridge boundaries (fake provider only)', () =>
     expect(value.service.budget()).toMatchObject({ attempts: 1, reservedUsd: 0.5 });
   });
 
-  it('lets caller speech cancel a pending opening without sending a duplicate VAD cancellation', () => {
+  it('does not cancel the caller reply when server VAD already canceled an uncreated opening', () => {
     const value = fixture(true);
     const { id } = value.start();
     value.provider.open();
     value.service.receive(id, ready);
     value.provider.event({ type: 'input_audio_buffer.speech_started' });
-    value.provider.event({ type: 'response.created', response: { id: 'opening-vad-cancelled' } });
-    value.provider.event({ type: 'response.output_audio.delta', response_id: 'opening-vad-cancelled', delta: 'AAAA' });
-    expect(value.events.filter(event => event.type === 'audio')).toHaveLength(0);
+    value.provider.event({ type: 'input_audio_buffer.speech_stopped' });
+    value.provider.event({ type: 'response.created', response: { id: 'caller-vad-reply' } });
+    value.provider.event({ type: 'response.output_audio.delta', response_id: 'caller-vad-reply', delta: 'AAAA' });
+    expect(value.events.filter(event => event.type === 'audio')).toEqual([
+      { type: 'audio', data: 'AAAA', sampleRate: 24000, responseId: 'caller-vad-reply' },
+    ]);
+    expect(value.provider.sent.filter(event => event.type === 'response.cancel')).toHaveLength(0);
+  });
+
+  it('clears an uncorrelated pending client cancellation when server VAD takes ownership', () => {
+    const value = fixture(true);
+    const { id } = value.start();
+    value.provider.open();
+    value.service.receive(id, ready);
+    value.service.receive(id, { type: 'interrupt' });
+    value.provider.event({ type: 'input_audio_buffer.speech_started' });
+    value.provider.event({ type: 'input_audio_buffer.speech_stopped' });
+    value.provider.event({ type: 'response.created', response: { id: 'caller-owned-reply' } });
+    value.provider.event({ type: 'response.output_audio.delta', response_id: 'caller-owned-reply', delta: 'AAAA' });
+    expect(value.events.filter(event => event.type === 'audio')).toEqual([
+      { type: 'audio', data: 'AAAA', sampleRate: 24000, responseId: 'caller-owned-reply' },
+    ]);
+    expect(value.provider.sent.filter(event => event.type === 'response.cancel')).toHaveLength(0);
+    expect(value.service.status().lifecycle).toMatchObject({ clientInterrupts: 1, serverSpeechStarts: 1, serverSpeechStops: 1 });
+  });
+
+  it('forwards caller transcription before the next response exists while suppressing canceled assistant events', () => {
+    const value = fixture(true);
+    const { id } = value.start();
+    value.provider.open();
+    value.service.receive(id, ready);
+    value.provider.event({ type: 'response.created', response: { id: 'canceled-opening' } });
+    value.service.receive(id, { type: 'interrupt' });
+    value.provider.event({ type: 'input_audio_buffer.speech_started' });
+    value.provider.event({ type: 'input_audio_buffer.speech_stopped' });
+    value.provider.event({ type: 'conversation.item.input_audio_transcription.completed', transcript: 'Hi, magkano po magpa-siphon sa Quezon City?' });
+    value.provider.event({ type: 'response.output_audio_transcript.done', response_id: 'canceled-opening', transcript: 'Canceled assistant transcript' });
+    value.provider.event({ type: 'response.output_audio.delta', response_id: 'canceled-opening', delta: 'AAAA' });
+    value.provider.event({ type: 'response.function_call_arguments.done', response_id: 'canceled-opening', call_id: 'canceled-rate', name: 'lookup_rate', arguments: '{"city":"Quezon City"}' });
+    expect(value.events.filter(event => event.type === 'transcript')).toEqual([
+      { type: 'transcript', entry: expect.objectContaining({ role: 'caller', text: 'Hi, magkano po magpa-siphon sa Quezon City?' }) },
+    ]);
+    expect(value.events.filter(event => event.type === 'audio' || event.type === 'tool')).toHaveLength(0);
+    expect(value.provider.sent.filter(event => event.item?.type === 'function_call_output')).toHaveLength(0);
+    value.service.stop(id);
+    const finalState = value.events.filter(event => event.type === 'state').at(-1);
+    expect(finalState && 'snapshot' in finalState && finalState.snapshot.transcript).toEqual([
+      expect.objectContaining({ role: 'caller', text: 'Hi, magkano po magpa-siphon sa Quezon City?' }),
+    ]);
+  });
+
+  it('drops late audio from the known VAD-canceled response while forwarding the next reply and its tool continuation', () => {
+    const value = fixture(true);
+    const { id } = value.start();
+    value.provider.open();
+    value.service.receive(id, ready);
+    value.provider.event({ type: 'response.created', response: { id: 'opening-known' } });
+    value.provider.event({ type: 'input_audio_buffer.speech_started' });
+    value.provider.event({ type: 'response.output_audio.delta', response_id: 'opening-known', delta: 'AAAA' });
+    value.provider.event({ type: 'response.done', response: { id: 'opening-known' } });
+    value.provider.event({ type: 'input_audio_buffer.speech_stopped' });
+    value.provider.event({ type: 'response.created', response: { id: 'caller-tools' } });
+    value.provider.event({ type: 'response.function_call_arguments.done', response_id: 'caller-tools', call_id: 'rate', name: 'lookup_rate', arguments: '{"city":"Quezon City"}' });
+    value.provider.event({ type: 'response.done', response: { id: 'caller-tools', output: [{ type: 'function_call' }] } });
+    expect(value.provider.sent.filter(event => event.type === 'response.create')).toHaveLength(0);
+    value.service.receive(id, { type: 'playback_drained', responseId: 'caller-tools' });
+    expect(value.provider.sent.filter(event => event.type === 'response.create')).toHaveLength(1);
+    value.provider.event({ type: 'response.created', response: { id: 'caller-answer' } });
+    value.provider.event({ type: 'response.output_audio.delta', response_id: 'opening-known', delta: 'AAAA' });
+    value.provider.event({ type: 'response.output_audio.delta', response_id: 'caller-answer', delta: 'AAAA' });
+    expect(value.events.filter(event => event.type === 'audio')).toEqual([
+      { type: 'audio', data: 'AAAA', sampleRate: 24000, responseId: 'caller-answer' },
+    ]);
     expect(value.provider.sent.filter(event => event.type === 'response.cancel')).toHaveLength(0);
   });
 
