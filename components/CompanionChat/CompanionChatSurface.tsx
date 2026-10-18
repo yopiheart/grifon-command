@@ -299,6 +299,7 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
   };
   const cancel = () => { actionEpoch.current++; controller.cancel(); actionLock.current = false; setActionPending(false); };
   const exit = () => { clearPendingReply(); if (controller.busy || actionPending) cancel(); onBack(); };
+  const saveHint = fixtureLabel ?? 'No generation starts until you confirm.';
   const preferences = (
     <div className="mt-4 grid gap-3 sm:grid-cols-3">
       <label className="text-xs text-zinc-400">Language<select aria-label="Ad language" disabled={disabled || !!run} value={draft.language} onChange={event => setDraft({ ...draft, language: event.target.value as CompanionDraft['language'] })} className={`${inputStyle} mt-1`}><option>English</option><option>Taglish</option></select></label>
@@ -378,7 +379,11 @@ export function CompanionChatSurface({ controller, userId, onBack, onUpgrade, pr
             <CompanionComposer ref={composer} initialText={conversation?.chat.composer} onTextChange={text => conversation?.update({ composer: text })} disabled={disabled} voiceDisabled={disabled || viewer} voiceScope={`${userId}:${conversation?.chat.id ?? 'draft'}:${run?.runId ?? 'brief'}`} sendDisabled={replyPending} uploading={uploading} allowAttachment={!run}
               placeholder={run ? atResult ? 'Try “reshoot scene 2” or “style clean”…' : 'Use the review controls above…' : field || replyPending ? 'Tell Grifon…' : 'Anything to change? Edit your brief above.'}
               onAttach={() => upload.current?.click()} onSend={send} onDraftPresence={setHasText} />
-            <p id="companion-save-status" className="companion-footer-note mt-3 text-center text-xs leading-relaxed">{conversation?.saveConflict ? 'Another tab saved newer chats. Keep this tab open. Save this chat as a copy to preserve both versions.' : conversation?.saving ? 'Saving on this device…' : (conversation?.saved ?? saved) ? 'Draft saved on this device.' : 'Draft could not be saved on this device. Keep this tab open.'} {fixtureLabel ?? 'No generation starts until you confirm.'}</p>{conversation && !conversation.saved && !conversation.saving && <Button variant="secondary" className={control + " mt-2 w-full"} onClick={conversation.saveConflict ? conversation.recoverCopy : conversation.retrySave}>{conversation.saveConflict ? 'Save this chat as a copy' : 'Retry saving'}</Button>}
+            <div className="companion-footer-note companion-save-note mt-3 text-center text-xs leading-relaxed">
+              <span aria-hidden="true">Saving on this device… {saveHint}</span>
+              <span aria-hidden="true">Draft saved on this device. {saveHint}</span>
+              <p id="companion-save-status">{conversation?.saveConflict ? 'Another tab saved newer chats. Keep this tab open. Save this chat as a copy to preserve both versions.' : conversation?.saving ? 'Saving on this device…' : (conversation?.saved ?? saved) ? 'Draft saved on this device.' : 'Draft could not be saved on this device. Keep this tab open.'} {saveHint}</p>
+            </div>{conversation && !conversation.saved && !conversation.saving && <Button variant="secondary" className={control + " mt-2 w-full"} onClick={conversation.saveConflict ? conversation.recoverCopy : conversation.retrySave}>{conversation.saveConflict ? 'Save this chat as a copy' : 'Retry saving'}</Button>}
           </div>
         </footer>
       </section>

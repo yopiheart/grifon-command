@@ -16,10 +16,75 @@ async function openComposer(page: Page, theme: string, width: number, height: nu
   await page.route('**/*', route => {
     const url = new URL(route.request().url());
     if (!['localhost', '127.0.0.1'].includes(url.hostname) || url.pathname.startsWith('/api/')) return route.abort();
-    return route.continue();
+    return route.fallback();
   });
   await page.goto('/companion-chat-preview.html');
   await expect(page.getByRole('textbox', { name: 'Message Grifon' })).toBeVisible();
+}
+
+for (const theme of ['dark', 'light']) for (const [footer, width] of [['preview', 320], ['production', 390]] as const) {
+  test(`${theme} ${footer} composer stays still through device saves while typing and deleting on mobile at ${width}px`, async ({ page }, testInfo) => {
+    const suffix = footer === 'preview' ? 'Preview · simulated output.' : 'No generation starts until you confirm.';
+    if (footer === 'production') await page.route(/\/dev\/companionChatPreview\.tsx(?:\?.*)?$/, async route => {
+      const response = await route.fetch(), body = await response.text();
+      const label = 'fixtureLabel: "Preview · simulated output."';
+      if (!body.includes(label)) throw new Error('Production footer fixture no longer matches the preview prop');
+      await route.fulfill({ response, body: body.replace(label, `fixtureLabel: ${JSON.stringify(suffix)}`) });
+    });
+    await page.route(/\/services\/companionConversations\.ts(?:\?.*)?$/, route => {
+      if (route.request().url().includes('composer-save-original')) return route.fallback();
+      return route.fulfill({ contentType: 'application/javascript', body: `
+        export * from '/services/companionConversations.ts?composer-save-original';
+        import {saveConversations as save} from '/services/companionConversations.ts?composer-save-original';
+        export const saveConversations=book=>window.composerHoldWrite
+          ? new Promise((resolve,reject)=>{window.composerReleaseWrite=()=>{window.composerHoldWrite=false;save(book).then(resolve,reject);};})
+          : save(book);
+      ` });
+    });
+    await openComposer(page, theme, width, 667);
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.evaluate(() => document.fonts.ready);
+    const input = page.getByRole('textbox', { name: 'Message Grifon' });
+    const status = page.locator('#companion-save-status');
+    await input.fill('coffee'); await input.press('Enter');
+    await expect(page.getByRole('status', { name: 'Grifon is typing', exact: true })).toHaveCount(0);
+    await expect(status).toHaveText(`Draft saved on this device. ${suffix}`);
+    const measure = () => page.evaluate(async () => {
+      await new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+      const bounds = (selector: string) => {
+        const rect = document.querySelector(selector)!.getBoundingClientRect();
+        return { top: rect.top, height: rect.height, bottom: rect.bottom };
+      };
+      return { composer: bounds('.companion-composer'), footer: bounds('.companion-footer'), input: bounds('.companion-message-input') };
+    });
+    await page.setViewportSize({ width, height: 400 });
+    await input.focus();
+    let previous = await measure();
+    for (const text of ['Haha', 'Ha', '']) {
+      await page.evaluate(() => { (window as any).composerHoldWrite = true; });
+      await input.fill(text);
+      await expect(status).toHaveText(`Saving on this device… ${suffix}`);
+      const saving = await measure();
+      await page.evaluate(() => (window as any).composerReleaseWrite());
+      await expect(status).toHaveText(`Draft saved on this device. ${suffix}`);
+      const saved = await measure();
+      await testInfo.attach(`save-geometry-${text || 'empty'}`, { body: JSON.stringify({ width, text, previous, saving, saved }), contentType: 'application/json' });
+      for (const current of [saving, saved]) {
+        expect(Math.abs(current.composer.top - previous.composer.top)).toBeLessThanOrEqual(1);
+        expect(Math.abs(current.composer.height - previous.composer.height)).toBeLessThanOrEqual(1);
+        expect(Math.abs(current.footer.top - previous.footer.top)).toBeLessThanOrEqual(1);
+        expect(Math.abs(current.input.height - previous.input.height)).toBeLessThanOrEqual(1);
+        expect(current.composer.bottom).toBeLessThanOrEqual(400);
+      }
+      previous = saved;
+    }
+    const clearance = await page.locator('.companion-message-assistant').last().evaluate(node =>
+      document.querySelector('.companion-composer')!.getBoundingClientRect().top - node.getBoundingClientRect().bottom);
+    expect(clearance).toBeGreaterThanOrEqual(16);
+    await input.fill('Retained mobile draft');
+    await expect(status).toHaveText(`Draft saved on this device. ${suffix}`);
+    await page.reload(); await expect(input).toHaveValue('Retained mobile draft');
+  });
 }
 
 for (const theme of ['dark', 'light']) for (const [width, height] of [[375, 667], [1280, 900]]) {

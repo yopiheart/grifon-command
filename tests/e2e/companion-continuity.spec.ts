@@ -41,10 +41,7 @@ async function configure(page: Page, width: number) {
   const requests: string[] = [], rejected: string[] = [];
   page.on('request', request => {
     const url = new URL(request.url());
-    // Sidebar portraits share this asset directory but are not renderer reloads.
-    const sidebarPortrait = url.pathname === '/companion/neutral.png' && request.resourceType() === 'image'
-      && request.frame() === page.mainFrame();
-    if (url.pathname.startsWith('/companion/') && !sidebarPortrait) requests.push(url.pathname);
+    if (url.pathname.startsWith('/companion/')) requests.push(url.pathname);
   });
   await page.route('**/*', route => {
     const request = route.request(), url = new URL(request.url());

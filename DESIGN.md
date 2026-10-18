@@ -152,9 +152,9 @@ static monochrome grain sit on a separate decorative layer, quieter behind text.
   used in the local study is not distributed with the application.
 - The conversation sidebar uses one translucent charcoal/pearl material on
   desktop and mobile. Rows float without individual glass frames; a quiet tonal
-  selection and restrained gold marker identify the active conversation. Small
-  static portraits use the approved Grifon mascot, with the actual title,
-  message preview and relative time carrying each conversation's identity.
+  selection and restrained gold marker identify the active conversation. The
+  actual title, message preview and relative time carry each conversation's
+  identity; row portraits remain deferred until distinct mascot choices exist.
   The footer belongs to the same material. Dedicated mobile search remains
   full-width, with its footer hidden until returning to normal conversations.
   Pearl mobile navigation uses body-strength muted ink to retain contrast when
@@ -166,8 +166,7 @@ static monochrome grain sit on a separate decorative layer, quieter behind text.
   The approved static mascot appears while the animation initializes, then
   yields only after its first rendered frame is ready; no dots-only placeholder.
   `public/companion/startup.png` is a transparent 512px still exported directly
-  from the unchanged approved 3D renderer in its neutral pose; the sidebar's
-  circular portraits continue using the original `neutral.png` asset.
+  from the unchanged approved 3D renderer in its neutral pose.
 - The mascot identity stays centered above the conversation on desktop and
   mobile, separate from its scroll area: avatar, then name, then status. A soft,
   bounded spotlight behind the bare avatar improves its visibility; light mode
@@ -178,8 +177,11 @@ static monochrome grain sit on a separate decorative layer, quieter behind text.
   Saved chats show relative last-activity times. Replies and composer share
   outer gutters; individual bubbles retain a readable width. Glass fits
   the composer and navigation with thin silver edges and localized light catches;
-  the composer has 4px padding around 44px controls. Header/footer clearances
-  remain measured so every message, review heading, and action is reachable at
+  the composer has 4px padding around 44px controls. Save notes
+  reserve the natural wrapped size of both ordinary save-status messages so
+  typing does not shift the composer; save errors can expand to remain readable.
+  Header/footer clearances remain measured so every message, review heading,
+  and action is reachable at
   375px and desktop widths. A restrained progressive blur at the top scroll edge
   separates moving content from the fixed identity and appears only when there
   is content above. Decorative effects never intercept input.

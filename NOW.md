@@ -1,70 +1,82 @@
 # NOW - the resume doc
-**Stamped: 2026-10-18; Companion Chat sidebar and mascot entry**
+**Stamped: 2026-10-18; approved sidebar, mobile composer follow-up**
 
-## Active task and boundary
+## Active task and boundaries
 Checkout: F:/CodexWorktrees/chat-design-release/grifon-command.
 Branch: codex/chat-sidebar-vibrancy; base origin/main 9e3b0996.
-Source commit5c4066ae pushed; attached draft PR205:
-https://github.com/yopiheart/grifon-command/pull/205
-Hosted CI39091648732 FAIL:41/43 required jobs PASS,23failed,9cancelled.
-Shard23's500ms override expired before a2.7s passing measurement; no scroll bug.
-Test now uses configured wait + real history-reading wheel + cap-anchor event
-receipt. Old-follow mutation RED8062px after15s; healthy polish GREEN3/3.
-Shard9 found React18 unsupported fetchPriority prop; removed only that prop,
-preserving eager loading. All3 previously failing journey/320/375 console cases
-PASS locally; broader companion-chat18-case suite continues,0failures.
-Independent review of both corrections PASS,0findings. Require fresh green CI.
-Neil requested macOS-inspired translucent sidebar/floating conversation rows,
-then a static-first mascot on login/refresh. Earlier merge/release request remains
-active with these final refinements. No paid/provider/backend changes.
-PR202 design merged d79bd602; PR203 merged 9e3b0996 (main CI39087600268 PASS).
-PR201 live voice remains paused; Android microphone test was never started.
-No Grok provider work. Preserve unrelated primary and voice worktrees.
+Draft PR205: https://github.com/yopiheart/grifon-command/pull/205
+Earlier merge/release authorization remains active. Require green CI before merge.
+Neil approved the light/dark sidebar, then requested row avatars hidden until
+distinct mascot choices exist and the mobile typing/deleting bounce fixed.
+Do not touch the unrelated primary C:/ checkout or the voice worktree.
+PR201 live voice stays paused; Android microphone test was never started.
+No Grok work, paid calls, provider/backend changes or production data writes.
 
-## Changes
-One shared charcoal/pearl sidebar material on desktop/mobile; borderless rows,
-quiet selection/gold marker, approved small static Grifon portrait, actual title,
-preview and relative time. Footer belongs to pane. Search/drafts/nav unchanged.
-Pearl drawer muted ink strengthened after independent contrast finding.
-Header shows transparent startup.png while the single iframe initializes, then
-crossfades only after true first rendered frame. Error/retry/reduced motion kept.
-Poster: 512px transparent export of unchanged approved 3D renderer/neutral pose;
-no AI generation/bitmap retouch/model edit. Original neutral.png unchanged.
-DESIGN.md records the scoped sidebar and startup treatment.
+## Implementation
+One translucent charcoal/pearl sidebar material with borderless rows, quiet
+selection/gold marker, actual title, preview and relative time; unified footer.
+Row portraits and their 37px + 11px gutter are removed; central mascot preserved.
+Mobile search stays full-width; footer returns only after leaving search.
+Light drawer muted text uses body-strength ink for contrast over the dim veil.
+Header startup.png is a transparent512px export of the unchanged approved3D
+renderer, shown eagerly until the single iframe reports its first rendered frame.
+Retry/error, reduced motion, bounds and persistent renderer remain intact.
+Video confirmed35recording-pixel bounce from Saving/Saved note wrapping, while
+input height, keyboard and header stayed fixed. Browser RED:19.5CSSpx.
+Footer now reserves natural space for both normal messages in one grid cell;
+only the visible p#companion-save-status carries truthful accessible status.
+Errors/conflicts can expand, and retry/recover controls are preserved.
+Autosize, visualViewport, persistence and scroll handlers were not changed.
+Three existing beta assertions now target the live status p, retaining their
+text-prefix and visibility checks; hidden sizing siblings cannot satisfy them.
+DESIGN.md records deferred portraits and stable save-note sizing.
 
-## Success and verification
-Success: readable floating sidebar in both themes/desktop/mobile; static mascot
-then stable animation handoff. Failure: contrast/clipping, keyboard/draft/search
-regression, dots-only/blank slot, layout shift or duplicate renderer.
-Final build PASS; final serial Vitest PASS1681, same32 opt-in skips (132files/9skips).
-One prior repeat hit an existing Git-fixture5s timeout; isolated rerun PASS9/9,
-then full serial PASS. No assertion or unit timeout was changed.
-Bundle leak, voice/eval parity, domain language, PowerShell ASCII, artifact
-anchors, design lint and whitespace checks PASS.
-Startup RED original no-visible-still; all26 unique final cases have passing
-runs. One desktop screenshot timeout passed on unchanged explicit rerun.
-Continuity final PASS6/6,0retries; iframe/window/canvas/drafts/state retained.
-Contrast RED4.037:1; GREEN darkdesktop/lightmobile2/2 above4.5:1.
-Visual capture6/6 at1280x900,375x667,390x844, with both light-mobile recaptures2/2.
-Firefox152/WebKit26.5 PASS2/2, both themes and keyboard-size/drawer/search.
-Independent correctness+brand review PASS,0remaining findings, BRAND_PASS45/50;
-continuity ledger change separately reviewed clean.
-All111 unique relevant browser cases PASS: initial104 passed plus7 external
-origin-fixture setup failures; corrected only external helper port, rerun7/7
-PASS,0retries/skips. Initial reports retained; no product assertion failure.
-Actual Android keyboard was verified by Neil on prior design; latest styling
-uses desktop viewport/engine simulation, not a fresh physical-phone run.
-External QA: F:/CodexQA/grifon-sidebar-20261018 and
+## Contract and local verification
+Success: no row avatars/gutter; same-line type/delete has no composer/footer
+bounce; natural multiline growth and readable errors; latest reply accessible.
+Failure: keyboard overlap, lost drafts/reading position, clipped/error text,
+false save status, duplicate renderer, blank mascot or remount.
+Final build PASS; full serial Vitest1681PASS,32existing opt-in skips;
+132filesPASS,9skipped,238.84s. Quiet reporter buffered output; no restart.
+Own snapshot line-ending-only churn was verified and restored.
+Voice/eval parity, domain language, PowerShell ASCII, artifact anchors,
+design lint, bundle leak and whitespace checks PASS.
+Final native discovery345cases,0errors (4new regression cases).
+Valid old-code RED19.5px>1; fixed thin control0px across9geometry receipts.
+Final composer-actions12/12PASS,0retries/skips:4new320preview/390production
+light/dark cases plus8existing typed/dictated persistence, tooltip/touch cases.
+Independent narrow 19-case suite PASS, 0 retries/skips: conflict/copy, storage
+errors, keyboard, sidebar/search, continuity and appearance. Total 31 cases PASS.
+Final filled-sidebar 2/2 plus visual journeys 2/2 PASS: 35 unique final checks,
+0 failures/retries/skips. All CLI exits 0; initial harness reports kept separately.
+Fresh independent correctness and brand review PASS, 0 findings, BRAND_PASS45/50.
+Both themes reviewed at 1280px and 375px, with sidebar200%, save transitions,
+keyboard, multiline cap, storage error/retry and desktop conflict-copy captures.
+31-case receipts show 0px motion; measured latest-reply clearance 35.86px.
+Prior source startup26 unique PASS; continuity6/6 and contrast2/2 passed.
+Earlier111 unique relevant cases passed; initial setup/capture reports retained.
+Current motion QA: F:/CodexQA/grifon-composer-motion-20261018.
+Earlier QA: F:/CodexQA/grifon-sidebar-20261018 and
 F:/CodexQA/grifon-mascot-first-paint-20261018.
+Actual Android keyboard was previously human-verified; latest fix still needs
+phone retest. Desktop viewport/engine simulation is not physical Safari/Android.
 
-## Release and live evidence
-New sidebar not published yet. Prior main live smoke uses byte-unmodified
-production app plus network-only synthetic account/responses, not real auth.
-Baseline main live PASS4/4, both themes/mobile/desktop; deterministic synthetic
-auto-invite removes test entry race. No real email, provider call or prod write.
-Main deployment reported completed Dpm3bapc8eZBmu2QCxP9W1YBeqL5.
+## CI and deployment
+Prior pushed source efdc19a0. CI39093307073 finished:23started jobs PASS;
+172/172executed browser cases PASS (one capture retry),20unstarted shards
+covering169cases blocked by Actions budget. All20 annotations confirm budget.
+Neil asked to unblock; no confirmation, rerun or billing change since.
+Previous CI39091648732 failures were repaired and retained in QA reports.
+Exact efdc19a0 preview READY: dpl_48KFxkErrXDpmxGmu1ty9DWbHcwu,
+grifon-command-1ouwmfdad-neilmaglayabusiness22-2085s-projects.vercel.app.
+Production remains main9e3b0996, deploymentDpm3bapc8eZBmu2QCxP9W1YBeqL5.
+Old-main live baseline4/4PASS using unmodified deployed bytes and network-only
+synthetic auth/API responses; no real auth/email/provider/prod writes.
+Postmerge verifier updated for no portraits and12px title inset, still gated
+approvedReady=null until root confirms new production Ready plus merge SHA.
 
-## ▶ NEXT ACTION
-Commit/push the verified corrections while broader console checks finish, then require
-fresh hosted CI before the authorized merge. Verify resulting live mobile/desktop
-screens with synthetic-network coverage distinguished from real backend/phone.
+## Next action
+Commit/push checked follow-up to PR205,
+verify exact-source Ready preview and give Neil its mobile link.
+Keep production merge held for a complete green hosted run after budget unblock.
+Then verify live both themes/mobile/desktop with synthetic coverage disclosed.

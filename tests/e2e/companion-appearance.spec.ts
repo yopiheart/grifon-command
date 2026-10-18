@@ -242,6 +242,13 @@ for (const [width, height] of [[375, 667], [390, 844], [1280, 900]]) {
       await page.evaluate(() => document.fonts.ready);
       await expect(page.locator('iframe[title="Grifon animated companion"]:visible')).toHaveAttribute('data-ready', 'true');
       await page.screenshot({ path: path.join(screens, `${theme.toLowerCase()}-initial-${width}.png`), fullPage: true, scale: 'css', animations: 'disabled' });
+      if (width < 768) await page.getByRole('button', { name: 'Open conversations', exact: true }).click();
+      const navigation = width < 768 ? page.getByRole('dialog', { name: 'Chat navigation', exact: true }) : page.locator('.companion-sidebar');
+      await expect(navigation.locator('.companion-conversation img')).toHaveCount(0);
+      const titleInset = await navigation.locator('.companion-conversation').first().evaluate(row =>
+        row.querySelector('.companion-conversation-title')!.getBoundingClientRect().left - row.getBoundingClientRect().left);
+      expect(titleInset).toBeLessThanOrEqual(12);
+      if (width < 768) await page.keyboard.press('Escape');
     }
     if (width >= 768) {
       await expect(page.locator('.companion-shell img[alt="Grifon"]')).toBeVisible();
