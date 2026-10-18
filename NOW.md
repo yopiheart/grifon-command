@@ -1,13 +1,38 @@
 # NOW - the resume doc
-**Stamped: 2026-10-14, STP concept and engineering follow-up kit ready**
+**Stamped: 2026-10-18, Sunday preliminary STP response ready for August review**
 
 ## Current work
 Branch codex/oceanides-premium-profile-brochure; draft PR161 stacked on PR153.
 https://github.com/yopiheart/grifon-command/pull/161
-Neil requests concrete steps and a concept design before finding an STP supplier/engineer.
-Human-confirmed: no technical partner, actual laboratory results, flow records or plans yet.
-Prepare concept study and cost worksheet; final design, sizing and guarantees need technical review.
-No client/supplier outreach, new email, paid call, deployment or merge authorized by this request.
+Neil supplied BioGreen candidate-supplier plan/profile and operation-video URL.
+Candidate identified; appointment, engineering responsibility and reference-use permissions unconfirmed.
+Actual client laboratory results, flow records and site plans still unavailable.
+Neil states promised technical follow-up is due today, Sunday, before Monday; treat as current deadline.
+Preliminary response PDF and local email text ready; full requested package remains incomplete.
+No client/supplier outreach, actual email draft/send, paid call, deployment or merge performed.
+
+## Sunday supplier review and response
+Inputs retained unchanged in Downloads: STP 30 CMD PLAN - Copy.pdf; 4. Company Profile.pdf.
+YouTube https://www.youtube.com/watch?v=jDsKUca5_KA: transcript and selected process scenes reviewed.
+Plan: 3 pages, industrial wastewater, 30 m3/day average, generic client/project placeholders.
+EC + PAC/PAM dosing, settling, filtration and AOP; different from approved biological explainer.
+Civil/tank works excluded; client supplies main power/service water; regular desludging stated.
+Profile: BioGreen branding / DMR Trading legal scan; 2025 permits do not establish current validity.
+Project lists lack capacities, commissioning acceptance and lab results; independent validation pending.
+No site suitability, compliance, price, OPEX, savings, zero-siphoning or final-design claim established.
+clients/oceanides/stp-proposal-prep/output/pdf/Oceanides-STP-Preliminary-Technical-Response-2026-10-18.pdf
+3 A4 pages; 63,240 bytes; SHA fa9ee1c848dd119913c74f1bd1a4cd68b30974d1a2fb01e2ef6648870b8fb5ca.
+Client request matrix includes brochure, process, equipment/space, pumps/power/staff, controls,
+performance, references, earlier quotation/payment terms and three-year costs; pending status explicit.
+Three-site inputs, supplier clarifications and conditional next deliverables; no invented completion date.
+Local client-follow-up-email-for-review.txt is unsent, not a Gmail draft; recipient not supplied.
+Existing brochure available separately for August version review, not attached to this response.
+Builder build-preliminary-response.py; build and Python compile PASS.
+All 3 pages visually inspected; independent final content/layout PASS.
+All used fonts embedded and text within page bounds PASS; final render identical after font fix.
+Private source extracts/renders/QA under .tmp/oceanides-supplier-review/.
+Next: August reviews response; obtain supplier confirmation of missing items and real delivery dates,
+retrieve earlier quote, confirm priority site and client inputs before final technical/commercial issue.
 
 ## New engineering preparation deliverables
 clients/oceanides/stp-proposal-prep/output/pdf/Oceanides-STP-Concept-and-Follow-Up-Kit-2026.pdf
