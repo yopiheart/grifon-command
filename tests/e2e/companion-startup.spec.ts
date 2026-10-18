@@ -5,10 +5,11 @@ import path from 'node:path';
 const QA = path.resolve(process.env.COMPANION_STARTUP_QA_DIR || 'assets/design/companion-startup/qa');
 const phase = process.env.COMPANION_STARTUP_PHASE || 'final';
 const FRAME = 'iframe[title="Grifon animated companion"]';
-const STILL = 'img[src$="/companion/neutral.png"]';
+const STILL = '.companion-avatar > img[src$="/companion/startup.png"]';
 const input = (page: Page) => page.getByRole('textbox', { name: 'Message Grifon', exact: true });
 
 async function configure(page: Page, width: number, height: number) {
+  const origin = new URL(test.info().project.use.baseURL || 'http://127.0.0.1:5173').origin;
   await page.setViewportSize({ width, height });
   await page.addInitScript(() => {
     delete (window as any).SpeechRecognition; delete (window as any).webkitSpeechRecognition;
@@ -34,10 +35,10 @@ async function configure(page: Page, width: number, height: number) {
     }
     if (window !== window.top) return;
     const ledger = { samples: [] as any[], readyMessages: [] as any[], revealAnimations: [] as any[], frameInsertedAt: null as number | null, frameInsertedTimeline: null as number | null, running: true };
-    let heldReveal: Animation | null = null;
+    let heldReveals: Animation[] = [];
     const observedReady = new WeakSet<Element>();
     (window as any).startupEvidence = ledger;
-    (window as any).resumeStartupReveal = () => { heldReveal?.play(); heldReveal = null; };
+    (window as any).resumeStartupReveal = () => { heldReveals.forEach(animation => animation.play()); heldReveals = []; };
     new MutationObserver(records => {
       for (const record of records) {
         for (const node of record.addedNodes) {
@@ -58,7 +59,12 @@ async function configure(page: Page, width: number, height: number) {
           animation.currentTime = Number(timing.duration) / 2;
           ledger.revealAnimations.push({ at: performance.timeOrigin + performance.now(), duration: timing.duration, keyframes,
             midpointOpacity: Number(getComputedStyle(frame).opacity), playbackRate: animation.playbackRate });
-          heldReveal = animation;
+          heldReveals.push(animation);
+          const still = frame.parentElement?.querySelector('img');
+          for (const fade of still?.getAnimations() || []) {
+            fade.pause(); fade.currentTime = Number(fade.effect?.getTiming().duration) / 2;
+            heldReveals.push(fade);
+          }
         }
       }
     }).observe(document, { childList: true, subtree: true, attributes: true, attributeFilter: ['data-ready', 'style'] });
@@ -85,7 +91,7 @@ async function configure(page: Page, width: number, height: number) {
         const b = frame.parentElement!.getBoundingClientRect(), style = getComputedStyle(frame);
         const cue = frame.parentElement!.querySelector('[role="status"]');
         const state = {
-          opacity: Number(Number(style.opacity).toFixed(3)), visible: visible(frame), still: visible(document.querySelector('img[src$="/companion/neutral.png"]')),
+          opacity: Number(Number(style.opacity).toFixed(3)), visible: visible(frame), still: visible(frame.parentElement!.querySelector('img')),
           ready: frame.getAttribute('data-ready'),
           cueVisible: visible(cue), cueText: cue?.textContent,
           cueStyle: cue ? { opacity: getComputedStyle(cue).opacity, delay: getComputedStyle(cue).animationDelay, duration: getComputedStyle(cue).animationDuration } : null,
@@ -106,7 +112,7 @@ async function configure(page: Page, width: number, height: number) {
   await page.route('**/*', route => {
     const request = route.request(), url = new URL(request.url());
     if (request.method() === 'GET' && ['fonts.googleapis.com', 'fonts.gstatic.com'].includes(url.hostname)) return route.continue();
-    if (!['http://127.0.0.1:5173', 'http://localhost:5173'].includes(url.origin) || url.pathname.startsWith('/api/')) {
+    if (url.origin !== origin || url.pathname.startsWith('/api/')) {
       rejected.push(`${request.method()} ${url.origin}${url.pathname}`); return route.abort();
     }
     return route.continue();
@@ -152,12 +158,16 @@ async function observation(page: Page) {
   });
 }
 async function capture(page: Page, name: string, details: unknown) {
-  fs.writeFileSync(path.join(QA, `${phase}-${name}.json`), JSON.stringify(details, null, 2));
-  await page.screenshot({ path: path.join(QA, `${phase}-${name}.png`), fullPage: true });
+  const theme = await page.locator('.companion-shell').getAttribute('data-companion-theme');
+  fs.writeFileSync(path.join(QA, `${phase}-${theme}-${name}.json`), JSON.stringify(details, null, 2));
+  await page.screenshot({ path: path.join(QA, `${phase}-${theme}-${name}.png`), fullPage: true });
 }
 async function assertLoading(page: Page, width: number) {
   await expect(page.locator(FRAME)).not.toHaveAttribute('data-ready', 'true');
-  await expect(page.locator(STILL)).not.toBeVisible();
+  await expect(page.locator(STILL)).toBeVisible();
+  await expect(page.locator(STILL)).toHaveCSS('opacity', '1');
+  await expect(page.locator(STILL)).toHaveJSProperty('complete', true);
+  await expect(page.locator(STILL)).toHaveJSProperty('naturalWidth', 512);
   const value = await observation(page), size = width < 768 ? 56 : 64;
   expect(value.opacity).toBe(0);
   expect(value.slot.width).toBe(size); expect(value.slot.height).toBe(size);
@@ -181,7 +191,7 @@ async function assertReady(page: Page, before?: Awaited<ReturnType<typeof observ
   expect(value.ledger.readyMessages).toHaveLength(1);
   expect(value.ledger.readyMessages[0].firstPaint?.at).toBeLessThanOrEqual(value.ledger.readyMessages[0].at);
   expect(value.innerFallbackVisible).toBe(false);
-  await expect(page.locator(STILL)).not.toBeVisible();
+  await expect(page.locator(STILL)).toHaveCSS('opacity', '0');
   assertStableSlot(value.slot, value.reservedSlot);
   if (before) assertStableSlot(value.slot, before.slot);
   const positive = value.ledger.samples.filter((sample: any) => sample.state.visible && sample.state.opacity > 0);
@@ -213,7 +223,13 @@ async function assertReady(page: Page, before?: Awaited<ReturnType<typeof observ
   return value;
 }
 
-test('held model startup never shows an outer static mascot', async ({ page }) => {
+for (const theme of ['dark', 'light'] as const) {
+test.describe(`${theme} appearance`, () => {
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(value => localStorage.setItem('grifon-companion-appearance', value), theme);
+});
+
+test('held model startup shows the approved still mascot instead of loading dots', async ({ page }) => {
   const network = await configure(page, 375, 667);
   let release!: () => void, requested = false;
   const held = new Promise<void>(resolve => { release = resolve; });
@@ -226,7 +242,7 @@ test('held model startup never shows an outer static mascot', async ({ page }) =
     const loading = await page.evaluate(() => {
       const frame = document.querySelector('iframe[title="Grifon animated companion"]') as HTMLIFrameElement;
       const b = frame.parentElement!.getBoundingClientRect();
-      const still = document.querySelector('img[src$="/companion/neutral.png"]');
+      const still = document.querySelector('.companion-avatar > img[src$="/companion/startup.png"]');
       return {
         ready: frame.getAttribute('data-ready'),
         slot: { left: b.left, top: b.top, width: b.width, height: b.height },
@@ -234,18 +250,19 @@ test('held model startup never shows an outer static mascot', async ({ page }) =
         fixtureCalls: (window as any).companionFixture.snapshot().calls,
       };
     });
-    fs.writeFileSync(path.join(QA, `${phase}-held-model-375.json`), JSON.stringify({ loading, network }, null, 2));
-    await page.screenshot({ path: path.join(QA, `${phase}-held-model-375.png`), fullPage: true });
+    await capture(page, 'held-model-375', { loading, network });
     await expect(page.locator(FRAME)).not.toHaveAttribute('data-ready', 'true');
-    expect(loading.visibleStill, 'loading must reserve the avatar slot without showing neutral.png').toBe(false);
+    expect(loading.visibleStill, 'the mascot remains visible while the animated model initializes').toBe(true);
     expect(loading.slot.width).toBe(56); expect(loading.slot.height).toBe(56);
-    await expect(page.locator(STILL)).not.toBeVisible();
+    await expect(page.locator(STILL)).toBeVisible();
+    await expect(page.locator(STILL)).toHaveJSProperty('naturalWidth', 512);
+    await expect(page.locator('.companion-avatar-loading')).toHaveCount(0);
     expect(network.rejected).toEqual([]); expect(loading.fixtureCalls).toEqual([]);
   } finally { release(); }
 });
 
 for (const [width, height] of [[375, 667], [390, 844], [1280, 900]]) {
-  test(`cold slow load and full refresh keep a stable empty slot then reveal real pixels at ${width}px`, async ({ page }) => {
+  test(`cold slow load and full refresh keep a stable mascot then reveal real pixels at ${width}px`, async ({ page }) => {
     const network = await configure(page, width, height);
     let release!: () => void, held!: Promise<void>, requests = 0;
     const hold = () => { held = new Promise<void>(resolve => { release = resolve; }); };
@@ -257,21 +274,8 @@ for (const [width, height] of [[375, 667], [390, 844], [1280, 900]]) {
       await page.waitForTimeout(1400);
       const slow = await assertLoading(page, width); assertStableSlot(slow.slot, before.slot);
       await capture(page, `slow-${width}`, { before, slow, network });
-      const firstCue = slow.ledger.samples.find((sample: any) => sample.state.cueVisible);
-      expect(firstCue, 'slow startup must paint an informative loading cue').toBeDefined();
-      // Native CSS animation time and performance.now drift in headless Edge.
-      // Compare insertion/paint on the same document animation timeline.
-      expect(firstCue.state.timeline - slow.ledger.frameInsertedTimeline, 'loading cue waits through the brief fast-load window').toBeGreaterThanOrEqual(280);
-      expect(slow.ledger.samples.filter((sample: any) => sample.state.timeline - slow.ledger.frameInsertedTimeline < 280 && sample.state.cueVisible)).toEqual([]);
-      const indicator = page.locator('.companion-avatar [role="status"]');
-      await expect(indicator).toBeVisible(); await expect(indicator).toContainText(/loading|starting|connecting|preparing/i);
-      expect(await indicator.evaluate(element => {
-        for (let current: Element | null = element; current; current = current.parentElement) {
-          const css = getComputedStyle(current);
-          if (Number(css.opacity) === 0 || css.visibility === 'hidden' || css.display === 'none') return false;
-        }
-        return true;
-      }), 'the delayed loading cue must actually be painted, not merely present in the DOM').toBe(true);
+      expect(slow.ledger.samples.some((sample: any) => sample.state.still), 'the approved still is painted during startup').toBe(true);
+      await expect(page.locator('.companion-avatar-loading')).toHaveCount(0);
       await input(page).fill('Chat while the model loads'); await input(page).press('Enter');
       await expect(page.getByRole('status', { name: 'Grifon is typing', exact: true })).toHaveCount(0);
       await expect(page.locator('.companion-message-user')).toHaveText('Chat while the model loads');
@@ -294,13 +298,14 @@ for (const [width, height] of [[375, 667], [390, 844], [1280, 900]]) {
       await page.emulateMedia({ reducedMotion: reduced ? 'reduce' : 'no-preference' });
       await load(page); const value = await assertReady(page, undefined, reduced);
       await capture(page, `${reduced ? 'reduced' : 'fast'}-${width}`, { value, network });
-      expect(value.ledger.samples.filter((sample: any) => !sample.state.ready && sample.state.still)).toEqual([]);
+      await expect(page.locator(STILL)).toHaveCount(1);
+      await expect(page.locator('.companion-avatar-loading')).toHaveCount(0);
       expect(value.slot.width).toBe(width < 768 ? 56 : 64);
       expect(network.rejected).toEqual([]); expect(network.pageErrors).toEqual([]);
     });
   }
 
-  test(`genuine model failure offers truthful still and retry hides it until new real pixels at ${width}px`, async ({ page }) => {
+  test(`genuine model failure and retry keep the still until new real pixels at ${width}px`, async ({ page }) => {
     const network = await configure(page, width, height);
     let fail = true, requests = 0, release!: () => void;
     const held = new Promise<void>(resolve => { release = resolve; });
@@ -329,4 +334,6 @@ for (const [width, height] of [[375, 667], [390, 844], [1280, 900]]) {
       expect(network.rejected).toEqual([]); expect(network.pageErrors).toEqual([]);
     } finally { release(); }
   });
+}
+});
 }

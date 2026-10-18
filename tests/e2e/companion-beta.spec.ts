@@ -31,16 +31,16 @@ for (const width of [390, 1280]) test(`guided beta limitations are visible at ${
 test('stale second tab cannot erase a newer conversation', async ({ page, context }) => {
   await page.setViewportSize({ width: 1280, height: 900 }); await open(page);
   await input(page).fill('Shared first conversation'); await input(page).press('Enter');
-  await expect(page.getByText(/^Draft saved on this device/)).toBeVisible();
+  await expect(page.locator('#companion-save-status').filter({ hasText: /^Draft saved on this device/ })).toBeVisible();
   const older = await context.newPage(); await older.setViewportSize({ width: 1280, height: 900 }); await open(older);
   await expect(older.locator('.companion-message-user')).toHaveText('Shared first conversation');
   await page.getByRole('button', { name: 'New chat', exact: true }).click();
   await input(page).fill('Newer second conversation'); await input(page).press('Enter');
-  await expect(page.getByText(/^Draft saved on this device/)).toBeVisible();
+  await expect(page.locator('#companion-save-status').filter({ hasText: /^Draft saved on this device/ })).toBeVisible();
   await input(older).fill('Older tab unsent edit');
   await expect(older.getByText(/Another tab saved newer chats/)).toBeVisible();
   await older.getByRole('button', { name: 'Save this chat as a copy', exact: true }).click();
-  await expect(older.getByText(/^Draft saved on this device/)).toBeVisible();
+  await expect(older.locator('#companion-save-status').filter({ hasText: /^Draft saved on this device/ })).toBeVisible();
   await page.reload();
   await expect(page.getByRole('navigation', { name: 'Conversations', exact: true }).getByRole('button', { name: /Newer second conversation/ })).toBeVisible();
   await expect(input(page)).toHaveValue('Older tab unsent edit');
