@@ -9,7 +9,6 @@ interface CompanionAvatarProps {
   className?: string;
 }
 const motionStyle = {
-  '--companion-loading-delay': `${DUR.base}s`,
   '--companion-ready-duration': `${DUR.fast}s`,
   '--companion-reply-duration': `${DUR.entrance}s`,
   '--companion-duration': `${DUR.instant}s`,
@@ -112,11 +111,9 @@ export const CompanionAvatar = memo(function CompanionAvatar({ state, className 
   const retry = () => { setReady(false); setFailed(false); setAttempt(value => value + 1); };
   return (
     <div ref={host} className={`companion-avatar relative isolate ${className}`} style={motionStyle} data-companion-state={state}>
-      {failed && <img src={`${base}neutral.png`} alt="" aria-hidden="true" draggable={false} className="pointer-events-none absolute inset-0 h-full w-full object-contain" />}
-      {!ready && !failed && <div role="status" aria-label="Loading companion" className="companion-avatar-loading pointer-events-none absolute inset-0 flex items-center justify-center gap-1.5">
-        <span className="sr-only">Loading companion</span>
-        <span aria-hidden="true" className="companion-typing-dot h-1 w-1 rounded-full bg-zinc-400" /><span aria-hidden="true" className="companion-typing-dot h-1 w-1 rounded-full bg-zinc-400" /><span aria-hidden="true" className="companion-typing-dot h-1 w-1 rounded-full bg-zinc-400" />
-      </div>}
+      <img src={`${base}startup.png`} alt="" aria-hidden="true" draggable={false} loading="eager" fetchPriority="high" width={512} height={512}
+        data-ready={ready ? 'true' : undefined} className="pointer-events-none absolute inset-0 h-full w-full object-contain"
+        style={{ opacity: ready ? 0 : 1 }} />
       <iframe
         key={attempt} ref={frame} src={`${base}frame.html`} title="Grifon animated companion"
         aria-hidden="true" tabIndex={-1} draggable={false} data-ready={ready ? 'true' : undefined}

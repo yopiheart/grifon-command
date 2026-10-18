@@ -5,18 +5,19 @@ import path from 'node:path';
 const QA = path.resolve(process.env.COMPANION_CONTINUITY_QA_DIR || 'assets/design/companion-continuity/qa');
 const phase = process.env.COMPANION_CONTINUITY_PHASE || 'current';
 const FRAME = 'iframe[title="Grifon animated companion"]';
-const FALLBACK = 'img[src$="/companion/neutral.png"]';
+const FALLBACK = '.companion-avatar > img[src$="/companion/startup.png"]';
 const input = (page: Page) => page.getByRole('textbox', { name: 'Message Grifon', exact: true });
 const currentId = (page: Page) => page.getByTestId('companion-chat').getAttribute('data-chat-id');
 
 async function configure(page: Page, width: number) {
+  const origin = new URL(test.info().project.use.baseURL || 'http://127.0.0.1:5173').origin;
   await page.setViewportSize({ width, height: width === 1280 ? 900 : width === 375 ? 667 : 844 });
   await page.addInitScript(() => {
     // Never open a microphone while testing unrelated renderer lifecycle.
     delete (window as any).SpeechRecognition; delete (window as any).webkitSpeechRecognition;
     const events: { type: string; at: number; ready?: string | null }[] = [];
     const frameSelector = 'iframe[title="Grifon animated companion"]';
-    const fallbackSelector = 'img[src$="/companion/neutral.png"]';
+    const fallbackSelector = '.companion-avatar > img[src$="/companion/startup.png"]';
     const collect = (node: Node, type: string) => {
       if (!(node instanceof Element)) return;
       for (const selector of [frameSelector, fallbackSelector]) {
@@ -38,12 +39,18 @@ async function configure(page: Page, width: number) {
     (window as any).continuityEvidence = { events, reference: null };
   });
   const requests: string[] = [], rejected: string[] = [];
-  page.on('request', request => { const url = new URL(request.url()); if (url.pathname.startsWith('/companion/')) requests.push(url.pathname); });
+  page.on('request', request => {
+    const url = new URL(request.url());
+    // Sidebar portraits share this asset directory but are not renderer reloads.
+    const sidebarPortrait = url.pathname === '/companion/neutral.png' && request.resourceType() === 'image'
+      && request.frame() === page.mainFrame();
+    if (url.pathname.startsWith('/companion/') && !sidebarPortrait) requests.push(url.pathname);
+  });
   await page.route('**/*', route => {
     const request = route.request(), url = new URL(request.url());
     if (request.method() === 'GET' && ['fonts.googleapis.com', 'fonts.gstatic.com'].includes(url.hostname)) return route.continue();
     if (url.pathname === '/tests/fixtures/sample-batch/before_after-run1-complete-raw.mp4') return route.fulfill({ contentType: 'video/webm', path: 'tests/e2e/fixtures/recovery.webm' });
-    if (!['http://127.0.0.1:5173', 'http://localhost:5173'].includes(url.origin) || url.pathname.startsWith('/api/')) {
+    if (url.origin !== origin || url.pathname.startsWith('/api/')) {
       rejected.push(`${request.method()} ${url.origin}${url.pathname}`); return route.abort();
     }
     return route.continue();
@@ -55,7 +62,10 @@ async function configure(page: Page, width: number) {
 async function load(page: Page) {
   await page.goto('/companion-chat-preview.html'); await expect(input(page)).toBeVisible();
 }
-async function ready(page: Page) { await expect(page.locator(FRAME)).toHaveAttribute('data-ready', 'true', { timeout: 30_000 }); }
+async function ready(page: Page) {
+  await expect(page.locator(FRAME)).toHaveAttribute('data-ready', 'true', { timeout: 30_000 });
+  await expect(page.locator(FALLBACK)).toHaveCSS('opacity', '0');
+}
 async function capture(page: Page, name: string, data: unknown) {
   fs.writeFileSync(path.join(QA, `${phase}-${name}.json`), JSON.stringify(data, null, 2));
   await page.screenshot({ path: path.join(QA, `${phase}-${name}.png`), fullPage: true });
@@ -81,7 +91,8 @@ async function observation(page: Page) {
       originalIframeConnected: ledger.reference?.iframe.isConnected ?? null,
       originalCanvasConnected: ledger.reference?.canvas?.isConnected ?? null,
       iframeCount: document.querySelectorAll('iframe[title="Grifon animated companion"]').length,
-      fallbackCount: document.querySelectorAll('img[src$="/companion/neutral.png"]').length,
+      fallbackCount: document.querySelectorAll('.companion-avatar > img[src$="/companion/startup.png"]').length,
+      fallbackOpacity: getComputedStyle(iframe!.parentElement!.querySelector('img')!).opacity,
       ready: iframe?.getAttribute('data-ready'),
       reaction: debug?.reaction.state, frameCount: debug?.frameCount,
       hostReaction: iframe?.parentElement?.getAttribute('data-companion-state'),
@@ -142,7 +153,7 @@ for (const width of [375, 390, 1280]) {
       expect.soft(snapshot.sameIframe, `${snapshot.action}: preserve iframe DOM identity`).toBe(true);
       expect.soft(snapshot.sameWindow, `${snapshot.action}: preserve live window identity`).toBe(true);
       expect.soft(snapshot.sameCanvas, `${snapshot.action}: preserve live canvas identity`).toBe(true);
-      expect.soft(snapshot.iframeCount).toBe(1); expect.soft(snapshot.fallbackCount).toBe(0);
+      expect.soft(snapshot.iframeCount).toBe(1); expect.soft(snapshot.fallbackCount).toBe(1); expect.soft(snapshot.fallbackOpacity).toBe('0');
     }
     expect.soft(warmRequests, 'chat switches must not reload renderer resources').toEqual([]);
     expect.soft(final.events.filter(event => ['iframe-added', 'iframe-removed', 'fallback-added'].includes(event.type)), 'no remount or neutral fallback insertion after initial ready').toEqual([]);
@@ -186,19 +197,20 @@ test('pending intake and working production reactions cannot leak into a new cha
   expect(warmRequests).toEqual([]); expect(network.rejected).toEqual([]);
 });
 
-test('cold load reserves the avatar slot without a still while chat works', async ({ page }) => {
+test('cold load keeps the approved still visible while chat works', async ({ page }) => {
   const network = await configure(page, 375); let release!: () => void;
   const held = new Promise<void>(resolve => { release = resolve; });
   await page.route('**/companion/scene.bin', async route => { await held; await route.continue(); });
   try {
-    await load(page); await expect(page.locator(FALLBACK)).not.toBeVisible();
+    await load(page); await expect(page.locator(FALLBACK)).toBeVisible();
+    await expect(page.locator(FALLBACK)).toHaveCSS('opacity', '1');
     await expect(page.locator(FRAME)).not.toHaveAttribute('data-ready', 'true');
     await send(page, 'Typing while the companion loads');
     await expect(page.locator('.companion-message-user')).toHaveText('Typing while the companion loads');
-    await expect(page.locator('.companion-avatar [role="status"]')).toBeVisible();
+    await expect(page.locator('.companion-avatar-loading')).toHaveCount(0);
     await capture(page, 'cold-loading', { fallbackCount: await page.locator(FALLBACK).count(), requests: network.requests });
   } finally { release(); }
-  await ready(page); await expect(page.locator(FALLBACK)).toHaveCount(0);
+  await ready(page);
   await capture(page, 'cold-ready', { requests: network.requests, rejected: network.rejected });
   expect(await page.evaluate(() => (window as any).companionFixture.snapshot().calls)).toEqual([]);
   expect(network.rejected).toEqual([]);
@@ -213,7 +225,7 @@ test('real asset failure keeps an honest still fallback and explicit retry resto
   await send(page, 'Chat remains available after an asset failure');
   await capture(page, 'failed-fallback', { requests: network.requests, fallbackCount: await page.locator(FALLBACK).count() });
   fail = false; await retry.click(); await ready(page);
-  await expect(page.locator(FALLBACK)).toHaveCount(0); await expect(retry).toHaveCount(0);
+  await expect(page.locator(FALLBACK)).toHaveCSS('opacity', '0'); await expect(retry).toHaveCount(0);
   await expect(page.locator('.companion-message-user')).toHaveText('Chat remains available after an asset failure');
   await capture(page, 'retry-ready', { requests: network.requests, rejected: network.rejected });
   expect(network.requests.filter(value => value === '/companion/scene.bin').length).toBe(2);

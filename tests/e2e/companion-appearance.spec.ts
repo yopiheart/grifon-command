@@ -148,9 +148,10 @@ test('both themes retain an opaque readable fallback for increased contrast', as
   }
 });
 
-test('dark saved-chat previews remain readable across the filled sidebar', async ({ page }, testInfo) => {
-  await openFixture(page, 1280, 900);
-  await page.evaluate(async () => {
+for (const [theme, width, height] of [['Dark', 1280, 900], ['Light', 375, 667]] as const) {
+test(`${theme.toLowerCase()} saved-chat previews remain readable across the filled ${width}px sidebar`, async ({ page }, testInfo) => {
+  await openFixture(page, width, height);
+  await page.evaluate(async selectedIndex => {
     const db = await new Promise<IDBDatabase>((resolve, reject) => {
       const request = indexedDB.open('grifon_companion', 1);
       request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error);
@@ -162,21 +163,24 @@ test('dark saved-chat previews remain readable across the filled sidebar', async
         const book = request.result, original = book.chats.find((item: { id: string }) => item.id === book.selectedId);
         book.chats = Array.from({ length: 12 }, (_, index) => ({ ...original, id: `contrast-chat-${index}`, title: `Saved chat ${index + 1}`,
           updatedAt: Date.now() - index, draft: { ...original.draft, messages: [{ id: `contrast-message-${index}`, role: 'assistant', text: 'Saved conversation', at: Date.now() }] } }));
-        book.selectedId = book.chats[6].id; store.put(book, 'fixture-user-a');
+        book.selectedId = book.chats[selectedIndex].id; store.put(book, 'fixture-user-a');
       };
       tx.oncomplete = () => resolve(); tx.onerror = () => reject(tx.error);
     });
     db.close();
-  });
+  }, width < 768 ? 2 : 6);
   await page.reload();
   await expect(page.locator('.companion-conversation')).toHaveCount(12);
   await openAppearance(page);
-  await appearance(page).getByRole('button', { name: 'Dark', exact: true }).click();
+  await appearance(page).getByRole('button', { name: theme, exact: true }).click();
   await closeAppearance(page);
+  if (width < 768 && !await page.getByRole('dialog', { name: 'Chat navigation', exact: true }).isVisible()) {
+    await page.getByRole('button', { name: 'Open conversations', exact: true }).click();
+  }
   const readPreviews = () => page.locator('.companion-conversation').evaluateAll(rows => rows.flatMap(row => {
     const preview = row.querySelector('.companion-conversation-preview')!, rect = row.getBoundingClientRect();
     const list = row.closest('.companion-sidebar-scroll')!.getBoundingClientRect(), text = preview.getBoundingClientRect();
-    if (rect.top < list.top || rect.bottom > list.bottom) return [];
+    if (!rect.width || !rect.height || rect.top < list.top || rect.bottom > list.bottom) return [];
     return [{ x: Math.floor(rect.left + 6), y: Math.floor(text.top + text.height / 2), color: getComputedStyle(preview).color, selected: row.getAttribute('aria-current') === 'page' }];
   }));
   const luminance = (rgb: number[]) => rgb.map(value => {
@@ -185,12 +189,12 @@ test('dark saved-chat previews remain readable across the filled sidebar', async
   }).reduce((sum, value, index) => sum + value * [0.2126, 0.7152, 0.0722][index], 0);
   const captureContrast = async (state: 'selected' | 'inactive') => {
     const previews = await readPreviews();
-    expect(previews.length).toBeGreaterThanOrEqual(6);
-    if (state === 'selected') expect(previews.some(preview => preview.selected && preview.y > 650)).toBe(true);
+    expect(previews.length).toBeGreaterThanOrEqual(width < 768 ? 3 : 6);
+    if (state === 'selected') expect(previews.some(preview => preview.selected && preview.y > (width < 768 ? height / 2 : 650))).toBe(true);
     const hovered = previews.filter(preview => !preview.selected).at(-1)!;
-    if (state === 'inactive') expect(hovered.y).toBeGreaterThan(650);
+    if (state === 'inactive') expect(hovered.y).toBeGreaterThan(width < 768 ? height / 2 : 650);
     await page.mouse.move(hovered.x + 20, hovered.y);
-    const screenshot = await page.screenshot({ path: testInfo.outputPath(`dark-filled-sidebar-${state}.png`), animations: 'disabled' });
+    const screenshot = await page.screenshot({ path: testInfo.outputPath(`${theme.toLowerCase()}-filled-sidebar-${state}.png`), animations: 'disabled' });
     const { data, info } = await sharp(screenshot).raw().toBuffer({ resolveWithObject: true });
     const scale = info.width / (await page.evaluate(() => innerWidth));
     const contrasts = previews.map(preview => {
@@ -205,10 +209,13 @@ test('dark saved-chat previews remain readable across the filled sidebar', async
   };
   // Cover the same lower sidebar region in selected and inactive/hovered states.
   await captureContrast('selected');
-  await page.locator('.companion-conversation').first().click();
-  await expect(page.locator('.companion-conversation').first()).toHaveAttribute('aria-current', 'page');
+  const visibleList = width < 768 ? page.getByRole('dialog', { name: 'Chat navigation', exact: true }) : page.locator('.companion-sidebar');
+  await visibleList.locator('.companion-conversation').first().click();
+  if (width < 768) await page.getByRole('button', { name: 'Open conversations', exact: true }).click();
+  await expect(visibleList.locator('.companion-conversation').first()).toHaveAttribute('aria-current', 'page');
   await captureContrast('inactive');
 });
+}
 
 for (const [width, height] of [[375, 667], [390, 844], [1280, 900]]) {
   test(`both themes retain readable controls and fit at ${width}px`, async ({ page }, testInfo) => {

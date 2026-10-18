@@ -1,65 +1,58 @@
 # NOW - the resume doc
-**Stamped: 2026-10-18; deep test audit**
+**Stamped: 2026-10-18; Companion Chat sidebar and mascot entry**
 
 ## Active task and boundary
-Checkout: F:/CodexWorktrees/8710/grifon-command.
-Branch: codex/deep-test-audit; base origin/main d79bd602.
-Code revision ba754d38 is pushed; draft PR203:
-https://github.com/yopiheart/grifon-command/pull/203
-Audit unused legacy code and test relevance; remove only proven obsolete paths,
-fix false-green test behavior, preserve meaningful coverage.
-Keep a draft PR for review. No merge or deployment requested for this work.
-PR202 is already merged in the base. PR201 live voice remains paused;
-do not run paid voice calls or implement the proposed Grok provider.
+Checkout: F:/CodexWorktrees/chat-design-release/grifon-command.
+Branch: codex/chat-sidebar-vibrancy; base origin/main 9e3b0996.
+Neil requested macOS-inspired translucent sidebar/floating conversation rows,
+then a static-first mascot on login/refresh. Earlier merge/release request remains
+active with these final refinements. No paid/provider/backend changes.
+PR202 design merged d79bd602; PR203 merged 9e3b0996 (main CI39087600268 PASS).
+PR201 live voice remains paused; Android microphone test was never started.
+No Grok provider work. Preserve unrelated primary and voice worktrees.
 
-## Changes and removal evidence
-Removed 13 runtime/test-unreferenced feature modules (1,368 lines):
-- DirectorOneShot: sole App caller replaced by OneShotAd in 4fe61ae4.
-- glossyGoldButton: both checkout callers replaced by GoldButton in 46cf803c.
-- AdMontagePhone, ProofGallery, StackReplace, RoiMetrics, Aurora,
-  ExitIntentModal/useExitIntent and UrgencyBar: last callers retired by
-  landing redesign 21005a23 (Aurora dashboard replaced earlier in b36c1757).
-- MessengerFloat and RecentActivityToast: last callers removed in 46cf803c.
-- QuotaMeter: dashboard replaced it with real quota reporting in 8c1b3d32.
-AST/static/dynamic-import tracing and repository searches found no callers.
-All 38 API shared libraries retain non-test consumers.
-Preserved Fable archive, live RunningScreen.fable5, previews, generic Gemini
-LegacyBody, saved-session recovery, reusable primitives and curated records.
-No existing tests, assertions, tuned content, dependencies or lockfile removed.
+## Changes
+One shared charcoal/pearl sidebar material on desktop/mobile; borderless rows,
+quiet selection/gold marker, approved small static Grifon portrait, actual title,
+preview and relative time. Footer belongs to pane. Search/drafts/nav unchanged.
+Pearl drawer muted ink strengthened after independent contrast finding.
+Header shows transparent startup.png while the single iframe initializes, then
+crossfades only after true first rendered frame. Error/retry/reduced motion kept.
+Poster: 512px transparent export of unchanged approved 3D renderer/neutral pose;
+no AI generation/bitmap retouch/model edit. Original neutral.png unchanged.
+DESIGN.md records the scoped sidebar and startup treatment.
 
-Fixed exact process-flag opt-in before credential loading in four regression
-harnesses; disabled runs neither read .env nor initialize the provider SDK.
-Fixed boot checks hiding app errors and accepting unrelated legal-page content.
-Fixed burn-in PSNR failures masquerading as visible differences; burn-in/demo
-fixture guards permit only their own local server, retaining real SSRF elsewhere.
+## Success and verification
+Success: readable floating sidebar in both themes/desktop/mobile; static mascot
+then stable animation handoff. Failure: contrast/clipping, keyboard/draft/search
+regression, dots-only/blank slot, layout shift or duplicate renderer.
+Final build PASS; Vitest PASS1681, same32 existing opt-in skips (132files/9skips).
+Bundle leak, voice/eval parity, domain language, PowerShell ASCII, artifact
+anchors, design lint and whitespace checks PASS.
+Startup RED original no-visible-still; all26 unique final cases have passing
+runs. One desktop screenshot timeout passed on unchanged explicit rerun.
+Continuity final PASS6/6,0retries; iframe/window/canvas/drafts/state retained.
+Contrast RED4.037:1; GREEN darkdesktop/lightmobile2/2 above4.5:1.
+Visual capture6/6 at1280x900,375x667,390x844, with both light-mobile recaptures2/2.
+Firefox152/WebKit26.5 PASS2/2, both themes and keyboard-size/drawer/search.
+Independent correctness+brand review PASS,0remaining findings, BRAND_PASS45/50;
+continuity ledger change separately reviewed clean.
+All111 unique relevant browser cases PASS: initial104 passed plus7 external
+origin-fixture setup failures; corrected only external helper port, rerun7/7
+PASS,0retries/skips. Initial reports retained; no product assertion failure.
+Actual Android keyboard was verified by Neil on prior design; latest styling
+uses desktop viewport/engine simulation, not a fresh physical-phone run.
+External QA: F:/CodexQA/grifon-sidebar-20261018 and
+F:/CodexQA/grifon-mascot-first-paint-20261018.
 
-## Verification
-Baseline Vitest: PASS 1,616; 32 existing opt-in skips.
-Final Vitest: PASS 1,681; same 32 skips; 65 new assertions.
-Machine comparison confirms zero missing tests or changed original outcomes.
-Negative controls: boot RED6/GREEN8, live startup RED22/GREEN24,
-PSNR RED15/GREEN20; fixture guard plus real SSRF checks PASS28.
-Build/PowerShell ASCII, bundle leak, voice/eval parity, domain language,
-artifact anchors, design lint and diff whitespace checks PASS.
-Codex contracts PASS26; legacy permission harness PASS25;
-CI input/timing helper tests PASS17; E2E input guard PASS109 inputs.
-Affected browser smoke PASS68/68 across eight specs at mobile/desktop widths.
-Both legal-page checks reject a nonempty unrelated page (expected exit1).
-Independent correctness review clean; deletion-only brand review BRAND_PASS.
-Public telemetry lacks dummy-backend admin credentials as expected. One local
-image-handler auth log appeared during recovery teardown; isolated repeat PASS1
-without that log. Missing mock ruled out; close-before-abort race is unproven.
-No provider execution; paid/live switches remain unset.
+## Release and live evidence
+New sidebar not published yet. Prior main live smoke uses byte-unmodified
+production app plus network-only synthetic account/responses, not real auth.
+Baseline mobile themes and desktop dark passed; desktop light entry harness
+race is being corrected outside repo. No real email, provider call or prod write.
+Main deployment reported completed Dpm3bapc8eZBmu2QCxP9W1YBeqL5.
 
-## Remaining boundaries and next action
-Paid-provider suites need an approved exact test spec; opt-in real-render suites
-remain unrun under tests/AGENTS.md. Offline helper checks do not prove a render.
-Unused auth wrappers need focused session compatibility verification before
-removal. Test-only tuned script guardrails/generation helpers need exact-diff
-approval. Preserve the historical icon wrappers until the legacy instruction
-discrepancy is resolved. No failures were skipped or assertions weakened.
-Hosted CI39086098893 never started verify (zero steps): GitHub annotation says
-"The job was not started because an Actions budget is preventing further use."
-Vercel status also says "Account is blocked." No gates waived or retries billed.
-PR203 is draft and attached; local gates are complete. Resolve account/budget
-blocks and run hosted CI before any merge decision. No deploy/merge requested.
+## ▶ NEXT ACTION
+Commit/push scoped changes, attach draft PR and require
+hosted CI before the authorized merge. Verify resulting live mobile/desktop
+screens with synthetic-network coverage distinguished from real backend/phone.

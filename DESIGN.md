@@ -150,10 +150,24 @@ static monochrome grain sit on a separate decorative layer, quieter behind text.
   bot messages, composer, chat navigation, and chat account settings. Mobile
   message input is 16px to avoid input zoom. The commercial Hyperspace Race font
   used in the local study is not distributed with the application.
+- The conversation sidebar uses one translucent charcoal/pearl material on
+  desktop and mobile. Rows float without individual glass frames; a quiet tonal
+  selection and restrained gold marker identify the active conversation. Small
+  static portraits use the approved Grifon mascot, with the actual title,
+  message preview and relative time carrying each conversation's identity.
+  The footer belongs to the same material. Dedicated mobile search remains
+  full-width, with its footer hidden until returning to normal conversations.
+  Pearl mobile navigation uses body-strength muted ink to retain contrast when
+  its translucent surface composites over the drawer's dimmed background.
 - Functional chrome can use a bounded refractive backdrop with a thin specular
   edge. Message bubbles and content cards remain readable PLATE surfaces.
   Preserve selectable messages, 44px targets, and the live 56px mobile / 64px
   desktop companion. Theme changes must not remount the chat or companion.
+  The approved static mascot appears while the animation initializes, then
+  yields only after its first rendered frame is ready; no dots-only placeholder.
+  `public/companion/startup.png` is a transparent 512px still exported directly
+  from the unchanged approved 3D renderer in its neutral pose; the sidebar's
+  circular portraits continue using the original `neutral.png` asset.
 - The mascot identity stays centered above the conversation on desktop and
   mobile, separate from its scroll area: avatar, then name, then status. A soft,
   bounded spotlight behind the bare avatar improves its visibility; light mode
