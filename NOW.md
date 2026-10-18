@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-18; paid draft approved, mobile audio/key setup pending**
+**Stamped: 2026-10-18; desktop live lab armed, zero paid sessions started**
 
 ## Active task and boundary
 Checkout: F:/CodexWorktrees/7471/grifon-command.
@@ -8,7 +8,7 @@ Neil approved the exact paid-test draft in chat: at most 10 sessions x 3 minutes
 within USD 5. Preserve that approval; do not ask for it again unchanged.
 Draft PR 206: https://github.com/yopiheart/grifon-command/pull/206.
 No deployment, merge, customer call, ad action or production data write authorized.
-No paid provider connection has run; live runtime remains disabled until ready.
+No paid provider connection has run; desktop server is armed for the approved test.
 
 ## Implementation
 Separate Vite runtime in funnels/oceanides-price-page; `npm.cmd run dev:voice`
@@ -56,11 +56,24 @@ Local reservations are not a provider billing guarantee or account-wide cap.
 Required server gates: OCEANIDES_VOICE_LIVE=1, exact approved file SHA in
 OCEANIDES_VOICE_APPROVED_SPEC_SHA256, and XAI_API_KEY. Leave unset ordinarily.
 Approval verified 2026-10-18 09:19 UTC against the unchanged raw-file SHA above.
-Current process lacks XAI_API_KEY; checked only presence, never secret values.
-Runtime 5184 is running mock-only, attempts 0 / reserved USD 0 / no active session.
-Neil is mobile remote. Awaiting remote app/phone OS and secure API-key location.
-The phone browser cannot reach the PC's 127.0.0.1. Existing remote desktop needs
-PC sound to phone AND phone mic to PC; check both for free before paid Start.
+Tool environment does not receive the private child server's key. Check only
+/api/voice-lab/status, never console/clipboard/API-key page or secret values.
+Latest status: serverReady/liveReady true, attempts 0 / reserved USD 0, inactive.
+Verified idle mock PID 28444 stopped; persistent ledger preserved.
+Latest correction: Neil is now physically at the desktop, still no xAI API key.
+Mobile access work is unnecessary for this run; keep the local-only boundary.
+xAI Console signup page opened for human account creation, terms and billing.
+Neil reports minimum top-up USD 5 and confirms API key created; human handled entry.
+No agent payment or provider call performed. PowerShell script execution is
+restricted, so use the existing Node runtime without changing that policy.
+Private no-echo key launcher: .tmp/oceanides-voice-lab/start-approved-voice.mjs.
+Node syntax, no-secret --validate-only, and independent code review PASS;
+approved SHA exact, 0/10 attempts, USD 0 reserved. It starts only the local server,
+not a provider session; key is passed only in the owned child process environment.
+Standalone private launcher PID 9488 is running; human key entry completed and
+public status confirms liveReady true. Key not saved or relayed to tool output.
+Lab UI prepared for Natural inquiry / Live voice, no Start click performed.
+Next: human free mic/output check, Start, allow microphone and read approved lines.
 Current paid Start reserves/connects before requesting mic, so don't use it as
 the first microphone check. Remote audio delay is separate from browser metrics.
 Any instruction/model/voice/scenario/setting change requires fresh approval.
