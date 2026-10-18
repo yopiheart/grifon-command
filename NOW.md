@@ -1,14 +1,16 @@
 # NOW - the resume doc
-**Stamped: 2026-10-18; deep test audit**
+**Stamped: 2026-10-18; deep test audit merged**
 
 ## Active task and boundary
 Checkout: F:/CodexWorktrees/8710/grifon-command.
-Branch: codex/deep-test-audit; base origin/main d79bd602.
-Code revision ba754d38 is pushed; draft PR203:
+Checkpoint branch: codex/deep-test-audit; merged main revision 9e3b0996.
+Tested PR head 007fd04a; implementation revision ba754d38. Merged PR203:
 https://github.com/yopiheart/grifon-command/pull/203
 Audit unused legacy code and test relevance; remove only proven obsolete paths,
 fix false-green test behavior, preserve meaningful coverage.
-Keep a draft PR for review. No merge or deployment requested for this work.
+Neil explicitly authorized merge; PR203 merged on 2026-10-18 at 01:44:52 UTC.
+Main's merge tree exactly matches the tested PR head. Vercel's automatic build
+was accepted after account recovery; no manual deployment was requested.
 PR202 is already merged in the base. PR201 live voice remains paused;
 do not run paid voice calls or implement the proposed Grok provider.
 
@@ -46,6 +48,13 @@ CI input/timing helper tests PASS17; E2E input guard PASS109 inputs.
 Affected browser smoke PASS68/68 across eight specs at mobile/desktop widths.
 Both legal-page checks reject a nonempty unrelated page (expected exit1).
 Independent correctness review clean; deletion-only brand review BRAND_PASS.
+Review reuse confirmed at unchanged head007fd04a immediately before merge.
+Hosted CI39086158186 attempt2:43 jobs PASS, including all40 browser shards.
+Hosted Vitest PASS1681,32 existing opt-in skips. Native browser reports match
+all327 unique discovered cases:325 first-pass,2 passed on unchanged retry;
+zero missing/duplicate/extra/skipped/unexecuted browser cases.
+Retries: Settings sign-in actionability15s timeout (mechanism unproven), and
+Chromium afterEach screenshot protocol failure after beta assertions passed.
 Public telemetry lacks dummy-backend admin credentials as expected. One local
 image-handler auth log appeared during recovery teardown; isolated repeat PASS1
 without that log. Missing mock ruled out; close-before-abort race is unproven.
@@ -58,8 +67,9 @@ Unused auth wrappers need focused session compatibility verification before
 removal. Test-only tuned script guardrails/generation helpers need exact-diff
 approval. Preserve the historical icon wrappers until the legacy instruction
 discrepancy is resolved. No failures were skipped or assertions weakened.
-Hosted CI39086098893 never started verify (zero steps): GitHub annotation says
-"The job was not started because an Actions budget is preventing further use."
-Vercel status also says "Account is blocked." No gates waived or retries billed.
-PR203 is draft and attached; local gates are complete. Resolve account/budget
-blocks and run hosted CI before any merge decision. No deploy/merge requested.
+GitHub Actions budget restored; no gates waived. PR203 is merged and attached.
+Automatic Vercel build for9e3b0996 was accepted; final status is in PR203.
+Post-merge main CI39087600268 was triggered normally; do not cancel it.
+No implementation remains for PR203.
+Keep this final resume checkpoint on the existing audit branch; it does not
+change production code or require another product merge.
