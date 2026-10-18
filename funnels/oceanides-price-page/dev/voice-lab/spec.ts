@@ -6,6 +6,7 @@ import type { CriticalDetails } from '../../src/voice-lab/contracts';
 export interface PaidSpec {
   model: 'grok-voice-3.0';
   voice: 'eve';
+  openingMessage: string;
   turnDetection: { type: 'server_vad' };
   audio: Record<string, unknown>;
   instructions: string;
@@ -19,7 +20,7 @@ export function loadLiveSpec(path: string, env: NodeJS.ProcessEnv = process.env)
   const raw = readFileSync(path);
   const sha256 = createHash('sha256').update(raw).digest('hex');
   const spec = JSON.parse(raw.toString('utf8')) as PaidSpec;
-  if (spec.model !== 'grok-voice-3.0' || spec.voice !== 'eve' || spec.turnDetection?.type !== 'server_vad' || typeof spec.instructions !== 'string' || !spec.instructions.trim()) throw new Error('invalid_voice_spec');
+  if (spec.model !== 'grok-voice-3.0' || spec.voice !== 'eve' || typeof spec.openingMessage !== 'string' || !spec.openingMessage.trim() || spec.openingMessage.length > 500 || spec.turnDetection?.type !== 'server_vad' || typeof spec.instructions !== 'string' || !spec.instructions.trim()) throw new Error('invalid_voice_spec');
   const limits = spec.limits;
   if (!limits || !Number.isInteger(limits.maxAttempts) || limits.maxAttempts < 1 || limits.maxAttempts > HARD_LIMITS.maxAttempts || !Number.isFinite(limits.maxUsd) || limits.maxUsd <= 0 || limits.maxUsd > HARD_LIMITS.maxUsd || limits.reservationUsd !== HARD_LIMITS.reservationUsd || !Number.isInteger(limits.sessionMs) || limits.sessionMs <= 0 || limits.sessionMs > HARD_LIMITS.sessionMs || !Number.isInteger(limits.maxTextInputs) || limits.maxTextInputs <= 0 || limits.maxTextInputs > HARD_LIMITS.maxTextInputs || !Number.isInteger(limits.maxTextCharacters) || limits.maxTextCharacters <= 0 || limits.maxTextCharacters > 500 || !Number.isInteger(limits.maxToolCalls) || limits.maxToolCalls <= 0 || limits.maxToolCalls > 30) throw new Error('invalid_budget_spec');
   const allowed = new Set(['lookup_rate', 'update_details', 'confirm_details', 'create_service_request', 'get_dispatch', 'accept_booking', 'human_callback', 'decline']);

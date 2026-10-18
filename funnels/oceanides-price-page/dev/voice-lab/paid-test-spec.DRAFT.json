@@ -4,6 +4,7 @@
   "provider": "xai",
   "model": "grok-voice-3.0",
   "voice": "eve",
+  "openingMessage": "Magandang araw po! Ako si Michael, AI assistant ng Oceanides. Anong service po ang kailangan n’yo?",
   "turnDetection": { "type": "server_vad" },
   "audio": {
     "input": { "format": { "type": "audio/pcm", "rate": 24000 } },

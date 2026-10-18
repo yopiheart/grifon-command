@@ -61,7 +61,10 @@ production p95. Mock timings must remain labeled as mock or unmeasured.
 ## Paid test specification: approved, unchanged inputs only
 
 Neil explicitly approved the exact draft on 2026-10-18: at most **10 sessions of
-3 minutes within US$5**, one active session. The approved raw-file SHA256 is
+3 minutes within US$5**, one active session. He subsequently approved adding the
+exact opening below, with all original fields unchanged. The revised raw-file
+SHA256 is `6d66cbfe539b9dc6fc5aa35193511e1378d51245d7a147c7cd6f0f4c2769e0cf`.
+The original approved identity was
 `09fc7b4f15acb4b327016c36fc4f31d173030f96647c5050f07a7221653eaeee`.
 Preserve that approval; do not request it again for unchanged inputs. Any changed
 model, voice, instruction, scenario input, asset, or generation setting requires
@@ -108,11 +111,11 @@ details during evaluation. Review any exported transcript before sharing it.
 
 ### Diagnose startup before another voice attempt
 
-The first four manual live starts failed before a conversation. The persistent
-ledger retains four reservations totaling US$2.00; these are not confirmed xAI
-charges. A later free preflight found that the loaded credential did not have the
-basic raw xAI key format. Re-enter the actual secret privately; never put it in
-chat, command arguments, a browser form, or a file.
+The first four manual live starts failed before a conversation. A free preflight
+found that the loaded credential did not have the basic raw xAI key format.
+Human re-entry passed validation; a fifth lab attempt has since been reserved.
+The ledger retains five reservations totaling US$2.50; these are not confirmed
+xAI charges. Never put a key in chat, command arguments, a browser form, or a file.
 
 An explicit `POST /api/voice-lab/check-provider` with JSON `{}` performs a single
 read-only `GET https://api.x.ai/v1/api-key`. It creates no voice session or budget
@@ -129,6 +132,68 @@ authentication failure: each attempted voice connection reserves another slot.
 The ignored desktop private launcher validates credentials through the same
 free check before starting the armed Vite process. It never starts a paid voice
 session automatically. Check the desktop microphone separately before Start.
+
+### Approved opening and listening sequence
+
+Neil explicitly requested this exact revised opening on 2026-10-18:
+
+> Magandang araw po! Ako si Michael, AI assistant ng Oceanides. Anong service po ang kailangan n’yo?
+
+Keep `grok-voice-3.0`, stock `eve`, all existing session instructions, server VAD,
+audio format, tools, scenario inputs and global limits. The new `openingMessage`
+is part of the exact paid-spec identity. This approval does not reset the ledger
+or authorize other prompt, voice or model substitutions.
+
+The browser acknowledges audio readiness after microphone capture starts. Only
+then may the configured bridge send the opening once as an interruptible
+`force_message`. Do not send an additional `response.create` for that greeting.
+It uses TTS synthesis, so replay the actual opening to assess its accent rather
+than assuming it matches the model-generated greeting heard in the playground.
+No fixed response delay or emotion parameter has been added.
+
+Use three existing scenarios, each with its existing three-minute limit and
+US$0.50 reservation; start each manually, stop when done and never auto-retry:
+
+1. **Repeated interruptions.** Say `Magkano po yung service?`, then interrupt
+   audible speech with `Wait lang, may sasabihin pa ako.` and
+   `Sandali, iba pala yung address.` Check actual sound stops, late buffered
+   audio stays stopped, and the response addresses the correction. Record the
+   estimated cutoff and listening judgment separately.
+2. **Thinking pauses.** Say `Yung address namin...`, leave a 1-3 second pause,
+   then use `Sandali lang, iniisip ko pa yung schedule.` and `Sa Quezon City po.`
+   Listen for premature takeover or pressure; a gentle acknowledgment differs
+   from launching a new question before the thought is finished. Browser silence
+   timing alone cannot establish whether the model understands a thinking pause.
+3. **Price objection / emotional appropriateness.** Use the existing lines
+   `Parang mahal naman. May discount ba?` and `Hindi na muna, salamat.` A mildly
+   frustrated delivery should receive a calm, respectful response, no invented
+   discount, inappropriate laughter or continued selling after refusal. Rate
+   Warmth and Appropriate tone from 1-5; do not insert speech tags into Grok.
+
+With the current five reservations, these three tests would bring the local
+ledger to eight attempts / US$4.00. The original ten-attempt / US$5 cap remains.
+Export each local report before a new session replaces its displayed evidence.
+
+### Later comparison: ElevenLabs v4 Turbo
+
+Current official docs distinguish produced-content `eleven_v4` from realtime
+`eleven_v4_turbo`, with Filipino listed for the v4 family. The latter is the
+candidate for the later live-agent comparison. Account access, exact Eleven
+voice, system instructions, turn policy and paid ceiling still need a concrete
+comparison specification; this lab does not yet contain an ElevenLabs adapter.
+No ElevenLabs generation, account change or subscription is started here.
+
+Reuse the approved opening and the same three scenario scripts/business rules.
+Score natural Taglish, warmth, pacing, appropriate tone, premature takeover,
+audible interruption cutoff and invented promises. Comparing complete
+ElevenAgents and Grok setups measures the whole system, not TTS in isolation.
+Vendor synthesis-latency claims do not include microphone/network/turn-detection
+or tool delays. A standalone TTS sample cannot pass the live interruption test.
+
+References: [xAI force message](https://docs.x.ai/developers/model-capabilities/audio/speech-to-speech#force-message),
+[Grok prompting](https://docs.x.ai/developers/model-capabilities/audio/speech-to-speech/prompting-guide),
+[ElevenLabs models](https://elevenlabs.io/docs/overview/models),
+[ElevenLabs conversation flow](https://elevenlabs.io/docs/eleven-agents/customization/conversation-flow).
 
 ## Acceptance and next milestone
 

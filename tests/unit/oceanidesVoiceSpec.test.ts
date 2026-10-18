@@ -25,6 +25,16 @@ afterEach(() => {
 });
 
 describe('Oceanides exact paid-spec gate (no provider connection)', () => {
+  it('includes the approved exact opening in the hashed server-owned spec', () => {
+    const result = loadLiveSpec(draft, {});
+    expect(result.spec).toHaveProperty('openingMessage', 'Magandang araw po! Ako si Michael, AI assistant ng Oceanides. Anong service po ang kailangan n’yo?');
+  });
+
+  it.each([undefined, null, '', '   ', 'x'.repeat(501)])('rejects an invalid opening before any live start', openingMessage => {
+    const { path } = copySpec(spec => { spec.openingMessage = openingMessage; });
+    expect(() => loadLiveSpec(path, {})).toThrow('invalid_voice_spec');
+  });
+
   it('is blocked by default even with an existing server credential', () => {
     expect(loadLiveSpec(draft, { XAI_API_KEY: 'TEST-NOT-A-CREDENTIAL' }).liveReady).toBe(false);
   });

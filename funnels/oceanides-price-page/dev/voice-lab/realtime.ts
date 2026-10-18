@@ -23,10 +23,13 @@ export class RealtimeAdapter {
   private toolCalls = 0;
   private disposed = false;
   private configured = false;
+  private audioReady = false;
+  private openingSent = false;
   private pendingTurn = false;
   private responseRequested = false;
   private callerSpeaking = false;
   private cancelWhenCreated = false;
+  private cancelUpstreamWhenCreated = false;
   private failed = false;
   private phase: ProviderPhase = 'connecting';
   private readonly connectedAt: number;
@@ -76,6 +79,16 @@ export class RealtimeAdapter {
     }
   }
 
+  private greetIfReady() {
+    if (this.disposed || this.failed || !this.configured || !this.audioReady || this.openingSent || this.domain.automationStopped()) return;
+    this.openingSent = true;
+    this.responseRequested = true;
+    this.responseDone = false;
+    this.drained = false;
+    // force_message owns its response lifecycle; response.create would start a second response.
+    this.write({ type: 'conversation.item.create', item: { type: 'force_message', role: 'assistant', interruptible: true, content: [{ type: 'output_text', text: this.spec.openingMessage }] } });
+  }
+
   private requestResponse() {
     if (this.domain.automationStopped()) return;
     if (this.responseRequested || this.callerSpeaking) { this.pendingTurn = true; return; }
@@ -88,7 +101,7 @@ export class RealtimeAdapter {
 
   private queueText(text: string) {
     if (this.domain.automationStopped()) return this.stopTerminalWorkflow();
-    if (!this.configured) throw new Error('provider_preparing');
+    if (!this.configured || !this.audioReady) throw new Error('provider_preparing');
     if (text.length > this.spec.limits.maxTextCharacters || ++this.textInputs > this.spec.limits.maxTextInputs) { this.fail('text_input_limit'); return; }
     this.write({ type: 'conversation.item.create', item: { type: 'message', role: 'user', content: [{ type: 'input_text', text }] } });
     if (!this.responseRequested && !this.callerSpeaking && (!this.responseId || (this.responseDone && this.drained))) {
@@ -106,6 +119,7 @@ export class RealtimeAdapter {
       this.configured = true;
       this.domain.state.phase = 'active';
       this.send({ type: 'state', snapshot: this.domain.snapshot() });
+      this.greetIfReady();
       return;
     }
     if (type === 'response.created') {
@@ -117,10 +131,21 @@ export class RealtimeAdapter {
       this.drained = false;
       this.hasTools = false;
       this.send({ type: 'response_started', responseId: this.responseId });
-      if (this.cancelWhenCreated) { this.cancelWhenCreated = false; this.interrupt(); }
+      if (this.cancelWhenCreated) {
+        const cancelUpstream = this.cancelUpstreamWhenCreated;
+        this.cancelWhenCreated = false;
+        this.cancelUpstreamWhenCreated = false;
+        this.interrupt(cancelUpstream);
+      }
       return;
     }
-    if (type === 'input_audio_buffer.speech_started') { this.callerSpeaking = true; this.interrupt(false); return; }
+    if (type === 'input_audio_buffer.speech_started') {
+      this.callerSpeaking = true;
+      // A caller who speaks first owns this turn; never add a late greeting over its VAD response.
+      this.openingSent = true;
+      this.interrupt(false);
+      return;
+    }
     if (type === 'input_audio_buffer.speech_stopped') { this.callerSpeaking = false; this.send({ type: 'speech_stopped', at: this.now() }); return; }
     const eventResponseId = typeof event.response_id === 'string' ? event.response_id : this.responseId;
     if (this.canceled.has(eventResponseId) && type !== 'response.done') return;
@@ -168,8 +193,13 @@ export class RealtimeAdapter {
 
   audio(data: string) {
     if (this.domain.automationStopped()) return this.stopTerminalWorkflow();
-    if (!this.configured) return;
+    if (!this.configured || !this.audioReady) return;
     this.write({ type: 'input_audio_buffer.append', audio: data });
+  }
+
+  readyAudio() {
+    this.audioReady = true;
+    this.greetIfReady();
   }
 
   text(text: string) {
@@ -177,7 +207,7 @@ export class RealtimeAdapter {
   }
 
   notifyStaffState() {
-    if (!this.configured) return;
+    if (!this.configured || !this.audioReady) return;
     if (this.domain.automationStopped()) return this.stopTerminalWorkflow();
     this.queueText('SIMULATED STAFF EVENT: The local request status or staff decision changed. Use get_dispatch to read the authoritative status, final price, slot and conditions before responding.');
   }
@@ -191,7 +221,10 @@ export class RealtimeAdapter {
 
   interrupt(cancelUpstream = true) {
     const active = this.responseId && !this.responseDone && !this.canceled.has(this.responseId);
-    if (!this.responseId && this.responseRequested && cancelUpstream) this.cancelWhenCreated = true;
+    if (!this.responseId && this.responseRequested) {
+      this.cancelWhenCreated = true;
+      this.cancelUpstreamWhenCreated ||= cancelUpstream;
+    }
     if (active) this.canceled.add(this.responseId);
     this.pendingTurn = false;
     this.pendingTools = false;

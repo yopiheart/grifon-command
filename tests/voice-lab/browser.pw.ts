@@ -1,4 +1,80 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Page, type WebSocketRoute } from '@playwright/test';
+import type { ClientEvent, LabSnapshot, LabStatus } from '../../funnels/oceanides-price-page/src/voice-lab/contracts.js';
+
+async function fakeLiveAudio(page: Page) {
+  const budget = { attempts: 0, reservedUsd: 0, maxAttempts: 10, maxUsd: 5, reservationUsd: 0.5, liveReady: true, blockedReason: null, specSha256: 'fake-browser-only' };
+  const snapshot: LabSnapshot = {
+    sessionId: 'fake-browser-only', mode: 'live', phase: 'active', scenarioId: 'natural-inquiry', startedAt: Date.now(), expiresAt: Date.now() + 180000, scripted: false,
+    requestStatus: 'collecting', details: { name: 'Test', contact: 'TEST-NOT-DIALABLE', city: 'Quezon City', address: 'Sample Street', problem: 'Test siphoning', access: 'Test access', preferredTime: 'Test slot' },
+    detailsConfirmed: false, dispatch: { version: 0, decision: 'pending', pricePhp: null, slot: '', conditions: '' }, acceptedVersion: null, owner: 'Neil/Zam', nextStep: 'Test only', transcript: [], toolLog: [], timings: [], budget,
+  };
+  const status: LabStatus = { active: false, budget, service: { area: 'Metro Manila', ratePhp: 5000, capacityLiters: 4000, callbackHours: 'Test only' }, mockNotice: 'Mock audio resources only' };
+  const sent: ClientEvent[] = [];
+  let socket: WebSocketRoute | undefined;
+  let sessionPosts = 0;
+  await page.route('**/api/voice-lab/status', route => route.fulfill({ json: status }));
+  await page.route('**/api/voice-lab/session', route => {
+    sessionPosts++;
+    return route.fulfill({ json: { sessionId: snapshot.sessionId, wsPath: '/voice-lab/ws?token=FAKE', state: { ...snapshot, phase: 'preparing' } } });
+  });
+  await page.routeWebSocket('**/voice-lab/ws?token=FAKE', route => {
+    socket = route;
+    route.onMessage(message => sent.push(JSON.parse(String(message)) as ClientEvent));
+    route.send(JSON.stringify({ type: 'state', snapshot }));
+  });
+  await page.addInitScript(() => {
+    const microphone = { requested: 0, stopped: 0, resolve: () => {} };
+    Object.assign(window, { __voiceMic: microphone });
+    Object.defineProperty(navigator, 'mediaDevices', { configurable: true, value: {
+      getUserMedia: () => {
+        microphone.requested++;
+        return new Promise(resolve => { microphone.resolve = () => resolve({ getTracks: () => [{ stop: () => { microphone.stopped++; } }] }); });
+      },
+    } });
+    const node = () => ({ connect: () => {}, disconnect: () => {} });
+    class FakeContext {
+      state = 'running';
+      sampleRate = 48000;
+      destination = {};
+      audioWorklet = { addModule: async () => {} };
+      async resume() {}
+      async close() { this.state = 'closed'; }
+      createMediaStreamSource = node;
+      createGain() { return { ...node(), gain: { value: 1 } }; }
+    }
+    class FakeWorklet { port = { onmessage: null }; connect() {} disconnect() {} }
+    Object.assign(window, { AudioContext: FakeContext, AudioWorkletNode: FakeWorklet });
+  });
+  await page.goto('/voice-lab.html');
+  await page.getByLabel('Session mode', { exact: true }).selectOption('live');
+  await page.getByRole('button', { name: 'Start session', exact: true }).click();
+  await expect.poll(() => page.evaluate(() => (window as unknown as { __voiceMic: { requested: number } }).__voiceMic.requested)).toBe(1);
+  return { sent, pushState: () => socket!.send(JSON.stringify({ type: 'state', snapshot })), sessionPosts: () => sessionPosts };
+}
+
+test('fake live audio acknowledges readiness once after microphone setup, despite repeated provider state', async ({ page }) => {
+  const fake = await fakeLiveAudio(page);
+  fake.pushState();
+  expect(fake.sent.filter(event => event.type === 'audio_ready')).toHaveLength(0);
+  await page.evaluate(() => (window as unknown as { __voiceMic: { resolve: () => void } }).__voiceMic.resolve());
+  await expect.poll(() => fake.sent.filter(event => event.type === 'audio_ready').length).toBe(1);
+  fake.pushState();
+  await expect(page.getByTestId('session-status')).toContainText('Active');
+  expect(fake.sent.filter(event => event.type === 'audio_ready')).toHaveLength(1);
+  expect(fake.sessionPosts()).toBe(1);
+  await page.getByRole('button', { name: 'Stop session', exact: true }).click();
+});
+
+test('Stop during fake microphone permission prevents a late ready signal or automatic retry', async ({ page }) => {
+  const fake = await fakeLiveAudio(page);
+  await page.getByRole('button', { name: 'Stop session', exact: true }).click();
+  await page.evaluate(() => (window as unknown as { __voiceMic: { resolve: () => void } }).__voiceMic.resolve());
+  await expect.poll(() => page.evaluate(() => (window as unknown as { __voiceMic: { stopped: number } }).__voiceMic.stopped)).toBe(1);
+  expect(fake.sent.filter(event => event.type === 'audio_ready')).toHaveLength(0);
+  expect(fake.sessionPosts()).toBe(1);
+  await expect(page.getByRole('button', { name: 'Start session', exact: true })).toBeEnabled();
+  await expect(page.getByTestId('session-status')).not.toContainText('Active');
+});
 
 async function openLab(page: Page, scenario = 'natural-inquiry') {
   await page.goto('/voice-lab.html');

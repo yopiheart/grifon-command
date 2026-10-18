@@ -119,7 +119,10 @@ export function VoiceLab() {
           const voice = audio.current;
           setNotice('Provider ready. Allow the microphone to begin the synthetic voice test.');
           void voice?.start().then(() => {
-            if (mounted.current && epoch === sessionEpoch.current) { setConnectionState('active'); setNotice('Live voice connected. Synthetic scenarios only.'); }
+            if (mounted.current && epoch === sessionEpoch.current && audio.current === voice) {
+              if (!connection.current?.send({ type: 'audio_ready' })) throw new Error('audio_ready_not_connected');
+              setConnectionState('active'); setNotice('Live voice connected. Synthetic scenarios only.');
+            }
           }).catch(() => {
             if (mounted.current && epoch === sessionEpoch.current) { setError('Microphone could not start. This session has stopped; no automatic retry.'); stopSession(); }
           });

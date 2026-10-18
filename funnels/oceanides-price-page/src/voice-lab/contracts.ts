@@ -36,6 +36,7 @@ export interface LabSnapshot {
 }
 export type ClientEvent =
   | { type: 'user_text'; text: string }
+  | { type: 'audio_ready' }
   | { type: 'audio'; data: string }
   | { type: 'interrupt' }
   | { type: 'playback_drained'; responseId?: string }

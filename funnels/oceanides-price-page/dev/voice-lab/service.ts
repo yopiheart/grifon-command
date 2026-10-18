@@ -143,6 +143,9 @@ export class VoiceLabService {
       if (!event || typeof event !== 'object' || Array.isArray(event)) throw new Error('invalid_event');
       switch (event.type) {
         case 'stop': this.stop(sessionId, 'tester_stopped'); return;
+        case 'audio_ready':
+          if (domain.state.mode !== 'live' || Object.keys(event).length !== 1) throw new Error('invalid_audio_ready');
+          session.adapter?.readyAudio(); return;
         case 'audio':
           if (domain.state.mode !== 'live' || typeof event.data !== 'string' || event.data.length > 64_000 || !/^[A-Za-z0-9+/]+={0,2}$/.test(event.data) || Buffer.from(event.data, 'base64').length % 2) throw new Error('invalid_audio');
           session.adapter?.audio(event.data); return;

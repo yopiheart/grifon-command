@@ -7,7 +7,7 @@ import { join, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { VoiceLabService } from '../../funnels/oceanides-price-page/dev/voice-lab/service';
 import { VoiceLedger } from '../../funnels/oceanides-price-page/dev/voice-lab/ledger';
-import type { ServerEvent } from '../../funnels/oceanides-price-page/src/voice-lab/contracts';
+import type { ClientEvent, ServerEvent } from '../../funnels/oceanides-price-page/src/voice-lab/contracts';
 
 const specPath = fileURLToPath(new URL('../../funnels/oceanides-price-page/dev/voice-lab/paid-test-spec.DRAFT.json', import.meta.url));
 const hash = createHash('sha256').update(readFileSync(specPath)).digest('hex');
@@ -55,6 +55,153 @@ afterEach(() => {
 });
 
 describe('Oceanides mock and live bridge boundaries (fake provider only)', () => {
+  const opening = 'Magandang araw po! Ako si Michael, AI assistant ng Oceanides. Anong service po ang kailangan n’yo?';
+  const ready: ClientEvent = { type: 'audio_ready' };
+
+  it('speaks the approved opening verbatim once only after audio and provider readiness', () => {
+    const value = fixture(true);
+    const { id } = value.start();
+    value.provider.open();
+    expect(value.provider.sent.filter(event => event.item?.type === 'force_message')).toHaveLength(0);
+    value.service.receive(id, ready);
+    value.service.receive(id, ready);
+    value.provider.event({ type: 'session.updated' });
+    expect(value.provider.sent.filter(event => event.item?.type === 'force_message')).toEqual([
+      { type: 'conversation.item.create', item: { type: 'force_message', role: 'assistant', interruptible: true, content: [{ type: 'output_text', text: opening }] } },
+    ]);
+    expect(value.provider.sent.filter(event => event.type === 'response.create')).toHaveLength(0);
+    expect(value.service.budget()).toMatchObject({ attempts: 1, reservedUsd: 0.5 });
+  });
+
+  it('waits for configuration when microphone readiness arrives first and discards earlier capture', () => {
+    const value = fixture(true);
+    const { id } = value.start();
+    value.service.receive(id, { type: 'audio', data: 'AAA=' });
+    value.service.receive(id, ready);
+    expect(value.provider.sent).toHaveLength(0);
+    value.provider.open();
+    expect(value.provider.sent.filter(event => event.item?.type === 'force_message')).toHaveLength(1);
+    expect(value.provider.sent.filter(event => event.type === 'input_audio_buffer.append')).toHaveLength(0);
+    value.service.receive(id, { type: 'audio', data: 'AAA=' });
+    expect(value.provider.sent.filter(event => event.type === 'input_audio_buffer.append')).toHaveLength(1);
+  });
+
+  it('does not upload capture or generate text while microphone readiness is pending', () => {
+    const value = fixture(true);
+    const { id } = value.start();
+    value.provider.open();
+    value.service.receive(id, { type: 'audio', data: 'AAA=' });
+    value.service.receive(id, { type: 'user_text', text: 'What is the rate?' });
+    expect(value.provider.sent.filter(event => event.type === 'input_audio_buffer.append' || event.type === 'response.create')).toHaveLength(0);
+  });
+
+  it('holds another turn until the opening response completes and its playback drains', () => {
+    const value = fixture(true);
+    const { id } = value.start();
+    value.provider.open();
+    value.service.receive(id, ready);
+    value.service.receive(id, { type: 'user_text', text: 'What is the rate?' });
+    expect(value.provider.sent.filter(event => event.type === 'response.create')).toHaveLength(0);
+    value.provider.event({ type: 'response.created', response: { id: 'opening-1' } });
+    value.provider.event({ type: 'response.done', response: { id: 'opening-1' } });
+    expect(value.provider.sent.filter(event => event.type === 'response.create')).toHaveLength(0);
+    value.service.receive(id, { type: 'playback_drained', responseId: 'opening-1' });
+    expect(value.provider.sent.filter(event => event.type === 'response.create')).toHaveLength(1);
+    value.service.receive(id, ready);
+    expect(value.provider.sent.filter(event => event.item?.type === 'force_message')).toHaveLength(1);
+  });
+
+  it('cancels a not-yet-created opening and suppresses its late audio', () => {
+    const value = fixture(true);
+    const { id } = value.start();
+    value.provider.open();
+    value.service.receive(id, ready);
+    value.service.receive(id, { type: 'interrupt' });
+    value.provider.event({ type: 'response.created', response: { id: 'opening-cancelled' } });
+    value.provider.event({ type: 'response.output_audio.delta', response_id: 'opening-cancelled', delta: 'AAAA' });
+    value.provider.event({ type: 'response.done', response: { id: 'opening-cancelled' } });
+    value.service.receive(id, { type: 'playback_drained', responseId: 'opening-cancelled' });
+    expect(value.events.filter(event => event.type === 'audio')).toHaveLength(0);
+    expect(value.provider.sent.filter(event => event.type === 'response.cancel')).toHaveLength(1);
+    expect(value.provider.sent.filter(event => event.type === 'response.create')).toHaveLength(0);
+  });
+
+  it('does not greet after Stop even when configuration or microphone readiness arrives late', () => {
+    const value = fixture(true);
+    const { id } = value.start();
+    value.service.receive(id, ready);
+    value.service.receive(id, { type: 'stop' });
+    value.provider.open();
+    value.service.receive(id, ready);
+    expect(value.provider.sent.filter(event => event.item?.type === 'force_message')).toHaveLength(0);
+    expect(value.opener).toHaveBeenCalledTimes(1);
+    expect(value.service.budget()).toMatchObject({ attempts: 1, reservedUsd: 0.5 });
+  });
+
+  it('lets caller speech cancel a pending opening without sending a duplicate VAD cancellation', () => {
+    const value = fixture(true);
+    const { id } = value.start();
+    value.provider.open();
+    value.service.receive(id, ready);
+    value.provider.event({ type: 'input_audio_buffer.speech_started' });
+    value.provider.event({ type: 'response.created', response: { id: 'opening-vad-cancelled' } });
+    value.provider.event({ type: 'response.output_audio.delta', response_id: 'opening-vad-cancelled', delta: 'AAAA' });
+    expect(value.events.filter(event => event.type === 'audio')).toHaveLength(0);
+    expect(value.provider.sent.filter(event => event.type === 'response.cancel')).toHaveLength(0);
+  });
+
+  it('rejects client-supplied greeting text instead of substituting for the server spec', () => {
+    const value = fixture(true);
+    const { id } = value.start();
+    value.provider.open();
+    value.service.receive(id, { type: 'audio_ready', text: 'Unapproved opening' } as ClientEvent);
+    expect(value.events).toContainEqual(expect.objectContaining({ type: 'error', code: 'invalid_audio_ready' }));
+    expect(value.provider.sent.filter(event => event.item?.type === 'force_message')).toHaveLength(0);
+    value.service.receive(id, ready);
+    expect(value.provider.sent.find(event => event.item?.type === 'force_message')?.item.content[0].text).toBe(opening);
+  });
+
+  it('does not stack a late welcome over a caller-first VAD response', () => {
+    const value = fixture(true);
+    const { id } = value.start();
+    value.provider.open();
+    value.provider.event({ type: 'input_audio_buffer.speech_started' });
+    value.service.receive(id, ready);
+    value.provider.event({ type: 'input_audio_buffer.speech_stopped' });
+    value.provider.event({ type: 'response.created', response: { id: 'caller-first' } });
+    value.provider.event({ type: 'response.output_audio.delta', response_id: 'caller-first', delta: 'AAAA' });
+    expect(value.provider.sent.filter(event => event.item?.type === 'force_message' || event.type === 'response.create')).toHaveLength(0);
+    expect(value.events.filter(event => event.type === 'audio')).toHaveLength(1);
+  });
+
+  it('does not let staff notifications start a second response during the opening lifecycle', () => {
+    const value = fixture(true);
+    const { id } = value.start();
+    value.provider.open();
+    value.service.receive(id, ready);
+    value.provider.event({ type: 'response.created', response: { id: 'opening-staff' } });
+    value.provider.event({ type: 'response.function_call_arguments.done', response_id: 'opening-staff', call_id: 'confirm', name: 'confirm_details', arguments: '{"confirmed":true}' });
+    value.provider.event({ type: 'response.function_call_arguments.done', response_id: 'opening-staff', call_id: 'request', name: 'create_service_request', arguments: '{}' });
+    value.service.receive(id, { type: 'dispatch', decision: 'approved', pricePhp: 5000, slot: 'TEST slot' });
+    expect(value.provider.sent.filter(event => event.type === 'response.create')).toHaveLength(0);
+    value.provider.event({ type: 'response.done', response: { id: 'opening-staff' } });
+    expect(value.provider.sent.filter(event => event.type === 'response.create')).toHaveLength(0);
+    value.service.receive(id, { type: 'playback_drained', responseId: 'opening-staff' });
+    expect(value.provider.sent.filter(event => event.type === 'response.create')).toHaveLength(1);
+  });
+
+  it('does not fabricate a response during silence in a thinking-pause mock', () => {
+    const value = fixture();
+    const session = value.service.createSession('thinking-pauses', 'mock');
+    const token = new URL(session.wsPath, 'http://127.0.0.1:5184').searchParams.get('token')!;
+    value.service.attach(token, event => value.events.push(event));
+    const before = structuredClone(value.events);
+    value.advance(3000);
+    expect(value.events).toEqual(before);
+    expect(value.service.budget()).toMatchObject({ attempts: 0, reservedUsd: 0 });
+    expect(value.opener).not.toHaveBeenCalled();
+  });
+
   it('never opens a provider in mock mode or for an unapproved live request', () => {
     const value = fixture();
     const { id } = value.start();
@@ -159,6 +306,10 @@ describe('Oceanides mock and live bridge boundaries (fake provider only)', () =>
     const value = fixture(true);
     const { id } = value.start();
     value.provider.open();
+    value.service.receive(id, ready);
+    value.provider.event({ type: 'response.created', response: { id: 'opening-complete' } });
+    value.provider.event({ type: 'response.done', response: { id: 'opening-complete' } });
+    value.service.receive(id, { type: 'playback_drained', responseId: 'opening-complete' });
     value.service.receive(id, { type: 'user_text', text: 'What is the rate?' });
     value.service.receive(id, { type: 'user_text', text: 'Please explain the per-load price.' });
     expect(value.provider.sent.filter(event => event.type === 'response.create')).toHaveLength(1);
@@ -168,6 +319,7 @@ describe('Oceanides mock and live bridge boundaries (fake provider only)', () =>
     const value = fixture(true);
     const { id } = value.start();
     value.provider.open();
+    value.service.receive(id, ready);
     value.provider.event({ type: 'response.function_call_arguments.done', call_id: 'confirm', name: 'confirm_details', arguments: '{"confirmed":true}' });
     value.provider.event({ type: 'response.function_call_arguments.done', call_id: 'request', name: 'create_service_request', arguments: '{}' });
     for (let index = 0; index < 21; index++) value.service.receive(id, { type: 'dispatch', decision: 'approved', pricePhp: 5000, slot: 'TEST slot' });
