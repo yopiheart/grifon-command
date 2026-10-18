@@ -8,6 +8,7 @@ import { VoiceDomain } from './domain';
 import { HARD_LIMITS, VoiceLedger } from './ledger';
 import { RealtimeAdapter, type ProviderSocket } from './realtime';
 import { loadLiveSpec } from './spec';
+import { checkProviderKey, type ProviderCheck, type ProviderDiagnostic } from './diagnostics';
 
 export interface VoiceLabOptions {
   ledgerDirectory: string;
@@ -17,6 +18,7 @@ export interface VoiceLabOptions {
   openProvider?: (url: string, key: string) => ProviderSocket;
   setTimer?: (callback: () => void, milliseconds: number) => ReturnType<typeof nodeSetTimeout>;
   clearTimer?: (timer: ReturnType<typeof nodeSetTimeout> | number) => void;
+  fetchProvider?: typeof fetch;
 }
 interface Session {
   id: string;
@@ -39,6 +41,9 @@ export class VoiceLabService {
   private readonly now: () => number;
   private readonly env: NodeJS.ProcessEnv;
   private active: Session | null = null;
+  private lastProviderCheck: ProviderCheck | null = null;
+  private lastProviderFailure: ProviderDiagnostic | null = null;
+  private providerCheckInFlight: Promise<ProviderCheck> | null = null;
 
   constructor(private readonly options: VoiceLabOptions) {
     this.now = options.now ?? Date.now;
@@ -53,9 +58,15 @@ export class VoiceLabService {
     return { attempts: limits.attempts, reservedUsd: limits.reservedUsd, maxAttempts: config.spec.limits.maxAttempts, maxUsd: config.spec.limits.maxUsd, reservationUsd: HARD_LIMITS.reservationUsd, liveReady: config.liveReady && !exhausted, blockedReason: exhausted ? 'The persistent paid test allowance is exhausted.' : config.blockedReason, specSha256: config.sha256 };
   }
 
-  status(): LabStatus {
+  status(): LabStatus & { providerCheck: ProviderCheck | null; providerFailure: ProviderDiagnostic | null } {
     this.expireSessions();
-    return { active: Boolean(this.active), budget: this.budget(), service: { area: 'Metro Manila household septic-tank siphoning', ratePhp: Number(RATE.mmSiphon.replace(/[^0-9]/g, '')), capacityLiters: 4000, callbackHours: 'Daily 08:00–17:00 Asia/Manila' }, mockNotice: 'SCRIPTED MOCK: no microphone, speech recognition, AI generation, naturalness, or latency evidence.' };
+    return { active: Boolean(this.active), budget: this.budget(), service: { area: 'Metro Manila household septic-tank siphoning', ratePhp: Number(RATE.mmSiphon.replace(/[^0-9]/g, '')), capacityLiters: 4000, callbackHours: 'Daily 08:00–17:00 Asia/Manila' }, mockNotice: 'SCRIPTED MOCK: no microphone, speech recognition, AI generation, naturalness, or latency evidence.', providerCheck: this.lastProviderCheck && { ...this.lastProviderCheck }, providerFailure: this.lastProviderFailure && { ...this.lastProviderFailure } };
+  }
+
+  checkProvider(): Promise<ProviderCheck> {
+    if (this.providerCheckInFlight) return this.providerCheckInFlight;
+    this.providerCheckInFlight = checkProviderKey(this.env.XAI_API_KEY, this.options.fetchProvider).then(result => { this.lastProviderCheck = result; return { ...result }; }).finally(() => { this.providerCheckInFlight = null; });
+    return this.providerCheckInFlight;
   }
 
   createSession(scenarioId: string, mode: SessionMode): SessionResponse {
@@ -106,7 +117,7 @@ export class VoiceLabService {
       sink({ type: 'snapshot', snapshot: session.domain.snapshot() });
       const opener = this.options.openProvider ?? ((url: string, key: string) => new WebSocket(url, { headers: { Authorization: `Bearer ${key}` }, maxPayload: 1_000_000, handshakeTimeout: 10_000 }));
       const upstream = opener(`wss://api.x.ai/v1/realtime?model=${encodeURIComponent(config.spec.model)}`, this.env.XAI_API_KEY!.trim());
-      session.adapter = new RealtimeAdapter(upstream, config.spec, session.domain, sink, reason => this.stop(session.id, reason), this.now);
+      session.adapter = new RealtimeAdapter(upstream, config.spec, session.domain, sink, reason => this.stop(session.id, reason), this.now, diagnostic => { this.lastProviderFailure = diagnostic; });
       return session.id;
     } catch {
       sink({ type: 'error', code: 'live_start_failed', message: 'Live startup failed. Any durable reservation remains counted. No automatic retry.' });

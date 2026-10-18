@@ -1,82 +1,84 @@
 # NOW - the resume doc
-**Stamped: 2026-10-18; desktop live lab armed, zero paid sessions started**
+**Stamped: 2026-10-18; credential setup blocked before voice evaluation**
 
 ## Active task and boundary
 Checkout: F:/CodexWorktrees/7471/grifon-command.
 Branch: codex/oceanides-voice-lab; base 3fec6515 (main, PR184).
-Neil approved the exact paid-test draft in chat: at most 10 sessions x 3 minutes,
-within USD 5. Preserve that approval; do not ask for it again unchanged.
-Draft PR 206: https://github.com/yopiheart/grifon-command/pull/206.
-No deployment, merge, customer call, ad action or production data write authorized.
-No paid provider connection has run; desktop server is armed for the approved test.
+Draft PR206: https://github.com/yopiheart/grifon-command/pull/206.
+Neil approved the exact paid draft: maximum 10 sessions x 3 minutes, within USD5,
+one active session. Do not request that approval again for unchanged inputs.
+No merge, deployment, customer calls, ad actions or production writes authorized.
 
-## Implementation
-Separate Vite runtime in funnels/oceanides-price-page; `npm.cmd run dev:voice`
-there serves only loopback 127.0.0.1:5184/voice-lab.html (strict port).
-Own entry point, local HTTP/WebSocket bridge, synthetic scenarios, transcript,
-tool log, simulated dispatch, result checklist, JSON export and timing estimates.
-Production lead/ops/tracking bootstraps are excluded. Their API routes return 404.
-Server-only credentials; one-use socket token and same-origin/loopback checks.
-Mock tools never write a production database or contact a person.
-Metro Manila household siphoning: PHP 5,000 per truckload, up to 4,000 L.
-Daily callback window 08:00-17:00 Asia/Manila is not a crew schedule.
-Final price/slot require Neil/Zam checking Boss Jay, then explicit customer
-acceptance of the current version. Corrections invalidate earlier acceptance.
-Refusal, human handoff and workflow failure prevent resuming the selling flow.
-Interrupted responses cancel upstream and queued playback; tool continuation
-waits for response completion and browser drain. No automatic paid retries.
+## Implemented lab
+Separate Vite runtime: funnels/oceanides-price-page, npm.cmd run dev:voice.
+Strict loopback http://127.0.0.1:5184/voice-lab.html; no public exposure.
+Scenario selector, Start/Stop, transcript, mock tools, simulated dispatch,
+result checklist, JSON export and timing estimates. Synthetic details only.
+Production lead/ops/tracking bootstraps excluded; their API routes return404.
+Server-only key, one-use socket token and exact Host/Origin/loopback checks.
+Metro Manila household siphoning: PHP5000 per truckload, up to4000liters.
+Callbacks daily08:00-17:00 Asia/Manila; not a promise of crew availability.
+Neil/Zam consult Boss Jay to approve final price/slot, then customer acceptance
+of the current version. Corrections invalidate previous acceptance.
+Human/refusal/failure states stop selling; interruption cancels upstream and
+queued playback. Tool continuation waits for response completion/audio drain.
+
+## Startup failure and structural fix
+Four manual live starts failed before any transcript. Original generic errors
+lost HTTP/TLS/DNS details, so the exact historical failures cannot be recovered.
+Basic unauthenticated HTTPS/DNS/TLS reached xAI (expected401).
+Explicit free GET /v1/api-key initially returned400. After a boolean format guard,
+root confirmed credentialFormatPlausible:false / invalid_credential_format.
+The latter made zero external requests. No key value/fragment/length was read.
+New sanitized diagnostics retain phase, elapsed time, HTTP/close status and
+strictly allowlisted error codes. No raw body/header/error/reason is exposed.
+Explicit same-origin JSON POST /api/voice-lab/check-provider performs one fixed
+read-only key check; no generation/reservation/redirect/retry. Status never fetches.
+Response projection drops key material, names, IDs and raw ACLs. Eight-second
+whole-operation timeout, bounded response, malformed keys rejected before fetch.
+Cancelled sockets suppress late failures; failed handshakes explicitly abort.
+No prompt/model/voice/tool/VAD/audio/scenario change; approved SHA unchanged.
+Contract: diagnose auth/transport without secret exposure or new paid attempts;
+fail on leaked raw data, changed caps/ledger/spec or auto retry.
 
 ## Verification
-Root build PASS (existing large-chunk warning); full unit suite 1,626 PASS,
-32 existing skips across 9 files. All 53 new focused tests PASS across 6 files.
-Dedicated Playwright suite 9/9 PASS, independent smoke, live env explicitly off.
-Pending-socket-stop regression: original 1 FAIL/2 PASS -> fixed 3/3 PASS.
-Stale-start browser regression: late A failure closed B before fix; now PASS.
-Funnel typecheck:voice, production build and separate lab build PASS.
-Bundle-leak, voice-sync, eval-prompts, domain, artifact anchors, ps1-ascii,
-Codex controls 26/26 and diff whitespace checks PASS.
-Fresh production dist scans: no lab entry point, model or mock markers.
-Independent source review: no remaining substantive correctness findings.
-Independent mobile/desktop smoke passed; final mobile evidence refreshed.
-Final desktop refresh unavailable because CUA had no browser; earlier checks PASS.
-Brand PASS_WITH_NITS, 0 critical/1 nit: English internal technical chrome vs the
-client Taglish rule. Customer-facing Taglish remains in the approval draft.
-Logs/screenshots are local-only in ignored .tmp/oceanides-voice-lab/.
+Current focused oceanidesVoice suite84/84 PASS across7files.
+Root build PASS (existing large-chunk warning); full unit suite1657 PASS,
+32 existing skips across9files;134 passing files. Root paid switches unset.
+Funnel typecheck:voice, production build (voice65/layout14) and lab build PASS.
+Bundle-leak, voice-sync, eval-prompts, domain, artifact anchors and ps1-ascii PASS.
+Original diagnostic regression failed6/6 before fix; now fixed tests PASS.
+Independent source review, format guard review and private launcher review PASS.
+Independent blocked-HTTP runtime smoke6/6 PASS; ledger4/USD2 unchanged.
+Earlier dedicated mock Playwright9/9 PASS including stale Start/Stop regression.
+Browser suite not repeated while private live runtime used5184; UI unchanged.
+Independent final public status unavailable during intentional private restart.
+Snapshot test caused EOL-only dirt; verified no semantic diff and restored only it.
+Earlier brand PASS_WITH_NITS: one English internal technical-chrome exception.
+Local screenshots/logs remain ignored .tmp/oceanides-voice-lab/.
 
-## Paid test: APPROVED, NOT RUN
+## Approved paid test and next action
 Runbook: clients/oceanides/VOICE-LAB.md.
 Exact draft: funnels/oceanides-price-page/dev/voice-lab/paid-test-spec.DRAFT.json.
 SHA256: 09fc7b4f15acb4b327016c36fc4f31d173030f96647c5050f07a7221653eaeee.
-Proposed pinned grok-voice-3.0, stock eve, server VAD, ten synthetic scenarios.
-Maximum 10 sessions x 3 minutes, one active, USD 5 local allowance; USD 0.50 reservation
-per attempt, persisted before provider open. Failures retain their reservation.
-Ledger: .tmp/oceanides-voice-lab/budget.json; never reset to gain allowance.
-Crash/unresolved locks fail closed; inspect owner before recovery, keep ledger.
-Local reservations are not a provider billing guarantee or account-wide cap.
-Required server gates: OCEANIDES_VOICE_LIVE=1, exact approved file SHA in
-OCEANIDES_VOICE_APPROVED_SPEC_SHA256, and XAI_API_KEY. Leave unset ordinarily.
-Approval verified 2026-10-18 09:19 UTC against the unchanged raw-file SHA above.
-Tool environment does not receive the private child server's key. Check only
-/api/voice-lab/status, never console/clipboard/API-key page or secret values.
-Latest status: serverReady/liveReady true, attempts 0 / reserved USD 0, inactive.
-Verified idle mock PID 28444 stopped; persistent ledger preserved.
-Latest correction: Neil is now physically at the desktop, still no xAI API key.
-Mobile access work is unnecessary for this run; keep the local-only boundary.
-xAI Console signup page opened for human account creation, terms and billing.
-Neil reports minimum top-up USD 5 and confirms API key created; human handled entry.
-No agent payment or provider call performed. PowerShell script execution is
-restricted, so use the existing Node runtime without changing that policy.
-Private no-echo key launcher: .tmp/oceanides-voice-lab/start-approved-voice.mjs.
-Node syntax, no-secret --validate-only, and independent code review PASS;
-approved SHA exact, 0/10 attempts, USD 0 reserved. It starts only the local server,
-not a provider session; key is passed only in the owned child process environment.
-Standalone private launcher PID 9488 is running; human key entry completed and
-public status confirms liveReady true. Key not saved or relayed to tool output.
-Lab UI prepared for Natural inquiry / Live voice, no Start click performed.
-Next: human free mic/output check, Start, allow microphone and read approved lines.
-Current paid Start reserves/connects before requesting mic, so don't use it as
-the first microphone check. Remote audio delay is separate from browser metrics.
-Any instruction/model/voice/scenario/setting change requires fresh approval.
-Real Grok speech, Taglish quality, emotion, acoustic latency, microphone and phone
-performance remain NOT RUN. No claim of voice suitability until approved calls.
-Phone routing/caller ID/transfers/crew timing are a later independently tested step.
+Pinned grok-voice-3.0, stock eve, server VAD, ten synthetic scenarios.
+Ledger .tmp/oceanides-voice-lab/budget.json:4 attempts, USD2 reserved, inactive.
+Six attempts / USD3 allowance remain. Reservation is not confirmed provider billing.
+Never reset/refund/delete ledger or unresolved locks to gain allowance.
+Live gates: OCEANIDES_VOICE_LIVE=1, exact SHA in
+OCEANIDES_VOICE_APPROVED_SPEC_SHA256, server-only XAI_API_KEY; ordinarily unset.
+Neil is now physically at desktop and created a key; no mobile work needed.
+Verified owned inactive Vite12692 / launcher9488 stopped; ledger preserved.
+Ignored private launcher .tmp/oceanides-voice-lab/start-approved-voice.mjs now
+checks format+free HTTP200+three blocked flags false before arming/spawning.
+No automatic paid session. Syntax, six offline cases, independent review and
+--validate-only PASS: exact SHA,4/USD2, no key/network/spawn during validation.
+New standalone private launcher PID28424 awaiting human raw-key entry.
+User told actual secret starts xai-, no Bearer/quotes/key name, never chat.
+Never inspect private console, clipboard, key page or process secret environment.
+Tool processes do not inherit its private key. Check public status only.
+Next: human enters actual secret; free preflight must pass before server starts.
+Then verify public status/unchanged budget, check desktop mic and one approved
+manual natural-inquiry session. Do not blindly repeat Start on failure.
+No real conversation has succeeded. Taglish, emotion, microphone, acoustic latency
+and phone/caller-ID/crew response remain unverified until actual tests run.

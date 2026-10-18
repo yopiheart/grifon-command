@@ -1,12 +1,13 @@
 import type { ServerEvent } from '../../src/voice-lab/contracts';
 import { VoiceDomain } from './domain';
 import type { PaidSpec } from './spec';
+import { diagnosticMessage, safeCloseCode, safeHttpStatus, safeProviderCode, safeTransportCode, type ProviderDiagnostic, type ProviderPhase } from './diagnostics';
 
 export interface ProviderSocket {
   readyState: number;
   send(data: string): void;
   close(): void;
-  on(event: 'open' | 'message' | 'error' | 'close', listener: (data?: unknown) => void): unknown;
+  on(event: 'open' | 'message' | 'error' | 'close' | 'unexpected-response', listener: (...data: unknown[]) => void): unknown;
 }
 
 /** Session-local adapter. Never reconnects or resumes a paid connection. */
@@ -26,10 +27,15 @@ export class RealtimeAdapter {
   private responseRequested = false;
   private callerSpeaking = false;
   private cancelWhenCreated = false;
+  private failed = false;
+  private phase: ProviderPhase = 'connecting';
+  private readonly connectedAt: number;
 
-  constructor(private readonly socket: ProviderSocket, private readonly spec: PaidSpec, private readonly domain: VoiceDomain, private readonly send: (event: ServerEvent) => void, private readonly finish: (reason: string) => void, private readonly now = Date.now) {
+  constructor(private readonly socket: ProviderSocket, private readonly spec: PaidSpec, private readonly domain: VoiceDomain, private readonly send: (event: ServerEvent) => void, private readonly finish: (reason: string) => void, private readonly now = Date.now, private readonly observeFailure?: (diagnostic: ProviderDiagnostic) => void) {
+    this.connectedAt = now();
     socket.on('open', () => {
-      if (this.disposed) return socket.close();
+      if (this.disposed || this.failed) return;
+      this.phase = 'socket_open';
       this.write({ type: 'session.update', session: { voice: spec.voice, instructions: `${spec.instructions}\n${JSON.stringify({ selectedScenario: domain.state.scenarioId, knownLead: domain.state.details })}`, turn_detection: spec.turnDetection, audio: spec.audio, tools: spec.tools, resumption: { enabled: false } } });
     });
     socket.on('message', raw => {
@@ -40,12 +46,26 @@ export class RealtimeAdapter {
         this.onEvent(JSON.parse(text) as Record<string, unknown>);
       } catch { this.fail('provider_protocol_error'); }
     });
-    socket.on('error', () => this.fail('provider_connection_failed'));
-    socket.on('close', () => { if (!this.disposed) this.finish('provider_disconnected'); });
+    socket.on('unexpected-response', (_request, response) => {
+      if (this.disposed || this.failed) return;
+      // Only statusCode is projected. dispose() explicitly aborts this handshake;
+      // handling this event suppresses ws's default abort.
+      const httpStatus = response && typeof response === 'object' ? safeHttpStatus((response as { statusCode?: unknown }).statusCode) : null;
+      this.fail('provider_handshake_rejected', { httpStatus });
+    });
+    socket.on('error', error => { if (!this.disposed && !this.failed) this.fail('provider_connection_failed', { transportCode: safeTransportCode(error) }); });
+    socket.on('close', code => { if (!this.disposed && !this.failed) this.fail('provider_disconnected', { closeCode: safeCloseCode(code) }); });
   }
 
   private write(event: unknown) { if (!this.disposed && this.socket.readyState === 1) this.socket.send(JSON.stringify(event)); }
-  private fail(code: string) { this.send({ type: 'error', code, message: 'The provider operation failed. No automatic retry or booking was made.' }); this.finish(code); }
+  private fail(code: string, details: Partial<Pick<ProviderDiagnostic, 'httpStatus' | 'closeCode' | 'transportCode' | 'providerCode'>> = {}) {
+    if (this.disposed || this.failed) return;
+    this.failed = true;
+    const diagnostic: ProviderDiagnostic = { phase: this.phase, elapsedMs: Math.max(0, Math.min(180000, Math.round(this.now() - this.connectedAt))), httpStatus: null, closeCode: null, transportCode: null, providerCode: null, ...details };
+    this.observeFailure?.(diagnostic);
+    try { this.send({ type: 'error', code, message: diagnosticMessage(diagnostic) }); }
+    finally { try { this.finish(code); } finally { this.dispose(); } }
+  }
 
   private continueIfReady() {
     if (this.domain.automationStopped()) return;
@@ -79,8 +99,10 @@ export class RealtimeAdapter {
 
   private onEvent(event: Record<string, unknown>) {
     const type = event.type;
-    if (type === 'error') return this.fail('provider_rejected_request');
+    if (type === 'error') return this.fail('provider_rejected_request', { providerCode: safeProviderCode(event.error) });
+    if (type === 'session.created') { this.phase = 'session_created'; return; }
     if (type === 'session.updated') {
+      this.phase = 'configured';
       this.configured = true;
       this.domain.state.phase = 'active';
       this.send({ type: 'state', snapshot: this.domain.snapshot() });

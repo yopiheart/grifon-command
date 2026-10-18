@@ -58,18 +58,19 @@ and descriptive p95. Tool-dependent responses are a separate group. A filler
 acknowledgment is not a completed relevant answer. A small sample cannot establish
 production p95. Mock timings must remain labeled as mock or unmeasured.
 
-## Paid test specification: review required
+## Paid test specification: approved, unchanged inputs only
 
-The user accepted a **US$5 planning ceiling**, not permission to run this exact
-configuration or spend. The implementation prepares a draft specification with
-the proposed instructions, model, voice, inputs, and expected results. Review
-that complete draft before enabling paid mode. Any changed model, voice,
-instruction, scenario input, asset, or generation setting requires fresh approval.
+Neil explicitly approved the exact draft on 2026-10-18: at most **10 sessions of
+3 minutes within US$5**, one active session. The approved raw-file SHA256 is
+`09fc7b4f15acb4b327016c36fc4f31d173030f96647c5050f07a7221653eaeee`.
+Preserve that approval; do not request it again for unchanged inputs. Any changed
+model, voice, instruction, scenario input, asset, or generation setting requires
+fresh approval.
 
 Review the exact [paid-test specification](../../funnels/oceanides-price-page/dev/voice-lab/paid-test-spec.DRAFT.json),
 including its full instructions, tool schemas, synthetic lead, ten caller scripts,
-staff actions, and acceptance criteria. The file remains a draft; its existence
-does not authorize a call. Obtain the current raw-file identity with:
+staff actions, and acceptance criteria. The filename retains `DRAFT`; the explicit
+human approval applies only to the exact identity above. Verify it with:
 
 ```powershell
 Get-FileHash funnels/oceanides-price-page/dev/voice-lab/paid-test-spec.DRAFT.json -Algorithm SHA256
@@ -79,7 +80,8 @@ All three server-only gates must match before a paid connection can open:
 `OCEANIDES_VOICE_LIVE=1`, `OCEANIDES_VOICE_APPROVED_SPEC_SHA256` equal to that
 approved file's SHA256, and an available `XAI_API_KEY`. Keep these unset during
 ordinary development. This is a local approval interlock, not a substitute for
-Neil's approval of the exact test. No paid session has been run for this delivery.
+Neil's approval of the exact test. `liveReady` establishes local gates and budget;
+it does not establish valid provider credentials, credit, or voice access.
 
 The proposed run is at most ten sessions of at most three minutes each, with one
 active connection. Voice generation alone is approximately US$2.40 at US$0.08 per
@@ -103,6 +105,30 @@ been approved. Approval artifacts and the usage ledger are local, ignored state.
 
 No audio is automatically recorded. Use synthetic names, addresses, and contact
 details during evaluation. Review any exported transcript before sharing it.
+
+### Diagnose startup before another voice attempt
+
+The first four manual live starts failed before a conversation. The persistent
+ledger retains four reservations totaling US$2.00; these are not confirmed xAI
+charges. A later free preflight found that the loaded credential did not have the
+basic raw xAI key format. Re-enter the actual secret privately; never put it in
+chat, command arguments, a browser form, or a file.
+
+An explicit `POST /api/voice-lab/check-provider` with JSON `{}` performs a single
+read-only `GET https://api.x.ai/v1/api-key`. It creates no voice session or budget
+reservation and never retries. The request requires the exact loopback Host and
+Origin. Status reads alone do not contact xAI. Missing or malformed credentials
+are rejected locally before a fetch. Public results contain only format
+plausibility, HTTP status, a fixed transport category, and projected account/ACL
+booleans; key material, names, IDs, raw ACLs and response bodies are discarded.
+A successful check is credential evidence, not proof of voice access or credit.
+
+WebSocket failures now retain only a phase, elapsed time, numeric HTTP/close
+status, and allowlisted error codes. Do not repeatedly press Start to diagnose an
+authentication failure: each attempted voice connection reserves another slot.
+The ignored desktop private launcher validates credentials through the same
+free check before starting the armed Vite process. It never starts a paid voice
+session automatically. Check the desktop microphone separately before Start.
 
 ## Acceptance and next milestone
 

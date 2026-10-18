@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 import type { Plugin } from 'vite';
 import { WebSocketServer } from 'ws';
 import type { ClientEvent } from '../../src/voice-lab/contracts';
-import { VoiceLabService } from './service';
+import { VoiceLabService, type VoiceLabOptions } from './service';
 
 const HOST = '127.0.0.1:5184';
 const ORIGIN = `http://${HOST}`;
@@ -25,13 +25,13 @@ async function body(request: IncomingMessage) {
   return JSON.parse(Buffer.concat(chunks).toString('utf8')) as Record<string, unknown>;
 }
 
-export function voiceLabPlugin(): Plugin {
+export function voiceLabPlugin(options?: VoiceLabOptions): Plugin {
   let service: VoiceLabService | undefined;
   return {
     name: 'local-oceanides-voice-lab',
     apply: 'serve',
     configureServer(server) {
-      service = new VoiceLabService({ ledgerDirectory: fileURLToPath(new URL('../../../../.tmp/oceanides-voice-lab/', import.meta.url)), specPath: fileURLToPath(new URL('./paid-test-spec.DRAFT.json', import.meta.url)) });
+      service = new VoiceLabService(options ?? { ledgerDirectory: fileURLToPath(new URL('../../../../.tmp/oceanides-voice-lab/', import.meta.url)), specPath: fileURLToPath(new URL('./paid-test-spec.DRAFT.json', import.meta.url)) });
       const lab = service;
       const wsServer = new WebSocketServer({ noServer: true, maxPayload: 80_000 });
       server.middlewares.use(async (request, response, next) => {
@@ -42,6 +42,12 @@ export function voiceLabPlugin(): Plugin {
         if (!pathname.startsWith('/api/')) return next();
         try {
           if (pathname === '/api/voice-lab/status' && request.method === 'GET') return json(response, 200, lab.status());
+          if (pathname === '/api/voice-lab/check-provider' && request.method === 'POST') {
+            if (!isLocalRequest(request, true) || !request.headers['content-type']?.startsWith('application/json')) return json(response, 403, { error: 'same_origin_json_required' });
+            const value = await body(request);
+            if (!value || typeof value !== 'object' || Array.isArray(value) || Object.keys(value).length !== 0) return json(response, 400, { error: 'empty_object_required' });
+            return json(response, 200, await lab.checkProvider());
+          }
           if (pathname === '/api/voice-lab/session/cancel' && request.method === 'POST') {
             if (!isLocalRequest(request, true) || !request.headers['content-type']?.startsWith('application/json')) return json(response, 403, { error: 'same_origin_json_required' });
             const value = await body(request);
