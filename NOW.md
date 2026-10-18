@@ -4,6 +4,8 @@
 ## Active task and boundary
 Checkout: F:/CodexWorktrees/8710/grifon-command.
 Branch: codex/deep-test-audit; base origin/main d79bd602.
+Code revision ba754d38 is pushed; draft PR203:
+https://github.com/yopiheart/grifon-command/pull/203
 Audit unused legacy code and test relevance; remove only proven obsolete paths,
 fix false-green test behavior, preserve meaningful coverage.
 Keep a draft PR for review. No merge or deployment requested for this work.
@@ -44,8 +46,10 @@ CI input/timing helper tests PASS17; E2E input guard PASS109 inputs.
 Affected browser smoke PASS68/68 across eight specs at mobile/desktop widths.
 Both legal-page checks reject a nonempty unrelated page (expected exit1).
 Independent correctness review clean; deletion-only brand review BRAND_PASS.
-Local dummy-backend telemetry/interruption logs need no provider credentials;
-paid/live switches remain unset.
+Public telemetry lacks dummy-backend admin credentials as expected. One local
+image-handler auth log appeared during recovery teardown; isolated repeat PASS1
+without that log. Missing mock ruled out; close-before-abort race is unproven.
+No provider execution; paid/live switches remain unset.
 
 ## Remaining boundaries and next action
 Paid-provider suites need an approved exact test spec; opt-in real-render suites
@@ -54,5 +58,8 @@ Unused auth wrappers need focused session compatibility verification before
 removal. Test-only tuned script guardrails/generation helpers need exact-diff
 approval. Preserve the historical icon wrappers until the legacy instruction
 discrepancy is resolved. No failures were skipped or assertions weakened.
-Local gates are complete. Commit, push and attach the draft PR for review;
-hosted CI remains a separate gate before any merge decision.
+Hosted CI39086098893 never started verify (zero steps): GitHub annotation says
+"The job was not started because an Actions budget is preventing further use."
+Vercel status also says "Account is blocked." No gates waived or retries billed.
+PR203 is draft and attached; local gates are complete. Resolve account/budget
+blocks and run hosted CI before any merge decision. No deploy/merge requested.
