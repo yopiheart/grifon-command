@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { isExpectedBootConsoleError } from '../support/bootErrors.js';
 
 // Boot/render smoke for the public, pre-auth routes. Each route must:
 //   1. mount React into #root (not a white screen),
@@ -15,27 +16,23 @@ const CRASH_FALLBACK = 'A module has crashed.'; // components/ui/ErrorBoundary.t
 type Route = {
   path: string;
   name: string;
-  anchor?: string;   // CSS selector that must be attached
-  text?: string;     // visible text that must appear
-};
+} & ({ anchor: string } | { text: string } | { heading: string });
 
 const ROUTES: Route[] = [
   { path: '/', name: 'landing', anchor: '#what-you-get' },
   { path: '/pricing', name: 'pricing', text: 'Starter' },
-  { path: '/terms', name: 'terms' },
-  { path: '/privacy', name: 'privacy' },
+  { path: '/terms', name: 'terms', heading: 'Terms of Service' },
+  { path: '/privacy', name: 'privacy', heading: 'Privacy Policy' },
 ];
-
-// Errors we expect when booting against a dummy, unreachable Supabase URL.
-// Anything matching these is noise; anything else is a real regression.
-const BENIGN = /supabase|localhost:54321|Failed to (load|fetch)|net::ERR|ERR_CONNECTION/i;
 
 for (const route of ROUTES) {
   test(`public route renders: ${route.name} (${route.path})`, async ({ page }) => {
     const errors: string[] = [];
     page.on('pageerror', (e) => errors.push(`pageerror: ${e.message}`));
     page.on('console', (m) => {
-      if (m.type() === 'error') errors.push(`console.error: ${m.text()}`);
+      if (m.type() === 'error' && !isExpectedBootConsoleError(m.text(), m.location().url)) {
+        errors.push(`console.error: ${m.text()}`);
+      }
     });
 
     await page.goto(route.path, { waitUntil: 'domcontentloaded' });
@@ -47,16 +44,18 @@ for (const route of ROUTES) {
     await expect(page.getByText(CRASH_FALLBACK)).toHaveCount(0);
 
     // 3. Route-specific proof of render.
-    if (route.anchor) await expect(page.locator(route.anchor)).toBeAttached();
-    if (route.text) {
+    if ('anchor' in route) await expect(page.locator(route.anchor)).toBeAttached();
+    if ('text' in route) {
       await expect(page.getByText(route.text, { exact: false }).first()).toBeVisible();
+    }
+    if ('heading' in route) {
+      await expect(page.getByRole('heading', { name: route.heading, exact: true })).toBeVisible();
     }
 
     // 4. Verification artifact.
     await page.screenshot({ path: `test-results/boot-${route.name}.png`, fullPage: true });
 
     // 5. No unexpected runtime errors.
-    const real = errors.filter((e) => !BENIGN.test(e));
-    expect(real, `Unexpected runtime errors on ${route.path}:\n${real.join('\n')}`).toEqual([]);
+    expect(errors, `Unexpected runtime errors on ${route.path}:\n${errors.join('\n')}`).toEqual([]);
   });
 }

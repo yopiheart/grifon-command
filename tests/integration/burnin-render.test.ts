@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
 import { spawnSync } from 'node:child_process';
 import {
   mkdtempSync, rmSync, writeFileSync, readFileSync, existsSync, mkdirSync,
@@ -8,6 +8,17 @@ import { join } from 'node:path';
 import { createServer, type Server } from 'node:http';
 import ffmpegPath from 'ffmpeg-static';
 import type { FinalRenderScene } from '../../types.js';
+import { framesIdentical } from '../support/renderAssertions.js';
+
+const fixture = vi.hoisted(() => ({ origin: undefined as string | undefined }));
+vi.mock('../../api/_lib/ssrfGuard.js', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../api/_lib/ssrfGuard.js')>();
+  const { createFixtureMediaUrlGuard } = await import('../support/fixtureMediaUrlGuard.js');
+  return {
+    ...actual,
+    assertSafeMediaUrl: createFixtureMediaUrlGuard(() => fixture.origin, actual.assertSafeMediaUrl),
+  };
+});
 
 // Synthetic burn-in harness ("scripts/burnin-spike" as a gated vitest test so it
 // drives the REAL renderFinalVideo, not a re-implementation). Generates color
@@ -34,13 +45,6 @@ const meanVolumeDb = (path: string): number | null => {
   const err = (ff(['-i', path, '-af', 'volumedetect', '-f', 'null', '-']).stderr ?? Buffer.alloc(0)).toString('utf8');
   const m = /mean_volume:\s*(-?[\d.]+) dB/.exec(err);
   return m ? Number(m[1]) : null;
-};
-
-/** Are two PNG frames pixel-identical? psnr "inf" ⇒ identical. */
-const framesIdentical = (a: string, b: string): boolean => {
-  const err = (ff(['-i', a, '-i', b, '-lavfi', 'psnr', '-f', 'null', '-']).stderr ?? Buffer.alloc(0)).toString('utf8');
-  const m = /average:([\d.]+|inf)/.exec(err);
-  return !!m && m[1] === 'inf';
 };
 
 d('burn-in render (synthetic, free)', () => {
@@ -106,6 +110,7 @@ d('burn-in render (synthetic, free)', () => {
     const addr = server.address();
     const port = typeof addr === 'object' && addr ? addr.port : 0;
     base = `http://127.0.0.1:${port}`;
+    fixture.origin = base;
 
     // Set GRIFON_ASSET_DIR BEFORE importing the module (ASSET_ROOTS is load-time).
     // Font resolves from the repo asset dir via the fallback root.
@@ -115,6 +120,7 @@ d('burn-in render (synthetic, free)', () => {
 
   afterAll(async () => {
     await new Promise<void>((r) => server?.close(() => r()));
+    fixture.origin = undefined;
     for (const p of [work, assets]) if (p && existsSync(p)) rmSync(p, { recursive: true, force: true });
     delete process.env.GRIFON_ASSET_DIR;
   });
@@ -137,7 +143,7 @@ d('burn-in render (synthetic, free)', () => {
     // (1) OVERLAY BURNED: a frame inside the hook window differs from the bare stitch.
     ff(['-ss', '1.0', '-i', onPath, '-frames:v', '1', join(work, 'f_on.png')]);
     ff(['-ss', '1.0', '-i', offPath, '-frames:v', '1', join(work, 'f_off.png')]);
-    expect(framesIdentical(join(work, 'f_on.png'), join(work, 'f_off.png'))).toBe(false);
+    expect(framesIdentical(join(work, 'f_on.png'), join(work, 'f_off.png'), ff)).toBe(false);
 
     // (2) MUSIC/SFX PRESENT: the ON audio carries energy the voice-only stitch lacks.
     const onDb = meanVolumeDb(onPath);
@@ -172,7 +178,7 @@ d('burn-in render (synthetic, free)', () => {
     // Different preset → visibly different burn (font/colors/wipe + whip + zoom).
     ff(['-ss', '1.0', '-i', hypePath, '-frames:v', '1', join(work, 'f_hype.png')]);
     ff(['-ss', '1.0', '-i', classicPath, '-frames:v', '1', join(work, 'f_classic.png')]);
-    expect(framesIdentical(join(work, 'f_hype.png'), join(work, 'f_classic.png'))).toBe(false);
+    expect(framesIdentical(join(work, 'f_hype.png'), join(work, 'f_classic.png'), ff)).toBe(false);
 
     // CPU budget: effects (zoom eval=frame + whip + word-pop) ≤ 1.5× classic.
     expect(hypeMs).toBeLessThanOrEqual(classicMs * 1.5);

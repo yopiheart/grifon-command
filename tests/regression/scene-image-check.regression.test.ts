@@ -29,31 +29,13 @@
 //
 // Cost: 3 images on gemini-3.1-flash-lite-image (~$0.04 each estimated) = ~$0.12 per run.
 
-import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
 import { describe, it, expect, vi } from 'vitest';
 import { GoogleGenAI } from '@google/genai';
+import { loadLiveTestEnv } from '../support/liveTestEnv.js';
 
-// --- 1. Load .env manually (no dotenv dep) -------------------------------
+// --- 1. Load the live-test environment ----------------------------------
 
-const envPath = resolve(process.cwd(), '.env');
-try {
-  const envText = readFileSync(envPath, 'utf8');
-  for (const rawLine of envText.split(/\r?\n/)) {
-    const line = rawLine.trim();
-    if (!line || line.startsWith('#')) continue;
-    const eqIdx = line.indexOf('=');
-    if (eqIdx === -1) continue;
-    const key = line.slice(0, eqIdx).trim();
-    let val = line.slice(eqIdx + 1).trim();
-    if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
-      val = val.slice(1, -1);
-    }
-    if (!process.env[key]) process.env[key] = val;
-  }
-} catch {
-  // .env missing — the guard below turns this into an explicit failure
-}
+const { RUN_IMAGE_GATE_SMOKE: RUN } = loadLiveTestEnv(['RUN_IMAGE_GATE_SMOKE']);
 
 // --- 2. Mock supabaseClient so proxyCall passes its auth guard -----------
 
@@ -73,7 +55,7 @@ vi.mock('../../services/supabaseClient', () => ({
 // real fetch — otherwise the SDK's own fetch gets recursively re-mocked.
 
 const apiKey = process.env.GEMINI_API_KEY;
-const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
+const ai = RUN && apiKey ? new GoogleGenAI({ apiKey }) : null;
 const originalFetch = globalThis.fetch.bind(globalThis);
 
 const fetchMock = vi.fn(async (url: any, init: any = {}) => {
@@ -106,7 +88,6 @@ vi.stubGlobal('fetch', fetchMock);
 const { generateSceneImage } = await import('../../services/geminiService.js');
 const { checkSceneImage } = await import('../../utils/imageChecks.js');
 
-const RUN = process.env.RUN_IMAGE_GATE_SMOKE === '1';
 const ASPECTS = ['9:16', '16:9', '1:1'] as const;
 
 // A deliberately plain scene: this test measures GEOMETRY, not content. Nothing here

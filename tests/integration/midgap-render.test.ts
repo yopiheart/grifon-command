@@ -16,8 +16,6 @@ import type { FinalRenderScene } from '../../types.js';
 //   PowerShell: $env:RUN_MIDGAP='1'; npx vitest run tests/integration/midgap-render.test.ts
 //
 // The SSRF guard is stubbed because the harness serves its media from 127.0.0.1.
-// (tests/integration/burnin-render.test.ts predates the guard and is currently
-// red for exactly that reason — not touched here.)
 vi.mock('../../api/_lib/ssrfGuard.js', () => ({ assertSafeMediaUrl: () => {} }));
 
 const RUN = process.env.RUN_MIDGAP === '1';

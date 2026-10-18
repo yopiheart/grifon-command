@@ -38,32 +38,14 @@
 // Before a live run, approve the exact inputs, pass/fail criteria, evidence and
 // maximum cost. RUN_REGRESSION is an execution switch, not spend approval.
 
-import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
 import { describe, it, expect, vi } from 'vitest';
 import { GoogleGenAI } from '@google/genai';
 import { createAdscriptRegressionFetch } from '../support/adscriptRegressionFetch.js';
+import { loadLiveTestEnv } from '../support/liveTestEnv.js';
 
-// --- 1. Load .env manually (no dotenv dep) -------------------------------
+// --- 1. Load the live-test environment ----------------------------------
 
-const envPath = resolve(process.cwd(), '.env');
-try {
-  const envText = readFileSync(envPath, 'utf8');
-  for (const rawLine of envText.split(/\r?\n/)) {
-    const line = rawLine.trim();
-    if (!line || line.startsWith('#')) continue;
-    const eqIdx = line.indexOf('=');
-    if (eqIdx === -1) continue;
-    const key = line.slice(0, eqIdx).trim();
-    let val = line.slice(eqIdx + 1).trim();
-    if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
-      val = val.slice(1, -1);
-    }
-    if (!process.env[key]) process.env[key] = val;
-  }
-} catch {
-  // .env missing — tests will fail with explicit guard below
-}
+const { RUN_REGRESSION: SHOULD_RUN } = loadLiveTestEnv(['RUN_REGRESSION']);
 
 // --- 2. Mock supabaseClient so proxyCall passes auth ---------------------
 
@@ -90,7 +72,7 @@ vi.mock('../../services/supabaseClient', () => ({
 //      call never escapes the test process.
 
 const apiKey = process.env.GEMINI_API_KEY;
-const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
+const ai = SHOULD_RUN && apiKey ? new GoogleGenAI({ apiKey }) : null;
 const originalFetch = globalThis.fetch.bind(globalThis);
 
 const fetchMock = vi.fn(createAdscriptRegressionFetch(ai, originalFetch));
@@ -297,8 +279,6 @@ const condoFixture: BusinessInfoFixture = {
 };
 
 // --- 7. Tests ------------------------------------------------------------
-
-const SHOULD_RUN = !!process.env.RUN_REGRESSION;
 
 describe.skipIf(!SHOULD_RUN)('Baseline — Bukidnon Brew + OFW-wife audience', () => {
   it(

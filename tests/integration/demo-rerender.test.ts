@@ -1,10 +1,20 @@
-import { describe, it, beforeAll, afterAll, expect } from 'vitest';
+import { describe, it, beforeAll, afterAll, expect, vi } from 'vitest';
 import { spawnSync } from 'node:child_process';
 import { mkdirSync, writeFileSync, readFileSync, existsSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { createServer, type Server } from 'node:http';
 import ffmpegPath from 'ffmpeg-static';
 import type { FinalRenderScene } from '../../types.js';
+
+const fixture = vi.hoisted(() => ({ origin: undefined as string | undefined }));
+vi.mock('../../api/_lib/ssrfGuard.js', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../api/_lib/ssrfGuard.js')>();
+  const { createFixtureMediaUrlGuard } = await import('../support/fixtureMediaUrlGuard.js');
+  return {
+    ...actual,
+    assertSafeMediaUrl: createFixtureMediaUrlGuard(() => fixture.origin, actual.assertSafeMediaUrl),
+  };
+});
 
 // DEMO harness (Viral Editor 2.0): split the baseline ad (CURRENT EDIT.mp4,
 // pre-staged at .tmp/edit-analysis/current/src.mp4) at its 8 detected cut points
@@ -84,12 +94,14 @@ d('Viral Editor 2.0 demo re-render (real footage, free)', () => {
     await new Promise<void>((r) => server.listen(0, '127.0.0.1', r));
     const addr = server.address();
     base = `http://127.0.0.1:${typeof addr === 'object' && addr ? addr.port : 0}`;
+    fixture.origin = base;
 
     ({ renderFinalVideo } = await import('../../api/_lib/renderFfmpeg.js'));
   }, 180_000);
 
   afterAll(async () => {
     await new Promise<void>((r) => server?.close(() => r()));
+    fixture.origin = undefined;
   });
 
   it('re-renders the baseline ad under HYPE and IMPACT', async () => {
