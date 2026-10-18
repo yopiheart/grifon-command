@@ -1,0 +1,122 @@
+name: Chromium capture diagnostic
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: chromium-capture-diagnostic-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  capture:
+    if: github.head_ref == 'codex/chromium-capture-fix'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [7, 8]
+        backend: [current, legacy]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*
+            !/clients/
+            !/workflows/assets/
+            !/artifacts/
+            !/baselines/
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Verify E2E checkout inputs
+        run: node tools/check-ci-e2e-inputs.mjs
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install bundled Chromium and system dependencies
+        run: npx playwright install --with-deps chromium
+
+      - name: Repeat original shard and retain every attempt
+        env:
+          CAPTURE_BACKEND: ${{ matrix.backend }}
+          CAPTURE_SHARD: ${{ matrix.shard }}
+        shell: bash
+        run: |
+          if [[ "$CAPTURE_BACKEND" == legacy ]]; then
+            export PLAYWRIGHT_LEGACY_SCREENSHOT=1
+          else
+            unset PLAYWRIGHT_LEGACY_SCREENSHOT
+          fi
+          aggregate=0
+          for iteration in 1 2 3 4; do
+            iteration_dir="$GITHUB_WORKSPACE/.tmp/chromium-capture-diagnostic/iteration-$iteration"
+            mkdir -p "$iteration_dir"
+            export PLAYWRIGHT_JSON_OUTPUT_FILE="$iteration_dir/report.json"
+            set +e
+            npm run test:e2e -- --shard="$CAPTURE_SHARD/40" --reporter=github,list,json,./tools/ci-e2e-timing-reporter.mjs > "$iteration_dir/command.log" 2>&1
+            native_exit=$?
+            set -e
+            cat "$iteration_dir/command.log"
+            if [[ -d test-results ]]; then
+              cp -a test-results "$iteration_dir/test-results"
+            fi
+            if [[ -f .tmp/ci-e2e-timing/report.json ]]; then
+              cp .tmp/ci-e2e-timing/report.json "$iteration_dir/timing.json"
+            fi
+            if [[ -d assets/design/companion-beta/qa/current ]]; then
+              cp -a assets/design/companion-beta/qa/current "$iteration_dir/beta-qa"
+            fi
+            set +e
+            NATIVE_EXIT="$native_exit" ITERATION_DIR="$iteration_dir" node --input-type=module <<'NODE'
+          import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+          import { join } from 'node:path';
+          const directory = process.env.ITERATION_DIR;
+          const reportPath = join(directory, 'report.json');
+          const reportPresent = existsSync(reportPath);
+          const report = reportPresent ? JSON.parse(readFileSync(reportPath, 'utf8')) : null;
+          const errors = [];
+          function inspect(value, key = '') {
+            if (typeof value === 'string' && ['message', 'stack', 'value'].includes(key)) errors.push(value);
+            else if (Array.isArray(value)) value.forEach(item => inspect(item, key));
+            else if (value && typeof value === 'object') Object.entries(value).forEach(([name, item]) => inspect(item, name));
+          }
+          inspect(report);
+          const captureFailure = errors.some(error => error.includes('Page.captureScreenshot') && error.includes('Unable to capture screenshot'));
+          const summary = { nativeExit: Number(process.env.NATIVE_EXIT), reportPresent, captureFailure };
+          writeFileSync(join(directory, 'diagnostic-result.json'), `${JSON.stringify(summary)}\n`);
+          console.log(summary);
+          process.exit(captureFailure ? 2 : reportPresent ? 0 : 3);
+          NODE
+            inspection_exit=$?
+            set -e
+            if [[ "$native_exit" -ne 0 || "$inspection_exit" -ne 0 ]]; then
+              aggregate=1
+            fi
+            if [[ "$inspection_exit" -eq 2 ]]; then
+              echo "::error::Native Chromium screenshot failure reproduced; retaining this backend/shard's evidence."
+              break
+            fi
+          done
+          exit "$aggregate"
+
+      - name: Upload diagnostic evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chromium-capture-${{ matrix.backend }}-shard-${{ matrix.shard }}
+          path: |
+            .tmp/chromium-capture-diagnostic/
+            test-results/
+          include-hidden-files: true
+          if-no-files-found: ignore
+          retention-days: 7

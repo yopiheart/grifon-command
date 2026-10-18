@@ -1,65 +1,54 @@
 # NOW - the resume doc
-**Stamped: 2026-10-18; deep test audit**
+**Stamped: 2026-10-18; Chromium screenshot-capture investigation**
 
 ## Active task and boundary
 Checkout: F:/CodexWorktrees/8710/grifon-command.
-Branch: codex/deep-test-audit; base origin/main d79bd602.
-Code revision ba754d38 is pushed; draft PR203:
-https://github.com/yopiheart/grifon-command/pull/203
-Audit unused legacy code and test relevance; remove only proven obsolete paths,
-fix false-green test behavior, preserve meaningful coverage.
-Keep a draft PR for review. No merge or deployment requested for this work.
-PR202 is already merged in the base. PR201 live voice remains paused;
-do not run paid voice calls or implement the proposed Grok provider.
+Branch: codex/chromium-capture-fix; base origin/main 9e3b0996.
+User requests reproduction before fixing Chromium screenshot flakiness,
+preserving assertions/timeouts, with final CI verification.
+Success: reproduce the native capture failure, address its demonstrated cause,
+retain meaningful visual/behavior coverage, and pass relevant checks and CI.
+Failure: retries, waits, removed rendering, weaker assertions or increased
+timeouts conceal the original failure or regress the captured pixels.
+Verification: unchanged original cases, controlled backend comparison,
+pixel freshness/dimensions checks if changing transport, independent review,
+build/unit/gates and the full original browser suite in hosted CI.
+No merge/deploy requested for this branch. No paid/live switches or providers.
 
-## Changes and removal evidence
-Removed 13 runtime/test-unreferenced feature modules (1,368 lines):
-- DirectorOneShot: sole App caller replaced by OneShotAd in 4fe61ae4.
-- glossyGoldButton: both checkout callers replaced by GoldButton in 46cf803c.
-- AdMontagePhone, ProofGallery, StackReplace, RoiMetrics, Aurora,
-  ExitIntentModal/useExitIntent and UrgencyBar: last callers retired by
-  landing redesign 21005a23 (Aurora dashboard replaced earlier in b36c1757).
-- MessengerFloat and RecentActivityToast: last callers removed in 46cf803c.
-- QuotaMeter: dashboard replaced it with real quota reporting in 8c1b3d32.
-AST/static/dynamic-import tracing and repository searches found no callers.
-All 38 API shared libraries retain non-test consumers.
-Preserved Fable archive, live RunningScreen.fable5, previews, generic Gemini
-LegacyBody, saved-session recovery, reusable primitives and curated records.
-No existing tests, assertions, tuned content, dependencies or lockfile removed.
+## Previous task completed
+PR203 merged as main 9e3b099664a41fe85dbd8d0ac870dc520885926b.
+Postmerge CI39087600268 passed44/44 jobs; 1,681 Vitest passes and32 existing
+opt-in skips; 327 unique E2E cases,325 clean and2 screenshot retry passes.
+Automatic Vercel deployment succeeded; unpaid public live smoke passed21/21
+plus32 GET-only probes. Existing invite-only login blocks authenticated smoke.
+No generation, billing, production mutation or paid-provider execution occurred.
 
-Fixed exact process-flag opt-in before credential loading in four regression
-harnesses; disabled runs neither read .env nor initialize the provider SDK.
-Fixed boot checks hiding app errors and accepting unrelated legal-page content.
-Fixed burn-in PSNR failures masquerading as visible differences; burn-in/demo
-fixture guards permit only their own local server, retaining real SSRF elsewhere.
+## Reproduction evidence and investigation
+Both retained failures are native Page.captureScreenshot errors after fonts
+are ready: beta390 full-page capture, charcoal1280x900 viewport grain capture.
+Beta repeated in hosted CI39086158186 and postmerge39087600268, shard7;
+grain failed in postmerge shard8. Original attempts failed in553-919ms.
+Retry traces capture during avatar/WebGL startup; rendering pressure is a
+hypothesis, not an established cause. No original failure trace was retained.
+Pinned Playwright1.61.0 uses Chromium/headless-shell149.0.7827.55 rev1228.
+Exact Chromium source emits the error when surface readback returns an empty
+image, before PNG encoding. CDP discards the underlying surface-copy error.
+Playwright enables CDPScreenshotNewSurface; its upstream
+PLAYWRIGHT_LEGACY_SCREENSHOT switch offers a controlled backend experiment.
+No workaround is accepted without actual failing-versus-passing evidence.
 
-## Verification
-Baseline Vitest: PASS 1,616; 32 existing opt-in skips.
-Final Vitest: PASS 1,681; same 32 skips; 65 new assertions.
-Machine comparison confirms zero missing tests or changed original outcomes.
-Negative controls: boot RED6/GREEN8, live startup RED22/GREEN24,
-PSNR RED15/GREEN20; fixture guard plus real SSRF checks PASS28.
-Build/PowerShell ASCII, bundle leak, voice/eval parity, domain language,
-artifact anchors, design lint and diff whitespace checks PASS.
-Codex contracts PASS26; legacy permission harness PASS25;
-CI input/timing helper tests PASS17; E2E input guard PASS109 inputs.
-Affected browser smoke PASS68/68 across eight specs at mobile/desktop widths.
-Both legal-page checks reject a nonempty unrelated page (expected exit1).
-Independent correctness review clean; deletion-only brand review BRAND_PASS.
-Public telemetry lacks dummy-backend admin credentials as expected. One local
-image-handler auth log appeared during recovery teardown; isolated repeat PASS1
-without that log. Missing mock ruled out; close-before-abort race is unproven.
-No provider execution; paid/live switches remain unset.
+Windows unchanged traced baseline passed20/20 first attempts (10 beta390,
+10 grain). Actual bundled headless-shell uses SwiftShader. Native untraced
+original shard7/8 reproduction is underway; source/config hashes unchanged.
+Local evidence: .tmp/screenshot-capture-repro/.
+Hosted original evidence: .tmp/postmerge-ci-39087600268/e2e-tooling/.
+Temporary Linux CI diagnostic compares current/legacy capture backends using
+the unchanged original shard7/8 commands; retains native results and failures.
+No product code, screenshot assertions, timeouts, retries or dependencies edited.
 
-## Remaining boundaries and next action
-Paid-provider suites need an approved exact test spec; opt-in real-render suites
-remain unrun under tests/AGENTS.md. Offline helper checks do not prove a render.
-Unused auth wrappers need focused session compatibility verification before
-removal. Test-only tuned script guardrails/generation helpers need exact-diff
-approval. Preserve the historical icon wrappers until the legacy instruction
-discrepancy is resolved. No failures were skipped or assertions weakened.
-Hosted CI39086098893 never started verify (zero steps): GitHub annotation says
-"The job was not started because an Actions budget is preventing further use."
-Vercel status also says "Account is blocked." No gates waived or retries billed.
-PR203 is draft and attached; local gates are complete. Resolve account/budget
-blocks and run hosted CI before any merge decision. No deploy/merge requested.
+## Remaining work
+Obtain a real fresh capture failure, isolate the trigger with controlled A/B,
+implement the smallest justified fix, retain original rendering and checks,
+verify pixel validity/freshness and independent smoke/correctness review.
+Run build, Vitest, applicable gates and full hosted CI on the final commit.
+Keep draft PR/evidence current and do not merge without explicit instruction.
