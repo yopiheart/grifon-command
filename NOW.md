@@ -3,7 +3,7 @@
 
 ## Active task and boundaries
 Checkout: F:/CodexWorktrees/chat-design-release/grifon-command.
-Branch: codex/chat-sidebar-vibrancy; base origin/main 9e3b0996.
+Branch: codex/chat-sidebar-vibrancy; integrating origin/main ece79ac9 (PR204 screenshot capture).
 Draft PR205: https://github.com/yopiheart/grifon-command/pull/205
 Earlier merge/release authorization remains active. Require green CI before merge.
 Neil approved the light/dark sidebar, then requested row avatars hidden until
@@ -58,25 +58,30 @@ Earlier111 unique relevant cases passed; initial setup/capture reports retained.
 Current motion QA: F:/CodexQA/grifon-composer-motion-20261018.
 Earlier QA: F:/CodexQA/grifon-sidebar-20261018 and
 F:/CodexQA/grifon-mascot-first-paint-20261018.
-Actual Android keyboard was previously human-verified; latest fix still needs
-phone retest. Desktop viewport/engine simulation is not physical Safari/Android.
+Neil confirmed latest fix on actual Android: no composer shake in light/dark,
+approved release. Desktop engine simulation is not physical Safari hardware.
 
 ## CI and deployment
-Prior pushed source efdc19a0. CI39093307073 finished:23started jobs PASS;
+Follow-up pushed fe351eadfb330181aef4e3516157bd178c7bc904; GitHub head verified.
+CI39096735857 attempt1: all43 required jobs budget-blocked before start;
+345 native browser cases NOT RUN. All43 annotations audited, no artifacts.
+Neil reports budget unblocked; root reran failed jobs as attempt2 on exactfe351ead.
+Prior efdc19a0 CI39093307073 finished:23started jobs PASS;
 172/172executed browser cases PASS (one capture retry),20unstarted shards
 covering169cases blocked by Actions budget. All20 annotations confirm budget.
-Neil asked to unblock; no confirmation, rerun or billing change since.
+Attempt2 is running; no billing/workflow change or gate bypass.
 Previous CI39091648732 failures were repaired and retained in QA reports.
-Exact efdc19a0 preview READY: dpl_48KFxkErrXDpmxGmu1ty9DWbHcwu,
-grifon-command-1ouwmfdad-neilmaglayabusiness22-2085s-projects.vercel.app.
-Production remains main9e3b0996, deploymentDpm3bapc8eZBmu2QCxP9W1YBeqL5.
+Exact fe351ead preview READY verified: dpl_FF2jjjb8cHdoEmFYi6mta9pPgSsG,
+grifon-command-6lrtqczhg-neilmaglayabusiness22-2085s-projects.vercel.app.
+Production now main ece79ac9 (PR204), deploymentE8SZ5tFVFkmYjW3fiM52fAN7uZjW.
 Old-main live baseline4/4PASS using unmodified deployed bytes and network-only
 synthetic auth/API responses; no real auth/email/provider/prod writes.
-Postmerge verifier updated for no portraits and12px title inset, still gated
+Postmerge verifier checks no portraits,12px inset and16px clearance, still gated
 approvedReady=null until root confirms new production Ready plus merge SHA.
 
-## Next action
-Commit/push checked follow-up to PR205,
-verify exact-source Ready preview and give Neil its mobile link.
-Keep production merge held for a complete green hosted run after budget unblock.
-Then verify live both themes/mobile/desktop with synthetic coverage disclosed.
+## Integration and next action
+Main advanced via PR204: default Chromium screenshot path only; NOW-only conflict.
+Retain main playwright.config.ts exactly; approved application blobs unchanged.
+Complete old CI audit, push integration, require fresh green CI before PR205 merge.
+Confirm production Ready and exact merge SHA before opening postmerge verifier.
+Verify live both themes/mobile/desktop with synthetic coverage disclosed.
