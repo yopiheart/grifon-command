@@ -28,7 +28,17 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     trace: 'on-first-retry',
   },
-  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
+  projects: [{
+    name: 'chromium',
+    use: {
+      ...devices['Desktop Chrome'],
+      launchOptions: {
+        // Playwright 1.61's opt-in surface path returned empty bitmaps in CI.
+        // Use Chromium's default capture path with the same screenshot options.
+        ignoreDefaultArgs: ['--enable-features=CDPScreenshotNewSurface'],
+      },
+    },
+  }],
   webServer: {
     // Dev server retains SPA fallback and the real pre-auth API guards checked
     // by codex-desktop.spec.ts. CI has no .env files or provider credentials.
