@@ -1,10 +1,10 @@
 # NOW - the resume doc
-**Stamped: 2026-10-18; PR204 merged, post-merge CI verification**
+**Stamped: 2026-10-18; PR204 merged, CI and live public smoke verified**
 
 ## Active task and authorization
 Checkout: F:/CodexWorktrees/8710/grifon-command.
 Branch: codex/chromium-capture-fix, fast-forwarded to merged main for checkpoint.
-User explicitly requested merging PR204 and checking post-merge CI.
+User requested merging PR204, checking CI, then unpaid live smoke.
 https://github.com/yopiheart/grifon-command/pull/204
 PR204 merged at2026-10-18T05:05:54Z:
 ece79ac9b3809fca8659470747cecc113fe1e737.
@@ -25,6 +25,19 @@ Post-merge Vitest:1,681 passed,32 existing opt-in skips; all other gates green.
 Evidence: .tmp/postmerge-ci-39099372159/ (includes verify-job.log).
 Automatic Vercel deployment completed successfully (GitHub commit status):
 https://vercel.com/neilmaglayabusiness22-2085s-projects/grifon-command/E8SZ5tFVFkmYjW3fiM52fAN7uZjW
+
+## Live public smoke after PR204
+https://grifon.ai passed24 route/viewport checks: /, /pricing, /terms, /privacy,
+/refund, /support, /login, /app at1280x720,375x667,390x844.
+Headings rendered; no horizontal overflow or broken images observed. Navigation,
+Back/Forward, FAQs and billing toggle worked. Guest /app redirects to sign-in.
+No browser console warnings/errors observed. HTML and entry JS/CSS GETs were200.
+No credentials/forms submitted, paid-plan buttons clicked, generation or checkout.
+GitHub latest Production7150240826 and current main both identify ece79ac9.
+Vercel connector403 and absent CLI limit direct alias-to-deployment inspection;
+unique deployment URL returned a different document, so no byte-match claimed.
+Authenticated/provider/billing flows untested. No public regression observed.
+Evidence: .tmp/live-pr204-identity/browser-smoke.json and browser tool log.
 
 ## Pre-merge verification
 Final CI39091878389 passed exact reviewed head294f3481:
@@ -73,6 +86,5 @@ PR204 is merged and post-merge verification is complete. No CI blockers or
 regressions observed. PR204 records both full runs:654 browser case executions,
 all first-attempt passes. This branch carries the documentation-only checkpoint;
 no additional application/test code changed. Never cancel main CI.
-PR203 is already merged9e3b0996; its old CI had2 capture retry passes,
-which prompted this fix. Its unpaid public smoke passed21/21 plus32 GET probes.
-No generation, authenticated live flow or paid-provider smoke is authorized.
+PR203 is already merged9e3b0996; its old2 capture retries prompted this fix.
+No paid generation/provider smoke is authorized. No application/test edits here.
