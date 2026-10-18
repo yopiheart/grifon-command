@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-10-18, Sunday preliminary STP response ready for August review**
+**Stamped: 2026-10-18, August Gmail review draft verified with response and brochure**
 
 ## Current work
 Branch codex/oceanides-premium-profile-brochure; draft PR161 stacked on PR153.
@@ -8,8 +8,22 @@ Neil supplied BioGreen candidate-supplier plan/profile and operation-video URL.
 Candidate identified; appointment, engineering responsibility and reference-use permissions unconfirmed.
 Actual client laboratory results, flow records and site plans still unavailable.
 Neil states promised technical follow-up is due today, Sunday, before Monday; treat as current deadline.
-Preliminary response PDF and local email text ready; full requested package remains incomplete.
-No client/supplier outreach, actual email draft/send, paid call, deployment or merge performed.
+Preliminary response PDF and company brochure saved in one Gmail draft to August by explicit request.
+Full requested technical/commercial package remains incomplete; draft body states review limitations.
+No email send, client/supplier outreach, paid call, deployment or merge performed.
+
+## August Gmail review draft
+User requests preliminary technical response plus company brochure, for review before client submission.
+Recipient ceprianoaugust@gmail.com reconfirmed from historical SENT message 1a138fb825eaa72f.
+Subject: FOR REVIEW | Oceanides STP Preliminary Response + Company Brochure.
+Gmail draft r-6262352740619929843; readback message 1a14e061694babb4, thread 1a14e056ebb2001f.
+Verified DRAFT label, exact To/subject, no CC/BCC, exactly 2 PDF attachments with expected sizes:
+preliminary response 63,240 bytes; latest Redesign A5 reader brochure 10,251,058 bytes (8 pages).
+Both local hashes match existing delivery records; uploaded unchanged via Gmail file chooser.
+Body addressed to August for review, not client-facing forwarding text; explains remaining technical
+and commercial items and mismatch between brochure illustration and supplier EC/filtration/AOP train.
+Private receipt .tmp/oceanides-email/august-preliminary-brochure-draft-receipt.json and screenshot.
+Draft retained for review; assistant did not send. No other drafts changed.
 
 ## Sunday supplier review and response
 Inputs retained unchanged in Downloads: STP 30 CMD PLAN - Copy.pdf; 4. Company Profile.pdf.
@@ -25,8 +39,9 @@ clients/oceanides/stp-proposal-prep/output/pdf/Oceanides-STP-Preliminary-Technic
 Client request matrix includes brochure, process, equipment/space, pumps/power/staff, controls,
 performance, references, earlier quotation/payment terms and three-year costs; pending status explicit.
 Three-site inputs, supplier clarifications and conditional next deliverables; no invented completion date.
-Local client-follow-up-email-for-review.txt is unsent, not a Gmail draft; recipient not supplied.
-Existing brochure available separately for August version review, not attached to this response.
+Local client-follow-up-email-for-review.txt remains an unsent client-facing template.
+Separate Gmail review draft above addresses August and includes the brochure as its second attachment;
+the preliminary response PDF itself remains unchanged, with brochure not embedded in that PDF.
 Builder build-preliminary-response.py; build and Python compile PASS.
 All 3 pages visually inspected; independent final content/layout PASS.
 All used fonts embedded and text within page bounds PASS; final render identical after font fix.
