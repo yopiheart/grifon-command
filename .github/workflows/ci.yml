@@ -108,8 +108,8 @@ jobs:
   e2e:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    # Forty native shards separate the long Companion journeys while retaining
-    # every case, the existing time limits, and one worker per runner.
+    # Five geometry journeys exhausted one native shard's 15-minute job cap.
+    # Keep forty runners: 38 native shards for the rest, two for those journeys.
     strategy:
       fail-fast: false
       matrix:
@@ -157,7 +157,16 @@ jobs:
 
       - name: Boot/render smoke
         # The installed CLI has no --add-reporter; retain both CI reporters.
-        run: npm run test:e2e -- --shard=${{ matrix.shard }}/40 --reporter=github,list,./tools/ci-e2e-timing-reporter.mjs
+        # Artifact names identify runner slots; report.shard is the native shard.
+        run: |
+          if [ "${{ matrix.shard }}" -le 38 ]; then
+            echo "Runner slot ${{ matrix.shard }}: non-geometry native shard ${{ matrix.shard }}/38"
+            npm run test:e2e -- --grep-invert="centered companion geometry and reachable controls at " --shard=${{ matrix.shard }}/38 --reporter=github,list,./tools/ci-e2e-timing-reporter.mjs
+          else
+            shard=$(( ${{ matrix.shard }} - 38 ))
+            echo "Runner slot ${{ matrix.shard }}: geometry native shard ${shard}/2"
+            npm run test:e2e -- tests/e2e/companion-layout.spec.ts --grep="centered companion geometry and reachable controls at " --shard="${shard}/2" --reporter=github,list,./tools/ci-e2e-timing-reporter.mjs
+          fi
 
       - name: Upload screenshots
         if: always()
