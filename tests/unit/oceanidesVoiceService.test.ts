@@ -21,7 +21,7 @@ class FakeProvider extends EventEmitter {
   event(value: unknown) { this.emit('message', Buffer.from(JSON.stringify(value))); }
 }
 const fixtures: Array<{ directory: string; service: VoiceLabService }> = [];
-function fixture(live = false, failOpen = false) {
+function fixture(live = false, failOpen = false, approvedHash = hash) {
   const directory = mkdtempSync(join(tmpdir(), 'oceanides-service-test-'));
   const provider = new FakeProvider();
   const events: ServerEvent[] = [];
@@ -34,7 +34,7 @@ function fixture(live = false, failOpen = false) {
   });
   const service = new VoiceLabService({
     ledgerDirectory: directory, specPath, now: () => now,
-    env: live ? { OCEANIDES_VOICE_LIVE: '1', OCEANIDES_VOICE_APPROVED_SPEC_SHA256: hash, XAI_API_KEY: 'TEST-NOT-A-CREDENTIAL' } : {},
+    env: live ? { OCEANIDES_VOICE_LIVE: '1', OCEANIDES_VOICE_APPROVED_SPEC_SHA256: approvedHash, XAI_API_KEY: 'TEST-NOT-A-CREDENTIAL' } : {},
     openProvider: opener,
   });
   fixtures.push({ directory, service });
@@ -256,6 +256,43 @@ describe('Oceanides mock and live bridge boundaries (fake provider only)', () =>
     expect(new VoiceLedger(value.directory).summary()).toMatchObject({ attempts: 1, reservedUsd: 0.5 });
     expect(value.service.status().active).toBe(false);
     expect(value.events).toContainEqual(expect.objectContaining({ type: 'closed', reason: 'live_start_failed' }));
+  });
+
+  it('opens exactly one recovery provider after ten retained attempts and blocks a twelfth after restart', () => {
+    const value = fixture(true);
+    for (let i = 0; i < 10; i++) new VoiceLedger(value.directory).reserve('a'.repeat(64), 10, 5);
+    const path = join(value.directory, 'budget.json');
+    const original = JSON.parse(readFileSync(path, 'utf8')).reservations;
+    const { id } = value.start();
+    expect(value.openedAfterReservation()).toBe(11);
+    expect(value.opener).toHaveBeenCalledTimes(1);
+    expect(value.service.budget()).toMatchObject({ attempts: 11, reservedUsd: 5.5, liveReady: false });
+    expect(JSON.parse(readFileSync(path, 'utf8')).reservations.slice(0, 10)).toEqual(original);
+    value.service.stop(id);
+    const afterRecovery = readFileSync(path, 'utf8');
+    const nextOpener = vi.fn(() => new FakeProvider());
+    const restarted = new VoiceLabService({
+      ledgerDirectory: value.directory, specPath,
+      env: { OCEANIDES_VOICE_LIVE: '1', OCEANIDES_VOICE_APPROVED_SPEC_SHA256: hash, XAI_API_KEY: 'TEST-NOT-A-CREDENTIAL' },
+      openProvider: nextOpener,
+    });
+    try {
+      expect(() => restarted.createSession('natural-inquiry', 'live')).toThrow('live_not_approved_or_budget_unavailable');
+      expect(restarted.budget()).toMatchObject({ attempts: 11, reservedUsd: 5.5, liveReady: false });
+      expect(nextOpener).not.toHaveBeenCalled();
+      expect(readFileSync(path, 'utf8')).toBe(afterRecovery);
+    } finally { restarted.dispose(); }
+    expect(value.opener).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not reserve or open a recovery provider with stale spec approval', () => {
+    const value = fixture(true, false, 'a'.repeat(64));
+    for (let i = 0; i < 10; i++) new VoiceLedger(value.directory).reserve('a'.repeat(64), 10, 5);
+    const path = join(value.directory, 'budget.json');
+    const original = readFileSync(path, 'utf8');
+    expect(() => value.start()).toThrow('live_not_approved_or_budget_unavailable');
+    expect(value.opener).not.toHaveBeenCalled();
+    expect(readFileSync(path, 'utf8')).toBe(original);
   });
 
   it('enforces timeout even if the browser sends no more events', () => {

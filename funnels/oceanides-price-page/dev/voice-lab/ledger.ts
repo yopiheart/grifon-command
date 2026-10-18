@@ -2,7 +2,7 @@ import { closeSync, existsSync, fsyncSync, mkdirSync, openSync, readFileSync, re
 import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 
-export const HARD_LIMITS = Object.freeze({ maxAttempts: 10, maxUsd: 5, reservationUsd: 0.5, sessionMs: 180_000, maxTextInputs: 20 });
+export const HARD_LIMITS = Object.freeze({ maxAttempts: 11, maxUsd: 5.5, reservationUsd: 0.5, sessionMs: 180_000, maxTextInputs: 20 });
 interface LedgerData { version: 1; reservations: Array<{ id: string; at: number; usd: number; specSha256: string }> }
 
 export class VoiceLedger {

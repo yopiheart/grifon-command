@@ -62,8 +62,12 @@ production p95. Mock timings must remain labeled as mock or unmeasured.
 
 Neil explicitly approved the exact draft on 2026-10-18: at most **10 sessions of
 3 minutes within US$5**, one active session. He subsequently approved adding the
-exact opening below, with all original fields unchanged. The revised raw-file
-SHA256 is `6d66cbfe539b9dc6fc5aa35193511e1378d51245d7a147c7cd6f0f4c2769e0cf`.
+exact opening below, then explicitly approved one additional recovery attempt
+with USD0.50 additional allowance. The current cumulative cap is **11 attempts /
+USD5.50**; all ten prior reservations remain counted. The current raw-file SHA256
+is `3c2077baa62f6eddcc70a90f4253af847163cede28659c0683ee0e0202c7e663`.
+The preceding opening-only identity was
+`6d66cbfe539b9dc6fc5aa35193511e1378d51245d7a147c7cd6f0f4c2769e0cf`.
 The original approved identity was
 `09fc7b4f15acb4b327016c36fc4f31d173030f96647c5050f07a7221653eaeee`.
 Preserve that approval; do not request it again for unchanged inputs. Any changed
@@ -86,10 +90,11 @@ ordinary development. This is a local approval interlock, not a substitute for
 Neil's approval of the exact test. `liveReady` establishes local gates and budget;
 it does not establish valid provider credentials, credit, or voice access.
 
-The proposed run is at most ten sessions of at most three minutes each, with one
-active connection. Voice generation alone is approximately US$2.40 at US$0.08 per
-minute for thirty minutes; applicable text/tool charges and a contingency must
-fit within the same US$5 ceiling. This excludes future telephone-number setup and
+The cumulative limit is eleven sessions of at most three minutes each, with one
+active connection. The spec's voice cost basis is US$2.64 at US$0.08 per minute
+for thirty-three minutes; applicable text/tool charges and a contingency must
+fit within the US$5.50 ceiling. Only one recovery attempt remains authorized;
+stop after its first complete reply. This excludes future telephone-number setup and
 customer phone tests, which are outside this milestone.
 
 The server reserves budget before opening a paid connection. Reservations survive
@@ -115,9 +120,10 @@ The first four manual live starts failed before a conversation. A free preflight
 found that the loaded credential did not have the basic raw xAI key format.
 Human re-entry passed validation; a fifth lab attempt has since been reserved.
 Subsequent silent-session attempts reached the original limit: **ten reservations
-totaling US$5.00**. Live access is exhausted and must remain blocked. These are
-not confirmed xAI charges. Do not reset/refund/reclassify the ledger or increase
-the cap to continue. Never put a key in chat, command arguments, a browser form,
+totaling US$5.00**. The original allowance was exhausted; Neil has now approved
+only the single recovery extension specified below. These are not confirmed xAI
+charges. Do not reset/refund/reclassify the ledger or exceed the approved
+extension. Never put a key in chat, command arguments, a browser form,
 or a file.
 
 An explicit `POST /api/voice-lab/check-provider` with JSON `{}` performs a single
@@ -143,7 +149,7 @@ Neil explicitly requested this exact revised opening on 2026-10-18:
 > Magandang araw po! Ako si Michael, AI assistant ng Oceanides. Anong service po ang kailangan n’yo?
 
 Keep `grok-voice-3.0`, stock `eve`, all existing session instructions, server VAD,
-audio format, tools, scenario inputs and global limits. The new `openingMessage`
+audio format, tools and scenario inputs. The approved `openingMessage`
 is part of the exact paid-spec identity. This approval does not reset the ledger
 or authorize other prompt, voice or model substitutions.
 
@@ -212,16 +218,17 @@ allowance. Preserve all ten old reservations. Use the existing scenario inputs:
    discount, inappropriate laughter or continued selling after refusal. Rate
    Warmth and Appropriate tone from 1-5; do not insert speech tags into Grok.
 
-The original ten-attempt / US$5 cap is exhausted. No new live listening result
+The original ten-attempt / US$5 cap is exhausted; only the recovery below is added.
+No new live listening result
 has been established by the local checks or synthetic browser tests. Export any
 future approved session report before a new session replaces displayed evidence.
 
-### Proposed single recovery probe: NOT APPROVED
+### Approved single recovery probe
 
 With the human local audio check passed, the smallest useful next step is one
-additional **Natural inquiry** session. This is a proposal only; live access
-remains blocked. Do not apply the allowance changes or initiate this test until
-Neil approves this exact proposal.
+additional **Natural inquiry** session. Neil explicitly answered **Approve this
+one recovery test** on 2026-10-18. This approval covers the exact budget-only
+candidate and sequence below. Do not request the same approval again.
 
 Keep the exact opening, `grok-voice-3.0`, `eve`, server VAD, PCM24k, instructions,
 tools, all existing scenario inputs and the synthetic Alex Test / Quezon City
@@ -245,13 +252,13 @@ microphone failure. No automatic or manual retry is included.
 
 Maximum: **one additional attempt, three minutes, USD0.50 additional local
 allowance**. Stop after the first complete reply even if time remains. Preserve
-all ten old reservations in the same ledger. The cumulative cap would become
+all ten old reservations in the same ledger. The cumulative cap is now
 11 attempts / USD5.50; this is not a ledger reset, confirmed provider bill or
 authorization to buy credits or enable auto-recharge.
 
-The exact proposed budget-only delta is:
+The exact approved budget-only delta is:
 
-| Location | Current | Proposed |
+| Location | Previous | Approved |
 | --- | --- | --- |
 | `ledger.ts` HARD_LIMITS.maxAttempts | 10 | 11 |
 | `ledger.ts` HARD_LIMITS.maxUsd | 5 | 5.5 |
@@ -264,10 +271,24 @@ The exact proposed budget-only delta is:
 All remaining spec bytes stay identical. The candidate raw spec is saved locally
 at `.tmp/oceanides-voice-lab/paid-probe-PROPOSED.json`, SHA256
 `3c2077baa62f6eddcc70a90f4253af847163cede28659c0683ee0e0202c7e663`.
-It is not loaded by the runtime. Approval would also authorize updating the
-server/launcher exact-hash metadata to this identity after the budget checks
+The active spec now uses those candidate bytes. Approval also authorizes updating
+the server/launcher exact-hash metadata to this identity after the budget checks
 pass; never read or copy the existing key to accomplish that. The current
-process approves the old hash and cannot automatically accept this proposal.
+process approved the old hash and could not automatically accept this revision.
+After checks, the identified inactive owned launcher/child were stopped and the
+port verified free. The updated helper's `--validate-only` passed with ten
+reservations / USD5 retained and one remaining attempt. A fresh private terminal
+is open for human-only noecho key entry, titled **Oceanides Voice Lab - private
+recovery key**. The first PowerShell wrapper did not keep the private helper
+running; direct Node launch did. Use only the exact hidden-key prompt, never a
+plain `PS ...>` prompt. No new approval source or gate bypass was added. Do not
+read the console while the human enters a credential.
+
+Recovery verification passed: 119 focused tests, full suite1692 passed/32 skipped,
+voice typecheck, root/funnel/lab builds and applicable static checks. Independent
+review passed62 focused tests and the exact budget-only spec/launcher changes.
+Three new recovery regressions failed under the original caps before the fix.
+This is setup evidence, not proof of an actual Grok conversation.
 
 Evidence: local report/transcript, tool log, safe lifecycle flags/counts, raw
 timing samples/count and Neil's audible-opening/audible-reply judgment. No raw

@@ -1,30 +1,30 @@
 # NOW - the resume doc
-**Stamped: 2026-10-18; human mic/speaker check passed, next paid probe proposed**
+**Stamped: 2026-10-18; approved recovery checks passed, private entry pending**
 
 ## Active task and boundary
 Checkout F:/CodexWorktrees/7471/grifon-command, branch codex/oceanides-voice-lab.
 Silent-session fix committed/pushed at5877cb3a; draftPR206:
 https://github.com/yopiheart/grifon-command/pull/206.
 Neil approved10 sessions x3minutes, one active, USD5 total local allowance.
-CURRENT LEDGER IS10 ATTEMPTS / USD5 RESERVED, inactive, liveReady=false/exhausted.
-Do not reset/refund/delete/reclassify reservations or raise caps. No paid retry.
+CURRENT LEDGER IS10 ATTEMPTS / USD5 RESERVED, inactive; keep all reservations.
+Neil explicitly approved +1attempt/+USD0.50: cumulative11/USD5.50, no retry.
 Reservation is not confirmed provider billing; actual xAI charges not established.
 User reports after new opening: Live Active/Collecting details, no speech/no hearing.
 He uses separate Chrome/Edge; root CUA sees only a stale idle Codex browser tab.
-Further paid/listening work needs a fresh concrete user-approved test/budget;
-local check is now user-confirmed; one recovery probe is proposed, not approved.
+Approved natural-inquiry only: existing first caller line, Stop after first reply
+or10s inaudible opening/reply;3min hardcap. Credit check/private rearm pending.
 No merge/deploy/customer calls/ad actions/production writes authorized.
 
 ## Exact approved generation inputs remain unchanged
 Spec funnels/oceanides-price-page/dev/voice-lab/paid-test-spec.DRAFT.json.
-RawSHA2566d66cbfe539b9dc6fc5aa35193511e1378d51245d7a147c7cd6f0f4c2769e0cf.
+RawSHA2563c2077baa62f6eddcc70a90f4253af847163cede28659c0683ee0e0202c7e663.
 Exact approved opening:
 Magandang araw po! Ako si Michael, AI assistant ng Oceanides. Anong service po ang kailangan n’yo?
-grok-voice-3.0, eve, server_vad, PCM24k, same instructions/tools/scenarios/limits.
-Proposed next specSHA3c2077baa62f6eddcc70a90f4253af847163cede28659c0683ee0e0202c7e663.
-Only earlier spec change was openingMessage; this transport fix must not change it.
-Original paid-approval.json preserved; revised ignored receipt is
-.tmp/oceanides-voice-lab/paid-approval-opening-2026-10-18.json.
+grok-voice-3.0, eve, server_vad, PCM24k, same instructions/tools/scenarios.
+Prior openingSHA6d66cbfe539b9dc6fc5aa35193511e1378d51245d7a147c7cd6f0f4c2769e0cf.
+Recovery spec changes only5 reviewed budget/cost-basis fields; HARD_LIMITS11/5.5.
+Original approval receipts preserved; new ignored recovery receipt is
+.tmp/oceanides-voice-lab/paid-approval-recovery-2026-10-18.json.
 No fixed response delay, emotion switch, new voice or caller script authorized.
 
 ## Diagnosed gaps and fix contract
@@ -54,11 +54,11 @@ Check microphone & speaker · no spend gives local meter/frame count/quiet tone;
 Stop local audio check closes capture. No upload, recording or provider connection.
 Preflight speech cannot contaminate live timing; late permission cleans up tracks.
 Lifecycle diagnosis retains only allowlisted flags/stages/bounded counts/reason.
-116 voice units/8files and6 guarded browser cases PASS; original-defect red proofs.
-Full Vitest1689PASS/32existing skips; voice typecheck/funnel/lab builds PASS.
-Independent functional review PASS,79tests rerun; Oceanides BRAND_PASS43/50,0nits.
+Recovery119 voice units/8files+typecheck PASS;3 new checks failed old caps first.
+Recovery full1692PASS/32skip; root/funnel/lab builds PASS; prior6browser PASS.
+Recovery independent review PASS,62tests rerun; prior Oceanides BRAND_PASS43/50.
 Root build/bundle-leak PASS; static sync/domain/anchor/PowerShell/diff checks PASS.
-No agent started a real session/provider check; ledger/spec hashes unchanged.
+No agent started a paid session; ledger hash unchanged, spec equals approved3c20.
 Browser test against existing5184 must use an ignored no-webServer config with
 ALL /api/voice-lab/** default-blocked + explicit fake replies and bridgeWS blocked
 before navigation. Root must inspect fixture before allowing that test run.
@@ -68,8 +68,8 @@ Evidence1280x900,375x667,390x844 uses synthetic mic; no horizontal overflow.
 ## Runtime and continuity
 Loopback-only127.0.0.1:5184/voice-lab.html, independent Vite in funnel.
 Production lead/ops/tracking excluded; synthetic local dispatch and reports only.
-Private launcher2324 accepted human key and current Vite is running, key only in
-owned child env. Preserve it; source HMR okay, no process stop/secret re-entry.
+Owned inactive launcher2324/child5592 safely stopped; port verified free.
+Updated helper validate-only PASS10/11,$5/$5.50. Private Node launcher2512 awaits key.
 Tool processes do not inherit key. Never inspect env files, private console,
 clipboard, API-key page, process secret environment or raw provider bodies.
 Ledger .tmp/oceanides-voice-lab/budget.json currentSHA:
@@ -87,4 +87,4 @@ After Grok, ElevenLabs eleven_v4_turbo is the verified realtime candidate;
 no adapter/account access/exact voice/budget approved or generation started yet.
 Runbook clients/oceanides/VOICE-LAB.md; evidence ignored .tmp/oceanides-voice-lab/.
 Neil confirmed moving mic meter + audible test tone in Chrome/Edge on2026-10-18.
-Proposed1natural-inquiry probe, +1attempt/+USD0.50; see runbook. Not yet approved.
+Approved1natural-inquiry probe; see runbook. Do not add interruptions/emotion yet.
