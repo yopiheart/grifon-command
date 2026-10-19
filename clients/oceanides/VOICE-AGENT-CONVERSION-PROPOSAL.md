@@ -1,7 +1,7 @@
 # Oceanides conversation coaching proposal
 
 Revision: **CM-2026-10-19-r2**. Supersedes the unapproved r1 proposal.
-**Approved and applied with Opening A on 2026-10-19. Exploratory transcript reviewed; r3 repair proposed.**
+**Approved and applied with Opening A on 2026-10-19. Historical r2 Instructions; now superseded by approved/applied r3.**
 
 ## Decision and evidence
 
@@ -181,7 +181,8 @@ clarification, discount concern and a night-only scheduling question. It differs
 from the fixed five-line script: stress, thanks and the exact dated preference
 are absent, and clarification/night questions are added. This is useful
 exploratory evidence, not a strict scripted quality pass or an authorized retry.
-The one r2 free preview is now reported/consumed. No further preview is authorized.
+The one r2 free preview is now reported/consumed. That allowance authorizes no
+further preview; r3's separate new approval is recorded below.
 
 The 5,000-per-truckload/up-to4,000L facts are present, with no confirmed booking
 or invented discount in the supplied excerpt. Quality defects remain:
@@ -203,7 +204,9 @@ or numeric ratings establish acoustic emotion, warmth, interruption cutoff,
 naturalness or latency. No search/tool outcome can be independently audited
 from this text alone. No conversion conclusion follows.
 
-[CM-2026-10-19-r3](VOICE-AGENT-CLARITY-r3.PROPOSED.md) prepares exact repairs and
-one new free replay for approval. R2 remains the saved Builder configuration;
-no new prompt, greeting, voice control, preview or paid allowance was changed
-while reviewing this transcript.
+[CM-2026-10-19-r3](VOICE-AGENT-CLARITY-r3.PROPOSED.md) was subsequently explicitly
+approved and saved, with exact Instructions verified after reload. It removes
+the personal lead/date seed and adds caller-source, relevance and price-unit
+guidance. Opening A, Altair/model/pronunciation remain. One new free replay is
+approved, max180sec/USD0/no retry; human result pending. No agent preview,
+Publish, API run or local paid allowance change occurred.

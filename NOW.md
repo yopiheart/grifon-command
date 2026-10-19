@@ -1,14 +1,15 @@
 # NOW - the resume doc
-**Stamped: 2026-10-19; CMO transcript defects found, exact r3 repair proposed**
+**Stamped: 2026-10-19; exact Oceanides r3 repair approved and applied**
 
 ## ▶ NEXT ACTION
 Neil accepted free voice-only previews with web_search attached but prohibited.
-CM-r2 exploratory transcript received: correctrateunits, but unsupported caller
-date attribution (bukas gabi), irrelevantcallbackhours and weakpricewording.
-R2 contains static Tomorrow seed; plausible source, not proven provider cause.
-Original2 free previews+r2session now reported; no further preview authorized.
-CM-2026-10-19-r3 exact repair+1newfree replay PROPOSED; approval needed first.
-Path clients/oceanides/VOICE-AGENT-CLARITY-r3.PROPOSED.md. Savedr2 remains active.
+CM-r2 exploratory transcript: correct rate units, unsupported caller-date claim,
+irrelevant callback hours and weak price wording; not a strict scripted pass.
+Static Tomorrow seed was a plausible source, not proven provider causation.
+Neil explicitly approved CM-2026-10-19-r3 + one NEW free180sec/USD0 replay.
+Exact Instructions applied and matched after reload; human replay result pending.
+Path clients/oceanides/VOICE-AGENT-CLARITY-r3.PROPOSED.md; r3 is saved active.
+Four fixed caller lines; fresh conversation, manual timer, no retry/paid fallback.
 User clarified request received, schedule subject to crew availability.
 Altair/model/pronunciation retained; no agent preview,Publish/API/paid run.
 
@@ -18,10 +19,10 @@ Draft PR206: https://github.com/yopiheart/grifon-command/pull/206.
 Latest explicit voice choice Altair overrides Eve for Builder only.
 GrokVoice3.0 retained; guided-request Opening A is the saved Michael greeting.
 Welcome/caller-interruption on; Manila; auto language; speed1x; silence nudge off.
-BP/PC snapshots preserved. CM-r2 full prompt and Opening A applied; no other
-control changes. Oceanides->oceanayds rule and pesos wording retained.
+BP/PC/r2 snapshots preserved. Exact r3 Instructions replaced r2; no other
+control changes. Opening A, Oceanides->oceanayds and pesos wording retained.
 Saved Instructions LF SHA256
-1918a2dcd7ee89935d84c775c615b6f686d6a06f1152675a5aeb00e59d65940a.
+12fe80e2638575e81df5e77df56c900dd87db4823577ebea9c09a170ec5d517c.
 Draft state retained; no Publish. Connectors0/collections0/phone not configured.
 Tools remain web_search/end_call. Delete would permanently remove account tool
 from every using agent; canceled, no safe draft-only detach found. Neil then
@@ -34,13 +35,13 @@ under .tmp/oceanides-voice-lab/builder-*2026-10-19* and approved-BP snapshot.
 Preview can remember/read back synthetic details only; no actual saved request,
 dispatch, callback queue, transfer or booking. Do not invoke local-lab functions.
 
-## CMO r2, approved and applied
-clients/oceanides/VOICE-AGENT-CONVERSION-PROPOSAL.md (CM-2026-10-19-r2).
-Full replacement Instructions +Opening A explicitly approved/applied.
+## CMO repairs and evidence
+CM-r2 is historical in clients/oceanides/VOICE-AGENT-CONVERSION-PROPOSAL.md.
+Opening A remains; r3 full replacement Instructions explicitly approved/applied.
 No internal approver names in routine replies; truthful preferred-slot status.
 Exploratorycall exposedsource/relevance/clarity defects; no fullscript pass.
-R3 removesfakepersonalcontext and addsprovenance/relevance/price guidance.
-R3 preview1x180sec/USD0 is unapproved; no retry,Publish/API/paid fallback.
+R3 removes seeded personal context and adds source/relevance/price guidance.
+Original A/B + r2 allowances consumed; r3 is one new free session, not a reset.
 Real receipt close needs persistent request+owner; none connected in Builder.
 Measure actual customer-accepted bookings later; dispatch approval remains.
 
@@ -73,7 +74,9 @@ No general latency or300mscutoff pass. Raw details in clients/oceanides/VOICE-LA
 ## Verification and business contract
 Builder persistence/hash/config checks passed; independent BP draft review PASS.
 CM-r2 configuration audit PASS; conversation quality defects recorded separately.
-Independent r3 proposal/hash review PASS; no live r3 validation or application.
+Independent r3 proposal/hash review PASS; saved exact text verified after reload.
+Independent r3 applied-evidence/status review PASS, no actionable findings.
+R3 human replay pending; no claim of a repaired-conversation quality pass.
 Resume,domain-language,artifact-anchor,diff checks PASS; paid hashes unchanged.
 No app code changed this alignment. Earlier code checks: focused68/68,
 full1700passed/32existing skips,root/funnel/labbuilds,typecheck/staticPASS.

@@ -1,7 +1,9 @@
 # Oceanides clarity and caller-source repair
 
-Revision: **CM-2026-10-19-r3**. **PROPOSED ONLY; not approved or applied.**
-The saved Builder remains r2 with Opening A. No preview is started by this file.
+Revision: **CM-2026-10-19-r3**. **Approved and applied on 2026-10-19.**
+The exact Instructions below matched after reload; Opening A remains unchanged.
+One new free replay is approved, human result pending. No preview was started
+by the agent and no Publish or paid API run occurred.
 
 ## Why this revision
 
@@ -43,11 +45,11 @@ dispatch approval/customer acceptance, correction/readback, no external tools
 except explicit end_call. Search remains attached but prohibited, not disabled.
 No production record, handoff, phone, Publish, paid API or local-budget change.
 
-## Exact proposed full Instructions
+## Exact approved full Instructions
 
 Saved r2 baseline LF SHA256:
 `1918a2dcd7ee89935d84c775c615b6f686d6a06f1152675a5aeb00e59d65940a`.
-Proposed r3 LF SHA256: `12fe80e2638575e81df5e77df56c900dd87db4823577ebea9c09a170ec5d517c`.
+Saved r3 LF SHA256: `12fe80e2638575e81df5e77df56c900dd87db4823577ebea9c09a170ec5d517c`.
 
 ```text
 You are Michael, Oceanides' AI assistant in an internal browser preview. Disclose that you are an AI assistant. Speak natural conversational Taglish when the caller uses Filipino; follow their preferred language. Keep a warm, attentive baseline. Use one question at a time and ask only for information that is missing or needs correction. Use only caller details with a known source. Do not ask again for details already explicitly supplied in this conversation. Do not turn every reply into a question or sales pitch.
@@ -102,14 +104,15 @@ Night-only preference, before any date is supplied:
 
 > Gabi po ang gusto mong schedule. Kailangan pa nating i-confirm kung may crew. Anong araw po ang target mo?
 
-These are proposed wording examples. They do not establish service hours,
+These are illustrative wording examples in the approved specification. They do not establish service hours,
 night availability, discount policy or a new fee. No production receipt is
 claimed; r2's real-store/owner prerequisite for receipt copy remains.
 
-## Proposed one-session free replay
+## Approved one-session free replay
 
-Requires new explicit approval of this exact revision and test. R2's one free
-session is consumed; there is no automatic retry or reset. Proposed allowance:
+Neil explicitly approved this exact revision and test with "Approve r3 + one
+free replay (Recommended)". R2's one free session is consumed; there is no
+automatic retry or reset. New approved allowance:
 **one additional free browser preview, max180 seconds by manual timer, USD0 paid
 allowance**, no retry or paid fallback. Stop if native free access is absent or
 credits/charging are indicated. No API, phone, Publish, pronunciation preview,
@@ -141,6 +144,16 @@ raw outcomes and any untested items. This does not establish acoustic emotion,
 conversion lift, phone readiness or full dispatch/booking acceptance.
 
 Independent draft review passed after qualifying the household rate when property
-type is unknown. The proposed LF prompt hash above was independently verified.
-This is a proposal/configuration review, not evidence that a repaired live
-conversation has passed; no r3 Instructions, setting or preview is applied/run.
+type is unknown. The LF prompt hash above was independently verified. The saved
+Instructions matched the approved text exactly after reload. Opening A, Altair,
+Grok Voice3.0, Manila, welcome/caller-interruption and Oceanides->oceanayds were
+retained; the agent did not start a preview. The human replay result is pending.
+Configuration verification is not evidence that a repaired live conversation
+has passed.
+Independent applied-evidence/status review passed with no actionable findings;
+approved/current prompt text and saved hash matched, with paid limits untouched.
+
+The immutable pre-application approved document, direct-human approval receipt,
+applied hash proof and screenshots are preserved under ignored
+`.tmp/oceanides-voice-lab/builder-*CM*r3*2026-10-19*` and
+`builder-approved-CM-2026-10-19-r3.md`. Status edits do not replace that snapshot.

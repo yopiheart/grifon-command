@@ -539,8 +539,9 @@ wording and Opening A. The supplied exploratory transcript shows correct rate
 units but unsupported caller-date attribution, irrelevant callback hours and
 weak clarity. Static Tomorrow is a plausible date source, not proven causation.
 Strict scripted coverage and acoustic emotion remain unverified. Its one free
-session is consumed; CM-r3 exact repairs/replay are proposed, not approved or
-applied. Native results cannot establish
+session is consumed; CM-r3 exact repairs and one new free max180sec/USD0 replay
+were subsequently approved. Instructions are saved and matched after reload;
+human replay result pending, no retry. Native results cannot establish
 the custom lab's playback queue or mock dispatch correctness; Altair Builder
 and Eve local lab are different configurations. Publication itself is not the
 only possible usage/billing boundary.
@@ -549,9 +550,15 @@ At Neil's request, [CMO conversation-coaching revision r2](VOICE-AGENT-CONVERSIO
 prepared full exact Instructions,3 inbound greeting choices, closing references
 and one new max3-minute/USD0 free listening test. Neil explicitly approved its
 full Instructions, Opening A and that additional free test. Instructions/opening
-are saved and matched after reload, LF Instructions SHA256
+were saved and matched after reload, historical r2 LF Instructions SHA256
 `1918a2dcd7ee89935d84c775c615b6f686d6a06f1152675a5aeb00e59d65940a`.
 Altair/model/pronunciation retained; no preview/Publish/API run by the agent.
+The active [CM-r3 Instructions](VOICE-AGENT-CLARITY-r3.PROPOSED.md) now remove
+seeded personal details/date and add source, answer-relevance and price clarity
+rules. Saved LF SHA256:
+`12fe80e2638575e81df5e77df56c900dd87db4823577ebea9c09a170ec5d517c`.
+Exact text and unchanged Opening A were verified after reload; Altair/model/
+pronunciation retained. One new approved free replay awaits the human result.
 Neil explicitly selected request received with schedule subject to crew
 availability. Routine customer copy can omit internal approver names while
 preserving that status boundary. Actual receipt language requires a persisted
