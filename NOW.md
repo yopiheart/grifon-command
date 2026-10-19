@@ -1,14 +1,15 @@
 # NOW - the resume doc
-**Stamped: 2026-10-19; interruption feedback recorded, speech fixes proposed**
+**Stamped: 2026-10-19; approved speech fixes saved, free B results pending**
 
 ## ▶ NEXT ACTION
 Neil accepted free voice-only previews with web_search attached but prohibited.
 Neil reports audible yielding and address readback; exact per-probe/search/stale
 speech evidence is incomplete, so no full A or acoustic300ms pass is established.
 He dislikes P-H-P spelling and wants brand reading oceanayds; calm tone noted.
-PC-2026-10-19-r1 tiny exact currency/brand fixes + revised B are proposed only.
-Obtain exact approval before new Instructions/rule or changed-input free test.
-Protocol/results: clients/oceanides/VOICE-BUILDER-PREVIEW.md; no new session run.
+PC-2026-10-19-r1 exact currency/brand fixes + revised B explicitly approved.
+Both fixes saved and verified after reload. Human B instructions/results asked;
+await actual listening notes. ONE remaining free180sec/USD0, no retry/Publish/API.
+Protocol/results: clients/oceanides/VOICE-BUILDER-PREVIEW.md; no agent preview run.
 
 ## Builder configuration and approval
 Checkout F:/CodexWorktrees/7471/grifon-command, branch codex/oceanides-voice-lab.
@@ -16,9 +17,10 @@ Draft PR206: https://github.com/yopiheart/grifon-command/pull/206.
 Latest explicit voice choice Altair overrides Eve for Builder only.
 GrokVoice3.0 retained; exact approved Magandang-araw Michael greeting saved.
 Welcome/caller-interruption on; Manila; auto language; speed1x; silence nudge off.
-Neil approved exact BP prompt + draft-only web_search removal. Instructions
-saved and matched after reload, SHA256
-4ffdfd50ae1e15ab1991dbcf560c8965f578ba9d971c3eafcee127b95ae22306.
+BP original prompt approval/snapshot preserved. PC adds only the exact currency
+paragraph and one Oceanides->oceanayds rule, both persisted after reload.
+Saved Instructions LF SHA256
+0afb8205adc626a775f11fdedc317e4e80e240258e10aa6034c91456d48204a7.
 Draft state retained; no Publish. Connectors0/collections0/phone not configured.
 Tools remain web_search/end_call. Delete would permanently remove account tool
 from every using agent; canceled, no safe draft-only detach found. Neil then
@@ -66,7 +68,7 @@ No general latency or300mscutoff pass. Raw details in clients/oceanides/VOICE-LA
 
 ## Verification and business contract
 Builder persistence/hash/config checks passed; independent BP draft review PASS.
-Independent final BP/CMO/approval review PASS; no actionable findings.
+Independent BP/CMO review PASS; PC hash/minimal-delta/applied-outcome review PASS.
 Resume,domain-language,artifact-anchor,diff checks PASS; paid hashes unchanged.
 No app code changed this alignment. Earlier code checks: focused68/68,
 full1700passed/32existing skips,root/funnel/labbuilds,typecheck/staticPASS.

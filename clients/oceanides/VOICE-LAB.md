@@ -522,7 +522,13 @@ Neil now reports audible yielding and address readback in the interruption test;
 exact per-probe values, stale-speech/search absence and acoustic timing remain
 unverified. He reports letter-by-letter PHP and undesired brand pronunciation.
 The exact PC-2026-10-19-r1 currency/brand correction and revised free B preview
-are proposed in the same protocol, not yet approved or applied. Calm expert
+were subsequently explicitly approved. Only the currency paragraph and one
+Oceanides->oceanayds pronunciation rule were saved; both verified after reload.
+Current Instructions LF SHA256 is
+`0afb8205adc626a775f11fdedc317e4e80e240258e10aa6034c91456d48204a7`.
+Same Altair/model/opening/settings; no preview or Publish started by the agent.
+The revised free B uses only the remaining one180sec/USD0 session, no retry or
+separate pronunciation generation. Human listening results are pending. Calm expert
 delivery is the brand direction, without an established conversion lift.
 Thinking-pause results remain pending. Native results cannot establish
 the custom lab's playback queue or mock dispatch correctness; Altair Builder

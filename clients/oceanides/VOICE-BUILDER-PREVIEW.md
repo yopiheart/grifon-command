@@ -10,8 +10,9 @@ Altair selected. Grok Voice3.0 retained. Greeting changed to the exact approved 
 > Magandang araw po! Ako si Michael, AI assistant ng Oceanides. Anong service po ang kailangan n’yo?
 
 Welcome and caller interruption remain on; Manila timezone, auto-detect language,
-1.0x speaking speed and disabled follow-up-after-silence stay unchanged. No new
-pronunciation rule, connector, knowledge collection, phone or generation knob.
+1.0x speaking speed and disabled follow-up-after-silence stay unchanged. BP added
+no pronunciation rule; the later approved PC rule is recorded below. No new
+connector, knowledge collection, phone or other generation knob.
 No Publish action. The initial Try-it-live inspection automatically connected;
 it was stopped with only greeting text visible, no scored caller probes.
 
@@ -183,9 +184,9 @@ attentive delivery fits the client's brand, but conversion lift remains unknown.
 Thinking-pause results are still pending. No prompt or pronunciation setting
 was changed while receiving this feedback; the CMO addition is still not applied.
 
-## Proposed speech correction and revised B, PC-2026-10-19-r1
+## Approved speech correction and revised B, PC-2026-10-19-r1
 
-**Not yet approved or applied.** This is a specific change from the BP baseline.
+**Approved and applied on 2026-10-19.** This is a specific change from the BP baseline.
 It preserves Altair, Grok Voice3.0, the exact approved greeting, rate facts,
 approval boundaries and existing speech settings. It adds no sales coaching.
 
@@ -197,7 +198,7 @@ For spoken prices, say "pesos" rather than spelling the currency code "PHP". Rea
 
 2. Add one Speech > Pronunciation rule, using the observed UI fields:
 
-| Field | Exact proposed value |
+| Field | Exact approved value |
 | --- | --- |
 | Phrase | Oceanides |
 | Pronunciation | oceanayds |
@@ -212,7 +213,7 @@ Official references: [speech pronunciation replacements](https://docs.x.ai/devel
 Replacement spelling still requires human listening; instructions and UI
 presence do not prove the intended sound was produced.
 
-### Exact revised B preview, conditional on approval
+### Approved exact revised B preview
 
 Purpose: check the corrected greeting/rate delivery and thinking pauses. This
 uses the remaining one free preview in the original two-session allowance,
@@ -237,5 +238,25 @@ Judge brand pronunciation and currency separately from the three pause probes.
 Record each as pass/fail/invalid/untested; unrun later probes remain untested.
 No measured acoustic cutoff or conversion conclusion follows from this preview.
 Revised B uses PC-r1, not the unchanged BP-r1 baseline; do not present A versus
-B as a controlled causal comparison. Specific user approval is required before
-saving the new paragraph/rule or running this changed-input preview.
+B as a controlled causal comparison. Neil explicitly approved both fixes and
+this revised free B specification. No additional session, retry or paid allowance
+is authorized.
+
+### Saved configuration evidence
+
+The exact currency paragraph was inserted at the approved location, with no
+other Instructions change. Saved Instructions matched after reload, LF SHA256
+`0afb8205adc626a775f11fdedc317e4e80e240258e10aa6034c91456d48204a7`.
+An independent computation produced the same hash and confirmed that removing
+only the insertion restores the BP baseline. After reload, the Pronunciation
+manager showed exactly one rule, **Oceanides -> oceanayds**. Altair, approved
+greeting, Grok Voice3.0 and unpublished Draft state were verified unchanged.
+No pronunciation-preview generation, Try-it-live start, Publish or API run was
+performed while applying these changes. Actual sound and pause behavior remain
+unverified until the human's approved B preview.
+
+The pre-application approved document, direct-user approval receipt, applied
+hash proof and saved-rule screenshot are preserved under ignored
+`.tmp/oceanides-voice-lab/builder-*PC*2026-10-19*`. B instructions/results were
+requested from the human; no result has yet been supplied. CMO coaching remains
+unapplied; local paid specification and exhausted ledger remain unchanged.
