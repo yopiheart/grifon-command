@@ -1,7 +1,7 @@
 # Oceanides conversation coaching proposal
 
 Revision: **CM-2026-10-19-r2**. Supersedes the unapproved r1 proposal.
-**Approved and applied with Opening A on 2026-10-19. Human listening results pending.**
+**Approved and applied with Opening A on 2026-10-19. Exploratory transcript reviewed; r3 repair proposed.**
 
 ## Decision and evidence
 
@@ -170,5 +170,40 @@ No preview, pronunciation generation or API run was started by the agent.
 The immutable pre-application approved document, direct-user approval receipt,
 applied-state/hash proof and Opening A screenshot are preserved under ignored
 `.tmp/oceanides-voice-lab/builder-*CM*2026-10-19*`. Human test instructions/results
-were requested; actual CMO delivery and conversion remain unverified. Local paid
+were requested; the later exploratory transcript is reviewed below. Acoustic
+delivery and conversion remain unverified. Local paid
 specification, exhausted ledger and held TT proposal remain unchanged.
+
+## Exploratory transcript review, 2026-10-19
+
+The supplied text contains Opening A, a Quezon City price inquiry, price
+clarification, discount concern and a night-only scheduling question. It differs
+from the fixed five-line script: stress, thanks and the exact dated preference
+are absent, and clarification/night questions are added. This is useful
+exploratory evidence, not a strict scripted quality pass or an authorized retry.
+The one r2 free preview is now reported/consumed. No further preview is authorized.
+
+The 5,000-per-truckload/up-to4,000L facts are present, with no confirmed booking
+or invented discount in the supplied excerpt. Quality defects remain:
+
+- The assistant attributes "bukas gabi" to the caller although no day appears
+  in the supplied caller lines. The static Tomorrow seed is a plausible source,
+  not a proven provider root cause. Unsupported caller-detail attribution is
+  the highest-priority defect.
+- Callback hours are recited instead of directly handling night service
+  availability. The assistant correctly says those hours do not establish crew
+  availability, but that policy explanation does not resolve the caller's question.
+- "Covered dito sa preview", vague quantity language and "walang ibang halaga
+  na alam ko" weaken the ordinary service/price answer. The tank-size/extra-load
+  discussion is speculative, not an established volume assessment.
+
+The duplicate night caller line has an unknown cause; do not classify it as an
+ASR bug or count it as two independent probes. No supplied recording/timestamps
+or numeric ratings establish acoustic emotion, warmth, interruption cutoff,
+naturalness or latency. No search/tool outcome can be independently audited
+from this text alone. No conversion conclusion follows.
+
+[CM-2026-10-19-r3](VOICE-AGENT-CLARITY-r3.PROPOSED.md) prepares exact repairs and
+one new free replay for approval. R2 remains the saved Builder configuration;
+no new prompt, greeting, voice control, preview or paid allowance was changed
+while reviewing this transcript.

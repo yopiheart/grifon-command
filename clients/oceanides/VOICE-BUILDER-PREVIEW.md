@@ -286,5 +286,9 @@ revision with Opening A and one additional free max180sec/USD0 preview, no retry
 Its exact Instructions and Opening A are saved and matched after reload, LF
 Instructions SHA256 `1918a2dcd7ee89935d84c775c615b6f686d6a06f1152675a5aeb00e59d65940a`.
 Altair/model/pronunciation and Draft state were verified; no preview or Publish
-was started by the agent. Actual human CMO test results remain pending. This
-new free allowance does not reset BP/PC or the exhausted local paid ledger.
+was started by the agent. The human later supplied an exploratory transcript,
+reviewed in the CMO document: correct rate units, unsupported date attribution,
+irrelevant callback-hours explanation and weak price framing. Its one r2 free
+session is consumed; strict five-line coverage, emotion and acoustic timing are
+not established. CM-r3 is proposed separately for approval, not applied. No
+free allowance resets BP/PC or the exhausted local paid ledger.

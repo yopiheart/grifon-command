@@ -1,13 +1,14 @@
 # NOW - the resume doc
-**Stamped: 2026-10-19; CMO r2 and Opening A saved, human test pending**
+**Stamped: 2026-10-19; CMO transcript defects found, exact r3 repair proposed**
 
 ## ▶ NEXT ACTION
 Neil accepted free voice-only previews with web_search attached but prohibited.
-Neil now reports correct oceanayds/pesos, can interrupt, no search/wrongprice/book.
-Individual1/2/3-second pause results remain unverified; no acoustic300ms pass.
-Original2 free previews used. CM-2026-10-19-r2 +Opening A explicitly approved.
-Exact Instructions/opening saved and matched after reload; human test asked.
-ONE new free180sec/USD0 preview authorized, no retry/Publish/API/paid fallback.
+CM-r2 exploratory transcript received: correctrateunits, but unsupported caller
+date attribution (bukas gabi), irrelevantcallbackhours and weakpricewording.
+R2 contains static Tomorrow seed; plausible source, not proven provider cause.
+Original2 free previews+r2session now reported; no further preview authorized.
+CM-2026-10-19-r3 exact repair+1newfree replay PROPOSED; approval needed first.
+Path clients/oceanides/VOICE-AGENT-CLARITY-r3.PROPOSED.md. Savedr2 remains active.
 User clarified request received, schedule subject to crew availability.
 Altair/model/pronunciation retained; no agent preview,Publish/API/paid run.
 
@@ -37,8 +38,9 @@ dispatch, callback queue, transfer or booking. Do not invoke local-lab functions
 clients/oceanides/VOICE-AGENT-CONVERSION-PROPOSAL.md (CM-2026-10-19-r2).
 Full replacement Instructions +Opening A explicitly approved/applied.
 No internal approver names in routine replies; truthful preferred-slot status.
-Situation-specific wording, not guaranteed acoustic emotion or conversion lift.
-One new max180sec/USD0 free preview authorized; human result pending.
+Exploratorycall exposedsource/relevance/clarity defects; no fullscript pass.
+R3 removesfakepersonalcontext and addsprovenance/relevance/price guidance.
+R3 preview1x180sec/USD0 is unapproved; no retry,Publish/API/paid fallback.
 Real receipt close needs persistent request+owner; none connected in Builder.
 Measure actual customer-accepted bookings later; dispatch approval remains.
 
@@ -70,7 +72,8 @@ No general latency or300mscutoff pass. Raw details in clients/oceanides/VOICE-LA
 
 ## Verification and business contract
 Builder persistence/hash/config checks passed; independent BP draft review PASS.
-Independent CM-r2 expected/applied review PASS; BP/PC reviews also PASS.
+CM-r2 configuration audit PASS; conversation quality defects recorded separately.
+Independent r3 proposal/hash review PASS; no live r3 validation or application.
 Resume,domain-language,artifact-anchor,diff checks PASS; paid hashes unchanged.
 No app code changed this alignment. Earlier code checks: focused68/68,
 full1700passed/32existing skips,root/funnel/labbuilds,typecheck/staticPASS.

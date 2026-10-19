@@ -535,7 +535,12 @@ previews are now reported; another preview requires a new explicit allowance.
 No transcript/acoustic audit or conversion result follows from these notes.
 Calm expert delivery is the brand direction; uniform delivery was reported.
 The subsequently approved CM-2026-10-19-r2 revision below adds more relevant
-wording and Opening A; its human listening results remain pending. Native results cannot establish
+wording and Opening A. The supplied exploratory transcript shows correct rate
+units but unsupported caller-date attribution, irrelevant callback hours and
+weak clarity. Static Tomorrow is a plausible date source, not proven causation.
+Strict scripted coverage and acoustic emotion remain unverified. Its one free
+session is consumed; CM-r3 exact repairs/replay are proposed, not approved or
+applied. Native results cannot establish
 the custom lab's playback queue or mock dispatch correctness; Altair Builder
 and Eve local lab are different configurations. Publication itself is not the
 only possible usage/billing boundary.
