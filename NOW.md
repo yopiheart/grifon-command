@@ -1,6 +1,10 @@
 # NOW - the resume doc
 **Stamped: 2026-10-19; one further recovery approved, checked, private entry pending**
 
+## ▶ NEXT ACTION
+Human enters key in private Node window11836. Verify public inactive/liveReady
+status11/12,USD5.50/6.00 and exact SHA before human Chrome/Edge starts once.
+
 ## Active task and boundary
 Checkout F:/CodexWorktrees/7471/grifon-command, branch codex/oceanides-voice-lab.
 Draft PR206: https://github.com/yopiheart/grifon-command/pull/206.
@@ -15,7 +19,7 @@ Neil confirmed at leastUSD0.50 available before the new test; no funding needed.
 ## Exact current approved spec / test
 Spec funnels/oceanides-price-page/dev/voice-lab/paid-test-spec.DRAFT.json.
 Raw SHA25624427b8cd6819e9898369f9f148df4088d261b35755d7398e4d79e3266ac7758.
-Previous eleven-attempt SHA3c2077baa62f6eddcc70a90f4253af847163cede28659c0683ee0e0202c7e663.
+Prior eleven-attempt identity:3c2077baa62f6eddcc70a90f4253af847163cede28659c0683ee0e0202c7e663.
 Only five spec budget/cost tokens changed:12 attempts/USD6,36min/USD2.88
 voice basis and allowance note. Ledger HARD_LIMITS cap also12/6.
 Opening: Magandang araw po! Ako si Michael, AI assistant ng Oceanides. Anong service po ang kailangan n’yo?
