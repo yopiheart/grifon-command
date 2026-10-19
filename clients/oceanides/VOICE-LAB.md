@@ -495,6 +495,22 @@ Independent proposal review passed. Preparation does not activate this candidate
 increase HARD_LIMITS, change the launcher or authorize a paid run. The live desk
 remains exhausted/blocked at12/USD6 until Neil explicitly approves this proposal.
 
+Subsequent steering: Neil reports that the xAI Agent Builder explicitly labels
+browser live tests free, and repeated tests did not reduce his API credits.
+Prefer that native preview for initial voice/interruptions/pause screening;
+hold the local USD1 proposal unapproved. This is account-specific human evidence,
+not a blanket free API/phone or unlimited-test guarantee. Official
+[Builder documentation](https://x.ai/news/grok-voice-agent-builder) supports
+browser preview and separately describes usage-based agent/phone pricing.
+
+Read-only inspection found the Oceanides Builder draft using Grok Voice3.0,
+Altair, a Hi-po opening and web_search/end_call tools. It does not yet match the
+lab's Eve/Magandang-araw opening, prompt or mock functions. No settings were
+edited, no publish action taken and no call started. Match configuration under
+an exact reviewed diff before a controlled comparison. Native Builder voice
+results cannot establish the custom lab's playback queue or mock dispatch
+correctness. Publication itself is not the only possible usage/billing boundary.
+
 ### Later comparison: ElevenLabs v4 Turbo
 
 Current official docs distinguish produced-content `eleven_v4` from realtime

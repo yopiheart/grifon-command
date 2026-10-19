@@ -1,10 +1,11 @@
 # NOW - the resume doc
-**Stamped: 2026-10-19; turn-taking proposal prepared, paid approval pending**
+**Stamped: 2026-10-19; free Builder screening preferred, local paid proposal on hold**
 
 ## ▶ NEXT ACTION
-Await Neil's approval of TT-2026-10-19-r1:2attempts,max180sec each,+USD1;
-future14/USD7 preserving12/USD6. Exact scripts and candidate linked below.
-Keep current paid starts blocked; no cap/launcher/runtime activation approved yet.
+Use xAI Builder browser preview for voice screening first. Neil reports explicit
+free-test labeling and repeated tests with unchanged API credits. Check matching
+configuration before comparison; local TT proposal remains unapproved/on hold.
+Keep local paid starts blocked; no cap/launcher/runtime activation approved.
 
 ## Current result and boundary
 Checkout F:/CodexWorktrees/7471/grifon-command, branch codex/oceanides-voice-lab.
@@ -27,6 +28,10 @@ Model/voice/opening/prompt/VAD/audio/tools/lead unchanged. No fixed delay/emotio
 2x3min givesUSD0.48 voice basis at0.08/min plus applicable0.004/textinput charges;
 USD1 conservative local reservation, notbillguarantee/topup. IndependentreviewPASS.
 Active spec24427.../ledgerdc6c... unchanged; no runtime/limit/key/paid mutation.
+Builder observed GrokVoice3.0/Altair/Hi-po opening,web_search+end_call; differsfrom
+Eve/Magandang-araw lab. No setting edit/publish/call made. Hosted preview cannot
+establish customlab playback/tool-state correctness. Do not infer freeAPI/phone
+or unlimited trial from human account-specific browser-test observations.
 
 ## Preserved report and result
 User report C:/Users/ADMIN/Downloads/oceanides-voice-4d33dd8a-b22f-4ed9-9fb6-85fd149221c3.json.
