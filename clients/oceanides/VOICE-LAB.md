@@ -65,7 +65,7 @@ Neil explicitly approved the exact draft on 2026-10-18: at most **10 sessions of
 exact opening below, then explicitly approved one additional recovery attempt
 with USD0.50 additional allowance. On 2026-10-19 he approved one further attempt
 with the same voice/opening and another USD0.50. The current cumulative cap is
-**12 attempts / USD6.00**; all eleven prior reservations remain counted.
+**12 attempts / USD6.00**; all twelve reservations are now counted and exhausted.
 The current raw-file SHA256 is `24427b8cd6819e9898369f9f148df4088d261b35755d7398e4d79e3266ac7758`.
 The preceding eleven-attempt identity was
 `3c2077baa62f6eddcc70a90f4253af847163cede28659c0683ee0e0202c7e663`.
@@ -96,8 +96,8 @@ it does not establish valid provider credentials, credit, or voice access.
 The cumulative limit is twelve sessions of at most three minutes each, with one
 active connection. The spec's voice cost basis is US$2.88 at US$0.08 per minute
 for thirty-six minutes; applicable text/tool charges and a contingency must
-fit within the US$6.00 ceiling. Eleven attempts are already reserved; exactly one
-further attempt is authorized. This excludes future telephone-number setup and
+fit within the US$6.00 ceiling. All twelve attempts are now reserved; no further
+paid attempt is authorized. This excludes future telephone-number setup and
 customer phone tests, which are outside this milestone.
 
 The server reserves budget before opening a paid connection. Reservations survive
@@ -419,6 +419,69 @@ concurrent checks; a full rerun without concurrent builds passed1700 tests with
 32 existing skips. No timeout/test changes or new skips were used. The known
 generated snapshot had only EOL changes and was restored after verification.
 
+### Observed welcome and rate exchange: 2026-10-19
+
+Neil reports hearing the full welcome and correct answer with a complete caller
+transcript. He separately judged the actual pacing **Natural/okay**. The supplied
+local report was exported at06:27:47.069Z and is preserved, without modification,
+as `.tmp/oceanides-voice-lab/welcome-human-report-2026-10-19.json` (raw SHA256
+`04da068562f6e08fd4d5b7d9f278bb0506f2c983cdb28d1cce1f334fb141a76c`).
+Local evaluation/server projection is `welcome-evaluation-2026-10-19.json` in
+that directory; the later human pacing observation is saved separately.
+
+This is a basic observed voice-flow and rate-content pass, not full acceptance.
+The report contains the approved welcome words (apostrophe transcription differs),
+a caller question including Quezon City, successful `lookup_rate`, and PHP5,000
+per truckload up to4,000L with the dispatch caveat. No invented fee, final-total,
+crew availability or booking promise appears. Dispatch remains pending, details
+unconfirmed and request collecting; no service request or booking was created.
+Audibility is established by Neil's testimony, supported by active PCM playback
+counters, not by those counters alone. No acoustic recording was made.
+
+Exact-script compliance does not pass: the first recorded caller line is
+"Ah, magkano po magpa-service sa Quezon City?", differing from the approved line.
+The file cannot distinguish changed speech from ASR error. An extra question,
+"Pero magkano talaga?", and answer occurred after the first substantive reply.
+Preserve these deviations rather than claiming a strict one-question benchmark
+or verified word-for-word recognition. No new paid operation followed the report.
+
+Four unique estimated samples occur in two duplicate arrays; do not double-count:
+
+| Classification | Raw ms | Samples | Descriptive median / worst, ms |
+| --- | ---: | ---: | ---: |
+| Startup or unattributed mic energy; labeled ordinary | 1760.699999988079 | 1 | 1760.7 / 1760.7 |
+| Tool-dependent rate answer | 7292.800000011921 | 1 | 7292.8 / 7292.8 |
+| Local interruption cancellation | 81.53333332141483 | 1 | 81.53 / 81.53 |
+| Extra reply after interruption | 4543.5 | 1 | 4543.5 / 4543.5 |
+
+Clean ordinary-response samples:0. The first ordinary sample accompanies the
+greeting before any caller transcript; the second is the extra post-interruption reply.
+These estimate local speech-energy end to scheduled playback plus baseLatency,
+or energy onset to queue cancellation. They are not acoustic measurements or
+provider latency. The rate turn includes a spoken acknowledgment before the
+relevant answer;7.29s cannot be equated with7.29s of silence. Neil judged pacing
+okay; this single call does not meet a controlled latency or audible-cutoff gate.
+No meaningful percentile or general median is established. Checklist and numeric
+voice ratings are empty; thinking pauses and emotional appropriateness remain
+unevaluated. No fixed delay, VAD, prompt, voice or model change is made.
+
+Stopped public diagnostics agree with the export:48 chunks received/decoded/
+scheduled,42 ended,6 canceled,0 dropped;777608 nonzero samples. Server reports
+1897 input-frame append attempts,2 VAD starts/stops,4 responses created/done,
+1 client interrupt,1594560 forwarded PCM bytes and operator_stopped, with no
+classified provider failure. Notification count3 includes the local echo and is
+not3 independent spoken interruptions. The report is closed before export,
+64.709s after recorded start; this bounds the observed duration, not exact stop.
+
+Budget is12/12 attempts and USD6/USD6 reserved, inactive, `liveReady:false`.
+Current ledger SHA256 is
+`dc6c13fe5aaf23de45ea815f63623d7962c4564ea443ea08bc905bfe828968a2`.
+Serializing the first eleven entries reproduces the preserved pre-run hash;
+the twelfth is the approved USD0.50/current-spec reservation. No refund/reset or
+further retry. Reservations are not actual provider charges; those are absent
+from the report. Controlled interruption/thinking-pause evaluation comes next
+under a separately reviewed/approved paid spec; ElevenLabs comparison remains later.
+
 ### Later comparison: ElevenLabs v4 Turbo
 
 Current official docs distinguish produced-content `eleven_v4` from realtime
@@ -444,8 +507,9 @@ References: [xAI force message](https://docs.x.ai/developers/model-capabilities/
 
 The first delivery requires passing mock logic and browser tests, build checks,
 production-build exclusion checks, and independent review. Zero invented charges
-or premature bookings is the functional bar. Actual Grok quality remains NOT RUN
-until an approved live test is completed.
+or premature bookings is the functional bar. One observed live welcome and rate
+exchange passed basic content/audio review on2026-10-19. Full Grok quality,
+controlled latency, interruptions, thinking pauses and emotion remain pending.
 
 Run verification from the repository root:
 
