@@ -482,6 +482,19 @@ further retry. Reservations are not actual provider charges; those are absent
 from the report. Controlled interruption/thinking-pause evaluation comes next
 under a separately reviewed/approved paid spec; ElevenLabs comparison remains later.
 
+### Proposed next test: interruptions and thinking pauses
+
+The exact [TT-2026-10-19-r1 protocol](VOICE-LAB-TURN-TAKING-SPEC.md) and
+[inactive candidate](voice-lab-turn-taking.PROPOSED.json) are prepared for review.
+Proposed addition:two attempts,180 seconds each,USD1 total; future cumulative
+14 attempts/USD7 with all existing12/USD6 preserved. Session A has two spoken
+interruptions and successive address corrections; Session B has1/2/3-second
+pauses. The protocol includes exact words, triggers, branching, evidence and
+stop rules. It retains the same model,voice,opening,prompt,VAD,audio,tools and lead.
+Independent proposal review passed. Preparation does not activate this candidate,
+increase HARD_LIMITS, change the launcher or authorize a paid run. The live desk
+remains exhausted/blocked at12/USD6 until Neil explicitly approves this proposal.
+
 ### Later comparison: ElevenLabs v4 Turbo
 
 Current official docs distinguish produced-content `eleven_v4` from realtime

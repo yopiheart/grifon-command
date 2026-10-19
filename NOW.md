@@ -1,10 +1,10 @@
 # NOW - the resume doc
-**Stamped: 2026-10-19; basic Oceanides voice exchange observed, allowance exhausted**
+**Stamped: 2026-10-19; turn-taking proposal prepared, paid approval pending**
 
 ## ▶ NEXT ACTION
-Keep paid tests blocked. Next evaluation should isolate interruptions/thinking
-pauses using the same voice; prepare an exact bounded spec before any new paid
-approval/run. No additional allowance, retry, voice change or generation approved.
+Await Neil's approval of TT-2026-10-19-r1:2attempts,max180sec each,+USD1;
+future14/USD7 preserving12/USD6. Exact scripts and candidate linked below.
+Keep current paid starts blocked; no cap/launcher/runtime activation approved yet.
 
 ## Current result and boundary
 Checkout F:/CodexWorktrees/7471/grifon-command, branch codex/oceanides-voice-lab.
@@ -16,6 +16,17 @@ No merge/deploy/customer call/ad/production write/credit purchase authorized.
 No new paid call by an agent. Latest one recovery completed, operator stopped.
 Budget12/12 attempts,USD6/USD6 RESERVED;inactive,liveReady=false,exhausted.
 No refund/reset/reclassification. Reservations are not actual provider charges.
+
+## Prepared proposal, not activated
+Protocol clients/oceanides/VOICE-LAB-TURN-TAKING-SPEC.md (TT-2026-10-19-r1).
+Candidate clients/oceanides/voice-lab-turn-taking.PROPOSED.json; rawSHA
+0582839db5f331a3a7337030537c78dd4744bb7a666a4f481060c957db7f2c48.
+A:2spoken interruptions with24/Pasig then42/Pasig corrections/readback.
+B:1/2/3sec thinkingpauses. Exact scripts,branching,Stop/evidence rules inprotocol.
+Model/voice/opening/prompt/VAD/audio/tools/lead unchanged. No fixed delay/emotion.
+2x3min givesUSD0.48 voice basis at0.08/min plus applicable0.004/textinput charges;
+USD1 conservative local reservation, notbillguarantee/topup. IndependentreviewPASS.
+Active spec24427.../ledgerdc6c... unchanged; no runtime/limit/key/paid mutation.
 
 ## Preserved report and result
 User report C:/Users/ADMIN/Downloads/oceanides-voice-4d33dd8a-b22f-4ed9-9fb6-85fd149221c3.json.
