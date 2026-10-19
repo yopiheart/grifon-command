@@ -401,6 +401,15 @@ recover or copy a key from another process. The user must start the one paid
 session in their separate Chrome/Edge window. A ready server is not proof of
 actual voice.
 
+Neil confirmed private entry and the Vite URL. Public status then verified
+inactive, `liveReady:true`,11/12 reservations,USD5.50/6.00 reserved, protocol
+`audio-first-frame-v1` and exact approved SHA256. Lifecycle was null and the
+ledger raw hash remained unchanged. The loopback listener is127.0.0.1:5184.
+The safe ready checkpoint is local/ignored at
+`.tmp/oceanides-voice-lab/welcome-ready-checkpoint-2026-10-19.json`.
+The human was given the exact one-question sequence, Stop rule and report export
+instruction. This is pre-start readiness, not an actual voice pass.
+
 Verification:68 focused budget/spec/service tests passed, with four expected
 failures under the old cap. Independent review reran68 tests and found no
 actionable defects; exact spec-byte equivalence, helper/receipt and unchanged

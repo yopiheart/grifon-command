@@ -1,9 +1,10 @@
 # NOW - the resume doc
-**Stamped: 2026-10-19; one further recovery approved, checked, private entry pending**
+**Stamped: 2026-10-19; one further recovery ready, human listening test pending**
 
 ## ▶ NEXT ACTION
-Human enters key in private Node window11836. Verify public inactive/liveReady
-status11/12,USD5.50/6.00 and exact SHA before human Chrome/Edge starts once.
+Human Chrome/Edge starts approved Natural inquiry ONCE; speak exact line below,
+Stop after first reply/10s silence, Download report BEFORE refresh. No retry.
+Public inactive/liveReady=true,11/12,USD5.50/6.00 and exact SHA verified before start.
 
 ## Active task and boundary
 Checkout F:/CodexWorktrees/7471/grifon-command, branch codex/oceanides-voice-lab.
@@ -53,7 +54,10 @@ Port5184 had no listener; no active/unresolved lock at new startup checks.
 Ignored direct Node helper .tmp/oceanides-voice-lab/start-approved-voice.mjs now
 matches current exact hash and12/6 limits. Syntax and --validate-only PASS:
 11/12 attempts,USD5.50/6.00; no key requested/provider/Vite/paid session started.
-Direct Node private launcher opened,PID11836; human-only hidden-key entry pending.
+Neil confirmed hidden-key entry and Vite URL. Public GET reports inactive,
+liveReady=true,11/12,USD5.50/6.00 and the exact approved raw SHA. Lifecycle null.
+Loopback listener127.0.0.1:5184 PID15592; private launcher11836 remains owned.
+Safe pre-start checkpoint .tmp/oceanides-voice-lab/welcome-ready-checkpoint-2026-10-19.json.
 Prior memory-only credential process exited. Never recover/copy credentials from it.
 Use direct visible Node, not PowerShell wrapper; exact hidden prompt only,
 never plain PS prompt. Never inspect .env, private console/clipboard/key page,
