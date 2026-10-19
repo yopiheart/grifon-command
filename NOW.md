@@ -1,26 +1,26 @@
 # NOW - the resume doc
-**Stamped: 2026-10-19; approved speech fixes saved, free B results pending**
+**Stamped: 2026-10-19; CMO r2 and Opening A saved, human test pending**
 
 ## ▶ NEXT ACTION
 Neil accepted free voice-only previews with web_search attached but prohibited.
-Neil reports audible yielding and address readback; exact per-probe/search/stale
-speech evidence is incomplete, so no full A or acoustic300ms pass is established.
-He dislikes P-H-P spelling and wants brand reading oceanayds; calm tone noted.
-PC-2026-10-19-r1 exact currency/brand fixes + revised B explicitly approved.
-Both fixes saved and verified after reload. Human B instructions/results asked;
-await actual listening notes. ONE remaining free180sec/USD0, no retry/Publish/API.
-Protocol/results: clients/oceanides/VOICE-BUILDER-PREVIEW.md; no agent preview run.
+Neil now reports correct oceanayds/pesos, can interrupt, no search/wrongprice/book.
+Individual1/2/3-second pause results remain unverified; no acoustic300ms pass.
+Original2 free previews used. CM-2026-10-19-r2 +Opening A explicitly approved.
+Exact Instructions/opening saved and matched after reload; human test asked.
+ONE new free180sec/USD0 preview authorized, no retry/Publish/API/paid fallback.
+User clarified request received, schedule subject to crew availability.
+Altair/model/pronunciation retained; no agent preview,Publish/API/paid run.
 
 ## Builder configuration and approval
 Checkout F:/CodexWorktrees/7471/grifon-command, branch codex/oceanides-voice-lab.
 Draft PR206: https://github.com/yopiheart/grifon-command/pull/206.
 Latest explicit voice choice Altair overrides Eve for Builder only.
-GrokVoice3.0 retained; exact approved Magandang-araw Michael greeting saved.
+GrokVoice3.0 retained; guided-request Opening A is the saved Michael greeting.
 Welcome/caller-interruption on; Manila; auto language; speed1x; silence nudge off.
-BP original prompt approval/snapshot preserved. PC adds only the exact currency
-paragraph and one Oceanides->oceanayds rule, both persisted after reload.
+BP/PC snapshots preserved. CM-r2 full prompt and Opening A applied; no other
+control changes. Oceanides->oceanayds rule and pesos wording retained.
 Saved Instructions LF SHA256
-0afb8205adc626a775f11fdedc317e4e80e240258e10aa6034c91456d48204a7.
+1918a2dcd7ee89935d84c775c615b6f686d6a06f1152675a5aeb00e59d65940a.
 Draft state retained; no Publish. Connectors0/collections0/phone not configured.
 Tools remain web_search/end_call. Delete would permanently remove account tool
 from every using agent; canceled, no safe draft-only detach found. Neil then
@@ -33,12 +33,14 @@ under .tmp/oceanides-voice-lab/builder-*2026-10-19* and approved-BP snapshot.
 Preview can remember/read back synthetic details only; no actual saved request,
 dispatch, callback queue, transfer or booking. Do not invoke local-lab functions.
 
-## CMO review, proposed only
-clients/oceanides/VOICE-AGENT-CONVERSION-PROPOSAL.md (CM-2026-10-19-r1).
-One exact coaching paragraph +3 illustrative Taglish lines; not applied.
-Do baseline voice tests first; specific new prompt text needs exact approval.
-Answer first, acknowledge concern, one voluntary next step. No guaranteed lift.
-Measure real accepted bookings later; human finalprice/crew approval remains.
+## CMO r2, approved and applied
+clients/oceanides/VOICE-AGENT-CONVERSION-PROPOSAL.md (CM-2026-10-19-r2).
+Full replacement Instructions +Opening A explicitly approved/applied.
+No internal approver names in routine replies; truthful preferred-slot status.
+Situation-specific wording, not guaranteed acoustic emotion or conversion lift.
+One new max180sec/USD0 free preview authorized; human result pending.
+Real receipt close needs persistent request+owner; none connected in Builder.
+Measure actual customer-accepted bookings later; dispatch approval remains.
 
 ## Local paid lab, exhausted and unchanged
 Local TT-2026-10-19-r1 proposal remains unapproved/on hold, not activated.
@@ -68,7 +70,7 @@ No general latency or300mscutoff pass. Raw details in clients/oceanides/VOICE-LA
 
 ## Verification and business contract
 Builder persistence/hash/config checks passed; independent BP draft review PASS.
-Independent BP/CMO review PASS; PC hash/minimal-delta/applied-outcome review PASS.
+Independent CM-r2 expected/applied review PASS; BP/PC reviews also PASS.
 Resume,domain-language,artifact-anchor,diff checks PASS; paid hashes unchanged.
 No app code changed this alignment. Earlier code checks: focused68/68,
 full1700passed/32existing skips,root/funnel/labbuilds,typecheck/staticPASS.

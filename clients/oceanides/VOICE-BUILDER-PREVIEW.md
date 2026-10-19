@@ -162,9 +162,9 @@ All other session, script, evidence, no-Publish and USD0 boundaries above remain
 The approved original document and approval receipt are preserved under ignored
 `.tmp/oceanides-voice-lab/`; later status edits do not replace that snapshot.
 
-The CMO review is a separate proposed change in
+The BP baseline did not include CMO coaching. The later r2 and its status are in
 [VOICE-AGENT-CONVERSION-PROPOSAL.md](VOICE-AGENT-CONVERSION-PROPOSAL.md).
-It is not applied to this baseline. No local active spec, ledger, cap or launcher
+No local active spec, ledger, cap or launcher
 changes were made.
 
 ## Human interruption feedback, 2026-10-19
@@ -182,7 +182,7 @@ brand sounded like "oceanidess" rather than Neil's desired "oceanayds". The
 voice sounded calm; Neil asked whether that delivery converts. Calm, warm,
 attentive delivery fits the client's brand, but conversion lift remains unknown.
 Thinking-pause results are still pending. No prompt or pronunciation setting
-was changed while receiving this feedback; the CMO addition is still not applied.
+was changed while receiving this feedback; CMO coaching was not part of that session.
 
 ## Approved speech correction and revised B, PC-2026-10-19-r1
 
@@ -252,11 +252,39 @@ only the insertion restores the BP baseline. After reload, the Pronunciation
 manager showed exactly one rule, **Oceanides -> oceanayds**. Altair, approved
 greeting, Grok Voice3.0 and unpublished Draft state were verified unchanged.
 No pronunciation-preview generation, Try-it-live start, Publish or API run was
-performed while applying these changes. Actual sound and pause behavior remain
-unverified until the human's approved B preview.
+performed while applying these changes. The later qualified human B feedback
+is recorded below; saved configuration alone does not establish audio quality.
 
 The pre-application approved document, direct-user approval receipt, applied
 hash proof and saved-rule screenshot are preserved under ignored
-`.tmp/oceanides-voice-lab/builder-*PC*2026-10-19*`. B instructions/results were
-requested from the human; no result has yet been supplied. CMO coaching remains
-unapplied; local paid specification and exhausted ledger remain unchanged.
+`.tmp/oceanides-voice-lab/builder-*PC*2026-10-19*`. CMO coaching was not part of
+the PC application; its later r2 approval/application is recorded below. Local
+paid specification and exhausted ledger remain unchanged.
+
+## Human revised B feedback and next direction, 2026-10-19
+
+Neil reports that the welcome now says oceanayds correctly and prices use pesos
+instead of spelling PHP. He can interrupt and reports no search or wrong
+price/booking promise. These are positive human listening observations, not a
+transcript audit or acoustic measurement. His response does not separately
+describe the 1/2/3-second thinking-pause continuations, exact duration or numeric
+voice grades. Those pause outcomes remain unverified; do not infer three passes
+from the statement that interruptions work.
+
+He also reports uniform emotional delivery and wants a stronger opening, CMO
+response coaching and less customer-facing approval bureaucracy. He explicitly
+clarified the intended status: **request received; schedule subject to crew
+availability**, not an automatically guaranteed slot. The preview still has no
+request persistence/owner/dispatch integration and cannot claim actual receipt.
+
+The original two free previews A/B have now been reported; no additional native
+preview is authorized under BP/PC. The separate **CM-2026-10-19-r2** revision in
+[VOICE-AGENT-CONVERSION-PROPOSAL.md](VOICE-AGENT-CONVERSION-PROPOSAL.md) prepares
+three exact opening choices, full customer-facing coaching Instructions and one
+new free listening-test specification. Neil subsequently approved the full
+revision with Opening A and one additional free max180sec/USD0 preview, no retry.
+Its exact Instructions and Opening A are saved and matched after reload, LF
+Instructions SHA256 `1918a2dcd7ee89935d84c775c615b6f686d6a06f1152675a5aeb00e59d65940a`.
+Altair/model/pronunciation and Draft state were verified; no preview or Publish
+was started by the agent. Actual human CMO test results remain pending. This
+new free allowance does not reset BP/PC or the exhausted local paid ledger.

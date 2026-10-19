@@ -524,22 +524,35 @@ unverified. He reports letter-by-letter PHP and undesired brand pronunciation.
 The exact PC-2026-10-19-r1 currency/brand correction and revised free B preview
 were subsequently explicitly approved. Only the currency paragraph and one
 Oceanides->oceanayds pronunciation rule were saved; both verified after reload.
-Current Instructions LF SHA256 is
+Instructions under PC-r1 had LF SHA256
 `0afb8205adc626a775f11fdedc317e4e80e240258e10aa6034c91456d48204a7`.
 Same Altair/model/opening/settings; no preview or Publish started by the agent.
 The revised free B uses only the remaining one180sec/USD0 session, no retry or
-separate pronunciation generation. Human listening results are pending. Calm expert
-delivery is the brand direction, without an established conversion lift.
-Thinking-pause results remain pending. Native results cannot establish
+separate pronunciation generation. Neil subsequently reports correct oceanayds,
+pesos, continued interruption ability and no search/wrong price/booking promise.
+His individual1/2/3-second pause results remain unverified. Both original free
+previews are now reported; another preview requires a new explicit allowance.
+No transcript/acoustic audit or conversion result follows from these notes.
+Calm expert delivery is the brand direction; uniform delivery was reported.
+The subsequently approved CM-2026-10-19-r2 revision below adds more relevant
+wording and Opening A; its human listening results remain pending. Native results cannot establish
 the custom lab's playback queue or mock dispatch correctness; Altair Builder
 and Eve local lab are different configurations. Publication itself is not the
 only possible usage/billing boundary.
 
-At Neil's request, a CMO conversation-coaching review produced
-[a separate exact proposal](VOICE-AGENT-CONVERSION-PROPOSAL.md), not applied.
-It prioritizes clear answers, relevant qualification and a voluntary next step.
-No guaranteed lift, invented proof or new operational capability is claimed;
-real conversion requires verified customer-accepted bookings and human dispatch.
+At Neil's request, [CMO conversation-coaching revision r2](VOICE-AGENT-CONVERSION-PROPOSAL.md)
+prepared full exact Instructions,3 inbound greeting choices, closing references
+and one new max3-minute/USD0 free listening test. Neil explicitly approved its
+full Instructions, Opening A and that additional free test. Instructions/opening
+are saved and matched after reload, LF Instructions SHA256
+`1918a2dcd7ee89935d84c775c615b6f686d6a06f1152675a5aeb00e59d65940a`.
+Altair/model/pronunciation retained; no preview/Publish/API run by the agent.
+Neil explicitly selected request received with schedule subject to crew
+availability. Routine customer copy can omit internal approver names while
+preserving that status boundary. Actual receipt language requires a persisted
+request with a human owner; the current Builder has neither. No guaranteed lift,
+invented proof or new operational capability is claimed. Realtime wording can
+be guided; stronger acoustic emotion remains a listening hypothesis.
 
 ### Later comparison: ElevenLabs v4 Turbo
 
