@@ -144,7 +144,8 @@ removal. The Instructions above were saved and matched exactly after reload:
 SHA256 `4ffdfd50ae1e15ab1991dbcf560c8965f578ba9d971c3eafcee127b95ae22306`.
 Altair, the approved greeting, Grok Voice3.0 and unpublished Draft state were
 verified. No scored preview was run by the agent after this change; no Publish
-or paid API run was performed. Human test A was requested; results are pending.
+or paid API run was performed. Qualified human A feedback is recorded below;
+full protocol verification remains incomplete.
 
 The UI's Delete tool confirmation says it deletes the account tool and removes
 it from every agent, irreversibly. That action was canceled. No draft-only
@@ -163,4 +164,78 @@ The approved original document and approval receipt are preserved under ignored
 The CMO review is a separate proposed change in
 [VOICE-AGENT-CONVERSION-PROPOSAL.md](VOICE-AGENT-CONVERSION-PROPOSAL.md).
 It is not applied to this baseline. No local active spec, ledger, cap or launcher
-changes were made. Human interruption/pause results remain pending.
+changes were made.
+
+## Human interruption feedback, 2026-10-19
+
+Neil reports that the agent stops its answer when he interrupts and reads back
+the address. These are positive listening observations, not a full scripted
+protocol pass: the reply does not separately verify both exact 24/Pasig and
+42/Pasig values, absence of resumed obsolete speech, tool/search activity,
+duration or numerical ratings. No native transcript, recording or acoustic
+timing was supplied with this feedback. Do not count two measured successes
+or assert a 300ms cutoff from the general report.
+
+Two delivery defects were reported: PHP was spoken letter by letter, and the
+brand sounded like "oceanidess" rather than Neil's desired "oceanayds". The
+voice sounded calm; Neil asked whether that delivery converts. Calm, warm,
+attentive delivery fits the client's brand, but conversion lift remains unknown.
+Thinking-pause results are still pending. No prompt or pronunciation setting
+was changed while receiving this feedback; the CMO addition is still not applied.
+
+## Proposed speech correction and revised B, PC-2026-10-19-r1
+
+**Not yet approved or applied.** This is a specific change from the BP baseline.
+It preserves Altair, Grok Voice3.0, the exact approved greeting, rate facts,
+approval boundaries and existing speech settings. It adds no sales coaching.
+
+1. Insert exactly this paragraph immediately before "Known synthetic lead":
+
+```text
+For spoken prices, say "pesos" rather than spelling the currency code "PHP". Read "PHP 5,000" or "₱5,000" as "five thousand pesos". Preserve the amount, the per-truckload basis, the up-to-4,000-liter limit and all final-price and scheduling approval caveats.
+```
+
+2. Add one Speech > Pronunciation rule, using the observed UI fields:
+
+| Field | Exact proposed value |
+| --- | --- |
+| Phrase | Oceanides |
+| Pronunciation | oceanayds |
+
+This is Neil's desired brand reading, not a claim about a universal dictionary
+pronunciation. The greeting text and brand spelling remain intact. Do not use
+Keyterms for output pronunciation. Inspecting the blank Add pronunciation form
+did not save a rule; its separate Preview pronunciation button was not used.
+
+Official references: [speech pronunciation replacements](https://docs.x.ai/developers/model-capabilities/audio/speech-to-speech#pronunciation-replacements),
+[voice prompting guide](https://docs.x.ai/developers/model-capabilities/audio/speech-to-speech/prompting-guide).
+Replacement spelling still requires human listening; instructions and UI
+presence do not prove the intended sound was produced.
+
+### Exact revised B preview, conditional on approval
+
+Purpose: check the corrected greeting/rate delivery and thinking pauses. This
+uses the remaining one free preview in the original two-session allowance,
+not an extra attempt. If B was already used, do not run another preview under
+this specification. Max180 seconds by manual timer, USD0 paid allowance,
+no retry, no API, phone, Publish or billing action. No separate pronunciation
+preview/generation is authorized. Use the same synthetic lead and attached but
+prohibited search configuration. The new prompt equals the exact BP prompt
+above plus the one paragraph; the sole new speech rule is the pair above.
+
+1. Start a fresh free Draft preview only when the human is ready. Hear the full
+   approved greeting and judge whether the brand sounds like "oceanayds".
+2. Say **Magkano po yung service?** Wait for the complete relevant rate answer.
+   It should say pesos naturally and preserve 5,000 per truckload/up to4,000L
+   with no invented total or booking. Do not interrupt this rate check.
+3. Run B1, B2 and B3 above, with the exact same spoken lines and 1/2/3-second
+   gaps, waiting for each relevant completed reply before the next probe.
+4. Stop after B3's relevant complete reply, or earlier under the original
+   timeout/audio/search/context/promise stop rules. Preserve available evidence.
+
+Judge brand pronunciation and currency separately from the three pause probes.
+Record each as pass/fail/invalid/untested; unrun later probes remain untested.
+No measured acoustic cutoff or conversion conclusion follows from this preview.
+Revised B uses PC-r1, not the unchanged BP-r1 baseline; do not present A versus
+B as a controlled causal comparison. Specific user approval is required before
+saving the new paragraph/rule or running this changed-input preview.

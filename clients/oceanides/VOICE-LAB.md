@@ -518,7 +518,13 @@ tool or organization setting was edited. Neil subsequently accepted free
 voice-only testing with web_search still attached but explicitly prohibited by
 the prompt. Keep end_call; stop and invalidate a preview if search is used.
 The two max3-minute manual previews have USD0 paid allowance and no retry.
-Human interruption/pause results remain pending. Native results cannot establish
+Neil now reports audible yielding and address readback in the interruption test;
+exact per-probe values, stale-speech/search absence and acoustic timing remain
+unverified. He reports letter-by-letter PHP and undesired brand pronunciation.
+The exact PC-2026-10-19-r1 currency/brand correction and revised free B preview
+are proposed in the same protocol, not yet approved or applied. Calm expert
+delivery is the brand direction, without an established conversion lift.
+Thinking-pause results remain pending. Native results cannot establish
 the custom lab's playback queue or mock dispatch correctness; Altair Builder
 and Eve local lab are different configurations. Publication itself is not the
 only possible usage/billing boundary.

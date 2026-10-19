@@ -1,12 +1,14 @@
 # NOW - the resume doc
-**Stamped: 2026-10-19; approved Builder draft saved, free human probes pending**
+**Stamped: 2026-10-19; interruption feedback recorded, speech fixes proposed**
 
 ## ▶ NEXT ACTION
 Neil accepted free voice-only previews with web_search attached but prohibited.
-Human interruption test A instructions have been given; await the actual result.
-Review A before thinking-pause test B. Try it live auto-connects; use the human's
-Chrome/Edge mic, manual3-minute timer, Draft, no retries/Publish/paid fallback.
-Protocol: clients/oceanides/VOICE-BUILDER-PREVIEW.md (BP-2026-10-19-r1).
+Neil reports audible yielding and address readback; exact per-probe/search/stale
+speech evidence is incomplete, so no full A or acoustic300ms pass is established.
+He dislikes P-H-P spelling and wants brand reading oceanayds; calm tone noted.
+PC-2026-10-19-r1 tiny exact currency/brand fixes + revised B are proposed only.
+Obtain exact approval before new Instructions/rule or changed-input free test.
+Protocol/results: clients/oceanides/VOICE-BUILDER-PREVIEW.md; no new session run.
 
 ## Builder configuration and approval
 Checkout F:/CodexWorktrees/7471/grifon-command, branch codex/oceanides-voice-lab.
