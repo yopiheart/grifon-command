@@ -503,13 +503,31 @@ not a blanket free API/phone or unlimited-test guarantee. Official
 [Builder documentation](https://x.ai/news/grok-voice-agent-builder) supports
 browser preview and separately describes usage-based agent/phone pricing.
 
-Read-only inspection found the Oceanides Builder draft using Grok Voice3.0,
-Altair, a Hi-po opening and web_search/end_call tools. It does not yet match the
-lab's Eve/Magandang-araw opening, prompt or mock functions. No settings were
-edited, no publish action taken and no call started. Match configuration under
-an exact reviewed diff before a controlled comparison. Native Builder voice
-results cannot establish the custom lab's playback queue or mock dispatch
-correctness. Publication itself is not the only possible usage/billing boundary.
+The later authorized Builder alignment is recorded in
+[VOICE-BUILDER-PREVIEW.md](VOICE-BUILDER-PREVIEW.md), BP-2026-10-19-r1. Neil's
+latest choice is Altair. Grok Voice3.0, the approved Magandang-araw Michael
+opening and exact approved Oceanides preview Instructions are saved and verified
+after reload. The hosted draft is conversation-only, without the local lab's
+eight mock functions. The original Try-it-live inspection auto-connected and
+was promptly stopped; greeting text appeared, with no scored caller probes.
+No Publish or paid API run was performed by the agent.
+
+Draft-only web_search removal could not be completed: the UI offered permanent
+account-wide deletion affecting every using agent, so it was canceled. No shared
+tool or organization setting was edited. Neil subsequently accepted free
+voice-only testing with web_search still attached but explicitly prohibited by
+the prompt. Keep end_call; stop and invalidate a preview if search is used.
+The two max3-minute manual previews have USD0 paid allowance and no retry.
+Human interruption/pause results remain pending. Native results cannot establish
+the custom lab's playback queue or mock dispatch correctness; Altair Builder
+and Eve local lab are different configurations. Publication itself is not the
+only possible usage/billing boundary.
+
+At Neil's request, a CMO conversation-coaching review produced
+[a separate exact proposal](VOICE-AGENT-CONVERSION-PROPOSAL.md), not applied.
+It prioritizes clear answers, relevant qualification and a voluntary next step.
+No guaranteed lift, invented proof or new operational capability is claimed;
+real conversion requires verified customer-accepted bookings and human dispatch.
 
 ### Later comparison: ElevenLabs v4 Turbo
 
