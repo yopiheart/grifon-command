@@ -391,16 +391,17 @@ describe('Oceanides mock and live bridge boundaries (fake provider only)', () =>
     expect(value.events).toContainEqual(expect.objectContaining({ type: 'closed', reason: 'live_start_failed' }));
   });
 
-  it('opens exactly one recovery provider after ten retained attempts and blocks a twelfth after restart', () => {
+  it('opens exactly one recovery provider after eleven retained attempts and blocks a thirteenth after restart', () => {
     const value = fixture(true);
-    for (let i = 0; i < 10; i++) new VoiceLedger(value.directory).reserve('a'.repeat(64), 10, 5);
+    for (let i = 0; i < 11; i++) new VoiceLedger(value.directory).reserve('a'.repeat(64), 11, 5.5);
     const path = join(value.directory, 'budget.json');
     const original = JSON.parse(readFileSync(path, 'utf8')).reservations;
     const { id } = value.start();
-    expect(value.openedAfterReservation()).toBe(11);
+    expect(value.openedAfterReservation()).toBe(12);
     expect(value.opener).toHaveBeenCalledTimes(1);
-    expect(value.service.budget()).toMatchObject({ attempts: 11, reservedUsd: 5.5, liveReady: false });
-    expect(JSON.parse(readFileSync(path, 'utf8')).reservations.slice(0, 10)).toEqual(original);
+    expect(value.service.budget()).toMatchObject({ attempts: 12, reservedUsd: 6, liveReady: false });
+    expect(value.events.find(event => event.type === 'snapshot')).toMatchObject({ snapshot: { startedAt: 1000, expiresAt: 181000 } });
+    expect(JSON.parse(readFileSync(path, 'utf8')).reservations.slice(0, 11)).toEqual(original);
     value.service.stop(id);
     const afterRecovery = readFileSync(path, 'utf8');
     const nextOpener = vi.fn(() => new FakeProvider());
@@ -411,7 +412,7 @@ describe('Oceanides mock and live bridge boundaries (fake provider only)', () =>
     });
     try {
       expect(() => restarted.createSession('natural-inquiry', 'live')).toThrow('live_not_approved_or_budget_unavailable');
-      expect(restarted.budget()).toMatchObject({ attempts: 11, reservedUsd: 5.5, liveReady: false });
+      expect(restarted.budget()).toMatchObject({ attempts: 12, reservedUsd: 6, liveReady: false });
       expect(nextOpener).not.toHaveBeenCalled();
       expect(readFileSync(path, 'utf8')).toBe(afterRecovery);
     } finally { restarted.dispose(); }
@@ -419,10 +420,11 @@ describe('Oceanides mock and live bridge boundaries (fake provider only)', () =>
   });
 
   it('does not reserve or open a recovery provider with stale spec approval', () => {
-    const value = fixture(true, false, 'a'.repeat(64));
-    for (let i = 0; i < 10; i++) new VoiceLedger(value.directory).reserve('a'.repeat(64), 10, 5);
+    const value = fixture(true, false, '3c2077baa62f6eddcc70a90f4253af847163cede28659c0683ee0e0202c7e663');
+    for (let i = 0; i < 11; i++) new VoiceLedger(value.directory).reserve('a'.repeat(64), 11, 5.5);
     const path = join(value.directory, 'budget.json');
     const original = readFileSync(path, 'utf8');
+    expect(value.service.budget()).toMatchObject({ attempts: 11, reservedUsd: 5.5, liveReady: false, blockedReason: 'Exact current paid-spec SHA approval is missing.' });
     expect(() => value.start()).toThrow('live_not_approved_or_budget_unavailable');
     expect(value.opener).not.toHaveBeenCalled();
     expect(readFileSync(path, 'utf8')).toBe(original);

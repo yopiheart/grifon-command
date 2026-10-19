@@ -63,9 +63,12 @@ production p95. Mock timings must remain labeled as mock or unmeasured.
 Neil explicitly approved the exact draft on 2026-10-18: at most **10 sessions of
 3 minutes within US$5**, one active session. He subsequently approved adding the
 exact opening below, then explicitly approved one additional recovery attempt
-with USD0.50 additional allowance. The current cumulative cap is **11 attempts /
-USD5.50**; all ten prior reservations remain counted. The current raw-file SHA256
-is `3c2077baa62f6eddcc70a90f4253af847163cede28659c0683ee0e0202c7e663`.
+with USD0.50 additional allowance. On 2026-10-19 he approved one further attempt
+with the same voice/opening and another USD0.50. The current cumulative cap is
+**12 attempts / USD6.00**; all eleven prior reservations remain counted.
+The current raw-file SHA256 is `24427b8cd6819e9898369f9f148df4088d261b35755d7398e4d79e3266ac7758`.
+The preceding eleven-attempt identity was
+`3c2077baa62f6eddcc70a90f4253af847163cede28659c0683ee0e0202c7e663`.
 The preceding opening-only identity was
 `6d66cbfe539b9dc6fc5aa35193511e1378d51245d7a147c7cd6f0f4c2769e0cf`.
 The original approved identity was
@@ -90,11 +93,11 @@ ordinary development. This is a local approval interlock, not a substitute for
 Neil's approval of the exact test. `liveReady` establishes local gates and budget;
 it does not establish valid provider credentials, credit, or voice access.
 
-The cumulative limit is eleven sessions of at most three minutes each, with one
-active connection. The spec's voice cost basis is US$2.64 at US$0.08 per minute
-for thirty-three minutes; applicable text/tool charges and a contingency must
-fit within the US$5.50 ceiling. That single recovery attempt has now been used;
-the cumulative allowance is exhausted. This excludes future telephone-number setup and
+The cumulative limit is twelve sessions of at most three minutes each, with one
+active connection. The spec's voice cost basis is US$2.88 at US$0.08 per minute
+for thirty-six minutes; applicable text/tool charges and a contingency must
+fit within the US$6.00 ceiling. Eleven attempts are already reserved; exactly one
+further attempt is authorized. This excludes future telephone-number setup and
 customer phone tests, which are outside this milestone.
 
 The server reserves budget before opening a paid connection. Reservations survive
@@ -317,8 +320,8 @@ provider configured, audio ready and opening written were true; 575 input-frame
 append attempts and one output chunk were counted, no classified provider error
 was retained, and the operator stopped the session. These counters do not prove
 that the provider recognized the full utterance or that browser audio was heard.
-The current ledger is11 attempts / USD5.50, inactive and exhausted. Preserve all
-reservations; no further paid attempt or allowance extension is authorized.
+At that checkpoint the ledger was11 attempts / USD5.50, inactive and exhausted.
+Preserve all reservations. The subsequent authorization is recorded below.
 
 A zero-network regression reproduced a backend cancellation race: speech while
 an opening lacks a response ID could arm cancellation against the next caller
@@ -365,6 +368,47 @@ The lab was restored with the standard local Vite command in mock-only mode,
 explicitly clearing the live flag, approval environment and xAI key in that
 development process. Public GET confirmed inactive,11/11 reservations and live
 blocked; no key re-entry or provider call was needed for this restoration.
+
+### Approved welcome and full-question recovery: 2026-10-19
+
+Neil explicitly approved one additional live attempt, maximum three minutes and
+USD0.50 additional allowance, using the same voice and opening. This extends the
+cumulative cap from11/USD5.50 to12/USD6.00. All eleven existing reservations remain
+unchanged; no refund, reset, automatic retry or credit purchase is included.
+The preceding failed call remains a failed observation.
+
+Use the exact same Natural inquiry sequence and ten-second silence stop rule as
+the preceding approved probe: hear the approved Michael opening, say only
+**Hi, magkano po magpa-siphon sa Quezon City?**, hear the first relevant answer,
+then Stop. Hard stop at three minutes. No deliberate interruption, additional
+line, dispatch action, voice substitution or emotion setting is added here.
+Pass requires an audible opening/reply, a transcript reflecting the complete
+question including Quezon City, successful rate lookup and the correct per-load
+rate without an unapproved booking promise. Download the local report before
+refreshing, even on failure; retain the new bounded playback/lifecycle counters.
+
+Only the cumulative budget changes: ledger/spec maxAttempts11 to12, maxUsd5.5
+to6, spec maximumVoiceMinutes33 to36, maximumVoiceUsd2.64 to2.88 and the note's
+USD5.50 allowance toUSD6.00. All other raw spec bytes remain identical. The
+private launcher must match the new raw SHA256 and cumulative limits before
+human-only hidden-key entry. Approval receipt is local/ignored at
+`.tmp/oceanides-voice-lab/paid-approval-welcome-2026-10-19.json`.
+
+The startup check found no listener on5184 and no unresolved lock. Updated
+launcher validation passed with11/12 attempts and USD5.50/6.00 reserved. The
+direct Node private launcher is open for human-only hidden-key entry; do not
+recover or copy a key from another process. The user must start the one paid
+session in their separate Chrome/Edge window. A ready server is not proof of
+actual voice.
+
+Verification:68 focused budget/spec/service tests passed, with four expected
+failures under the old cap. Independent review reran68 tests and found no
+actionable defects; exact spec-byte equivalence, helper/receipt and unchanged
+actual ledger hash checked. Root/funnel/lab builds, voice typecheck and static
+checks passed. The first full run had three five-second timeouts during
+concurrent checks; a full rerun without concurrent builds passed1700 tests with
+32 existing skips. No timeout/test changes or new skips were used. The known
+generated snapshot had only EOL changes and was restored after verification.
 
 ### Later comparison: ElevenLabs v4 Turbo
 

@@ -192,30 +192,31 @@ describe('Oceanides voice lab: persistent bounded reservations', () => {
     expect(new VoiceLedger(directory).summary()).toMatchObject({ attempts: 2, reservedUsd: 1 });
   });
 
-  it('preserves the original ten reservations and allows only one approved recovery across restarts', () => {
+  it('preserves the first eleven reservations and allows only one additional approved recovery across restarts', () => {
     const directory = ledgerDirectory();
     for (let i = 0; i < 10; i++) new VoiceLedger(directory).reserve('a'.repeat(64), 10, 5);
-    expect(new VoiceLedger(directory).summary()).toMatchObject({ attempts: 10, reservedUsd: 5 });
+    new VoiceLedger(directory).reserve('b'.repeat(64), 11, 5.5);
+    expect(new VoiceLedger(directory).summary()).toMatchObject({ attempts: 11, reservedUsd: 5.5 });
     const path = join(directory, 'budget.json');
     const original = readFileSync(path, 'utf8');
-    expect(() => new VoiceLedger(directory).reserve('a'.repeat(64), 10, 5)).toThrow('budget_exhausted');
+    expect(() => new VoiceLedger(directory).reserve('b'.repeat(64), 11, 5.5)).toThrow('budget_exhausted');
     expect(readFileSync(path, 'utf8')).toBe(original);
-    const recovery = new VoiceLedger(directory).reserve('b'.repeat(64), 11, 5.5);
+    const recovery = new VoiceLedger(directory).reserve('c'.repeat(64), 12, 6);
     const afterRecovery = readFileSync(path, 'utf8');
     const reservations = JSON.parse(afterRecovery).reservations;
-    expect(reservations.slice(0, 10)).toEqual(JSON.parse(original).reservations);
-    expect(reservations[10]).toEqual(recovery);
-    expect(recovery).toMatchObject({ usd: 0.5, specSha256: 'b'.repeat(64) });
-    expect(new VoiceLedger(directory).summary()).toMatchObject({ attempts: 11, reservedUsd: 5.5 });
-    expect(() => new VoiceLedger(directory).reserve('b'.repeat(64))).toThrow('budget_exhausted');
+    expect(reservations.slice(0, 11)).toEqual(JSON.parse(original).reservations);
+    expect(reservations[11]).toEqual(recovery);
+    expect(recovery).toMatchObject({ usd: 0.5, specSha256: 'c'.repeat(64) });
+    expect(new VoiceLedger(directory).summary()).toMatchObject({ attempts: 12, reservedUsd: 6 });
     expect(() => new VoiceLedger(directory).reserve('c'.repeat(64))).toThrow('budget_exhausted');
+    expect(() => new VoiceLedger(directory).reserve('d'.repeat(64))).toThrow('budget_exhausted');
     expect(readFileSync(path, 'utf8')).toBe(afterRecovery);
   });
 
   it('cannot raise the hard budget through caller-supplied limits', () => {
     const value = new VoiceLedger(ledgerDirectory());
-    expect(() => value.reserve('a'.repeat(64), 12, 5.5)).toThrow('invalid_budget_spec');
-    expect(() => value.reserve('a'.repeat(64), 10, 6)).toThrow('invalid_budget_spec');
+    expect(() => value.reserve('a'.repeat(64), 13, 6)).toThrow('invalid_budget_spec');
+    expect(() => value.reserve('a'.repeat(64), 12, 6.5)).toThrow('invalid_budget_spec');
     expect(value.summary().attempts).toBe(0);
     expect(HARD_LIMITS.sessionMs).toBe(180_000);
   });

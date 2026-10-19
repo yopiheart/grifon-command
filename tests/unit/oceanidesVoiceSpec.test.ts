@@ -30,14 +30,14 @@ describe('Oceanides exact paid-spec gate (no provider connection)', () => {
     expect(result.spec).toHaveProperty('openingMessage', 'Magandang araw po! Ako si Michael, AI assistant ng Oceanides. Anong service po ang kailangan n’yo?');
   });
 
-  it('requires fresh approval for the single recovery allowance while retaining the three-minute limit', () => {
-    const original = copySpec(spec => { spec.limits.maxAttempts = 10; spec.limits.maxUsd = 5; });
-    const recovery = copySpec(spec => { spec.limits.maxAttempts = 11; spec.limits.maxUsd = 5.5; });
+  it('requires fresh approval for the additional recovery allowance while retaining the three-minute limit', () => {
+    const original = copySpec(spec => { spec.limits.maxAttempts = 11; spec.limits.maxUsd = 5.5; });
+    const recovery = copySpec(spec => { spec.limits.maxAttempts = 12; spec.limits.maxUsd = 6; });
     const env = { OCEANIDES_VOICE_LIVE: '1', OCEANIDES_VOICE_APPROVED_SPEC_SHA256: original.hash, XAI_API_KEY: 'TEST-NOT-A-CREDENTIAL' };
     expect(loadLiveSpec(recovery.path, env)).toMatchObject({ liveReady: false, blockedReason: 'Exact current paid-spec SHA approval is missing.' });
     const approved = loadLiveSpec(recovery.path, { ...env, OCEANIDES_VOICE_APPROVED_SPEC_SHA256: recovery.hash });
     expect(approved.liveReady).toBe(true);
-    expect(loadLiveSpec(draft, {}).spec.limits).toMatchObject({ maxAttempts: 11, maxUsd: 5.5, reservationUsd: 0.5, sessionMs: 180000 });
+    expect(loadLiveSpec(draft, {}).spec.limits).toMatchObject({ maxAttempts: 12, maxUsd: 6, reservationUsd: 0.5, sessionMs: 180000 });
   });
 
   it.each([undefined, null, '', '   ', 'x'.repeat(501)])('rejects an invalid opening before any live start', openingMessage => {
@@ -67,7 +67,7 @@ describe('Oceanides exact paid-spec gate (no provider connection)', () => {
   });
 
   it.each([
-    ['maxAttempts', 12], ['maxUsd', 6], ['sessionMs', 180001], ['maxTextInputs', 21],
+    ['maxAttempts', 13], ['maxUsd', 6.5], ['sessionMs', 180001], ['maxTextInputs', 21],
   ])('rejects a draft that increases %s above the agreed ceiling', (key, value) => {
     const { path } = copySpec(spec => { spec.limits[key] = value; });
     expect(() => loadLiveSpec(path, {})).toThrow('invalid_budget_spec');
