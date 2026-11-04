@@ -1,7 +1,34 @@
 # NOW - the resume doc
-**Stamped: 2026-11-05, authorized original BioGreen footage edit**
+**Stamped: 2026-11-05, own 3D recreation requested; footage composition rejected**
 
-## Current original supplier-footage edit
+## Current own 3D recreation
+Neil explicitly rejected the pasted supplier-footage film despite earlier reuse permission.
+He wants an original recreation with the same visible equipment design and no BioGreen marks.
+This supersedes the prior footage-edit route. Do not present that film as the current deliverable.
+New editable model: visuals/recreation-v4/Oceanides-STP-Recreated.blend and GLB/mesh.json.
+Six EC vessels, two blue pressure vessels, six AOP vessels, two different-diameter horizontal
+housings, two cabinet sections, booster pump, ring blower, source-style frame and piping.
+Visible proportions from rotating source; exact hidden plumbing/dimensions remain unverified.
+Blender Studio independent rounds fixed cropped heads, yellow manifold height/downleg,
+upper housing outlet and obstructed cutaways. Round3 sampled frame clarity PASS.
+EC electrodes, media/riser, fractionation mesh and UV cutaways are authored model geometry.
+scene-recreated.html uses only the authored mesh plus Oceanides logo; no source video or pixels.
+render-recreated.mjs enforces no source-video load and checks approved voice hash/scene text.
+Same228-word Aira take, aligned full Taglish captions and accepted Flow music; no new paid calls.
+Native1920x1080/30fps,102.8sec,3084frames rendered in128.189sec viaAMD/D3D11,zero page errors.
+Final output/Oceanides-STP-Recreated-3D-Aira-1080p.mp4,12,978,062bytes.
+SHA256 6e0c18bd599144113873f04052bb9094f66ba3696c75c7ab8ed70ac3d5519207.
+Full audio/video decode PASS; -16.41LUFS/-1.46dBTP,stereo48kAAC.
+Independent final sampled8/22/35/43/46.4/52/68/96sec visual review PASS; particle
+motion verified at22/22.4/22.8sec. No BioGreen marks in samples.
+375x812 browser seek/play/no-overflow PASS; JS syntax and artifact-anchor checks PASS.
+Source guard rejects previous footage builder and accepts current model-only scene.
+review.html now points only to new3D film and editable native master.
+Human listening/final acceptance and engineering dimensions/hidden plumbing remain unverified.
+No email, public upload, deployment or merge. Keep rejected output/history; do not delete it.
+Current branch codex/oceanides-ec-aop-film / draftPR223. Update review page/PR to own3D result.
+
+## Rejected supplier-footage edit - historical
 Neil rejected approximate hardware and explicitly confirmed BioGreen approval to use
 and rebrand the actual supplier animation. Only YouTube is available, no CAD or clean export.
 Use actual footage, not guessed geometry. Source retained in stp-ec-aop/source/;

@@ -1,0 +1,18 @@
+{
+  "version": "recreation-v4",
+  "blender": "5.2.2 LTS",
+  "objects": 391,
+  "native": "Oceanides-STP-Recreated.blend",
+  "sourceUse": "Reference viewing only. No source video frames, watermark textures, downloaded video or supplier pixels in render.",
+  "dimensions": "Relative observed proportions; hidden connections unverified.",
+  "bodyCounts": {
+    "ec": 6,
+    "blue": 2,
+    "aop": 6,
+    "horizontal": 2
+  },
+  "renderResolution": [
+    1248,
+    702
+  ]
+}

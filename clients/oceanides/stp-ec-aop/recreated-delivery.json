@@ -1,0 +1,72 @@
+{
+  "date": "2026-11-05",
+  "output": "output/Oceanides-STP-Recreated-3D-Aira-1080p.mp4",
+  "sha256": "6e0c18bd599144113873f04052bb9094f66ba3696c75c7ab8ed70ac3d5519207",
+  "bytes": 12978062,
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "duration": 102.8,
+  "frames": 3084,
+  "geometry": "Original authored Blender model / visuals/recreation-v4/",
+  "sourceUse": "BioGreen video used as visual reference only. Zero source video frames, source pixels or BioGreen watermarks in output.",
+  "fidelity": "Visible arrangement and proportions reconstructed. Unseen details and engineering dimensions unverified.",
+  "voice": "Same approved 228-word Aira take, unchanged. Character-aligned subtitles.",
+  "music": "Previously accepted Flow original score, ducked under voice.",
+  "paidCalls": 0,
+  "status": "Ready for Neil/August review. Full decode and independent sampled visual/motion review passed. Human listening and final acceptance pending.",
+  "verification": {
+    "fullDecode": "PASS, FFmpeg exit0",
+    "video": {
+      "width": 1920,
+      "height": 1080,
+      "fps": 30,
+      "decodedFrames": 3084,
+      "duration": 102.8
+    },
+    "audio": {
+      "codec": "AAC",
+      "channels": 2,
+      "sampleRate": 48000,
+      "integratedLufs": -16.41,
+      "truePeakDbtp": -1.46
+    },
+    "browser": {
+      "viewport": [
+        375,
+        812
+      ],
+      "noHorizontalOverflow": true,
+      "seekAndPlay": true
+    },
+    "independentReview": {
+      "agent": "stp_ec_aop_visual_qa",
+      "verdict": "PASS",
+      "samples": [
+        8,
+        22,
+        22.4,
+        22.8,
+        35,
+        43,
+        46.4,
+        52,
+        68,
+        96
+      ],
+      "findings": "No BioGreen marks; readable titles/captions; visible treatment cores; stable hardware with animated particles; no blocking sampled composition/motion defect.",
+      "scope": "Sampled visuals/metadata, not full listening or engineering certification."
+    },
+    "sourceGuard": {
+      "currentAuthoredScenePass": true,
+      "rejectedPreviousFootageBuilder": true
+    },
+    "checks": [
+      "Both JS builders parse",
+      "No page errors through all3084generated frames",
+      "check:artifact-anchors",
+      "git diff --check"
+    ],
+    "paidCalls": 0
+  }
+}

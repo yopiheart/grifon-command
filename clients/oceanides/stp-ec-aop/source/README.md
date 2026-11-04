@@ -1,5 +1,10 @@
 # Authorized supplier footage
 
+Historical source/reference only. Neil rejected the pasted-footage presentation on
+5 November 2026 and requested an original 3D recreation. The current film is
+`output/Oceanides-STP-Recreated-3D-Aira-1080p.mp4`; it uses no source footage or
+BioGreen watermark. The footage-edit description below records the rejected route.
+
 Source: https://www.youtube.com/watch?v=jDsKUca5_KA
 
 Title: BioGreen STP Domestic Operation Video Presentation. Channel: Carlo Morales.
