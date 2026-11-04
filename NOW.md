@@ -3,6 +3,7 @@
 
 ## Current video recreation
 Branch codex/oceanides-ec-aop-film, based on codex/oceanides-premium-profile-brochure.
+Draft PR223: https://github.com/yopiheart/grifon-command/pull/223 (backup pushed, unmerged).
 Neil requests original Oceanides-branded recreation preserving equipment design in BioGreen video
 https://www.youtube.com/watch?v=jDsKUca5_KA, with clear Taglish narration and premium visuals.
 Nov5 source frames viewed at 0/27/138/221/249 seconds; private screenshots retain original attribution.
@@ -23,7 +24,7 @@ delivery.json records finalhash/provenance/checks. Original and retry approval s
 review.html updated to narrated version. Prior10-frame independent review applied to superseded
 concept; final changed geometry inspected by root against source. Human visual/listening review pending.
 No public publishing, client/supplier outreach or email performed for the new film.
-Next: Neil reviews final movie and supplier-reference fidelity; draft PR backup to be attached.
+Next: Neil reviews final movie and supplier-reference fidelity; no additional paid call authorized.
 
 ## Current work
 Branch codex/oceanides-premium-profile-brochure; draft PR161 stacked on PR153.
