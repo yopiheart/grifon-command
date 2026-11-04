@@ -1,0 +1,92 @@
+{
+  "version": "2026-11-04-review-01",
+  "title": "Oceanides | On-site wastewater treatment",
+  "sourceReference": "https://www.youtube.com/watch?v=jDsKUca5_KA",
+  "status": "VISUAL_REVIEW_NARRATION_PENDING",
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "duration": 118,
+  "disclosure": "Illustrative process. Final configuration and performance require site assessment and technical validation.",
+  "brand": {
+    "logo": "../company-profile/assets/logo-transparent.png",
+    "phone": "0917 671 6383",
+    "email": "marketing@oceanidessepticandpest.com",
+    "navy": "#0A1F45",
+    "blue": "#1C63AD",
+    "paper": "#F4F6FA",
+    "ink": "#0B1B33"
+  },
+  "scenes": [
+    {
+      "id": "problem", "start": 0, "end": 7,
+      "kicker": "A better-informed wastewater decision",
+      "title": "What if you could treat it on site?",
+      "caption": "Paulit-ulit ba ang gastos sa paghakot ng wastewater?",
+      "vo": "Malaki ba ang regular na gastos ng facility mo sa paghakot ng wastewater?"
+    },
+    {
+      "id": "overview", "start": 7, "end": 17,
+      "kicker": "The treatment journey",
+      "title": "One flow. Several treatment stages.",
+      "caption": "Treatment sa mismong site, bago ang tamang discharge point.",
+      "vo": "Sa on-site treatment, ginagamot ang wastewater sa mismong site, bago ito ilabas sa tamang discharge point. Ganito ang flow ng system na ipinapakita."
+    },
+    {
+      "id": "ec", "start": 17, "end": 35,
+      "kicker": "01 / Electrocoagulation",
+      "title": "Help small particles come together.",
+      "caption": "Electrical current at electrodes. May chemical dosing din sa supplier plan.",
+      "vo": "Una, dinadala ng pump ang wastewater sa electrocoagulation stage. Gumagamit ito ng electrical current at metal electrodes para magsama-sama ang maliliit na particles, na mas madaling ma-separate sa tubig. Kasama rin sa supplier plan ang chemical dosing."
+    },
+    {
+      "id": "settling", "start": 35, "end": 46,
+      "kicker": "02 / Solids separation",
+      "title": "Separate the collected solids.",
+      "caption": "May sludge na kailangang alisin at maayos na i-dispose.",
+      "vo": "Sunod ang settling. Dito, hinihiwalay ang naipong solids. Ang nakolektang sludge, kailangan pa ring alisin at maayos na i-dispose."
+    },
+    {
+      "id": "filtration", "start": 46, "end": 53,
+      "kicker": "03 / Filtration",
+      "title": "Filter the remaining particles.",
+      "caption": "Filtration stages para sa natitirang particles.",
+      "vo": "Pagkatapos, dumadaan ang tubig sa filtration stages para masala ang natitirang particles."
+    },
+    {
+      "id": "aop", "start": 53, "end": 64,
+      "kicker": "04 / Advanced oxidation",
+      "title": "Add the next treatment stage.",
+      "caption": "UV at ozone, ayon sa supplier design.",
+      "vo": "Sa advanced oxidation stage, gumagamit ng UV at ozone ayon sa supplier design, para sa dagdag na treatment at disinfection."
+    },
+    {
+      "id": "verify", "start": 64, "end": 73,
+      "kicker": "05 / Verify performance",
+      "title": "Clear water still needs testing.",
+      "caption": "Lab results vs. discharge limits ng site.",
+      "vo": "Pero hindi sapat na mukhang malinaw ang tubig. Laboratory testing ang basehan kung pasado ito sa discharge requirements ng site."
+    },
+    {
+      "id": "care", "start": 73, "end": 90,
+      "kicker": "What changes. What remains.",
+      "title": "Evaluate hauling and ongoing care.",
+      "caption": "Possible na mas kaunting hauling. May O&M at sludge removal pa rin.",
+      "vo": "Ano ang possible benefit? Kung bagay ang system sa site mo, puwedeng mabawasan ang wastewater na kailangang ihakot. Pero hindi automatic na mawawala ang siphoning. May maintenance, power, consumables at sludge removal pa rin."
+    },
+    {
+      "id": "economics", "start": 90, "end": 101,
+      "kicker": "Build the case with actual data",
+      "title": "Measure before you commit.",
+      "caption": "Flow, lab results, space at actual operating costs.",
+      "vo": "Kaya bago mag-recommend ng system, i-check muna ang actual flow, lab results, available space at current operating costs."
+    },
+    {
+      "id": "cta", "start": 101, "end": 118,
+      "kicker": "Your next step",
+      "title": "Start with a site assessment.",
+      "caption": "Oceanides ang main contact mo para sa assessment at technical review.",
+      "vo": "Oceanides ang main contact mo para i-coordinate ang site assessment at technical review. Magpa-assess muna. I-compare ang installation at operating costs sa current setup mo, para may malinaw na basehan bago mag-decide."
+    }
+  ]
+}

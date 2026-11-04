@@ -1,0 +1,14 @@
+{
+  "blenderVersion": "5.2.2 LTS",
+  "geometry": "Original authored schematic; no measured dimensions or installed-project claim",
+  "renderEngine": "CYCLES",
+  "reviewResolution": [
+    1114,
+    626
+  ],
+  "samples": 24,
+  "meshObjects": 190,
+  "glb": "Oceanides-EC-AOP-Master.glb",
+  "native": "Oceanides-EC-AOP-Master.blend",
+  "mesh": "master-mesh.json"
+}

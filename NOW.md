@@ -1,5 +1,29 @@
 # NOW - the resume doc
-**Stamped: 2026-10-18, preliminary STP response and brochure emailed to August**
+**Stamped: 2026-11-05, BioGreen-reference Oceanides narrated video ready for review**
+
+## Current video recreation
+Branch codex/oceanides-ec-aop-film, based on codex/oceanides-premium-profile-brochure.
+Neil requests original Oceanides-branded recreation preserving equipment design in BioGreen video
+https://www.youtube.com/watch?v=jDsKUca5_KA, with clear Taglish narration and premium visuals.
+Nov5 source frames viewed at 0/27/138/221/249 seconds; private screenshots retain original attribution.
+Replaced the first conceptual rectangular EC chamber/circular surface clarifier with source-style
+cylindrical EC/AOP banks, two tall blue vessels, horizontal housings and underground chamber cutaway.
+Geometry preserves observed topology; authored proportions are not measured engineering dimensions.
+Concept-v1 assets preserved locally but superseded. Current native Blender/GLB/mesh assets retained.
+Final clients/oceanides/stp-ec-aop/output/Oceanides-EC-AOP-Aira-Reference-Matched-1080p.mp4.
+Native1920x1080/30fps,3084frames,102.8seconds,H264/AAC. Full decode PASS.
+Aira eleven_v4, approved228-word/1509-character script unchanged,10scene alignment verified.
+Only1.5383sec verified boundary silence removed; no time stretch or per-scene padding.
+Music uses accepted Flow take, ducked under voice. Final measured -16.41LUFS/-1.46dBTP.
+First attempt401; separately approved second attempt401 payment_issue; no audio from either.
+User confirms invoice paid Nov5 and explicitly approves one new attempt max1600existingcredits.
+Third attempt200, audio+alignment retained. Estimate1509; provider character-cost604;
+actual account debit not independently verified. No further generation authorized.
+delivery.json records finalhash/provenance/checks. Original and retry approval specs retained.
+review.html updated to narrated version. Prior10-frame independent review applied to superseded
+concept; final changed geometry inspected by root against source. Human visual/listening review pending.
+No public publishing, client/supplier outreach or email performed for the new film.
+Next: Neil reviews final movie and supplier-reference fidelity; draft PR backup to be attached.
 
 ## Current work
 Branch codex/oceanides-premium-profile-brochure; draft PR161 stacked on PR153.
