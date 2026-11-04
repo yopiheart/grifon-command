@@ -102,6 +102,8 @@ Half-baked ideas don't go here — they go in conversation and either die or get
 
 **Scope estimate:** 3–5 days for v1. Bulk of the work is the cron + idempotency + cost guard, not the UI.
 
+**Prior art (recoverable):** An admin-only **headless One-Click Ad v1** (fully-automated, no-UI orchestrator) was prototyped on the deleted branch `feat/headless-autopilot-v1` — recoverable at commit `b877cf879cff339e69c8ddc395229ed27294bbd5`. Its resume trigger was "Remotion Phase 2." Its TUNED prompt fixes (BANNED-CTA language scoping, hook-ref hardening) already shipped to main. The branch was deleted in the 2026-06-27 cleanup as superseded by main's rebuilt One-Shot, but this commit is the closest existing starting point if/when this tier is built.
+
 **Source:** Same NotebookLM brief as item #1. Neil endorsed the consumer-side application of agent loops as the headline Autopilot feature.
 
 > **Positioning language parked (2026-08-05, Boris Cherny / Claude Code brief eval):** the
@@ -1720,6 +1722,85 @@ are days, not hours — a queue, a worker, and a new class of partial-failure to
 **Source:** Fell out of the Claude Managed Agents / Vercel Chat SDK evaluation (2026-08-30).
 The announcement itself was rejected for the product; this gap is the one real thing it
 surfaced, and the coverage table above was measured during that evaluation rather than assumed.
+
+---
+
+### N. Second-line ceiling for fail-open anon write endpoints (consent-capture follow-up)
+
+**What:** Add a behind-the-line global/per-IP ceiling (or circuit breaker) for the
+anon-capable write endpoints `api/events.ts` + `api/feedback.ts` (and `api/consent.ts`).
+
+**Why it matters:** straw-man-audit (2026-06-27, PR #21) flagged these as HIGH — they
+inherit the app-wide documented fail-open rate limiter (`api/_lib/rateLimit.ts` returns
+allowed on RPC error). An *induced* Supabase RPC outage removes all throttling on these
+unauthenticated service-role writes → write-amplification flood.
+
+**Why parked:** Consciously **ACCEPTED_RISK** by Neil 2026-06-27 — consistent with the
+rest of the app's fail-open tradeoff; not a ship-blocker. The CRITICAL (CAPI consent
+bypass) was fixed before merge; these HIGHs are the residual.
+
+**When to resume:** if abuse/flood is observed on `public.events`/`public.feedback`, or
+before scaling beta to untrusted/public signups.
+
+**Where to start:** a global daily counter keyed independent of the per-user RPC (so it
+survives the RPC outage), or a per-IP hard cap in front of the fail-open check.
+
+**Source:** straw-man-audit verdict on consent-capture, PR #21.
+
+---
+
+### N+1. "Golden Glamour" Pro-gated avatar style preset
+
+**What:** A second avatar style preset ("Golden Glamour" — golden-hour / Korean
+glass-skin influencer-selfie look) alongside the default "office" look, Pro-gated in
+Step 4, with a matching scene-image realism grade.
+
+**Why it matters:** gives Pro users a distinct, premium avatar aesthetic — an upgrade
+lever and creative variety. ~90 lines of tuned, gender-aware prompt content with solid
+snapshot/assertion test coverage already written.
+
+**Why parked:** the source branch `claude/woman-saas-owner-prompt-iyvi44` was **deleted**
+(it was DOA — it also reverted RealEstate + the callout/saas ad families + generateBatchHeadlines
+that main has since shipped via PR #22/#23). The Golden Glamour work itself is sound and
+**recoverable at commit `06472f8af7be654bef5435daef51a18cc87b9658`**. The 1K/2K image-quality
+half of that branch is already in main (superseded).
+
+**When to resume:** when Neil wants to A/B a premium avatar aesthetic for Pro.
+
+**Where to start:** cherry-pick ONLY the glamour preset from `06472f8` onto a fresh branch
+off current main — `buildGlamourAvatarPrompt` + `buildOfficeAvatarPrompt` (relocation) +
+`REALISM_INSTRUCTION_GLAMOUR` + `AvatarStylePreset` type + Step4/Step5 preset UI + the
+avatarPreset test. Drop the 1K/2K toggle (already in main). TUNED — needs Neil's prompt
+approval before merge. ~30 min.
+
+**Source:** triage of the eval branches, 2026-06-27.
+
+---
+
+### N+2. Per-scene "clay reshoot" in the wizard storyboard (Step 5)
+
+**What:** A per-scene image-reshoot modal (`SceneClayStudio.tsx`, ~294 lines: EXPLORE 3
+divergent takes → SELECT → REFINE, identity-locked) wired into Step 5, so a client can
+re-roll one weak frame without redoing the whole ad.
+
+**Why it matters:** a targeted "fix one frame" repair tool — distinct from Expert Mode
+(`feat/expert-mode-directors-cut`), which is full script/shot CONTROL. The two are
+complementary (the advanced-mode spec treats clay as a Phase-1 prerequisite), but they
+overlap conceptually and shouldn't both ship without a deliberate product decision.
+
+**Why parked:** needs (1) a product decision — does per-scene reshoot ship before/with
+Expert Mode? — and (2) a ~2-3h rebase: Step 5 was redesigned onto the wizard token system
+on 2026-06-23 (after this branch), so `Step5Storyboard.tsx` conflicts. `SceneClayStudio.tsx`
+itself is conflict-free (new file). Branch `claude/scene-clay-storyboard` is **kept** as the
+reference (tip `104633b0d7d20b6484ba4b1420906f8bcf46f9cf`).
+
+**When to resume:** alongside the Expert Mode session, once Neil decides the advanced-mode
+direction (clay-as-repair vs expert-as-control vs both).
+
+**Where to start:** rebase `SceneClayStudio.tsx` + the Step 5 RESHOOT-button wiring onto the
+current token-system Step5Storyboard; reuse the existing `GeneratedFrameTile` divergence grid.
+
+**Source:** triage of the eval branches, 2026-06-27.
 
 ---
 
