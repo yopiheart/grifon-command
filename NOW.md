@@ -1,7 +1,34 @@
 # NOW - the resume doc
-**Stamped: 2026-11-05, BioGreen-reference Oceanides narrated video ready for review**
+**Stamped: 2026-11-05, authorized original BioGreen footage edit**
 
-## Current video recreation
+## Current original supplier-footage edit
+Neil rejected approximate hardware and explicitly confirmed BioGreen approval to use
+and rebrand the actual supplier animation. Only YouTube is available, no CAD or clean export.
+Use actual footage, not guessed geometry. Source retained in stp-ec-aop/source/;
+854x480/25fps is the highest exposed source resolution, 276.829seconds.
+Source SHA256 5c5b5629b2797e4700c8c3208baebc23ab71495f3dc5a6f5615a9bd0788d6626.
+New build-supplier-film.mjs: 10 scenes, existing approved228-word Aira take unchanged,
+accepted Flow music, full character-aligned Taglish subtitles, Oceanides typography/branding.
+Original embedded BioGreen marks retained to avoid damaging equipment pixels. A navy rail
+covers the burned English caption strip and any equipment detail behind that strip.
+Full source framing scaled proportionally; no equipment geometry reconstructed/added.
+Sludge scene explicitly labels upstream particle formation, not a pictured settling vessel.
+No chemical-free, zero-siphoning, fixed saving or automatic compliance claim introduced.
+Source480p limits equipment detail even though output typography/layout are1920x1080.
+Output Oceanides-BioGreen-Supplier-Animation-Aira-1080p.mp4 ready for local review.
+1920x1080/30fps,102.8sec container,3081decodedvideo frames,H264/AAC48kstereo.
+Full video/audio decode PASS; -16.41LUFS/-1.46dBTP. SHA256 79631e9407690cda2a6e11bf558994b93a3f3a1d360b0d634adc2eb06c666f7a.
+Earlier draft filenames retained locally; only latest Supplier-Animation filename is for review.
+Independent critic found clipped title, fallback serif railfont and source caption/logo remnants
+in superseded edit; current script fixes these. Fresh independent28/35/68/94sec visual
+inspection PASS. Listening acceptance remains with Neil/August. review.html points to new film.
+375x812 browser smoke PASS: no horizontal overflow, video seek/play advances,102.8sec.
+Both builder syntax checks, git diff--check and check:artifact-anchors PASS.
+No new paid call, email, public upload, deployment or merge. PR223 remains draft.
+Abandoned fidelity-model revisions preserved locally in visuals/fidelity-draft/;
+tracked previous native masters restored, original rendered movie preserved.
+
+## Previous narrated recreation
 Branch codex/oceanides-ec-aop-film, based on codex/oceanides-premium-profile-brochure.
 Draft PR223: https://github.com/yopiheart/grifon-command/pull/223 (backup pushed, unmerged).
 Neil requests original Oceanides-branded recreation preserving equipment design in BioGreen video

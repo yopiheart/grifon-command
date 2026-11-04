@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-05",
+  "reviewer": "stp_ec_aop_visual_qa",
+  "file": "clients/oceanides/stp-ec-aop/output/Oceanides-BioGreen-Supplier-Animation-Aira-1080p.mp4",
+  "sha256": "79631e9407690cda2a6e11bf558994b93a3f3a1d360b0d634adc2eb06c666f7a",
+  "verdict": "PASS",
+  "sampledSeconds": [
+    28,
+    35,
+    68,
+    94
+  ],
+  "findings": "No material layout defects in sampled frames; corrected title fit, Corbel rail font, alpha logo, readable aligned Taglish captions, supplier credit and CTA. Sludge illustration limitation visible.",
+  "limitations": [
+    "Source480p and original supplier marks remain.",
+    "Navy rail occludes original English subtitle area and hardware detail behind it.",
+    "Full listening and human acceptance pending."
+  ]
+}
