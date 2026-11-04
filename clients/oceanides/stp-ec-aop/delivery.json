@@ -1,0 +1,57 @@
+{
+  "status": "NARRATED_REVIEW_READY_PENDING_HUMAN_ACCEPTANCE",
+  "date": "2026-11-05",
+  "output": "clients\\oceanides\\stp-ec-aop\\output\\Oceanides-EC-AOP-Aira-Reference-Matched-1080p.mp4",
+  "bytes": 14108256,
+  "sha256": "76d9316379104582b65571b83a4d6ffc5ef07cf38e035ddd846276ca24fa9550",
+  "video": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frames": 3084,
+    "duration": 102.8,
+    "fullDecode": "PASS"
+  },
+  "audio": {
+    "voice": "Aira - Confident News Reporter",
+    "model": "eleven_v4",
+    "approvedWords": 228,
+    "sceneCharacters": 1509,
+    "alignedSceneCount": 10,
+    "integratedLufs": -16.41,
+    "truePeakDbtp": -1.46,
+    "speechSourceUnchanged": true,
+    "verifiedBoundarySilenceRemovedSeconds": 1.5382993197278911,
+    "subjectiveListeningAcceptance": "Pending Neil"
+  },
+  "reference": {
+    "youtube": "https://www.youtube.com/watch?v=jDsKUca5_KA",
+    "observedFramesSeconds": [
+      0,
+      27,
+      138,
+      221,
+      249
+    ],
+    "geometry": "Source-style cylindrical EC bank, two tall blue vessels, two horizontal housings, vertical AOP bank, partitioned underground tank; authored proportions, not measured fabrication design.",
+    "superseded": "Concept-v1 models with rectangular surface EC chamber and circular clarifier are not the delivery model."
+  },
+  "voiceAttempts": {
+    "first": "HTTP401, no audio",
+    "second": "HTTP401 payment_issue, no audio",
+    "third": "HTTP200 after separate human approval and invoice-paid confirmation; audio received",
+    "estimatedSuccessfulCredits": 1509,
+    "approvedCap": 1600,
+    "providerReportedCharacterCost": 604,
+    "actualAccountDebitIndependentlyVerified": false
+  },
+  "checks": [
+    "10 provider scene texts and character alignment match approved script",
+    "No aligned letter removed; only verified quiet boundary audio cut",
+    "No time stretching; scene boundaries contain associated narration",
+    "Native1080p,3084frames,H264/AAC,matching102.8second tracks",
+    "All final pages/scenes generated without JS errors; changed geometry frames visually compared to source",
+    "Complete final audio/video decode passes"
+  ],
+  "scope": "Local review. No email, supplier/client outreach, public upload or deployment."
+}

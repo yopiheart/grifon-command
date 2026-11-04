@@ -1,0 +1,129 @@
+{
+  "at": "2026-11-04T18:11:27.570Z",
+  "sourceReference": "https://www.youtube.com/watch?v=jDsKUca5_KA",
+  "sourceSha256": "5c5b5629b2797e4700c8c3208baebc23ab71495f3dc5a6f5615a9bd0788d6626",
+  "sourceResolution": [
+    854,
+    480
+  ],
+  "sourceFps": 25,
+  "sourceDuration": 276.829,
+  "permission": "User explicitly confirms BioGreen approval to use and rebrand supplier animation, 2026-11-05.",
+  "equipmentPixels": "Original supplier footage; no generative reconstruction or hardware geometry changes.",
+  "sourceBranding": "Original embedded supplier marks retained to preserve hardware detail. Oceanides main branding outside footage; supplier credited.",
+  "sourceCrop": "Complete 854x480 source frame retained with proportional scaling; navy rail covers original English subtitle strip, not a geometry edit.",
+  "script": "Approved 228-word take unchanged; full provider-aligned subtitles included.",
+  "output": "clients/oceanides/stp-ec-aop/output/Oceanides-BioGreen-Supplier-Animation-Aira-1080p.mp4",
+  "sha256": "79631e9407690cda2a6e11bf558994b93a3f3a1d360b0d634adc2eb06c666f7a",
+  "bytes": 19217210,
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "duration": 102.8,
+  "paidCalls": 0,
+  "shots": {
+    "problem": [
+      [
+        0,
+        4.366666666666666
+      ]
+    ],
+    "overview": [
+      [
+        8,
+        5
+      ],
+      [
+        25,
+        5.5
+      ]
+    ],
+    "ec": [
+      [
+        27,
+        3.6
+      ],
+      [
+        37,
+        3
+      ],
+      [
+        60,
+        10.033333333333333
+      ]
+    ],
+    "settling": [
+      [
+        81,
+        9.466666666666667
+      ]
+    ],
+    "filtration": [
+      [
+        137,
+        3.1
+      ],
+      [
+        180,
+        3.1
+      ]
+    ],
+    "aop": [
+      [
+        218,
+        8.8
+      ]
+    ],
+    "verify": [
+      [
+        241,
+        8.133333333333333
+      ]
+    ],
+    "care": [
+      [
+        119,
+        7
+      ],
+      [
+        250,
+        8.533333333333333
+      ]
+    ],
+    "economics": [
+      [
+        13,
+        9.066666666666666
+      ]
+    ],
+    "cta": [
+      [
+        253,
+        14.1
+      ]
+    ]
+  },
+  "captions": 21,
+  "status": "Ready for Neil/August review; full decode and independent sampled visual inspection passed. Human listening acceptance pending.",
+  "verification": {
+    "decode": "FFmpeg complete video/audio decode exit0",
+    "video": {
+      "width": 1920,
+      "height": 1080,
+      "fps": 30,
+      "decodedFrames": 3081
+    },
+    "audio": {
+      "codec": "AAC",
+      "sampleRate": 48000,
+      "channels": 2,
+      "integratedLufs": -16.41,
+      "truePeakDbtp": -1.46
+    },
+    "containerDuration": 102.8,
+    "captionCount": 21,
+    "captionRangesValid": true,
+    "independentVisualReview": "PASS; fresh final frames28/35/68/94seconds and metadata reviewed by stp_ec_aop_visual_qa. No material layout defects in sampled frames. No full listening claim.",
+    "paidCalls": 0
+  }
+}

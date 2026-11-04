@@ -1,0 +1,78 @@
+{
+  "cuts": [
+    {
+      "beforeScene": "ec",
+      "startSample": 649072,
+      "endSample": 662934,
+      "start": 14.718185941043084,
+      "end": 15.03251700680272,
+      "removedSeconds": 0.3143310657596372,
+      "peakDbfs": -56.62675784981146,
+      "verifiedThresholdDbfs": -50
+    },
+    {
+      "beforeScene": "settling",
+      "startSample": 1396752,
+      "endSample": 1409679,
+      "start": 31.67238095238095,
+      "end": 31.96551020408163,
+      "removedSeconds": 0.29312925170068027,
+      "peakDbfs": -57.18692655340669,
+      "verifiedThresholdDbfs": -50
+    },
+    {
+      "beforeScene": "filtration",
+      "startSample": 1827991,
+      "endSample": 1835030,
+      "start": 41.451043083900224,
+      "end": 41.61065759637188,
+      "removedSeconds": 0.15961451247165534,
+      "peakDbfs": -58.808518282322304,
+      "verifiedThresholdDbfs": -50
+    },
+    {
+      "beforeScene": "aop",
+      "startSample": 2107311,
+      "endSample": 2115306,
+      "start": 47.78482993197279,
+      "end": 47.96612244897959,
+      "removedSeconds": 0.1812925170068027,
+      "peakDbfs": -59.7357590263848,
+      "verifiedThresholdDbfs": -50
+    },
+    {
+      "beforeScene": "verify",
+      "startSample": 2504341,
+      "endSample": 2512305,
+      "start": 56.78777777777778,
+      "end": 56.96836734693878,
+      "removedSeconds": 0.18058956916099772,
+      "peakDbfs": -60.804136487476825,
+      "verifiedThresholdDbfs": -50
+    },
+    {
+      "beforeScene": "care",
+      "startSample": 2871045,
+      "endSample": 2881984,
+      "start": 65.10306122448979,
+      "end": 65.35111111111111,
+      "removedSeconds": 0.2480498866213152,
+      "peakDbfs": -58.33429432639117,
+      "verifiedThresholdDbfs": -50
+    },
+    {
+      "beforeScene": "economics",
+      "startSample": 3566236,
+      "endSample": 3573349,
+      "start": 80.86702947845805,
+      "end": 81.02832199546485,
+      "removedSeconds": 0.16129251700680272,
+      "peakDbfs": -59.53724085435444,
+      "verifiedThresholdDbfs": -50
+    }
+  ],
+  "initialLeadSeconds": 0.13333333333333333,
+  "rawSha256": "7402e5327fb6c36f4a9bc865f054e8ec4f8c26f0bd1b6976bed2987ef3e33fae",
+  "finalDuration": 102.8,
+  "allTenInputsPreserved": true
+}

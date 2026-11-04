@@ -1,0 +1,14 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import {spawn} from 'node:child_process';
+import {join,dirname} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import ffmpeg from 'ffmpeg-static';
+const dir=dirname(fileURLToPath(import.meta.url)),story=JSON.parse(await readFile(join(dir,'story-aira-tight.json'),'utf8')),d=story.duration;
+const output=join(dir,'output/Oceanides-STP-Recreated-3D-Aira-1080p.mp4');
+const input=join(dir,'output/Oceanides-STP-Recreated-3D-Silent-1080p.mp4');
+const filter=`[1:a]loudnorm=I=-16:TP=-1.5:LRA=7,aformat=sample_rates=48000:channel_layouts=stereo,asplit=2[v][sc];[2:a]atrim=duration=${d},loudnorm=I=-28:TP=-3:LRA=7,aformat=sample_rates=48000:channel_layouts=stereo,afade=t=in:st=0:d=0.3,afade=t=out:st=${d-1}:d=1[m];[m][sc]sidechaincompress=threshold=0.03:ratio=5:attack=20:release=300[duck];[v][duck]amix=inputs=2:normalize=0:duration=first,alimiter=limit=0.84:level=false[aout]`;
+await new Promise((ok,bad)=>{const p=spawn(ffmpeg,['-hide_banner','-loglevel','warning','-nostdin','-y','-i',input,'-i',join(dir,'output/Oceanides-EC-AOP-Aira-Synced.wav'),'-i',join(dir,'../stp-explainer/output/Oceanides-STP-Flow-Original-150s.mp3'),'-filter_complex',filter,'-map','0:v:0','-map','[aout]','-c:v','copy','-c:a','aac','-b:a','192k','-ar','48000','-ac','2','-t',String(d),'-movflags','+faststart',output],{stdio:['ignore','ignore','pipe']});let log='';p.stderr.on('data',b=>log+=b);p.on('error',bad);p.on('close',c=>c===0?ok():bad(Error(log.slice(-2500))));});
+const b=await readFile(output);
+await writeFile(join(dir,'recreated-delivery.json'),JSON.stringify({date:'2026-11-05',output:'output/Oceanides-STP-Recreated-3D-Aira-1080p.mp4',sha256:createHash('sha256').update(b).digest('hex'),bytes:b.length,width:1920,height:1080,fps:30,duration:d,frames:3084,geometry:'Original authored Blender model / visuals/recreation-v4/',sourceUse:'BioGreen video used as visual reference only. Zero source video frames, source pixels or BioGreen watermarks in output.',fidelity:'Visible arrangement and proportions reconstructed. Unseen details and engineering dimensions unverified.',voice:'Same approved 228-word Aira take, unchanged. Character-aligned subtitles.',music:'Previously accepted Flow original score, ducked under voice.',paidCalls:0,status:'Awaiting final decode and visual inspection'},null,2)+'\n');
+console.log(output);

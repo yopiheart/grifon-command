@@ -1,0 +1,19 @@
+Malaki ba ang regular na gastos ng facility mo sa paghakot ng wastewater?
+
+Sa on-site treatment, ginagamot ang wastewater sa mismong site, bago ito ilabas sa tamang discharge point. Ganito ang flow ng system na ipinapakita.
+
+Una, dinadala ng pump ang wastewater sa electrocoagulation stage. Gumagamit ito ng electrical current at metal electrodes para magsama-sama ang maliliit na particles, na mas madaling ma-separate sa tubig. Kasama rin sa supplier plan ang chemical dosing.
+
+Sunod ang settling. Dito, hinihiwalay ang naipong solids. Ang nakolektang sludge, kailangan pa ring alisin at maayos na i-dispose.
+
+Pagkatapos, dumadaan ang tubig sa filtration stages para masala ang natitirang particles.
+
+Sa advanced oxidation stage, gumagamit ng UV at ozone ayon sa supplier design, para sa dagdag na treatment at disinfection.
+
+Pero hindi sapat na mukhang malinaw ang tubig. Laboratory testing ang basehan kung pasado ito sa discharge requirements ng site.
+
+Ano ang possible benefit? Kung bagay ang system sa site mo, puwedeng mabawasan ang wastewater na kailangang ihakot. Pero hindi automatic na mawawala ang siphoning. May maintenance, power, consumables at sludge removal pa rin.
+
+Kaya bago mag-recommend ng system, i-check muna ang actual flow, lab results, available space at current operating costs.
+
+Oceanides ang main contact mo para i-coordinate ang site assessment at technical review. Magpa-assess muna. I-compare ang installation at operating costs sa current setup mo, para may malinaw na basehan bago mag-decide.

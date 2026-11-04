@@ -1,0 +1,143 @@
+{
+  "status": "FAILED_NO_RETRY",
+  "purpose": "One newly authorized attempt after permission repair; identical approved Taglish script, Aira voice and generation parameters. Not an automatic retry.",
+  "input": {
+    "file": "narration-for-approval.txt",
+    "sha256": "dc94bfbd52fb3b83ef5fb345352d9c24972d48d2049f24e8307411ae76b41cb0",
+    "words": 228,
+    "characters": 1509,
+    "sceneIds": [
+      "problem",
+      "overview",
+      "ec",
+      "settling",
+      "filtration",
+      "aop",
+      "verify",
+      "care",
+      "economics",
+      "cta"
+    ]
+  },
+  "voice": {
+    "name": "Aira - Confident News Reporter",
+    "voice_id": "CkDT8SVS21XIVk5BcuDe",
+    "category": "professional"
+  },
+  "request": {
+    "endpoint": "https://api.elevenlabs.io/v1/text-to-dialogue/with-timestamps?output_format=mp3_44100_128",
+    "body": {
+      "inputs": [
+        {
+          "text": "Malaki ba ang regular na gastos ng facility mo sa paghakot ng wastewater?",
+          "voice_id": "CkDT8SVS21XIVk5BcuDe"
+        },
+        {
+          "text": "Sa on-site treatment, ginagamot ang wastewater sa mismong site, bago ito ilabas sa tamang discharge point. Ganito ang flow ng system na ipinapakita.",
+          "voice_id": "CkDT8SVS21XIVk5BcuDe"
+        },
+        {
+          "text": "Una, dinadala ng pump ang wastewater sa electrocoagulation stage. Gumagamit ito ng electrical current at metal electrodes para magsama-sama ang maliliit na particles, na mas madaling ma-separate sa tubig. Kasama rin sa supplier plan ang chemical dosing.",
+          "voice_id": "CkDT8SVS21XIVk5BcuDe"
+        },
+        {
+          "text": "Sunod ang settling. Dito, hinihiwalay ang naipong solids. Ang nakolektang sludge, kailangan pa ring alisin at maayos na i-dispose.",
+          "voice_id": "CkDT8SVS21XIVk5BcuDe"
+        },
+        {
+          "text": "Pagkatapos, dumadaan ang tubig sa filtration stages para masala ang natitirang particles.",
+          "voice_id": "CkDT8SVS21XIVk5BcuDe"
+        },
+        {
+          "text": "Sa advanced oxidation stage, gumagamit ng UV at ozone ayon sa supplier design, para sa dagdag na treatment at disinfection.",
+          "voice_id": "CkDT8SVS21XIVk5BcuDe"
+        },
+        {
+          "text": "Pero hindi sapat na mukhang malinaw ang tubig. Laboratory testing ang basehan kung pasado ito sa discharge requirements ng site.",
+          "voice_id": "CkDT8SVS21XIVk5BcuDe"
+        },
+        {
+          "text": "Ano ang possible benefit? Kung bagay ang system sa site mo, puwedeng mabawasan ang wastewater na kailangang ihakot. Pero hindi automatic na mawawala ang siphoning. May maintenance, power, consumables at sludge removal pa rin.",
+          "voice_id": "CkDT8SVS21XIVk5BcuDe"
+        },
+        {
+          "text": "Kaya bago mag-recommend ng system, i-check muna ang actual flow, lab results, available space at current operating costs.",
+          "voice_id": "CkDT8SVS21XIVk5BcuDe"
+        },
+        {
+          "text": "Oceanides ang main contact mo para i-coordinate ang site assessment at technical review. Magpa-assess muna. I-compare ang installation at operating costs sa current setup mo, para may malinaw na basehan bago mag-decide.",
+          "voice_id": "CkDT8SVS21XIVk5BcuDe"
+        }
+      ],
+      "model_id": "eleven_v4",
+      "seed": 20261104
+    },
+    "bodySha256": "58a3fbb743dc8a413cc05ed2238d60b0c7301c8f2fd2a0f5e1789bd1b6f8f3a8"
+  },
+  "limits": {
+    "maxPaidCalls": 1,
+    "estimatedCredits": 1509,
+    "maxCredits": 1600,
+    "automaticRetries": 0,
+    "newPurchasesOrSubscriptions": false,
+    "otherPaidGenerationOrAnalysis": false
+  },
+  "evidence": {
+    "readOnlyPreflight": "2026-11-04: Aira exact ID/name/category confirmed; eleven_v4 supports Filipino; multiplier1, discount1, voiceRate1. No paid call.",
+    "pass": [
+      "Every script word audible and intelligible; no clipped or missing words",
+      "Pronunciation understandable in Taglish",
+      "Voice matches each depicted scene; verified boundary pauses shortened without clipping speech",
+      "Narration remains intelligible over accepted Flow music",
+      "1080p30 video fully decodes, captions and corner logo remain legible"
+    ],
+    "fail": [
+      "Missing or truncated words",
+      "Mismatch between narration and treatment stage",
+      "Unsupported performance or cost promise",
+      "New paid retry, purchase or spend above cap"
+    ]
+  },
+  "assets": {
+    "story": "story.json",
+    "logo": "../company-profile/assets/logo-transparent.png",
+    "music": "../stp-explainer/output/Oceanides-STP-Flow-Original-150s.mp3",
+    "musicSha256": "712324e214181fe81e5254baaa8ee62c3410205faa694ea9e155015520bfd4c8",
+    "visuals": "Original local Blender/Three.js schematic; no source footage reused or supplier watermark erased"
+  },
+  "output": {
+    "audio": "output/Oceanides-EC-AOP-Aira-Raw.mp3",
+    "alignment": "output/aira-alignment.json"
+  },
+  "approval": {
+    "humanResponse": "TTS enabled na; approve one new attempt, max 1,600 credits",
+    "receivedDateLocal": "2026-11-04",
+    "source": "Explicit user answer to retry question; confirms Text to Speech permission checked/enabled",
+    "bodySha256": "58a3fbb743dc8a413cc05ed2238d60b0c7301c8f2fd2a0f5e1789bd1b6f8f3a8",
+    "textToSpeechPermissionConfirmed": true,
+    "maxPaidCalls": 1,
+    "maxCredits": 1600
+  },
+  "previousAttempt": {
+    "status": "HTTP_401_NO_AUDIO_RETURNED",
+    "spec": "voice-aira.spec.json",
+    "automaticRetryPerformed": false
+  },
+  "prerequisite": "User confirms the existing ElevenLabs API key has Text to Speech permission enabled. No permission change is made automatically; do not disclose or paste keys.",
+  "execution": {
+    "at": "2026-11-04T12:53:29.234Z",
+    "status": "FAILED_OR_INCOMPLETE_NO_RETRY",
+    "bodySha256": "58a3fbb743dc8a413cc05ed2238d60b0c7301c8f2fd2a0f5e1789bd1b6f8f3a8",
+    "characters": 1509,
+    "estimatedCredits": 1509,
+    "maxCredits": 1600,
+    "maxPaidCalls": 1,
+    "automaticRetries": 0,
+    "voiceId": "CkDT8SVS21XIVk5BcuDe",
+    "model": "eleven_v4",
+    "httpStatus": 401,
+    "providerErrorStatus": "payment_issue",
+    "providerErrorMessage": "Your subscription has a failed or incomplete payment. Complete the latest invoice to continue usage.",
+    "error": "Provider returned HTTP 401. No automatic retry."
+  }
+}

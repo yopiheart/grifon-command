@@ -1,5 +1,84 @@
 # NOW - the resume doc
-**Stamped: 2026-10-18, preliminary STP response and brochure emailed to August**
+**Stamped: 2026-11-05, own 3D recreation requested; footage composition rejected**
+
+## Current own 3D recreation
+Neil explicitly rejected the pasted supplier-footage film despite earlier reuse permission.
+He wants an original recreation with the same visible equipment design and no BioGreen marks.
+This supersedes the prior footage-edit route. Do not present that film as the current deliverable.
+New editable model: visuals/recreation-v4/Oceanides-STP-Recreated.blend and GLB/mesh.json.
+Six EC vessels, two blue pressure vessels, six AOP vessels, two different-diameter horizontal
+housings, two cabinet sections, booster pump, ring blower, source-style frame and piping.
+Visible proportions from rotating source; exact hidden plumbing/dimensions remain unverified.
+Blender Studio independent rounds fixed cropped heads, yellow manifold height/downleg,
+upper housing outlet and obstructed cutaways. Round3 sampled frame clarity PASS.
+EC electrodes, media/riser, fractionation mesh and UV cutaways are authored model geometry.
+scene-recreated.html uses only the authored mesh plus Oceanides logo; no source video or pixels.
+render-recreated.mjs enforces no source-video load and checks approved voice hash/scene text.
+Same228-word Aira take, aligned full Taglish captions and accepted Flow music; no new paid calls.
+Native1920x1080/30fps,102.8sec,3084frames rendered in128.189sec viaAMD/D3D11,zero page errors.
+Final output/Oceanides-STP-Recreated-3D-Aira-1080p.mp4,12,978,062bytes.
+SHA256 6e0c18bd599144113873f04052bb9094f66ba3696c75c7ab8ed70ac3d5519207.
+Full audio/video decode PASS; -16.41LUFS/-1.46dBTP,stereo48kAAC.
+Independent final sampled8/22/35/43/46.4/52/68/96sec visual review PASS; particle
+motion verified at22/22.4/22.8sec. No BioGreen marks in samples.
+375x812 browser seek/play/no-overflow PASS; JS syntax and artifact-anchor checks PASS.
+Source guard rejects previous footage builder and accepts current model-only scene.
+review.html now points only to new3D film and editable native master.
+Human listening/final acceptance and engineering dimensions/hidden plumbing remain unverified.
+No email, public upload, deployment or merge. Keep rejected output/history; do not delete it.
+Current branch codex/oceanides-ec-aop-film / draftPR223. Update review page/PR to own3D result.
+
+## Rejected supplier-footage edit - historical
+Neil rejected approximate hardware and explicitly confirmed BioGreen approval to use
+and rebrand the actual supplier animation. Only YouTube is available, no CAD or clean export.
+Use actual footage, not guessed geometry. Source retained in stp-ec-aop/source/;
+854x480/25fps is the highest exposed source resolution, 276.829seconds.
+Source SHA256 5c5b5629b2797e4700c8c3208baebc23ab71495f3dc5a6f5615a9bd0788d6626.
+New build-supplier-film.mjs: 10 scenes, existing approved228-word Aira take unchanged,
+accepted Flow music, full character-aligned Taglish subtitles, Oceanides typography/branding.
+Original embedded BioGreen marks retained to avoid damaging equipment pixels. A navy rail
+covers the burned English caption strip and any equipment detail behind that strip.
+Full source framing scaled proportionally; no equipment geometry reconstructed/added.
+Sludge scene explicitly labels upstream particle formation, not a pictured settling vessel.
+No chemical-free, zero-siphoning, fixed saving or automatic compliance claim introduced.
+Source480p limits equipment detail even though output typography/layout are1920x1080.
+Output Oceanides-BioGreen-Supplier-Animation-Aira-1080p.mp4 ready for local review.
+1920x1080/30fps,102.8sec container,3081decodedvideo frames,H264/AAC48kstereo.
+Full video/audio decode PASS; -16.41LUFS/-1.46dBTP. SHA256 79631e9407690cda2a6e11bf558994b93a3f3a1d360b0d634adc2eb06c666f7a.
+Earlier draft filenames retained locally; only latest Supplier-Animation filename is for review.
+Independent critic found clipped title, fallback serif railfont and source caption/logo remnants
+in superseded edit; current script fixes these. Fresh independent28/35/68/94sec visual
+inspection PASS. Listening acceptance remains with Neil/August. review.html points to new film.
+375x812 browser smoke PASS: no horizontal overflow, video seek/play advances,102.8sec.
+Both builder syntax checks, git diff--check and check:artifact-anchors PASS.
+No new paid call, email, public upload, deployment or merge. PR223 remains draft.
+Abandoned fidelity-model revisions preserved locally in visuals/fidelity-draft/;
+tracked previous native masters restored, original rendered movie preserved.
+
+## Previous narrated recreation
+Branch codex/oceanides-ec-aop-film, based on codex/oceanides-premium-profile-brochure.
+Draft PR223: https://github.com/yopiheart/grifon-command/pull/223 (backup pushed, unmerged).
+Neil requests original Oceanides-branded recreation preserving equipment design in BioGreen video
+https://www.youtube.com/watch?v=jDsKUca5_KA, with clear Taglish narration and premium visuals.
+Nov5 source frames viewed at 0/27/138/221/249 seconds; private screenshots retain original attribution.
+Replaced the first conceptual rectangular EC chamber/circular surface clarifier with source-style
+cylindrical EC/AOP banks, two tall blue vessels, horizontal housings and underground chamber cutaway.
+Geometry preserves observed topology; authored proportions are not measured engineering dimensions.
+Concept-v1 assets preserved locally but superseded. Current native Blender/GLB/mesh assets retained.
+Final clients/oceanides/stp-ec-aop/output/Oceanides-EC-AOP-Aira-Reference-Matched-1080p.mp4.
+Native1920x1080/30fps,3084frames,102.8seconds,H264/AAC. Full decode PASS.
+Aira eleven_v4, approved228-word/1509-character script unchanged,10scene alignment verified.
+Only1.5383sec verified boundary silence removed; no time stretch or per-scene padding.
+Music uses accepted Flow take, ducked under voice. Final measured -16.41LUFS/-1.46dBTP.
+First attempt401; separately approved second attempt401 payment_issue; no audio from either.
+User confirms invoice paid Nov5 and explicitly approves one new attempt max1600existingcredits.
+Third attempt200, audio+alignment retained. Estimate1509; provider character-cost604;
+actual account debit not independently verified. No further generation authorized.
+delivery.json records finalhash/provenance/checks. Original and retry approval specs retained.
+review.html updated to narrated version. Prior10-frame independent review applied to superseded
+concept; final changed geometry inspected by root against source. Human visual/listening review pending.
+No public publishing, client/supplier outreach or email performed for the new film.
+Next: Neil reviews final movie and supplier-reference fidelity; no additional paid call authorized.
 
 ## Current work
 Branch codex/oceanides-premium-profile-brochure; draft PR161 stacked on PR153.

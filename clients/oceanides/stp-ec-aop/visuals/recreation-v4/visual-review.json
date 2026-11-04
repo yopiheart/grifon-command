@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-05",
+  "reviewer": "stp_ec_aop_visual_qa",
+  "rounds": 3,
+  "geometry": "Observed external features reviewed against supplier rotation reference. Cropped heads, EC manifold/downleg and upper-filter end connection corrected.",
+  "cutaways": "Media/riser/fractionation mesh/UV core visibility corrected; context hardware ghosted for explanation.",
+  "final": {
+    "agent": "stp_ec_aop_visual_qa",
+    "verdict": "PASS",
+    "samples": [
+      8,
+      22,
+      22.4,
+      22.8,
+      35,
+      43,
+      46.4,
+      52,
+      68,
+      96
+    ],
+    "findings": "No BioGreen marks; readable titles/captions; visible treatment cores; stable hardware with animated particles; no blocking sampled composition/motion defect.",
+    "scope": "Sampled visuals/metadata, not full listening or engineering certification."
+  },
+  "outputSha256": "6e0c18bd599144113873f04052bb9094f66ba3696c75c7ab8ed70ac3d5519207"
+}

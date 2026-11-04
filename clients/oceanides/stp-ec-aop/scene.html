@@ -1,0 +1,102 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Oceanides | On-site wastewater treatment</title>
+<style>html,body{margin:0;background:#0A1F45;overflow:hidden}canvas{width:100vw;height:100vh;object-fit:contain;display:block}</style>
+<canvas id="output" width="1920" height="1080"></canvas><script type="module">
+import * as THREE from '../stp-explainer/vendor/three.module.js';
+const params=new URLSearchParams(location.search),story=await(await fetch(params.get('story')||'./story.json')).json();
+const model=await(await fetch('./visuals/master-mesh.json')).json();
+const out=document.querySelector('#output'),ctx=out.getContext('2d');
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:true});
+renderer.setSize(1920,1080);renderer.setPixelRatio(1);renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.0;
+renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.shadowMap.autoUpdate=false;
+renderer.setClearColor(0x000000,0);
+const scene=new THREE.Scene(),plant=new THREE.Group();scene.add(plant);
+const camera=new THREE.PerspectiveCamera(34,1920/1080,.1,150);
+scene.add(new THREE.HemisphereLight(0xffffff,0x6484ac,1.75));
+const key=new THREE.DirectionalLight(0xffffff,3.0);key.position.set(-6,14,9);key.castShadow=true;
+key.shadow.mapSize.set(2048,2048);Object.assign(key.shadow.camera,{left:-13,right:13,top:10,bottom:-10,near:.1,far:45});key.shadow.bias=-.0005;scene.add(key);
+const rim=new THREE.DirectionalLight(0x8cbcff,1.4);rim.position.set(7,7,-5);scene.add(rim);
+const fill=new THREE.DirectionalLight(0xffffff,.8);fill.position.set(5,3,9);scene.add(fill);
+const envImages=[];for(let i=0;i<6;i++){const c=document.createElement('canvas');c.width=c.height=256;const g=c.getContext('2d');const grad=g.createLinearGradient(0,0,256,256);grad.addColorStop(0,'#fcfdff');grad.addColorStop(.48,'#b6cce3');grad.addColorStop(.52,'#5a7495');grad.addColorStop(1,'#e9f0f8');g.fillStyle=grad;g.fillRect(0,0,256,256);g.fillStyle='#ffffff';g.fillRect(15,5,48,235);envImages.push(c);}
+const cubeEnv=new THREE.CubeTexture(envImages);cubeEnv.needsUpdate=true;
+const pmrem=new THREE.PMREMGenerator(renderer);scene.environment=pmrem.fromCubemap(cubeEnv).texture;
+const meshes=[];const allMat=[];
+for(const item of model.objects){const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(item.positions,3));geo.setAttribute('normal',new THREE.Float32BufferAttribute(item.normals,3));const a=item.material;
+ const color=new THREE.Color(...a.color).convertSRGBToLinear();const mat=new THREE.MeshStandardMaterial({color,roughness:a.roughness,metalness:a.metalness,transparent:a.alpha<.99,opacity:a.alpha,depthWrite:a.alpha>.99,side:THREE.DoubleSide,envMapIntensity:.85});
+ const m=new THREE.Mesh(geo,mat);m.name=item.name;m.userData.stage=item.stage;m.castShadow=a.alpha>.99;m.receiveShadow=true;plant.add(m);meshes.push(m);allMat.push({m:mat,alpha:a.alpha,stage:item.stage,color:color.clone()});
+}
+const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.16}));floor.rotation.x=-Math.PI/2;floor.position.y=-.38;floor.receiveShadow=true;scene.add(floor);
+const tubeMat=new THREE.MeshStandardMaterial({color:0x3e8fd0,roughness:.24,metalness:.4});
+const flowPaths=[
+ {stage:'ec',p:[[-5.4,.28,1.35],[-4.1,.28,1.35],[-4.1,1.7,.8]]},
+ {stage:'settling',p:[[-2,-1.3,-1.4],[-2,-.4,-1.4],[.5,-.4,-1.4]]},
+ {stage:'filtration',p:[[-3,.3,0],[-2.25,.3,0],[-2.25,3.8,0],[.2,3.8,-.8],[.2,3.05,.45]]},
+ {stage:'aop',p:[[1.8,2.1,.45],[2.3,2.1,.45],[2.3,.18,.3],[4.4,.18,.3]]},
+ {stage:'verify',p:[[4.4,.22,-.55],[5.5,.22,-.55]]},
+ {stage:'care',p:[[-2,-1.3,-1.4],[-2,-1.3,-2.8],[-2,.3,-2.8]]}
+].map(v=>({...v,curve:new THREE.CatmullRomCurve3(v.p.map(p=>new THREE.Vector3(...p)),false,'centripetal')}));
+const drops=[];for(const path of flowPaths){for(let i=0;i<7;i++){const mesh=new THREE.Mesh(new THREE.SphereGeometry(.075,10,10),new THREE.MeshBasicMaterial({color:path.stage==='care'?0xf5b301:0x70c4ed}));scene.add(mesh);drops.push({mesh,path,seed:i/7});}}
+const solids=[];for(let i=0;i<28;i++){const mesh=new THREE.Mesh(new THREE.IcosahedronGeometry(.035+(i%3)*.012,0),new THREE.MeshStandardMaterial({color:0x8a6030,roughness:.8}));scene.add(mesh);solids.push({mesh,seed:i*.638});}
+const logo=new Image();logo.src='../company-profile/assets/logo-transparent.png';await logo.decode();
+const C={navy:'#0A1F45',blue:'#1C63AD',paper:'#F4F6FA',ink:'#0B1B33',gray:'#526174'};
+const gl=renderer.getContext(),debug=gl.getExtension('WEBGL_debug_renderer_info');
+window.renderInfo={renderer:debug?gl.getParameter(debug.UNMASKED_RENDERER_WEBGL):gl.getParameter(gl.RENDERER),geometrySource:'Blender evaluated mesh'};
+const ease=x=>{x=Math.max(0,Math.min(1,x));return x*x*(3-2*x)},lerp=(a,b,t)=>a+(b-a)*t;
+const scenes=story.scenes;
+function text(v,x,y,size=34,color=C.ink,weight=400,font='Corbel'){ctx.font=`${weight} ${size}px "${font}",Arial`;ctx.fillStyle=color;ctx.fillText(v,x,y);}
+function wrap(v,x,y,w,size=36,color=C.ink,weight=400,font='Corbel',leading=size*1.25){ctx.font=`${weight} ${size}px "${font}",Arial`;let line='',yy=y;for(const word of String(v||'').split(' ')){if(ctx.measureText(line+word).width>w&&line){text(line.trim(),x,yy,size,color,weight,font);line='';yy+=leading;}line+=word+' ';}if(line)text(line.trim(),x,yy,size,color,weight,font);return yy;}
+function projected(p){const q=new THREE.Vector3(...p).project(camera);return [(q.x*.5+.5)*1920,(-q.y*.5+.5)*1080];}
+function tag(v,p,side=1){const[x,y]=projected(p);const tx=x+side*70,ty=y-40;ctx.strokeStyle='#7e96b1';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(tx,ty);ctx.lineTo(tx+side*50,ty);ctx.stroke();ctx.fillStyle=C.paper;ctx.fillRect(tx+(side<0?-280:30),ty-29,280,42);text(v,tx+(side<0?-265:42),ty,27,C.blue,700);}
+const mapX={ec:-4.1,settling:-.3,filtration:-.4,aop:3.5,verify:5.0,care:-.3};
+window.renderFrame=async t=>{
+ const s=scenes.find(x=>t>=x.start&&t<x.end)||scenes.at(-1),local=t-s.start,fraction=local/(s.end-s.start),e=ease(local/1.4);
+ const hero=['problem','overview','economics','cta'].includes(s.id),dark=['problem','cta'].includes(s.id);
+ const focus=mapX[s.id];let tx=hero?0:focus||0;const push=ease(fraction)*.7;
+ if(hero){camera.position.set(13.5-Math.sin(t*.09)*1.0,9.7,18.5-push);camera.lookAt(-.1,1.0,0);camera.fov=34;}
+ else{camera.position.set(tx+5.4-push,5.7,8.5-push);camera.lookAt(tx,s.id==='settling'?-.65:1.65,0);camera.fov=s.id==='care'?39:36;}
+ camera.updateProjectionMatrix();camera.updateMatrixWorld();
+ plant.position.y=0;plant.rotation.y=hero?Math.sin(t*.08)*.025:0;
+ renderer.shadowMap.needsUpdate=window.currentScene!==s.id;
+ drops.forEach(({mesh,path,seed})=>{mesh.position.copy(path.curve.getPointAt((t*.18+seed)%1));mesh.visible=hero||path.stage===s.id||s.id==='care';});
+ solids.forEach(({mesh,seed},i)=>{const isEc=s.id==='ec';mesh.visible=isEc||s.id==='settling';mesh.position.set((isEc?-4.08:-.3)+Math.sin(seed)*.16,isEc?.7+((t*.32+seed)%1.1):-1.45+(1-(t*.14+seed)%1)*1.0,isEc?.8:-1.4);});
+ allMat.forEach(({m,alpha,stage,color})=>{const active=hero||stage===s.id||stage==='all'||s.id==='economics';m.color.copy(color);m.opacity=alpha*(active?1:.28);m.transparent=alpha<.99||!active;m.depthWrite=!m.transparent;});
+ ctx.fillStyle=C.paper;ctx.fillRect(0,0,1920,1080);
+ if(dark){const g=ctx.createLinearGradient(0,0,1250,0);g.addColorStop(0,C.navy);g.addColorStop(.46,C.navy);g.addColorStop(1,C.paper);ctx.fillStyle=g;ctx.fillRect(0,0,1920,1080);}
+ meshes.forEach(m=>{m.visible=s.id==='settling'?m.userData.stage==='settling':true;});floor.visible=s.id!=='settling';
+ renderer.render(scene,camera);ctx.save();ctx.beginPath();ctx.rect(0,310,1920,608);ctx.clip();ctx.drawImage(renderer.domElement,hero?260:230,hero?160:170,hero?1690:1700,hero?950:955);ctx.restore();
+ // Restrained Oceanides mark; no duplicated wordmark.
+ ctx.drawImage(logo,1745,45,112,112);
+ const title=s.title||({problem:'Treat wastewater on site.',overview:'One system. A clear flow.',ec:'Bring particles together.',settling:'Separate the solids.',filtration:'Filter what remains.',aop:'A further treatment stage.',verify:'Test the result.',care:'Plan for ongoing care.',economics:'Compare the total cost.',cta:'Start with your site.'}[s.id]);
+ const left=hero?94:88;
+ text(s.kicker||'OCEANIDES / WASTEWATER TREATMENT',left,75,20,dark?'#b9d0e8':C.blue,700,'Century Gothic');
+ const maxTitle=hero?650:1510;wrap(title,left,hero?186:170,maxTitle,hero?74:61,dark?'#ffffff':C.ink,700,'Century Gothic',hero?84:73);
+ if(hero)wrap(s.caption||'',left,s.id==='problem'?407:390,560,33,dark?'#dce7f4':C.gray,400,'Corbel',43);
+ else {
+  const support={ec:'Electrical current + metal electrodes',settling:'Solids separation + residuals handling',filtration:'Particle filtration stages',aop:'UV + ozone treatment',verify:'Sampling + laboratory verification',care:'Operation continues after installation.'};
+  wrap(support[s.id]||'',left,274,1450,30,C.gray,400,'Corbel',39);
+ }
+ if(s.id==='overview'){
+  const labels=[['Electrocoagulation',[-4.65,2.5,0]],['Solids separation',[-1.65,2.1,0]],['Filtration',[1.36,2.7,0]],['UV / ozone',[4.2,2.7,0]]];
+  labels.forEach(([v,p],i)=>{const[x,y]=projected(p);const px=260+x*1690/1920,py=160+y*950/1080;ctx.fillStyle=C.blue;ctx.beginPath();ctx.arc(px,py+12,5,0,Math.PI*2);ctx.fill();});
+ }
+ if(s.id==='care'){text('Power  /  consumables  /  sludge removal',95,845,35,C.blue,700);}
+ if(s.id==='verify'){text('Clarity is not proof of compliance.',95,842,35,C.blue,700);}
+ if(s.id==='economics'){text('Installation + operation + residual waste handling',95,845,34,C.blue,700);}
+ if(s.id==='cta'){text('0917 671 6383',95,727,40,'#ffffff',700);text('marketing@oceanidessepticandpest.com',95,778,27,'#dce7f4');}
+ // Readable narration excerpt, separate from all machine labels.
+ const bandY=918;ctx.fillStyle=dark?'#0A1F45':'#e8eef6';ctx.fillRect(0,bandY,1920,162);
+ ctx.fillStyle=C.blue;ctx.fillRect(88,942,5,50);
+ const preview=!(params.has('final'));text(preview?'VISUAL REVIEW / NARRATION PENDING':'OCEANIDES / PROCESS EXPLAINER',111,943,17,dark?'#c4d6ea':C.gray,700);
+ const timed=(s.captions||[]).find(c=>t>=c.start&&t<c.end);
+ const firstSentence=String(s.vo||s.caption||'').split(/(?<=[.!?])\s+/)[0];
+ const line=timed?.text||(hero?firstSentence:s.caption||'');
+ const bottom=wrap(line,111,984,1650,28,dark?'#ffffff':C.ink,400,'Corbel',34);
+ if(bottom>1021)throw new Error('Caption exceeds two-line safety area: '+s.id);
+ text('Illustrative process - final configuration and performance require site assessment and technical validation.',89,1050,19,dark?'#b9d0e8':C.gray);
+ ctx.fillStyle=dark?'#2d4d74':'#d4dfed';ctx.fillRect(0,1075,1920,5);ctx.fillStyle=dark?'#78a8dd':C.blue;ctx.fillRect(0,1075,1920*Math.min(1,t/scenes.at(-1).end),5);
+ window.currentScene=s.id;
+ return out.toDataURL('image/jpeg',.94).split(',')[1];
+};
+window.ready=true;await window.renderFrame(0);
+if(params.has('live')){const initial=performance.now();const tick=async()=>{await window.renderFrame(((performance.now()-initial)/1000)%scenes.at(-1).end);requestAnimationFrame(tick)};requestAnimationFrame(tick);}
+</script></html>

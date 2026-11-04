@@ -1,0 +1,128 @@
+[
+  {
+    "scene": "problem",
+    "start": 0.13333333333333333,
+    "end": 4.366666666666666,
+    "text": "Malaki ba ang regular na gastos ng facility mo sa paghakot ng wastewater?"
+  },
+  {
+    "scene": "overview",
+    "start": 4.373333333333334,
+    "end": 11.313333333333333,
+    "text": "Sa on-site treatment, ginagamot ang wastewater sa mismong site, bago ito ilabas sa tamang discharge"
+  },
+  {
+    "scene": "overview",
+    "start": 11.333333333333332,
+    "end": 14.866666666666667,
+    "text": "point. Ganito ang flow ng system na ipinapakita."
+  },
+  {
+    "scene": "ec",
+    "start": 14.939002267573695,
+    "end": 22.039002267573697,
+    "text": "Una, dinadala ng pump ang wastewater sa electrocoagulation stage. Gumagamit ito ng electrical current"
+  },
+  {
+    "scene": "ec",
+    "start": 22.059002267573696,
+    "end": 27.799002267573695,
+    "text": "at metal electrodes para magsama-sama ang maliliit na particles, na mas madaling ma-separate sa"
+  },
+  {
+    "scene": "ec",
+    "start": 27.819002267573694,
+    "end": 31.5,
+    "text": "tubig. Kasama rin sa supplier plan ang chemical dosing."
+  },
+  {
+    "scene": "settling",
+    "start": 31.605873015873016,
+    "end": 38.86587301587302,
+    "text": "Sunod ang settling. Dito, hinihiwalay ang naipong solids. Ang nakolektang sludge, kailangan pa ring"
+  },
+  {
+    "scene": "settling",
+    "start": 38.965873015873015,
+    "end": 40.96666666666667,
+    "text": "alisin at maayos na i-dispose."
+  },
+  {
+    "scene": "filtration",
+    "start": 41.04625850340136,
+    "end": 47.166666666666664,
+    "text": "Pagkatapos, dumadaan ang tubig sa filtration stages para masala ang natitirang particles."
+  },
+  {
+    "scene": "aop",
+    "start": 47.26496598639456,
+    "end": 54.36496598639456,
+    "text": "Sa advanced oxidation stage, gumagamit ng UV at ozone ayon sa supplier design, para sa dagdag na"
+  },
+  {
+    "scene": "aop",
+    "start": 54.38496598639456,
+    "end": 55.96666666666667,
+    "text": "treatment at disinfection."
+  },
+  {
+    "scene": "verify",
+    "start": 56.04437641723356,
+    "end": 62.18437641723356,
+    "text": "Pero hindi sapat na mukhang malinaw ang tubig. Laboratory testing ang basehan kung pasado ito sa"
+  },
+  {
+    "scene": "verify",
+    "start": 62.20437641723356,
+    "end": 64.1,
+    "text": "discharge requirements ng site."
+  },
+  {
+    "scene": "care",
+    "start": 64.19632653061224,
+    "end": 70.41632653061224,
+    "text": "Ano ang possible benefit? Kung bagay ang system sa site mo, puwedeng mabawasan ang wastewater na"
+  },
+  {
+    "scene": "care",
+    "start": 70.43632653061225,
+    "end": 77.05632653061224,
+    "text": "kailangang ihakot. Pero hindi automatic na mawawala ang siphoning. May maintenance, power,"
+  },
+  {
+    "scene": "care",
+    "start": 77.19632653061224,
+    "end": 79.63333333333334,
+    "text": "consumables at sludge removal pa rin."
+  },
+  {
+    "scene": "economics",
+    "start": 79.71503401360545,
+    "end": 86.57503401360545,
+    "text": "Kaya bago mag-recommend ng system, i-check muna ang actual flow, lab results, available space at"
+  },
+  {
+    "scene": "economics",
+    "start": 86.59503401360544,
+    "end": 88.7,
+    "text": "current operating costs."
+  },
+  {
+    "scene": "cta",
+    "start": 88.71503401360545,
+    "end": 94.49503401360545,
+    "text": "Oceanides ang main contact mo para i-coordinate ang site assessment at technical review. Magpa-assess"
+  },
+  {
+    "scene": "cta",
+    "start": 94.51503401360544,
+    "end": 101.05503401360545,
+    "text": "muna. I-compare ang installation at operating costs sa current setup mo, para may malinaw na basehan"
+  },
+  {
+    "scene": "cta",
+    "start": 101.07503401360545,
+    "end": 102.33503401360545,
+    "text": "bago mag-decide."
+  }
+]

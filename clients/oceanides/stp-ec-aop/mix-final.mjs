@@ -1,0 +1,12 @@
+import {spawn} from 'node:child_process';
+import {readFile,writeFile} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
+import {join} from 'node:path';
+import ffmpeg from 'ffmpeg-static';
+const dir=fileURLToPath(new URL('.',import.meta.url));
+const story=JSON.parse(await readFile(join(dir,'story-aira-tight.json'),'utf8'));
+const d=story.duration;
+const filter=`[1:a]loudnorm=I=-16:TP=-1.5:LRA=7,aformat=sample_rates=48000:channel_layouts=stereo,asplit=2[v][sc];[2:a]atrim=duration=${d},loudnorm=I=-28:TP=-3:LRA=7,aformat=sample_rates=48000:channel_layouts=stereo,afade=t=in:st=0:d=0.3,afade=t=out:st=${d-1}:d=1[m];[m][sc]sidechaincompress=threshold=0.03:ratio=5:attack=20:release=300[duck];[v][duck]amix=inputs=2:normalize=0:duration=first,alimiter=limit=0.84:level=false[out]`;
+const output=join(dir,'output/Oceanides-EC-AOP-Aira-Reference-Matched-1080p.mp4');
+await new Promise((ok,bad)=>{const p=spawn(ffmpeg,['-hide_banner','-nostdin','-y','-i',join(dir,'output/Oceanides-EC-AOP-Reference-Matched-Silent-1080p.mp4'),'-i',join(dir,'output/Oceanides-EC-AOP-Aira-Synced.wav'),'-i',join(dir,'../stp-explainer/output/Oceanides-STP-Flow-Original-150s.mp3'),'-filter_complex',filter,'-map','0:v:0','-map','[out]','-c:v','copy','-c:a','aac','-b:a','192k','-ar','48000','-ac','2','-t',String(d),'-movflags','+faststart',output],{stdio:['ignore','ignore','pipe']});let log='';p.stderr.on('data',b=>log+=b);p.on('error',bad);p.on('close',c=>c===0?ok():bad(Error(log.slice(-1800))));});
+console.log(output);
