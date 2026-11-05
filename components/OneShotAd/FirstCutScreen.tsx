@@ -107,6 +107,9 @@ export const FirstCutScreen: React.FC<{
             <span>Couldn&apos;t apply that edit style. Your previous cut is still selected. Try again.</span>
           </div>
         )}
+        {run.error?.startsWith('reshoot: ') && (
+          <p role="alert" className="mt-3 text-xs text-amber-200">{run.error.slice('reshoot: '.length)}</p>
+        )}
 
         {/* Scene film-strip — arrow affordances because a mouse can't obviously
             scroll a horizontal strip (Neil, 2026-08-01: "wala man lang scroller"). */}
@@ -151,8 +154,8 @@ export const FirstCutScreen: React.FC<{
               }
               setArmedIdx(null);
               // A "take" on a scene that already worked consumes the allowance; fixing a flagged
-              // scene is always free and never counts. The counter now lives on the run and is
-              // bumped + persisted in ProducerFlow.handleReshoot (survives remount + reload).
+              // scene is always free and never counts. The scene driver increments the
+              // saved counter only when it starts a new take.
               // TODO(billing): when One-Shot is metered, deduct 1 credit here when isPaid.
               onReshoot(sc.sceneIdx);
             };

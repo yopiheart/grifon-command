@@ -9,18 +9,10 @@ import handler from '../../api/producer/advance.js';
 const evidence = process.env.RECOVERY_EVIDENCE!;
 const restOrigin = process.env.RECOVERY_REST_URL!;
 const checks = ['Concurrent claimers', 'Committed record, lost response', 'Failed record, fresh recovery',
-  'Repeated stale recovery', 'Strict ten-minute threshold', 'Late old-attempt record',
+  'Repeated stale recovery', 'Aged recorded handle stays recoverable', 'Late old-attempt writes',
   'Wrong user and invalid auth', 'Completed clip reuse', 'Database outage'].map(name => ({ name, status: 'NOT RUN', detail: '' }));
-const risks: string[] = [];
 const timeline: Record<string, unknown>[] = [];
 let activeCase = '';
-let clock: number | undefined;
-const RealDate = Date;
-class ControlledDate extends RealDate {
-  constructor(value?: string | number) { super(value === undefined ? (clock ?? RealDate.now()) : value); }
-  static now() { return clock ?? RealDate.now(); }
-}
-globalThis.Date = ControlledDate as DateConstructor;
 const realFetch = globalThis.fetch;
 let handlerOrigin = '';
 let dropRecordReplyFor: string | null = null;
@@ -79,7 +71,7 @@ async function advance(runId: string, action: string, fields: Record<string, unk
   return result;
 }
 async function ok(runId: string, action: string, fields: Record<string, unknown> = {}) {
-  const response = await advance(runId, action, fields);
+  const response = await advance(runId, action, action === 'claim' ? { protocol: 2, ...fields } : fields);
   assert.equal(response.status, 200, `${action}: ${JSON.stringify(response.body)}`);
   return response.body;
 }
@@ -116,7 +108,7 @@ async function age(runId: string) { await sql(`update public.producer_scenes set
 async function scenario(index: number, run: () => Promise<string>) {
   activeCase = checks[index].name;
   try { checks[index].detail = await run(); checks[index].status = 'PASS'; }
-  catch (error) { checks[index].status = 'FAIL'; checks[index].detail = String(error); throw error; }
+  catch (error) { checks[index].status = 'FAIL'; checks[index].detail = String(error); }
 }
 
 let failure;
@@ -130,6 +122,10 @@ try {
     grant select on public.harness_fault to service_role;`);
   await scenario(0, async () => {
     const id = 'race-claim'; await seed(id);
+    const legacy = await advance(id, 'claim');
+    assert.equal(legacy.status, 409);
+    assert.equal(legacy.body.error, 'producer_refresh_required');
+    assert.equal((await row(id)).attempts, 0, 'Old browser must stop before it can submit');
     // Hold the row until both real PostgREST SQL requests are waiting on locks.
     const holder = spawn(process.env.RECOVERY_PSQL!, ['-X', '-q', '-A', '-t', '-w', '-v', 'ON_ERROR_STOP=1'], { env: process.env, windowsHide: true, stdio: ['pipe', 'pipe', 'pipe'] });
     let holderOutput = ''; holder.stdout.on('data', b => { holderOutput += b; });
@@ -167,64 +163,88 @@ try {
   await scenario(1, async () => {
     const id = 'lost-reply'; await seed(id); const handle = await claimAndSubmit(id);
     dropRecordReplyFor = id;
-    await assert.rejects(advance(id, 'record', { jobHandle: handle }), /fetch failed/);
+    await assert.rejects(advance(id, 'record', { attempt: 1, jobHandle: handle }), /fetch failed/);
     assert.equal(droppedReplies, 1, 'Expected precisely the injected socket drop');
     assert.deepEqual((await row(id)).job_handle, handle);
     const resumed = await ok(id, 'claim'); assert.equal(resumed.claimed, false);
     assert.deepEqual(resumed.scene.job_handle, handle);
-    await ok(id, 'complete', { videoUrl: poll(resumed.scene.job_handle) });
+    assert.equal((await ok(id, 'complete', { attempt: resumed.scene.attempts, videoUrl: poll(resumed.scene.job_handle) })).changed, true);
     assert.equal((await row(id)).status, 'done'); assert.equal(count(id), 1);
     return 'HTTP socket destroyed after commit; client fetch rejects; scripted resume polls durable handle without submission.';
   });
   await scenario(2, async () => {
     const id = 'fresh-failure'; await seed(id); const handle = await claimAndSubmit(id);
     await failRecords(true);
-    const failed = await advance(id, 'record', { jobHandle: handle });
-    await failRecords(false);
+    const failed = await advance(id, 'record', { attempt: 1, jobHandle: handle }).finally(() => failRecords(false));
     assert.equal(failed.status, 500); assert.equal(failed.body.error, 'write_failed');
     assert.equal((await row(id)).job_handle, null);
-    assert.equal((await ok(id, 'requeue')).changed, false);
+    assert.equal((await ok(id, 'requeue', { attempt: 1 })).changed, false);
     assert.equal((await ok(id, 'claim')).claimed, false); assert.equal(count(id), 1);
     return 'Actual trigger exception rolls back the write; fresh recovery cannot claim again.';
   });
   await scenario(3, async () => {
-    const id = 'repeat-stale'; await seed(id); await failRecords(true);
-    for (let attempt = 0; attempt < 3; attempt++) {
-      if (attempt) { await age(id); assert.equal((await ok(id, 'requeue')).changed, true); }
-      const handle = await claimAndSubmit(id);
-      assert.equal((await advance(id, 'record', { jobHandle: handle })).status, 500);
-      assert.equal((await row(id)).job_handle, null);
-    }
-    await failRecords(false);
-    assert.equal(count(id), 3); assert.equal((await row(id)).attempts, 3);
-    risks.push('Repeated failed handle writes plus stale recovery accepted three fake-provider jobs for one scene. No provider-spend deduplication is established.');
-    return 'KNOWN RISK reproduced: three accepted jobs across the original attempt and two stale recoveries.';
+    const id = 'repeat-stale'; await seed(id);
+    const handle = await claimAndSubmit(id);
+    const requeues = [];
+    let attempt = 1;
+    await failRecords(true);
+    try {
+      assert.equal((await advance(id, 'record', { attempt, jobHandle: handle })).status, 500);
+      for (let retry = 0; retry < 2; retry++) {
+        await age(id);
+        requeues.push((await ok(id, 'requeue', { attempt })).changed);
+        const claim = await ok(id, 'claim');
+        if (claim.claimed) {
+          attempt = claim.scene.attempts;
+          assert.equal((await advance(id, 'record', { attempt, jobHandle: acceptJob(id) })).status, 500);
+        }
+      }
+    } finally { await failRecords(false); }
+    const saved = await row(id);
+    assert.equal(count(id), 1, 'Repeated stale recovery accepted another fake provider job');
+    assert.deepEqual(requeues, [false, false]);
+    assert.equal(saved.attempts, 1); assert.equal(saved.status, 'submitting'); assert.equal(saved.job_handle, null);
+    return 'Aged handle-less claims stayed parked through two retries; one fake provider submission total.';
   });
   await scenario(4, async () => {
-    const id = 'threshold'; await seed(id); clock = RealDate.parse('2030-01-01T00:10:00.000Z');
-    try {
-      for (const [stamp, expected] of [['2030-01-01T00:00:00.001Z', false], ['2030-01-01T00:00:00.000Z', false], ['2029-12-31T23:59:59.999Z', true]] as const) {
-        await sql(`update public.producer_scenes set status='submitting',job_handle=null,updated_at=${literal(stamp)} where run_id=${literal(id)};`);
-        assert.equal((await ok(id, 'requeue')).changed, expected, stamp);
-        const saved = await row(id); assert.equal(saved.status, expected ? 'pending' : 'submitting');
-      }
-    } finally { clock = undefined; }
-    return 'Real PostgREST timestamp predicate rejects 9:59.999 and exactly 10:00; accepts 10:00.001.';
+    const id = 'aged-handle'; await seed(id); const handle = await claimAndSubmit(id);
+    assert.equal((await ok(id, 'record', { attempt: 1, jobHandle: handle })).changed, true);
+    await age(id);
+    assert.equal((await ok(id, 'requeue', { attempt: 1 })).changed, false);
+    const resumed = await ok(id, 'claim');
+    assert.equal(resumed.claimed, false);
+    assert.deepEqual(resumed.scene.job_handle, handle);
+    assert.equal((await ok(id, 'complete', { attempt: resumed.scene.attempts, videoUrl: poll(resumed.scene.job_handle) })).changed, true);
+    assert.equal((await row(id)).status, 'done'); assert.equal(count(id), 1);
+    return 'An aged rendering row retained its saved handle and completed by polling it.';
   });
   await scenario(5, async () => {
     const id = 'late-record'; await seed(id); const oldHandle = await claimAndSubmit(id);
-    await age(id); assert.equal((await ok(id, 'requeue')).changed, true);
+    assert.equal((await ok(id, 'record', { attempt: 1, jobHandle: oldHandle })).changed, true);
+    assert.equal((await ok(id, 'complete', { attempt: 1, videoUrl: poll(oldHandle) })).changed, true);
+    assert.equal((await ok(id, 'requeue', { attempt: 1 })).changed, true);
     const newHandle = await claimAndSubmit(id);
-    assert.equal((await ok(id, 'record', { jobHandle: oldHandle })).changed, true);
-    assert.equal((await ok(id, 'record', { jobHandle: newHandle })).changed, false);
-    assert.deepEqual((await row(id)).job_handle, oldHandle); assert.equal(count(id), 2);
-    risks.push('After stale requeue and a new claim, an older attempt can record its handle first; the new attempt then receives changed:false. Attempt ownership is not enforced by the record endpoint.');
-    return 'KNOWN RISK reproduced: old handle recorded into the new claim; newer handle refused.';
+    assert.equal((await row(id)).attempts, 2);
+    const lateRecord = await ok(id, 'record', { attempt: 1, jobHandle: oldHandle });
+    const currentRecord = await ok(id, 'record', { attempt: 2, jobHandle: newHandle });
+    assert.equal(lateRecord.changed, false, 'The old attempt recorded its handle into the newer claim');
+    assert.equal(currentRecord.changed, true);
+    const rendering = await row(id);
+    assert.deepEqual(rendering.job_handle, newHandle);
+    assert.equal((await ok(id, 'complete', { attempt: 1, videoUrl: poll(oldHandle) })).changed, false);
+    assert.equal((await ok(id, 'flag', { attempt: 1, reason: 'old failure' })).changed, false);
+    assert.equal((await ok(id, 'flag', { reason: 'image_check: late image verdict' })).changed, false);
+    assert.deepEqual(await row(id), rendering);
+    assert.equal((await ok(id, 'complete', { attempt: 2, videoUrl: poll(newHandle) })).changed, true);
+    const completed = await row(id);
+    assert.equal((await ok(id, 'requeue', { attempt: 1 })).changed, false);
+    assert.deepEqual(await row(id), completed); assert.equal(count(id), 2);
+    return 'After an explicit reshoot of a finished clip, late writes from the old attempt and an unfenced image flag left the new handle and output intact.';
   });
   await scenario(6, async () => {
     const id = 'ownership'; await seed(id); const before = await row(id);
     for (const action of ['claim', 'requeue', 'record', 'complete']) {
-      const fields = action === 'record' ? { jobHandle: { id: 'unowned' } } : action === 'complete' ? { videoUrl: 'https://media.invalid/unowned.mp4' } : {};
+      const fields = action === 'record' ? { attempt: 1, jobHandle: { id: 'unowned' } } : action === 'complete' ? { attempt: 1, videoUrl: 'https://media.invalid/unowned.mp4' } : { attempt: 1 };
       assert.equal((await advance(id, action, fields, 'stranger')).status, 403);
     }
     assert.equal((await advance(id, 'claim', {}, '')).status, 401);
@@ -234,8 +254,9 @@ try {
   });
   await scenario(7, async () => {
     const id = 'finished'; await seed(id); const handle = await claimAndSubmit(id);
-    await ok(id, 'record', { jobHandle: handle }); const url = poll(handle);
-    await ok(id, 'complete', { videoUrl: url });
+    assert.equal((await ok(id, 'record', { attempt: 1, jobHandle: handle })).changed, true);
+    const url = poll(handle);
+    assert.equal((await ok(id, 'complete', { attempt: 1, videoUrl: url })).changed, true);
     const resumed = await ok(id, 'claim'); assert.equal(resumed.claimed, false);
     assert.equal(resumed.scene.video_url, url); assert.equal(count(id), 1);
     assert.equal((await row(id)).status, 'done');
@@ -245,16 +266,17 @@ try {
     const id = 'db-outage'; await seed(id); const handle = await claimAndSubmit(id);
     assert.equal((await row(id)).job_handle, null);
     await command(process.env.RECOVERY_PG_CTL!, ['-D', process.env.RECOVERY_CLUSTER!, '-m', 'immediate', '-w', '-t', '10', 'stop']);
-    const response = await advance(id, 'record', { jobHandle: handle });
+    const response = await advance(id, 'record', { attempt: 1, jobHandle: handle });
     assert.equal(response.status, 500); assert.equal(response.body.error, 'write_failed');
     return 'Owned PostgreSQL server stopped; handler returns write_failed instead of reporting a durable handle.';
   });
 } catch (error) { failure = error; }
 finally {
   server.closeAllConnections(); await new Promise<void>(accept => server.close(() => accept()));
-  globalThis.fetch = realFetch; globalThis.Date = RealDate;
-  await writeFile(join(evidence, 'report.json'), JSON.stringify({ checks, risks, timeline, acceptedJobs: jobs, polls,
+  globalThis.fetch = realFetch;
+  await writeFile(join(evidence, 'report.json'), JSON.stringify({ checks, timeline, acceptedJobs: jobs, polls,
     limitations: ['Real Supabase Auth, hosted deployment, RLS rollout and production rate limiting (synthetic auth and allowed rate-limit seam).',
       'Actual provider billing/idempotency, customer-credit metering, browser recovery, full producer orchestration and customer approval gates.'] }, null, 2));
 }
-if (failure) { console.error(failure); process.exitCode = 1; }
+if (failure) console.error(failure);
+if (failure || checks.some(check => check.status !== 'PASS')) process.exitCode = 1;

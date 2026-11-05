@@ -241,6 +241,7 @@ interface KlingSubmitBody {
   aspect_ratio: string;
   cfg_scale?: number;
   finishedAdId?: string;     // per-finished-ad metering id (Slice 3)
+  producerScene?: { sceneIdx: number; attempt: number };
 }
 
 interface KlingOperation {
@@ -579,6 +580,7 @@ interface GenerateVideoOpts {
    * server meters ONE video_ad credit per finishedAdId (Slice 3) — all scenes
    * of one Render All share it, so the ad costs one credit, not one-per-scene. */
   finishedAdId?: string;
+  producerScene?: { sceneIdx: number; attempt: number };
 }
 
 const parseDataUrl = (dataUrl: string): { imageBytes: string; mimeType: string } => {
@@ -703,6 +705,7 @@ export const submitVideo = async (
       aspect_ratio: config.aspectRatio,
       cfg_scale: 0.5,
       finishedAdId: opts.finishedAdId,
+      producerScene: opts.producerScene,
     });
     initialOperation = klingResult.operation;
   } else {

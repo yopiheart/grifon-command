@@ -11,18 +11,17 @@ import { fileURLToPath } from 'node:url';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
 if (args.length === 1 && args[0] === '--help') {
-  console.log(`Usage: npm run verify:provider-recovery [-- --fail-on-known-risk]
+  console.log(`Usage: npm run verify:provider-recovery
 Requires Node 24, PG_BIN_DIR (initdb, pg_ctl, psql) and POSTGREST_PATH.
 Creates a fresh local cluster, uses unchanged scene SQL and the actual advance
 handler through Supabase JS and PostgREST, then removes only its own cluster.
 No .env files, application credentials, paid providers or external URLs.
 Reports live under .tmp/provider-recovery/<run>/report.{json,md}.
-Normal mode characterizes known risks; --fail-on-known-risk exits 2 when risks
-reproduce. This is a negative control for this baseline, not a future safety gate.
+Any failed or unexecuted scenario makes the command exit nonzero.
 This is a handler/persistence harness, not browser, real-auth or provider proof.`);
   process.exit(0);
 }
-assert.ok(args.length === 0 || (args.length === 1 && args[0] === '--fail-on-known-risk'), 'Unknown arguments; use --help');
+assert.ok(args.length === 0, 'Unknown arguments; use --help');
 assert.ok(process.env.PG_BIN_DIR, 'PG_BIN_DIR is required');
 assert.ok(process.env.POSTGREST_PATH, 'POSTGREST_PATH is required');
 const suffix = process.platform === 'win32' ? '.exe' : '';
@@ -85,6 +84,7 @@ let rest;
 let restExited;
 let failure;
 let result;
+let metadata;
 try {
   await command(pg.initdb, ['-D', data, '-U', 'postgres', '--auth=trust', '--no-locale', '--encoding=UTF8', '--no-sync'], {}, 60_000);
   // Disable Unix-domain sockets as well; this cluster listens only on IPv4 loopback.
@@ -114,7 +114,7 @@ try {
   let ready = false;
   for (let attempt = 0; attempt < 60; attempt++) {
     if (restError) throw restError;
-    if (rest.exitCode !== null) throw new Error(`PostgREST exited: ${restLog.join('')}`);
+    if (rest.exitCode !== null) throw new Error(`PostgREST exited ${rest.exitCode}: ${restLog.join('')}`);
     try { ready = (await fetch(`${restUrl}/producer_scenes?limit=0`, { signal: AbortSignal.timeout(500), redirect: 'error' })).ok; } catch { /* bounded startup */ }
     if (ready) break;
     await new Promise(accept => setTimeout(accept, 100));
@@ -131,7 +131,7 @@ try {
       builder.onResolve({ filter: /\/(_lib\/)?rateLimit\.js$/ }, () => ({ path: join(root, 'tests/provider-recovery/serverSeams.ts') }));
     } }],
   });
-  const metadata = { revision: await command('git', ['rev-parse', 'HEAD']), sourceHashes, postgres: identity.version,
+  metadata = { revision: await command('git', ['rev-parse', 'HEAD']), sourceHashes, postgres: identity.version,
     postgrest: await command(postgrest, ['--version']) };
   await writeFile(join(evidence, 'source.json'), JSON.stringify(metadata, null, 2));
   await command(process.execPath, [bundle], {
@@ -141,7 +141,6 @@ try {
   result = JSON.parse(await readFile(join(evidence, 'report.json'), 'utf8'));
   assert.equal(result.checks.length, 9, 'Incomplete scenario coverage');
   assert.ok(result.checks.every(check => check.status === 'PASS'), 'A scenario failed or did not run');
-  result.source = metadata;
 } catch (error) {
   failure = error;
   try { result = JSON.parse(await readFile(join(evidence, 'report.json'), 'utf8')); } catch { /* setup failure */ }
@@ -173,21 +172,19 @@ try {
   } catch (error) { failure ??= error; }
 }
 result ??= { checks: ['Concurrent claimers', 'Committed record, lost response', 'Failed record, fresh recovery',
-  'Repeated stale recovery', 'Strict ten-minute threshold', 'Late old-attempt record',
-  'Wrong user and invalid auth', 'Completed clip reuse', 'Database outage'].map(name => ({ name, status: 'NOT RUN', detail: 'Setup failed before execution.' })), risks: [], limitations: [] };
+  'Repeated stale recovery', 'Aged recorded handle stays recoverable', 'Late old-attempt writes',
+  'Wrong user and invalid auth', 'Completed clip reuse', 'Database outage'].map(name => ({ name, status: 'NOT RUN', detail: 'Setup failed before execution.' })), limitations: [] };
 result.status = failure ? 'FAIL' : 'PASS';
-result.mode = args.includes('--fail-on-known-risk') ? 'negative-control' : 'characterization';
-result.exitCode = failure ? 1 : (result.mode === 'negative-control' && result.risks.length ? 2 : 0);
-result.safety = result.risks.length ? 'KNOWN RISK' : (failure ? 'NOT ASSESSED' : 'NO RISK OBSERVED');
+result.exitCode = failure ? 1 : 0;
 result.cleanup = !stopped ? `PostgreSQL stop unconfirmed; cluster retained at ${data}`
   : failure ? 'See failure; owned resources cleanup attempted' : 'Owned PostgreSQL cluster removed; PostgREST stopped';
-result.source ??= { sourceHashes };
+result.source = metadata ?? { sourceHashes };
 if (failure) result.error = failure.message;
 await writeFile(join(evidence, 'report.json'), JSON.stringify(result, null, 2));
-const lines = [`# Provider recovery: ${result.status}`, '', `Mode: ${result.mode}; exit code: ${result.exitCode}.`, '', `Safety: **${result.safety}**. A passing characterization is not a safety certification.`, '',
+const lines = [`# Provider recovery: ${result.status}`, '', `Exit code: ${result.exitCode}.`, '',
   `Source revision: ${result.source.revision ?? 'not established'}; per-file SHA-256 identities are in report.json.`, '',
   ...result.checks.map(check => `- ${check.status}: ${check.name}. ${check.detail ?? ''}`), '',
-  ...result.risks.map(risk => `- KNOWN RISK: ${risk}`), '', ...result.limitations.map(line => `- NOT RUN: ${line}`), '', result.cleanup];
+  '', ...result.limitations.map(line => `- NOT RUN: ${line}`), '', result.cleanup];
 if (failure) lines.push('', `Failure: ${failure.message}`);
 await writeFile(join(evidence, 'report.md'), lines.join('\n') + '\n');
 console.log(lines.join('\n'));

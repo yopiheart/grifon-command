@@ -7,7 +7,7 @@ import { getSupabase } from './supabaseClient';
 //
 // This is the durable half of Model A: the client drives the stage sequence, but every
 // transition is checkpointed here so a closed tab / lost connection / different device
-// resumes to true state, and the atomic 'claim' guarantees each render fires exactly once.
+// resumes to durable state. Atomic claims and attempt checks guard scene transitions.
 
 export type ProductionRunStatus = 'running' | 'review' | 'done' | 'error';
 export type ProductionMode = 'oneshot' | 'concierge';
@@ -256,17 +256,23 @@ export const claimScene = (
   runId: string,
   sceneIdx: number
 ): Promise<{ claimed: boolean; scene: ProductionSceneRow | null }> =>
-  post('/api/producer/advance', { action: 'claim', runId, sceneIdx });
+  post('/api/producer/advance', { action: 'claim', runId, sceneIdx, protocol: 2 });
+
+export const readScene = (runId: string, sceneIdx: number): Promise<{ scene: ProductionSceneRow | null }> =>
+  post('/api/producer/advance', { action: 'scene', runId, sceneIdx });
+
+export const lookupKlingScene = (runId: string, sceneIdx: number, attempt: number): Promise<{ operation: { task_id: string } | null }> =>
+  post('/api/producer/advance', { action: 'lookup_kling', runId, sceneIdx, attempt });
 
 /** A scene write's outcome. `changed:false` = the guarded update matched no row (a lost race);
  * the caller re-reads scene state instead of proceeding blindly. */
 export interface SceneWriteResult { changed: boolean; }
 
-const toWriteResult = (d: any): SceneWriteResult => ({ changed: d?.changed !== false });
+const toWriteResult = (d: any): SceneWriteResult => ({ changed: d?.changed === true });
 
 /** Store the provider job handle after a winning claim submits (submitting → rendering). */
-export const recordScene = (runId: string, sceneIdx: number, jobHandle: Record<string, unknown>): Promise<SceneWriteResult> =>
-  post('/api/producer/advance', { action: 'record', runId, sceneIdx, jobHandle }).then(toWriteResult);
+export const recordScene = (runId: string, sceneIdx: number, jobHandle: Record<string, unknown>, attempt: number): Promise<SceneWriteResult> =>
+  post('/api/producer/advance', { action: 'record', runId, sceneIdx, jobHandle, attempt }).then(toWriteResult);
 
 /** Persist a scene's image(s) on its own row (upsert; image columns only). Written once per
  * scene so the multi-MB base64 stays out of the run-header checkpoint — resume rehydrates
@@ -302,13 +308,13 @@ export const recordAvatar = (runId: string, avatarUrl: string): Promise<SceneWri
   post('/api/producer/advance', { action: 'record_avatar', runId, avatarUrl }).then(toWriteResult);
 
 /** Mark a scene done with its rendered urls (rendering → done). */
-export const completeScene = (runId: string, sceneIdx: number, videoUrl: string, audioUrl?: string): Promise<SceneWriteResult> =>
-  post('/api/producer/advance', { action: 'complete', runId, sceneIdx, videoUrl, audioUrl }).then(toWriteResult);
+export const completeScene = (runId: string, sceneIdx: number, videoUrl: string, attempt: number): Promise<SceneWriteResult> =>
+  post('/api/producer/advance', { action: 'complete', runId, sceneIdx, videoUrl, attempt }).then(toWriteResult);
 
 /** Flag a scene whose generation failed after retries (surfaced at a reshoot gate). */
-export const flagScene = (runId: string, sceneIdx: number, reason?: string): Promise<SceneWriteResult> =>
-  post('/api/producer/advance', { action: 'flag', runId, sceneIdx, reason }).then(toWriteResult);
+export const flagScene = (runId: string, sceneIdx: number, reason?: string, attempt?: number): Promise<SceneWriteResult> =>
+  post('/api/producer/advance', { action: 'flag', runId, sceneIdx, reason, attempt }).then(toWriteResult);
 
 /** Reshoot: return a flagged/done scene to pending so the claim path re-runs it once. */
-export const requeueScene = (runId: string, sceneIdx: number): Promise<SceneWriteResult> =>
-  post('/api/producer/advance', { action: 'requeue', runId, sceneIdx }).then(toWriteResult);
+export const requeueScene = (runId: string, sceneIdx: number, attempt: number): Promise<SceneWriteResult> =>
+  post('/api/producer/advance', { action: 'requeue', runId, sceneIdx, attempt }).then(toWriteResult);

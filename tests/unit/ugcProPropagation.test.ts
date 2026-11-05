@@ -57,7 +57,9 @@ function makeFakeStore(): ProducerRunStore {
   const noHandle = { changed: true };
   return {
     seedScenes: vi.fn(async () => {}),
-    claimScene: vi.fn(async () => ({ claimed: true })),
+    claimScene: vi.fn(async () => ({ claimed: true, status: 'submitting' as const, attempt: 1 })),
+    readScene: vi.fn(async () => null),
+    lookupKlingScene: vi.fn(async () => null),
     recordScene: vi.fn(async () => noHandle),
     recordSceneImage: vi.fn(async () => noHandle),
     completeScene: vi.fn(async () => noHandle),

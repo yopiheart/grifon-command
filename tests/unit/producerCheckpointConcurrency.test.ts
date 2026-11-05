@@ -178,10 +178,12 @@ function makeFakeStore() {
       if (!s) return { claimed: false };
       if (s.status === 'pending') {
         s.status = 'submitting';
-        return { claimed: true };
+        return { claimed: true, status: 'submitting' as const, attempt: 1 };
       }
-      return { claimed: false, status: s.status as any, videoUrl: s.videoUrl, audioUrl: s.audioUrl, jobHandle: s.jobHandle };
+      return { claimed: false, status: s.status as any, attempt: 1, videoUrl: s.videoUrl, jobHandle: s.jobHandle };
     }),
+    readScene: vi.fn(async () => null),
+    lookupKlingScene: vi.fn(async () => null),
     recordScene: vi.fn(async (_r: string, i: number, handle: VideoJobHandle) => {
       const s = rows.get(i);
       if (s && s.status === 'submitting') {
@@ -196,12 +198,11 @@ function makeFakeStore() {
       thumbnailColumn.value = url; // stands in for producer_runs.thumbnail_url
       return { changed: true };
     }),
-    completeScene: vi.fn(async (_r: string, i: number, videoUrl: string, audioUrl?: string) => {
+    completeScene: vi.fn(async (_r: string, i: number, videoUrl: string) => {
       const s = rows.get(i);
       if (s && (s.status === 'submitting' || s.status === 'rendering')) {
         s.status = 'done';
         s.videoUrl = videoUrl;
-        if (audioUrl !== undefined) s.audioUrl = audioUrl;
         return { changed: true };
       }
       return { changed: false };

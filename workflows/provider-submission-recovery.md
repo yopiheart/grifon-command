@@ -1,9 +1,38 @@
-# Provider-submission recovery: investigation
+# Provider-submission recovery
 
-Source inspected: `7c422cd7` (2026-11-05). This is a bounded architecture
-investigation, not a production incident report or a shipped recovery fix.
+## Recovery policy
 
-## Finding and boundary
+One-Shot claims a scene, submits the render, and records the job ID before
+polling. The claim increments the existing `producer_scenes.attempts` counter.
+Record, complete, flag and requeue compare that attempt with the current row.
+Completion requires a recorded render. Only terminal rows can be requeued.
+An unfinished scene never becomes eligible for resubmission merely by aging.
+
+| Saved state | What Retry does |
+| --- | --- |
+| Done with a saved clip | Reuse the clip. |
+| Rendering with a job ID | Poll the saved job. A polling transport error preserves the handle. |
+| Submitting without a Kling job ID | Look up the current attempt by its custom ID. Save and poll only an exact match. |
+| Submitting without a Veo job ID or a matching Kling task | Pause the scene and report that the render could not be confirmed. The run retains completed sibling clips. |
+| Terminal provider failure | Flag the scene for review. An explicit First Cut reshoot can requeue it. |
+
+Kling's legacy image-to-video API documents a custom `external_task_id` and a
+lookup by that ID. Grifon derives it server-side from the authenticated user,
+run, scene and attempt, and verifies ownership and the current scene state
+before the lookup. This is a lookup key. Absence of a match cannot establish
+that a paid POST never arrived. The Gemini Veo docs describe recovery by a
+provider-issued operation name. A handle-less Veo attempt needs support if it
+cannot be confirmed. An interruption between claim and the actual POST can also
+leave a paused attempt. This is the availability tradeoff for avoiding a second
+submission with an unknown outcome.
+
+- [Kling legacy image-to-video API](https://kling.ai/document-api/api/video/3-0-omni/image-to-video/legacy)
+- [Veo asynchronous operations](https://ai.google.dev/gemini-api/docs/veo#handling-asynchronous-operations)
+
+## Historical failure reproduced before the fix
+
+Source inspected: `7c422cd7` (2026-11-05). The following describes the baseline
+investigation and its isolated evidence, rather than observed production charges.
 
 Producer claims a scene, submits a paid provider job, saves its handle, polls it,
 then saves the result. A provider can accept a job before its handle is durably
@@ -21,10 +50,8 @@ deduplicate upstream submissions.
 | Provider proxy | `api/gemini/video.ts` and `api/kling/video.ts`: meter the request, strip `requestId` and `finishedAdId`, then call the upstream. These fields are not provider idempotency keys in these paths. |
 | Customer credit | `api/_lib/quota.ts`, `consumeAdOnce`, and `supabase/finished_ad_meter.sql`: transactional receipt/debit, shared by video and Omni meters; unavailable or malformed RPC results deny the request. |
 
-The API and SQL still contain comments promising exactly-once/no-double-spend.
-Those comments describe the claim exclusion too broadly. The stale recovery code
-and executable characterization below establish the weaker guarantee. Production
-deployment identity and actual provider billing were not inspected.
+The original API and SQL comments promised exactly-once behavior. A database
+claim does not make the paid provider POST and the handle write atomic.
 
 ## Existing empirical evidence
 
@@ -62,33 +89,25 @@ PostgreSQL 17.6 and PostgREST 16.5. Set paths to already installed tools:
 $env:PG_BIN_DIR = 'C:/path/to/pgsql/bin'
 $env:POSTGREST_PATH = 'C:/path/to/postgrest.exe'
 npm.cmd run verify:provider-recovery
-node tools/verify-provider-recovery.mjs --fail-on-known-risk
 ```
 
-The second command is a **negative control**, expected to exit **2** when the
-current unsafe sequences reproduce. It is not a future-proof safety gate: these
-tests intentionally characterize the current behavior. A protocol fix must update
-the relevant expectations and first demonstrate its prevention test failing the
-original defect. Unknown flags fail; there is no live mode or connection URL.
-The npm script also accepts this flag after `--`, but npm may normalize exit 2
-to exit 1; use direct Node invocation when checking the exact negative-control code.
+Exit 0 requires all nine assertions to pass. A setup or assertion failure exits
+1. Unexecuted cases remain NOT RUN. The old characterization-only switch was
+retired when the assertions became a regression gate. The runner has no live
+mode or connection URL.
 
 Every run prints its unique `.tmp/provider-recovery/<run>/` evidence directory:
 
-- `report.json`: scenario PASS/FAIL/NOT RUN, separate KNOWN RISK findings, actual
-  request/response and row timelines, accepted fake jobs, source hashes, revision,
-  database/PostgREST versions, mode, exit code and cleanup outcome.
+- `report.json`: scenario PASS/FAIL/NOT RUN, actual request/response and row
+  timelines, accepted fake jobs, source hashes, revision, database/PostgREST
+  versions, exit code and cleanup outcome.
 - `report.md`: readable verdict and coverage limits.
 - `source.json`: inspected source identity; `postgres.log`: owned database log.
 
-A normal **PASS / KNOWN RISK / exit 0** means the characterization worked. It
-does not mean recovery is safe. A setup or assertion failure exits **1**, and
-unexecuted scenarios remain **NOT RUN**. Missing scenario coverage cannot pass.
-
 The nine cases cover two SQL claimers deliberately blocked behind a held row lock;
 a real HTTP socket drop after record commit; a trigger-induced record rollback
-followed by fresh recovery; repeated stale recovery; timestamps one millisecond
-below/at/above the ten-minute boundary; a late old-attempt record; ownership and
+followed by fresh recovery; repeated stale recovery; aged known-handle reuse;
+late old-attempt writes; ownership and
 synthetic invalid-token rejection; completed-output retrieval; and an actual
 owned PostgreSQL shutdown. The handler's filters and SQL predicates are not
 reimplemented in a fake query builder.
@@ -116,36 +135,24 @@ cluster is retained and the run fails. Local fixture authentication is trust-onl
 do not run on a shared untrusted host. `initdb --no-sync` accelerates creation of
 the disposable cluster; no machine-power-loss durability claim is made.
 
-## Engineering scope established by this harness
-
-The harness above implements the following boundary checks. It does not change
-runtime recovery behavior. Compare persisted rows, accepted fake jobs and HTTP
-outcomes before selecting a fix.
+## Safety and progress checks
 
 | Sequence | Required observation |
 | --- | --- |
 | Two claimers for one pending scene | One winning claim; no sibling submission. |
 | Record commits but its reply is lost | Resume polls the saved handle; accepted-job count stays one. |
 | Record fails before commit; claim still fresh | Resume stays recoverable and does not submit. |
-| Repeated failed records, each followed by stale recovery | Reproduce today's repeated submissions. A future prevention check must fail this original behavior. |
-| Ten-minute threshold | Control time around the actual strict-less-than timestamp predicate; do not substitute a stale boolean. |
-| Late record after requeue/reclaim | Older attempt records first into the reclaimed submitting state; newer record is rejected. Demonstrated by the isolated harness, not a production incident claim. |
+| Record failed and Retry happens repeatedly after the old age threshold | The same attempt stays submitting and accepted-job count stays one. |
+| Aged rendering row with saved handle | Requeue is denied. Poll the saved job. |
+| Late write after terminal requeue and new claim | Old record, complete, flag and requeue cannot affect the new attempt. The new attempt can complete. |
 | Wrong user and database outage | Ownership rejects the caller; persistence failure cannot be presented as a durable handle. |
 
-Before choosing a runtime fix, define the safety/availability decision for a job
-whose submission cannot be confirmed. A server submission ledger or outbox can
-track intent but cannot alone close the provider-acceptance/receipt gap. Verify
-provider support for idempotency or reconciliation against current documentation;
-the absence of a key in this code does not prove the upstream lacks that feature.
-If reconciliation is unavailable, blocking an uncertain submission trades automatic
-recovery for cost safety. Set an explicit policy rather than claiming exactly-once.
+The browser still drives production. The handler harness uses fake provider jobs.
+The companion fixture-backed browser test covers the UI and client protocol for
+One-Shot Retry. Hosted auth, real provider lookup, billing and media quality
+require separate evidence. Browser-local Companion receipts continue to apply.
 
-If changing the protocol, use a small state model with two drivers, a provider,
-durable scene state, attempt identity, lost replies and crashes. State safety and
-progress assumptions separately; derive failure sequences for implementation
-tests. No TLA+ toolchain or model is introduced by this investigation.
-
-Preserve known-handle polling, completed sibling clips, customer storyboard and
-First Cut approval gates, and atomic customer-credit metering. Browser-local
-Companion locks do not establish cross-device exclusion. Tuned generation settings
-and paid validation keep their existing approval requirements.
+Before a release, let in-flight renders finish and have existing tabs refresh.
+The new claim protocol rejects old tabs before they can start another attempt.
+A tab that submitted before the update needs to finish saving its job ID under
+the old protocol. The change reuses the existing SQL columns and claim function.

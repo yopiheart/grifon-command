@@ -1,8 +1,8 @@
 -- Server-side run-state for the unified One-Shot / Concierge producer flow.
 -- Backs two guarantees from the 2026-07-01 grill:
 --   1. Resume-to-true-state — survive tab-close / lost internet / different device.
---   2. Exactly-once / no-double-spend — the atomic per-scene claim below makes fan-out
---      submission fire each provider render exactly once, even under resume/retry/2-tabs.
+--   2. One winning claim per pending scene. Provider acceptance and handle persistence
+--      happen separately, so a claim cannot prove exactly-once upstream execution.
 -- Apply this in the Supabase SQL editor AFTER schema.sql. Idempotent: safe to re-run.
 
 -- ── Run header ────────────────────────────────────────────────────────────────
@@ -62,7 +62,7 @@ alter table public.producer_runs add column if not exists avatar_url text;
 -- ── Per-scene job queue ───────────────────────────────────────────────────────
 -- One row per (run, scene). A relational child table (not a jsonb array on the run)
 -- is deliberate: it makes the atomic claim below a single-row UPDATE, which is what
--- guarantees exactly-once fan-out submission under concurrent advance/poll callers.
+-- separates concurrent claimers. The attempts counter fences subsequent scene writes.
 create table if not exists public.producer_scenes (
   run_id        text not null references public.producer_runs(run_id) on delete cascade,
   scene_idx     int  not null,
@@ -101,12 +101,11 @@ create index if not exists producer_scenes_run_idx on public.producer_scenes(run
 alter table public.producer_runs   enable row level security;
 alter table public.producer_scenes enable row level security;
 
--- ── Atomic scene claim (the no-double-spend primitive) ────────────────────────
+-- ── Atomic scene claim ───────────────────────────────────────────────────────
 -- Flips exactly ONE pending scene to 'submitting' and reports whether THIS caller won.
 -- Returns false if the scene is already submitting/rendering/done/flagged — in which
--- case the caller must poll the existing job_handle instead of re-submitting. This is
--- what makes a resumed run, a retried request, or a second open tab a no-op rather
--- than a double provider charge. Single-statement UPDATE takes the row lock → atomic.
+-- case the caller reuses a completed clip, polls a saved handle, or checks the existing
+-- submission. Single-statement UPDATE takes the row lock and increments attempts.
 create or replace function public.producer_claim_scene(
   p_run_id text,
   p_scene_idx int
