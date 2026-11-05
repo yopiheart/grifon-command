@@ -126,6 +126,36 @@ for (const viewport of [{ width: 375, height: 667 }, { width: 1280, height: 900 
       expect(backend.unexpected).toEqual([]);
     });
 
+    test('Retry waits for a Kling match after a failed job ID write', async ({ page }) => {
+      if (viewport.width === 375) await page.setViewportSize({ width: 390, height: 844 });
+      const backend = await installRecoveryBackend(page, seededRun('video'));
+      backend.recordFails = true;
+      await openSeededProducer(page);
+
+      const paused = page.getByText(/Scene 1's render could not be confirmed/);
+      const retry = page.getByRole('button', { name: 'Retry', exact: true });
+      await expect(paused).toBeVisible();
+      expect(backend.submissions).toHaveLength(1);
+      expect(backend.submissions[0].producerScene).toEqual({ sceneIdx: 0, attempt: 1 });
+      expect(backend.scenes[0].job_handle).toBeNull();
+
+      await retry.click();
+      await expect.poll(() => backend.actions.filter(item => item.action === 'lookup_kling').length).toBe(1);
+      await expect(paused).toBeVisible();
+      await expect(retry).toBeEnabled();
+      expect(backend.submissions).toHaveLength(1);
+      expect(backend.finalStarts).toHaveLength(0);
+
+      backend.recordFails = false;
+      backend.lookupTaskId = 'recovery-video-1';
+      await retry.click();
+      await expect(page.getByRole('heading', { name: 'Your First Cut', exact: true })).toBeVisible({ timeout: 30_000 });
+      expect(backend.scenes[0].status).toBe('done');
+      expect(backend.polls[0].operation.task_id).toBe('recovery-video-1');
+      expect(backend.submissions).toHaveLength(1);
+      expect(backend.unexpected).toEqual([]);
+    });
+
     test('seeded final-render polling failure exposes Retry and preserves completed scenes', async ({ page }) => {
       const backend = await installRecoveryBackend(page, seededRun('final_render'));
       backend.finalPollFails = true;

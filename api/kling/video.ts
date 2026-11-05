@@ -1,12 +1,13 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { z } from 'zod';
-import { getUserFromAccessToken } from '../_lib/supabaseAdmin.js';
+import { getSupabaseAdmin, getUserFromAccessToken } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
 import { getUserPlan } from '../_lib/userPlan.js';
 import { meterVideoRequest } from '../_lib/quota.js';
 import { getKlingAccessToken, invalidateKlingAccessToken, KLING_API_BASE } from '../_lib/klingAuth.js';
 import { logVideoUsage } from '../_lib/modelCosts.js';
 import { getRunId } from '../_lib/requestId.js';
+import { producerKlingTaskId } from '../_lib/producerKlingTask.js';
 
 const Body = z.object({
   model_name: z.string().min(1),
@@ -21,6 +22,10 @@ const Body = z.object({
   requestId: z.string().optional(),
   // Per-finished-ad id — metered once per ad (Slice 3); shared Veo+Kling key.
   finishedAdId: z.string().optional(),
+  producerScene: z.object({
+    sceneIdx: z.number().int().min(0).max(23),
+    attempt: z.number().int().min(1).max(2_147_483_647),
+  }).optional(),
 });
 
 export const VIDEO_LIMIT = 12;
@@ -47,6 +52,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!parsed.success) {
     return res.status(400).json({ error: 'invalid_body', issues: parsed.error.issues });
   }
+  const { requestId, finishedAdId, producerScene, ...klingBody } = parsed.data;
 
   // Config/credential check BEFORE the rate-limit slot is consumed: a missing
   // KLING_* env is our misconfiguration, so it must 502 without burning the
@@ -80,12 +86,34 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
   }
 
+  let externalTaskId: string | undefined;
+  if (producerScene) {
+    // Only the current scene attempt of an owned Producer run may get a lookup ID.
+    if (!finishedAdId || finishedAdId.length < 8 || finishedAdId.length > 200) {
+      return res.status(400).json({ error: 'invalid_producer_run_id' });
+    }
+    const admin = getSupabaseAdmin();
+    const { data: run, error: runError } = await admin.from('producer_runs')
+      .select('user_id').eq('run_id', finishedAdId).maybeSingle();
+    if (runError) return res.status(503).json({ error: 'producer_scene_unavailable' });
+    if (!run) return res.status(404).json({ error: 'run_not_found' });
+    if (run.user_id !== user.id) return res.status(403).json({ error: 'forbidden' });
+
+    const { data: scene, error: sceneError } = await admin.from('producer_scenes')
+      .select('scene_idx').eq('run_id', finishedAdId).eq('scene_idx', producerScene.sceneIdx)
+      .eq('attempts', producerScene.attempt).eq('status', 'submitting').is('job_handle', null)
+      .maybeSingle();
+    if (sceneError) return res.status(503).json({ error: 'producer_scene_unavailable' });
+    if (!scene) return res.status(409).json({ error: 'producer_scene_not_submittable' });
+    externalTaskId = producerKlingTaskId(user.id, finishedAdId, producerScene.sceneIdx, producerScene.attempt);
+  }
+
   // Monthly plan allowance (video_ads). Shared cap across Veo + Kling. Distinct
   // from both the hourly rate-limit above and the Kling balance-exhausted 402
   // below (error: 'kling_balance_exhausted'); this 402 uses the quota_exceeded
   // contract that raises the in-app upgrade wall.
   const plan = await getUserPlan(user.id);
-  const videoQuota = await meterVideoRequest(user.id, plan, parsed.data.finishedAdId);
+  const videoQuota = await meterVideoRequest(user.id, plan, finishedAdId);
   if (!videoQuota.ok) {
     if (videoQuota.unavailable) {
       res.setHeader('Retry-After', '30');
@@ -101,7 +129,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
   }
 
-  const { requestId, finishedAdId, ...klingBody } = parsed.data;
   console.log('[grifon:kling:submit]', {
     t: Date.now(),
     userId: user.id,
@@ -121,7 +148,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(klingBody),
+      body: JSON.stringify(externalTaskId ? { ...klingBody, external_task_id: externalTaskId } : klingBody),
     });
     const text = await upstream.text();
     let json: any = null;
@@ -200,6 +227,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       error: 'kling_auth_failed',
       detail: 'Kling rejected the proxy JWT. Check KLING_ACCESS_KEY/SECRET_KEY validity.',
     });
+  }
+
+  // An ID conflict can refer to a job Kling already accepted for this attempt.
+  if (externalTaskId && (upstreamStatus === 409 ||
+      (upstreamStatus >= 400 && upstreamStatus < 500 && /already exists|duplicate/i.test(upstreamJson?.message ?? '')))) {
+    return res.status(502).json({ error: 'kling_submission_uncertain' });
   }
 
   // Other 4xx: pass through the status code so the client can react cleanly

@@ -5,8 +5,7 @@
 // things Fable 5 never had:
 //   1. TWO human gates — storyboard-image approval (before the expensive video render)
 //      and the First Cut preset gate — each PARKS the run (status: 'review').
-//   2. Fan-out video rendering with an atomic per-scene claim (exactly-once / no
-//      double-spend), replacing the sequential loop.
+//   2. Fan-out video rendering with an atomic per-scene claim and attempt-scoped writes.
 //   3. Server-side run-state, injected via deps.run so a closed tab / lost connection /
 //      different device resumes to true state (see services/producerRunService.ts).
 //
@@ -329,12 +328,12 @@ export interface ProducerDeps {
   renderFinalVideo: (req: FinalRenderRequest, onProgress?: (s: 'processing') => void) => Promise<FinalRenderResult>;
   /** Submit ONE scene's render and return its serializable provider job handle WITHOUT polling.
    * The fan-out records this handle before the long poll so a crash resumes by polling it. */
-  submitVideo: (config: VideoSubmitConfig, opts: { signal?: AbortSignal; sceneIdx?: number; userId?: string; finishedAdId?: string }) => Promise<VideoJobHandle>;
+  submitVideo: (config: VideoSubmitConfig, opts: { signal?: AbortSignal; sceneIdx?: number; userId?: string; finishedAdId?: string; producerScene?: { sceneIdx: number; attempt: number } }) => Promise<VideoJobHandle>;
   /** Poll a submitted/recorded handle to completion (handle → final url). No provider re-spend. */
   pollVideo: (handle: VideoJobHandle, opts: { signal?: AbortSignal }) => Promise<{ url: string; downloadUrl: string; mimeType: string }>;
   /** Persist after every state change so a reload can resume (local + server). */
   persist: (run: ProductionRun) => Promise<void>;
-  /** Server-side run-store — the no-double-spend + cross-device-resume half.
+  /** Server-side run-store for submission ownership and cross-device resume.
    * Injected so the state machine stays testable with mocks. */
   run: ProducerRunStore;
   /** Market-research cache (optional — absent in tests). */
@@ -343,14 +342,22 @@ export interface ProducerDeps {
   now: () => number;
 }
 
+export interface SceneQueueState {
+  status: SceneJobStatus;
+  attempt: number;
+  jobHandle?: VideoJobHandle | null;
+  videoUrl?: string | null;
+}
+
 /** The subset of services/producerRunService the orchestrator drives for fan-out. */
 export interface ProducerRunStore {
   seedScenes: (runId: string, sceneCount: number) => Promise<void>;
   /** Atomically try to own scene submission. `claimed:false` → poll `jobHandle` / reuse instead. */
-  claimScene: (runId: string, sceneIdx: number) => Promise<{ claimed: boolean; status?: SceneJobStatus; videoUrl?: string | null; audioUrl?: string | null; jobHandle?: VideoJobHandle | null }>;
-  /** Store the provider job handle after a winning claim submits (submitting → rendering).
-   * `changed:false` means the scene left 'submitting' under us — a lost race the caller re-reads. */
-  recordScene: (runId: string, sceneIdx: number, jobHandle: VideoJobHandle) => Promise<{ changed: boolean }>;
+  claimScene: (runId: string, sceneIdx: number) => Promise<{ claimed: boolean } & Partial<SceneQueueState>>;
+  readScene: (runId: string, sceneIdx: number) => Promise<SceneQueueState | null>;
+  lookupKlingScene: (runId: string, sceneIdx: number, attempt: number) => Promise<{ task_id: string } | null>;
+  /** Store the provider handle for the same submitting attempt (submitting → rendering). */
+  recordScene: (runId: string, sceneIdx: number, jobHandle: VideoJobHandle, attempt: number) => Promise<{ changed: boolean }>;
   /** Persist a scene's image(s) on its own row (written once per scene). Keeps multi-MB base64
    * out of the run-header checkpoint; resume rehydrates storyboard images from these rows. */
   recordSceneImage: (runId: string, sceneIdx: number, imageUrl: string, endFrameUrl?: string, gateVerdict?: Record<string, unknown> | null) => Promise<{ changed: boolean }>;
@@ -363,9 +370,9 @@ export interface ProducerRunStore {
    * avatar reference and regeneration is guaranteed-wrong. OPTIONAL for the same back-compat
    * reason as recordThumbnail; absent → identityRefLost refuses the regen instead. */
   recordAvatar?: (runId: string, avatarUrl: string) => Promise<{ changed: boolean }>;
-  completeScene: (runId: string, sceneIdx: number, videoUrl: string, audioUrl?: string) => Promise<{ changed: boolean }>;
-  flagScene: (runId: string, sceneIdx: number, reason?: string) => Promise<{ changed: boolean }>;
-  requeueScene: (runId: string, sceneIdx: number) => Promise<{ changed: boolean }>;
+  completeScene: (runId: string, sceneIdx: number, videoUrl: string, attempt: number) => Promise<{ changed: boolean }>;
+  flagScene: (runId: string, sceneIdx: number, reason?: string, attempt?: number) => Promise<{ changed: boolean }>;
+  requeueScene: (runId: string, sceneIdx: number, attempt: number) => Promise<{ changed: boolean }>;
 }
 
 export type SceneJobStatus = 'pending' | 'submitting' | 'rendering' | 'done' | 'flagged' | 'failed';
@@ -1161,9 +1168,12 @@ export async function reshootScene(run: ProductionRun, sceneIdx: number, cb: Pro
   const sc = run.scenes.find((s) => s.sceneIdx === sceneIdx);
   if (!scene || !sc) return run;
 
+  const saved = await deps.run.readScene(run.runId, sceneIdx);
+  const inFlight = saved?.status === 'submitting' || saved?.status === 'rendering';
+
   // BEFORE requeueScene, deliberately: requeue NULLs job_handle/video_url/audio_url, so guarding
   // after it would destroy the very clip we are declining to replace.
-  if (identityRefLost(run, scene)) {
+  if (!inFlight && identityRefLost(run, scene)) {
     emitRunEvent('node_fail', run.runId, { node: 'reshoot', sceneIdx, error: 'identity_reference_lost' });
     await commit((r) => {
       const s = r.scenes.find((x) => x.sceneIdx === sceneIdx);
@@ -1173,92 +1183,107 @@ export async function reshootScene(run: ProductionRun, sceneIdx: number, cb: Pro
     return run;
   }
 
-  await commit((r) => {
+  // Only the caller that requeues a terminal row may regenerate images. A
+  // concurrent caller can see pending while that work is still underway.
+  if (!inFlight) {
+    if (!saved || !(await deps.run.requeueScene(run.runId, sceneIdx, saved.attempt)).changed) return run;
+  }
+  const newTake = !inFlight && saved?.status === 'done' && sc.status !== 'flagged';
+  const previousScene = { status: sc.status, flaggedReason: sc.flaggedReason, morphDowngraded: sc.morphDowngraded };
+  const markReshoot = (r: ProductionRun) => {
     // Stay parked at the First Cut gate — a per-scene re-roll must NOT throw the user to the
     // full "Building your ad · ~15-45 min" RunningScreen. run.busy + the scene's own 'rendering'
     // status drive FirstCutScreen's spinner without a status flip (which would swap the screen).
     r.status = 'review';
     r.gate = 'first_cut';
     r.busy = 'reshoot';
+    if (newTake) r.takesUsed = (r.takesUsed ?? 0) + 1;
+    if (r.error?.startsWith('reshoot: ')) r.error = undefined;
     const s = r.scenes.find((x) => x.sceneIdx === sceneIdx)!;
     s.status = 'rendering';
     s.flaggedReason = undefined;
-  });
-  // Return the server scene row to pending so the claim path re-runs it exactly once. If the
-  // requeue changed nothing, the scene isn't in a requeue-able state (e.g. another driver has it
-  // in flight) — treat as a lost race and bail back to the gate rather than re-render blindly.
-  const requeued = await deps.run.requeueScene(run.runId, sceneIdx);
-  if (!requeued.changed) {
-    await commit((r) => {
-      const s = r.scenes.find((x) => x.sceneIdx === sceneIdx);
-      if (s) s.status = s.videoUrl ? 'done' : 'flagged';
-      r.status = 'review';
-      r.gate = 'first_cut';
-      r.busy = undefined;
-    });
-    return run;
+  };
+  if (inFlight) {
+    markReshoot(run);
+    cb.onUpdate(run);
+  } else {
+    await commit(markReshoot);
   }
 
   try {
-    // 1. Fresh image (a hook-morph scene regens the PAIR — see regenSceneImage)
     const prompt = scene.imagePrompt || scene.startFramePrompt || scene.sceneDescription;
-    // Scene 0 only. The name means what it says: the HOOK's morph, whose start frame is a
-    // product-free metaphor. Any other scene carrying a frame pair is showing two real states
-    // of a real object (a sealed box, then the pouch out of it) and MUST keep its references.
-    const isHookMorph = sceneIdx === 0 && !!scene.startFramePrompt && !!scene.endFramePrompt;
-    const imageUrl = await withRetry(
-      () =>
-        deps.generateSceneImage(
-          prompt,
-          run.input.aspectRatio === '1:1' ? '1:1' : run.input.aspectRatio,
-          '1K',
-          // A scene that names a venueSlot must be anchored to THAT uploaded photo, not the
-          // hero. Without this the regen paths ignored venueSlot entirely, so hitting
-          // REGENERATE on an unboxing scene quietly swapped its box back for the pouch.
-          { avatarUrl: run.input.avatar.url, productUrl: isHookMorph ? undefined : (slotPhotoFor(run, scene)?.url ?? run.input.heroImageBase64) },
-          run.input.avatar.ethnicity,
-          [],
-          run.input.scriptType,
-          run.input.productDescription,
-          run.input.productName,
-          1,
-          scene.referenceImage ?? 'avatar'
-        ),
-      MAX_STAGE_ATTEMPTS
-    );
-    await commit((r) => {
-      if (r.storyboard) r.storyboard[sceneIdx].imageUrl = imageUrl;
-      const s = r.scenes.find((x) => x.sceneIdx === sceneIdx)!;
-      s.imageUrl = imageUrl;
-      s.gateVerdict = undefined; // fresh image — stale verdict must not ride along (PR #70 critic)
-    });
-    if (scene.endFramePrompt) {
-      const endUrl = await renderEndFrame(run, scene, sceneIdx, deps, imageUrl);
+    let imageUrl = scene.imageUrl;
+    if (!inFlight) {
+      // 1. Fresh image (a hook-morph scene regens the PAIR — see regenSceneImage)
+      // Scene 0 only. The name means what it says: the HOOK's morph, whose start frame is a
+      // product-free metaphor. Any other scene carrying a frame pair is showing two real states
+      // of a real object (a sealed box, then the pouch out of it) and MUST keep its references.
+      const isHookMorph = sceneIdx === 0 && !!scene.startFramePrompt && !!scene.endFramePrompt;
+      imageUrl = await withRetry(
+        () =>
+          deps.generateSceneImage(
+            prompt,
+            run.input.aspectRatio === '1:1' ? '1:1' : run.input.aspectRatio,
+            '1K',
+            // A scene that names a venueSlot must be anchored to THAT uploaded photo, not the
+            // hero. Without this the regen paths ignored venueSlot entirely, so hitting
+            // REGENERATE on an unboxing scene quietly swapped its box back for the pouch.
+            { avatarUrl: run.input.avatar.url, productUrl: isHookMorph ? undefined : (slotPhotoFor(run, scene)?.url ?? run.input.heroImageBase64) },
+            run.input.avatar.ethnicity,
+            [],
+            run.input.scriptType,
+            run.input.productDescription,
+            run.input.productName,
+            1,
+            scene.referenceImage ?? 'avatar'
+          ),
+        MAX_STAGE_ATTEMPTS
+      );
+      const freshImageUrl = imageUrl;
       await commit((r) => {
-        if (r.storyboard) r.storyboard[sceneIdx].endFrameImageUrl = endUrl;
+        if (r.storyboard) r.storyboard[sceneIdx].imageUrl = freshImageUrl;
+        const s = r.scenes.find((x) => x.sceneIdx === sceneIdx)!;
+        s.imageUrl = freshImageUrl;
+        s.gateVerdict = undefined; // fresh image — stale verdict must not ride along (PR #70 critic)
       });
+      if (scene.endFramePrompt) {
+        const endUrl = await renderEndFrame(run, scene, sceneIdx, deps, imageUrl);
+        await commit((r) => {
+          if (r.storyboard) r.storyboard[sceneIdx].endFrameImageUrl = endUrl;
+        });
+      }
+      // Refresh the scene's durable image row (best-effort — see the scene_images stage).
+      // Explicit null CLEARS the stored gate verdict, matching the `s.gateVerdict = undefined`
+      // above: this is a brand-new image, and a verdict that outlived the still it judged would
+      // both show a wrong chip and poison the precision dataset with a mis-attributed label.
+      // Re-gating a regen is flag-ON work; until then "no verdict" is the honest state.
+      try {
+        await deps.run.recordSceneImage(run.runId, sceneIdx, imageUrl, scene.endFrameImageUrl, null);
+      } catch { /* best-effort */ }
     }
-    // Refresh the scene's durable image row (best-effort — see the scene_images stage).
-    // Explicit null CLEARS the stored gate verdict, matching the `s.gateVerdict = undefined`
-    // above: this is a brand-new image, and a verdict that outlived the still it judged would
-    // both show a wrong chip and poison the precision dataset with a mis-attributed label.
-    // Re-gating a regen is flag-ON work; until then "no verdict" is the honest state.
-    try {
-      await deps.run.recordSceneImage(run.runId, sceneIdx, imageUrl, scene.endFrameImageUrl, null);
-    } catch { /* best-effort */ }
 
-    // 2. Video (claimed → exactly-once)
+    // 2. Resume the saved attempt or claim a new take.
     const vp = run.videoPrompts?.[sceneIdx];
     const type = vp?.type ?? 'b-roll';
     const resolution = run.input.resolution ?? '720p';
     const model = routeModel(type, 'Veo_3.1_Lite', sceneIdx, resolution);
-    const videoUrl = await renderOneScene(
+    const result = await renderOneScene(
       run,
       { sceneIdx, prompt: vp?.prompt ?? prompt, startFrame: imageUrl, endFrame: scene.endFrameImageUrl, duration: pickSceneDuration(type, model, resolution), model },
       deps,
-      cb
+      cb,
+      inFlight ? saved ?? undefined : undefined
     );
-    if (!videoUrl) throw new Error('reshoot video failed');
+    if (!result) throw new Error('reshoot video failed');
+    if (!result.completedHere) {
+      // The driver that completed the attempt owns voice and final assembly.
+      // Leave its checkpoint alone and keep this tab's previous cut visible.
+      Object.assign(sc, previousScene);
+      run.busy = undefined;
+      cb.onUpdate(run);
+      return run;
+    }
+    const { url: videoUrl } = result;
     await commit((r) => {
       r.scenes.find((x) => x.sceneIdx === sceneIdx)!.videoUrl = videoUrl;
     });
@@ -1295,21 +1320,13 @@ export async function reshootScene(run: ProductionRun, sceneIdx: number, cb: Pro
       const s = r.scenes.find((x) => x.sceneIdx === sceneIdx)!;
       s.status = 'flagged';
       s.flaggedReason = `reshoot: ${e?.message ?? 'failed'}`;
+      r.error = s.flaggedReason;
       r.status = 'review';
       r.gate = 'first_cut';
       r.busy = undefined;
     });
   }
   return run;
-}
-
-/** Whether a poll error means the recorded handle is unknown/expired (so re-render is the only
- * recovery) vs a transient/content failure (flag, don't re-spend). Provider errors bubble up as
- * messages like `poll_http_404`, `NOT_FOUND`, `VEO_NO_OUTPUT`, `invalid_operation`. */
-function isExpiredHandleError(e: any): boolean {
-  const m = String(e?.message ?? '');
-  if (isContentRefusal(e)) return false; // a refusal is permanent — never re-render it
-  return /poll_http_40|not[_ ]?found|unknown|expired|invalid_operation|VEO_NO_OUTPUT|VEO_EMPTY_VIDEO/i.test(m);
 }
 
 /** The provider's safety filter refused this scene. PERMANENT: the identical prompt +
@@ -1321,9 +1338,9 @@ function isContentRefusal(e: any): boolean {
   return /VEO_CONTENT_REFUSED/i.test(String(e?.message ?? ''));
 }
 
-type PollOutcome = { kind: 'done'; url: string } | { kind: 'expired' } | { kind: 'failed'; reason: string };
+type PollOutcome = { kind: 'done'; url: string } | { kind: 'failed'; reason: string };
 
-/** Poll a handle to completion, mapping the provider result onto a re-render decision. */
+/** Poll a handle to completion, keeping saved handles on transport failures. */
 async function pollHandle(handle: VideoJobHandle, cb: ProducerCallbacks, deps: ProducerDeps): Promise<PollOutcome> {
   try {
     const res = await deps.pollVideo(handle, { signal: cb.signal });
@@ -1334,19 +1351,14 @@ async function pollHandle(handle: VideoJobHandle, cb: ProducerCallbacks, deps: P
       const detail = String(e?.message ?? '').split(/:\s*/).slice(1).join(': ').trim();
       return { kind: 'failed', reason: `refused by the provider safety filter${detail ? ` — ${detail}` : ''}` };
     }
-    if (isExpiredHandleError(e)) return { kind: 'expired' };
-    return { kind: 'failed', reason: e?.message ?? 'failed' };
+    const reason = String(e?.message ?? 'failed');
+    if (/^(VEO_ERROR|VEO_NO_OUTPUT|VEO_EMPTY_VIDEO|KLING_TASK_FAILED|KLING_NO_OUTPUT)(:|$)/.test(reason)) {
+      return { kind: 'failed', reason };
+    }
+    throw e;
   }
 }
 
-/**
- * Render a single scene through the atomic claim (exactly-once, no double-spend):
- *   claim → submit → recordScene(handle) → poll → completeScene.
- * On resume, a scene already 'submitting'/'rendering' WITH a recorded handle is POLLED to
- * completion (no new provider spend); only a handle-less stale claim (crash before record) or
- * an expired handle takes the requeue + re-render path (the acceptable single-extra-render case).
- * Returns the url, or null if it failed or another driver owns/finished it.
- */
 const PRODUCT_STOPWORDS = new Set(['the', 'and', 'for', 'with', 'your', 'this', 'that', 'from', 'sleek', 'clean', 'portable']);
 
 /** Compose two uploaded reference photos into ONE image, side by side on a white ground.
@@ -1512,12 +1524,24 @@ async function renderEndFrame(run: ProductionRun, scene: Scene, sceneIdx: number
   }
 }
 
-async function renderOneScene(run: ProductionRun, job: RenderJob, deps: ProducerDeps, cb: ProducerCallbacks): Promise<string | null> {
+type SceneRenderResult = { url: string; completedHere: boolean };
+
+async function renderOneScene(run: ProductionRun, job: RenderJob, deps: ProducerDeps, cb: ProducerCallbacks, saved?: SceneQueueState): Promise<SceneRenderResult | null> {
   const resolution = run.input.resolution ?? '720p';
   const fallbackModel = routeModel('talking', 'Veo_3.1_Lite', undefined, resolution);
   const model = (job.model ?? fallbackModel) as VideoModelType;
   const duration = job.duration ?? pickSceneDuration('talking', fallbackModel, resolution);
-  const inFlight = (status?: SceneJobStatus) => status === 'submitting' || status === 'rendering';
+  const { runId } = run;
+  const { sceneIdx } = job;
+  const paused = () => new Error(`Scene ${sceneIdx + 1}'s render could not be confirmed. Retry checks saved progress. If it stays paused, contact support.`);
+  const readCompleted = async (): Promise<SceneRenderResult> => {
+    const latest = await deps.run.readScene(runId, sceneIdx);
+    if (latest?.status === 'done' && latest.videoUrl) {
+      noteMorph(latest.jobHandle);
+      return { url: latest.videoUrl, completedHere: false };
+    }
+    throw paused();
+  };
 
   // A REFUSED frame pair must not keep its downstream action hold. submitVideo strips
   // config.lastFrame when the provider rejects startFrame+endFrame and re-submits single-frame,
@@ -1536,79 +1560,67 @@ async function renderOneScene(run: ProductionRun, job: RenderJob, deps: Producer
     if (s) s.morphDowngraded = h.morphDowngraded || undefined;
   };
 
-  let claim = await deps.run.claimScene(run.runId, job.sceneIdx);
-  noteMorph(claim.jobHandle);
-  if (!claim.claimed) {
-    // A scene that's genuinely DONE (has a url) — reuse it, never re-submit.
-    if (claim.videoUrl) return claim.videoUrl;
-    // In flight WITH a recorded handle → POLL it to completion. No new provider spend: this is
-    // the resume path that replaces the old blind re-render between spend and completeScene.
-    if (inFlight(claim.status) && claim.jobHandle) {
-      const outcome = await pollHandle(claim.jobHandle, cb, deps);
-      if (outcome.kind === 'done') {
-        await deps.run.completeScene(run.runId, job.sceneIdx, outcome.url);
-        return outcome.url;
-      }
-      if (outcome.kind === 'failed') {
-        await deps.run.flagScene(run.runId, job.sceneIdx, `video: ${outcome.reason}`);
-        return null;
-      }
-      // expired → fall through to guarded requeue + reclaim + re-render.
-    }
-    // Handle-less orphan (crash before record) OR expired handle: guarded reclaim + re-render.
-    // Each successful reclaim can add a provider submission; credit dedupe by runId
-    // does not cap provider spend across repeated failures to record a handle.
-    await deps.run.requeueScene(run.runId, job.sceneIdx);
-    claim = await deps.run.claimScene(run.runId, job.sceneIdx);
+  let claim = saved ? { ...saved, claimed: false } : await deps.run.claimScene(runId, sceneIdx);
+  // An image check may have flagged the row before the first video attempt.
+  // Approval of the updated storyboard allows that pre-video flag to clear.
+  if (!saved && !claim.claimed && claim.attempt === 0 && claim.status === 'flagged') {
+    await deps.run.requeueScene(runId, sceneIdx, 0);
+    claim = await deps.run.claimScene(runId, sceneIdx);
+  }
+  if (claim.status === 'done' && claim.videoUrl) {
     noteMorph(claim.jobHandle);
-    if (!claim.claimed) {
-      // Lost the reclaim race to another driver. Reuse a finished url, poll their in-flight
-      // handle, or leave the scene to the owner.
-      if (claim.videoUrl) return claim.videoUrl;
-      if (inFlight(claim.status) && claim.jobHandle) {
-        const outcome = await pollHandle(claim.jobHandle, cb, deps);
-        if (outcome.kind === 'done') {
-          await deps.run.completeScene(run.runId, job.sceneIdx, outcome.url);
-          return outcome.url;
-        }
-        return null;
+    return { url: claim.videoUrl, completedHere: false };
+  }
+  if (claim.status === 'flagged' || claim.status === 'failed') return null;
+  let attempt = claim.attempt;
+  if (typeof attempt !== 'number' || !Number.isSafeInteger(attempt) || attempt < 1) throw paused();
+
+  let handle = claim.jobHandle;
+  if (claim.status === 'submitting' && !handle) {
+    if (claim.claimed) {
+      try {
+        handle = await deps.submitVideo(
+          { model, prompt: job.prompt, duration, resolution, aspectRatio: run.input.aspectRatio, audioEnabled: true, startFrame: job.startFrame, endFrame: job.endFrame },
+          { signal: cb.signal, sceneIdx, userId: cb.userId, finishedAdId: runId, producerScene: { sceneIdx, attempt } }
+        );
+      } catch (e: any) {
+        if (e?.message === 'ABORTED') throw e;
+        const code = e?.body?.error;
+        // This specific Kling proxy error is returned before it contacts the provider.
+        if (code === 'producer_scene_not_submittable' || (isUnknownGenerationOutcome(e) && code !== 'producer_scene_unavailable')) throw paused();
+        const result = await deps.run.flagScene(runId, sceneIdx, `video: ${e?.message ?? 'submit failed'}`, attempt);
+        return result.changed ? null : readCompleted();
       }
-      if (inFlight(claim.status)) throw new Error('This video scene is still in progress. Try again later.');
-      return claim.videoUrl ?? null;
+    } else if (model === 'Kling_3_0') {
+      // An exact provider match can recover the original job. A miss is still uncertain.
+      const operation = await deps.run.lookupKlingScene(runId, sceneIdx, attempt).catch(() => null);
+      if (operation?.task_id) handle = { operation, model, prompt: job.prompt, sceneIdx, aspectRatio: run.input.aspectRatio, duration };
     }
+    if (!handle) throw paused();
+
+    const result = await deps.run.recordScene(runId, sceneIdx, handle, attempt).catch(() => { throw paused(); });
+    if (!result.changed) {
+      const latest = await deps.run.readScene(runId, sceneIdx);
+      if (latest?.status === 'done' && latest.videoUrl) {
+        noteMorph(latest.jobHandle);
+        return { url: latest.videoUrl, completedHere: false };
+      }
+      if (latest?.status !== 'rendering' || !latest.jobHandle) throw paused();
+      handle = latest.jobHandle;
+      attempt = latest.attempt;
+    }
+  } else if (claim.status !== 'rendering' || !handle) {
+    throw paused();
   }
 
-  // We own the claim (status: 'submitting'). Submit → record BEFORE the long poll → poll → complete.
-  let handle: VideoJobHandle;
-  try {
-    handle = await deps.submitVideo(
-      { model, prompt: job.prompt, duration, resolution, aspectRatio: run.input.aspectRatio, audioEnabled: true, startFrame: job.startFrame, endFrame: job.endFrame },
-      { signal: cb.signal, sceneIdx: job.sceneIdx, userId: cb.userId, finishedAdId: run.runId } // one video_ad credit per finished ad, not per scene
-    );
-  } catch (e: any) {
-    if (e?.message === 'ABORTED') throw e;
-    await deps.run.flagScene(run.runId, job.sceneIdx, `video: ${e?.message ?? 'submit failed'}`);
-    return null;
-  }
   noteMorph(handle);
-
-  // Record the handle so a crash between spend and completeScene resumes by polling, not re-spending.
-  const rec = await deps.run.recordScene(run.runId, job.sceneIdx, handle);
-  if (!rec.changed) {
-    // Lost race: the scene left 'submitting' under us. Re-read fresh state (claimScene is a
-    // side-effect-free read when status != pending) and adopt a finished url rather than proceed
-    // blindly. We already spent, so if it isn't done we still poll OUR handle to salvage the url.
-    const fresh = await deps.run.claimScene(run.runId, job.sceneIdx);
-    if (fresh.videoUrl) return fresh.videoUrl;
-  }
-
   const outcome = await pollHandle(handle, cb, deps);
   if (outcome.kind === 'done') {
-    await deps.run.completeScene(run.runId, job.sceneIdx, outcome.url);
-    return outcome.url;
+    const result = await deps.run.completeScene(runId, sceneIdx, outcome.url, attempt);
+    return result.changed ? { url: outcome.url, completedHere: true } : readCompleted();
   }
-  await deps.run.flagScene(run.runId, job.sceneIdx, `video: ${outcome.kind === 'expired' ? 'expired' : outcome.reason}`);
-  return null;
+  const result = await deps.run.flagScene(runId, sceneIdx, `video: ${outcome.reason}`, attempt);
+  return result.changed ? null : readCompleted();
 }
 
 async function runStage(
@@ -1992,8 +2004,7 @@ async function runStage(
         .filter((j): j is RenderJob => j !== null);
       if (jobs.length === 0) return;
 
-      // Seed the server queue and gate submissions with per-scene claims. Recorded
-      // handles are reused; a stale handle-less claim can permit another submission.
+      // Seed the queue. Resume uses durable handles or provider lookup for the same attempt.
       await deps.run.seedScenes(run.runId, scenes.length);
       const errors: unknown[] = [];
       await pooled(jobs, FANOUT_CONCURRENCY, async (job) => {
@@ -2003,13 +2014,13 @@ async function runStage(
             const sc = r.scenes.find((s) => s.sceneIdx === job.sceneIdx);
             if (sc) sc.status = 'rendering';
           });
-          const url = await renderOneScene(run, job, deps, cb);
+          const result = await renderOneScene(run, job, deps, cb);
           await commit((r) => {
             const sc = r.scenes.find((s) => s.sceneIdx === job.sceneIdx);
             if (!sc) return;
-            if (url) {
+            if (result) {
               sc.status = 'done';
-              sc.videoUrl = url;
+              sc.videoUrl = result.url;
             } else {
               sc.status = 'flagged';
               sc.flaggedReason = sc.flaggedReason ?? 'video: failed';

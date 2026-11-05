@@ -472,14 +472,9 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
   const handleReshoot = async (sceneIdx: number) => {
     if (!run || run.gate !== 'first_cut' || !run.scenes.some(scene => scene.sceneIdx === sceneIdx)) return;
     await withRun(async (active, receipt) => {
-    setReshooting(sceneIdx);
-    // C3: a manual re-roll of a scene that already worked counts toward the free-take
-    // allowance; fixing a FLAGGED scene is always free. Mutating run.takesUsed here means
-    // reshootScene's own persist() checkpoints it, so the count survives remount AND reload.
-    const sc = active.scenes.find((s) => s.sceneIdx === sceneIdx);
-    receipt.begin();
-    if (sc && sc.status !== 'flagged') active.takesUsed = (active.takesUsed ?? 0) + 1;
-    return reshootScene(active, sceneIdx, cb(active), realProducerDeps);
+      setReshooting(sceneIdx);
+      receipt.begin();
+      return reshootScene(active, sceneIdx, cb(active), realProducerDeps);
     });
   };
 
@@ -707,7 +702,7 @@ const ProducerFlow: React.FC<Props> = ({ userId, directorUnlocked, presetUnlocke
               {run.error ?? 'Something went wrong mid-production.'} Your finished steps are saved — Retry picks up right where it stopped.
             </p>
             <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-              <GoldButton onClick={handleRetry} className="flex items-center gap-2">
+              <GoldButton onClick={handleRetry} disabled={operationBusy} className="flex items-center gap-2">
                 <RotateCw className="h-4 w-4" /> Retry
               </GoldButton>
               <button

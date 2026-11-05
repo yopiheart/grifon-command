@@ -5,7 +5,7 @@
 // orchestrator itself imports NONE of these at runtime (deps are injected) so it stays
 // unit-testable and the UI can import its types without pulling this heavy chain.
 
-import type { ProducerDeps, ProductionRun, ProducerRunStore, VideoJobHandle } from './producerOrchestrator';
+import type { ProducerDeps, ProductionRun, ProducerRunStore, SceneQueueState, VideoJobHandle } from './producerOrchestrator';
 import {
   generateMarketResearch,
   generateAdScript,
@@ -29,6 +29,8 @@ import {
   saveRunCheckpoint,
   seedScenes,
   claimScene,
+  readScene,
+  lookupKlingScene,
   recordScene,
   recordSceneImage,
   recordThumbnail,
@@ -37,6 +39,7 @@ import {
   flagScene,
   requeueScene,
   type RunCheckpoint,
+  type ProductionSceneRow,
 } from './producerRunService';
 
 /** Map the full in-memory run to the partial server checkpoint (persist-after-every-transition). */
@@ -79,9 +82,7 @@ const toCheckpoint = (run: ProductionRun): RunCheckpoint => ({
 });
 
 // The run-header checkpoint is BEST-EFFORT: a failed/oversized write must not hard-stop a
-// live pipeline. The no-double-spend guarantee does NOT depend on it — it rides the small,
-// authoritative per-scene claim calls below. Worst case a dropped checkpoint means a
-// coarser resume, never a lost render or a double charge.
+// live pipeline. Scene claims and provider handles use separate, authoritative writes.
 const persist = async (run: ProductionRun): Promise<void> => {
   try {
     const res = await saveRunCheckpoint(run.runId, toCheckpoint(run));
@@ -91,7 +92,7 @@ const persist = async (run: ProductionRun): Promise<void> => {
     } else {
       // Stale-write conflict: a fresher checkpoint (e.g. another tab) already advanced the row.
       // Persist is best-effort — do NOT overwrite; adopt the server's revision so a later write
-      // can win, log, and continue. The no-double-spend guarantee rides the per-scene claim, not this.
+      // can win, log, and continue.
       if (res.current && typeof res.current.revision === 'number') run.revision = res.current.revision;
       console.warn('[producer] checkpoint superseded (revision conflict) — adopted server revision', run.revision);
     }
@@ -101,19 +102,25 @@ const persist = async (run: ProductionRun): Promise<void> => {
 };
 
 /** Adapt the run-store client to the orchestrator's ProducerRunStore shape. */
+const queueState = (scene: ProductionSceneRow): SceneQueueState => ({
+  status: scene.status,
+  attempt: scene.attempts,
+  videoUrl: scene.video_url,
+  jobHandle: scene.job_handle as VideoJobHandle | null,
+});
+
 const runStore: ProducerRunStore = {
   seedScenes,
   claimScene: async (runId, sceneIdx) => {
     const { claimed, scene } = await claimScene(runId, sceneIdx);
-    return {
-      claimed,
-      status: scene?.status,
-      videoUrl: scene?.video_url,
-      audioUrl: scene?.audio_url,
-      jobHandle: (scene?.job_handle as VideoJobHandle | null) ?? null,
-    };
+    return { claimed, ...(scene ? queueState(scene) : {}) };
   },
-  recordScene: (runId, sceneIdx, handle) => recordScene(runId, sceneIdx, handle as unknown as Record<string, unknown>),
+  readScene: async (runId, sceneIdx) => {
+    const { scene } = await readScene(runId, sceneIdx);
+    return scene ? queueState(scene) : null;
+  },
+  lookupKlingScene: async (runId, sceneIdx, attempt) => (await lookupKlingScene(runId, sceneIdx, attempt)).operation,
+  recordScene: (runId, sceneIdx, handle, attempt) => recordScene(runId, sceneIdx, handle as unknown as Record<string, unknown>, attempt),
   recordSceneImage,
   recordThumbnail,
   recordAvatar,

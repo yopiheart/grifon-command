@@ -113,7 +113,8 @@ interface FakeSceneRow {
   videoUrl: string | null;
   audioUrl: string | null;
   flaggedReason: string | null;
-  /** Simulated ">10min untouched" — the requeue guard's stale-escape precondition. */
+  attempt: number;
+  /** Older claims remain blocked just like fresh ones. */
   stale: boolean;
   /** Mirrors producer_scenes.gate_verdict. Starts null, exactly like the real column. */
   gateVerdict: Record<string, unknown> | null;
@@ -125,6 +126,7 @@ const freshRow = (over: Partial<FakeSceneRow> = {}): FakeSceneRow => ({
   videoUrl: null,
   audioUrl: null,
   flaggedReason: null,
+  attempt: over.status === 'submitting' || over.status === 'rendering' ? 1 : 0,
   stale: false,
   gateVerdict: null,
   ...over,
@@ -132,10 +134,7 @@ const freshRow = (over: Partial<FakeSceneRow> = {}): FakeSceneRow => ({
 
 /**
  * In-memory ProducerRunStore that mirrors api/producer/advance.ts's guarded
- * transitions: claim flips only from 'pending'; record guards status='submitting';
- * complete guards submitting|rendering; requeue is allowed from flagged/done/failed
- * OR a stale handle-less 'submitting' OR a stale 'rendering'. Every method is a vi.fn
- * so the tests can assert spend/write invariants via call counts.
+ * transitions. Every method is a vi.fn so tests can assert spend/write call counts.
  */
 function makeFakeStore(seed: Record<number, Partial<FakeSceneRow>> = {}) {
   const rows = new Map<number, FakeSceneRow>();
@@ -150,13 +149,16 @@ function makeFakeStore(seed: Record<number, Partial<FakeSceneRow>> = {}) {
       if (!s) return { claimed: false };
       if (s.status === 'pending') {
         s.status = 'submitting'; // atomic pending → submitting; only the winner submits
-        return { claimed: true };
+        s.attempt += 1;
+        return { claimed: true, ...s };
       }
-      return { claimed: false, status: s.status, videoUrl: s.videoUrl, audioUrl: s.audioUrl, jobHandle: s.jobHandle };
+      return { claimed: false, ...s };
     }),
-    recordScene: vi.fn(async (_runId: string, i: number, handle: VideoJobHandle) => {
+    readScene: vi.fn(async (_runId: string, i: number) => rows.has(i) ? { ...rows.get(i)! } : null),
+    lookupKlingScene: vi.fn(async () => null),
+    recordScene: vi.fn(async (_runId: string, i: number, handle: VideoJobHandle, attempt: number) => {
       const s = rows.get(i);
-      if (s && s.status === 'submitting') {
+      if (s && s.status === 'submitting' && s.attempt === attempt) {
         s.jobHandle = handle;
         s.status = 'rendering';
         return { changed: true };
@@ -180,34 +182,31 @@ function makeFakeStore(seed: Record<number, Partial<FakeSceneRow>> = {}) {
     // Durable presenter reference (producer_runs.avatar_url). Present here because a resumed run
     // has NO other copy — `input.avatar.url` is stripped in transit by slimCheckpointInput.
     recordAvatar: vi.fn(async (_runId: string, _avatarUrl: string) => ({ changed: true })),
-    completeScene: vi.fn(async (_runId: string, i: number, videoUrl: string, audioUrl?: string) => {
+    completeScene: vi.fn(async (_runId: string, i: number, videoUrl: string, attempt: number) => {
       const s = rows.get(i);
-      if (s && (s.status === 'submitting' || s.status === 'rendering')) {
+      if (s && s.status === 'rendering' && s.attempt === attempt) {
         s.status = 'done';
         s.videoUrl = videoUrl;
-        if (audioUrl !== undefined) s.audioUrl = audioUrl;
         return { changed: true };
       }
       return { changed: false };
     }),
-    flagScene: vi.fn(async (_runId: string, i: number, reason?: string) => {
+    flagScene: vi.fn(async (_runId: string, i: number, reason?: string, attempt?: number) => {
       const s = rows.get(i);
-      if (s) {
+      if (s && s.attempt === (attempt ?? 0) && (attempt === undefined
+        ? ['pending', 'flagged'].includes(s.status) : ['submitting', 'rendering'].includes(s.status))) {
         s.status = 'flagged';
         s.flaggedReason = reason ?? null;
         return { changed: true };
       }
       return { changed: false };
     }),
-    requeueScene: vi.fn(async (_runId: string, i: number) => {
+    requeueScene: vi.fn(async (_runId: string, i: number, attempt: number) => {
       const s = rows.get(i);
-      if (!s) return { changed: false };
-      const allowed =
-        ['flagged', 'done', 'failed'].includes(s.status) ||
-        (s.status === 'submitting' && !s.jobHandle && s.stale) ||
-        (s.status === 'rendering' && s.stale);
+      if (!s || s.attempt !== attempt) return { changed: false };
+      const allowed = ['flagged', 'done', 'failed'].includes(s.status);
       if (allowed) {
-        Object.assign(s, freshRow()); // → pending, clears handle/urls/flag
+        Object.assign(s, freshRow({ attempt })); // pending, keeping the attempt counter
         return { changed: true };
       }
       return { changed: false };
@@ -482,9 +481,9 @@ describe('runProduction — resume skips completed stages', () => {
 // --- 3. Record/poll resume (B1 spine) -------------------------------------
 
 describe('renderOneScene — resume polls a recorded handle instead of re-submitting', () => {
-  it('a scene left submitting WITH a recorded handle is POLLED (no re-spend) and completed', async () => {
+  it('polls a recorded handle and completes without spending again', async () => {
     const recordedHandle: VideoJobHandle = { operation: {}, prompt: 'P0', sceneIdx: 0, model: 'Veo_3.1_Lite', aspectRatio: '9:16', duration: 6 };
-    const { deps, spies, rows } = makeFakeDeps({}, { 0: { status: 'submitting', jobHandle: recordedHandle } });
+    const { deps, spies, rows } = makeFakeDeps({}, { 0: { status: 'rendering', jobHandle: recordedHandle } });
     const run = videoStageRun(1);
 
     const out = await runProduction(run, cb(), deps);
@@ -502,43 +501,45 @@ describe('renderOneScene — resume polls a recorded handle instead of re-submit
 
 // --- 4. Handle-less orphan ------------------------------------------------
 
-describe('renderOneScene — handle-less orphan requeues + reclaims + re-submits once', () => {
-  it('a stale submitting scene with no handle takes the single-extra-render path', async () => {
-    // stale:true so the requeue guard permits the handle-less 'submitting' escape.
+describe('renderOneScene — uncertain submissions', () => {
+  it('pauses a stale submitting scene with no recoverable handle', async () => {
     const { deps, spies, rows } = makeFakeDeps({}, { 0: { status: 'submitting', jobHandle: null, stale: true } });
     const run = videoStageRun(1);
 
     const out = await runProduction(run, cb(), deps);
 
-    expect(store2Count(deps, 'requeueScene')).toBeGreaterThanOrEqual(1);
-    expect(spies.submitVideo).toHaveBeenCalledTimes(1); // exactly one re-submit after reclaim
-    expect(store2Count(deps, 'completeScene')).toBe(1);
-    expect(rows.get(0)?.status).toBe('done');
-    expect(out.scenes[0].status).toBe('done');
-    expect(out.scenes[0].videoUrl).toBe('vid://0');
+    expect(spies.submitVideo).not.toHaveBeenCalled();
+    expect(store2Count(deps, 'requeueScene')).toBe(0);
+    expect(rows.get(0)?.status).toBe('submitting');
+    expect(out.status).toBe('error');
   });
 });
 
 describe('runProduction — recovery across scene persistence failures', () => {
-  it('recovers a stale handle-less claim after submit succeeds but recording fails', async () => {
+  it('reconciles a Kling submission whose handle write failed', async () => {
     let checkpoint: ProductionRun | undefined;
     const { deps, spies, store, rows } = makeFakeDeps({
       persist: vi.fn(async (run) => { checkpoint = structuredClone(run); }),
     });
     vi.mocked(store.recordScene).mockRejectedValueOnce(new Error('RECORD_WRITE_FAILED'));
 
-    await runProduction(videoStageRun(1), cb(), deps);
+    const run = videoStageRun(1);
+    run.videoPrompts![0].type = 'b-roll';
+    run.stages.find(stage => stage.id === 'video_prompts')!.status = 'done';
+    await runProduction(run, cb(), deps);
 
     expect(rows.get(0)).toMatchObject({ status: 'submitting', jobHandle: null });
     expect(spies.submitVideo).toHaveBeenCalledTimes(1);
     expect(spies.pollVideo).not.toHaveBeenCalled();
-    // The server allows another claim only after its existing stale interval.
-    rows.get(0)!.stale = true;
+    vi.mocked(store.lookupKlingScene).mockResolvedValueOnce({ task_id: 'original-kling-job' });
 
     const out = await runProduction(structuredClone(checkpoint!), cb(), deps);
 
-    expect(spies.submitVideo).toHaveBeenCalledTimes(2);
+    expect(spies.submitVideo).toHaveBeenCalledTimes(1);
+    expect(store.lookupKlingScene).toHaveBeenCalledWith(run.runId, 0, 1);
+    expect(spies.submitVideo.mock.calls[0][1].producerScene).toEqual({ sceneIdx: 0, attempt: 1 });
     expect(spies.pollVideo).toHaveBeenCalledTimes(1);
+    expect(spies.pollVideo.mock.calls[0][0].operation).toEqual({ task_id: 'original-kling-job' });
     expect(rows.get(0)).toMatchObject({ status: 'done', videoUrl: 'vid://0' });
     expect(out.scenes[0].videoUrl).toBe('vid://0');
     expect(out.gate).toBe('first_cut');
@@ -604,6 +605,21 @@ describe('runProduction — recovery across scene persistence failures', () => {
     expect(out.gate).toBe('first_cut');
   });
 
+  it('keeps a known handle after a transient polling failure', async () => {
+    const { deps, spies, rows } = makeFakeDeps();
+    spies.pollVideo.mockRejectedValueOnce(new Error('PROXY_ERROR_502: storage_upload_failed'));
+    const run = await runProduction(videoStageRun(1), cb(), deps);
+
+    expect(run.status).toBe('error');
+    expect(rows.get(0)).toMatchObject({ status: 'rendering', attempt: 1 });
+    const handle = rows.get(0)!.jobHandle;
+
+    const resumed = await runProduction(run, cb(), deps);
+    expect(spies.submitVideo).toHaveBeenCalledTimes(1);
+    expect(spies.pollVideo.mock.calls[1][0]).toEqual(handle);
+    expect(resumed.gate).toBe('first_cut');
+  });
+
   it('keeps failed scene writes recoverable without starting downstream production', async () => {
     const { deps, spies, store } = makeFakeDeps();
     vi.mocked(store.recordScene).mockRejectedValueOnce(new Error('RECORD_WRITE_FAILED'));
@@ -612,38 +628,32 @@ describe('runProduction — recovery across scene persistence failures', () => {
 
     expect(out.status).toBe('error');
     expect(out.stages.find((s) => s.id === 'video')?.status).toBe('failed');
-    expect(out.error).toContain('RECORD_WRITE_FAILED');
+    expect(out.error).toContain('render could not be confirmed');
     expect(spies.consolidateVoices).not.toHaveBeenCalled();
     expect(spies.generateEditDecisionList).not.toHaveBeenCalled();
     expect(spies.renderFinalVideo).not.toHaveBeenCalled();
   });
 
-  it('can submit again on each stale recovery when repeated handle writes fail', async () => {
+  it('repeated resumes of a missing Veo job ID never submit again', async () => {
     let checkpoint: ProductionRun | undefined;
     const { deps, spies, store, rows } = makeFakeDeps({
       persist: vi.fn(async (run) => { checkpoint = structuredClone(run); }),
     });
-    vi.mocked(store.recordScene)
-      .mockRejectedValueOnce(new Error('FIRST_RECORD_WRITE_FAILED'))
-      .mockRejectedValueOnce(new Error('SECOND_RECORD_WRITE_FAILED'));
+    vi.mocked(store.recordScene).mockRejectedValueOnce(new Error('RECORD_WRITE_FAILED'));
 
     await runProduction(videoStageRun(1), cb(), deps);
     expect(spies.submitVideo).toHaveBeenCalledTimes(1);
     expect(rows.get(0)).toMatchObject({ status: 'submitting', jobHandle: null });
 
-    rows.get(0)!.stale = true;
-    await runProduction(structuredClone(checkpoint!), cb(), deps);
-    expect(spies.submitVideo).toHaveBeenCalledTimes(2);
-    expect(rows.get(0)).toMatchObject({ status: 'submitting', jobHandle: null });
-
-    // This is a limit of handle-less recovery: two separate failed writes can
-    // leave two accepted provider jobs unavailable to the next session.
-    rows.get(0)!.stale = true;
-    const out = await runProduction(structuredClone(checkpoint!), cb(), deps);
-
-    expect(spies.submitVideo).toHaveBeenCalledTimes(3);
-    expect(spies.pollVideo).toHaveBeenCalledTimes(1);
-    expect(out.gate).toBe('first_cut');
+    for (let retry = 0; retry < 2; retry += 1) {
+      rows.get(0)!.stale = true;
+      const out = await runProduction(structuredClone(checkpoint!), cb(), deps);
+      expect(out.status).toBe('error');
+      expect(rows.get(0)).toMatchObject({ status: 'submitting', jobHandle: null, attempt: 1 });
+    }
+    expect(spies.submitVideo).toHaveBeenCalledTimes(1);
+    expect(spies.pollVideo).not.toHaveBeenCalled();
+    expect(store.lookupKlingScene).not.toHaveBeenCalled();
   });
 
   it('does not submit another job while a handle-less claim is still fresh', async () => {
@@ -658,12 +668,12 @@ describe('runProduction — recovery across scene persistence failures', () => {
     expect(rows.get(0)).toMatchObject({ status: 'submitting', jobHandle: null, stale: false });
   });
 
-  it('keeps an immediate retry recoverable until its handle-less claim becomes stale', async () => {
+  it('keeps the original attempt after an ambiguous submit response', async () => {
     let checkpoint: ProductionRun | undefined;
     const { deps, spies, store, rows } = makeFakeDeps({
       persist: vi.fn(async (run) => { checkpoint = structuredClone(run); }),
     });
-    vi.mocked(store.recordScene).mockRejectedValueOnce(new Error('RECORD_WRITE_FAILED'));
+    spies.submitVideo.mockRejectedValueOnce(Object.assign(new Error('Network disconnected'), { generationOutcomeUnknown: true }));
     await runProduction(videoStageRun(1), cb(), deps);
 
     const fresh = await runProduction(structuredClone(checkpoint!), cb(), deps);
@@ -673,12 +683,19 @@ describe('runProduction — recovery across scene persistence failures', () => {
     expect(rows.get(0)).toMatchObject({ status: 'submitting', jobHandle: null, stale: false });
     expect(fresh.stages.find((s) => s.id === 'video')?.status).not.toBe('done');
 
-    rows.get(0)!.stale = true;
-    const out = await runProduction(structuredClone(checkpoint!), cb(), deps);
+    expect(store.flagScene).not.toHaveBeenCalled();
+    expect(store.requeueScene).not.toHaveBeenCalled();
+  });
 
-    expect(spies.submitVideo).toHaveBeenCalledTimes(2);
-    expect(spies.pollVideo).toHaveBeenCalledTimes(1);
-    expect(out.gate).toBe('first_cut');
+  it('allows a fixable scene after the Kling proxy explicitly fails before submission', async () => {
+    const { deps, spies, rows } = makeFakeDeps();
+    spies.submitVideo.mockRejectedValueOnce(Object.assign(new Error('Scene state unavailable'), {
+      generationOutcomeUnknown: true,
+      body: { error: 'producer_scene_unavailable' },
+    }));
+    await runProduction(videoStageRun(1), cb(), deps);
+    expect(rows.get(0)).toMatchObject({ status: 'flagged', jobHandle: null, attempt: 1 });
+    expect(spies.pollVideo).not.toHaveBeenCalled();
   });
 });
 
@@ -832,11 +849,62 @@ describe('gates — park/resume are persist-backed and stay parked during busy o
     expect(out.busy).toBeUndefined();
     expect(store2Count(deps, 'requeueScene')).toBeGreaterThanOrEqual(1);
     expect(spies.submitVideo.mock.calls.length).toBe(submitsBefore + 1); // exactly one re-submit
-    // NOTE: reshootScene does NOT bump takesUsed — that is the caller's job
-    // (components/OneShotAd/ProducerFlow.tsx:264 mutates run.takesUsed BEFORE calling
-    // reshootScene, so reshootScene's own persist() checkpoints it). The orchestrator
-    // unit leaves takesUsed untouched; the brief's "reshoot bumps takesUsed" lives in the UI.
-    expect(out.takesUsed).toBe(takesBefore);
+    expect(out.takesUsed).toBe((takesBefore ?? 0) + 1);
+  });
+
+  it('resumes an interrupted First Cut take without another image, video, or take', async () => {
+    const { deps, spies, store, rows, run, callbacks } = await runToFirstCut();
+    const row = rows.get(1)!;
+    row.status = 'rendering';
+    row.videoUrl = null;
+    const handle = row.jobHandle;
+    const takesBefore = run.takesUsed;
+    spies.generateSceneImage.mockClear();
+    spies.submitVideo.mockClear();
+    spies.pollVideo.mockClear();
+
+    await reshootScene(run, 1, callbacks, deps);
+
+    expect(store.requeueScene).not.toHaveBeenCalled();
+    expect(spies.generateSceneImage).not.toHaveBeenCalled();
+    expect(spies.submitVideo).not.toHaveBeenCalled();
+    expect(spies.pollVideo.mock.calls[0][0]).toEqual(handle);
+    expect(run.takesUsed).toBe(takesBefore);
+    expect(run.gate).toBe('first_cut');
+    expect(row.status).toBe('done');
+  });
+
+  it('does not regenerate a reshoot another caller already requeued', async () => {
+    const { deps, spies, rows, run, callbacks } = await runToFirstCut();
+    rows.get(1)!.status = 'pending';
+    spies.generateSceneImage.mockClear();
+    spies.submitVideo.mockClear();
+
+    await reshootScene(run, 1, callbacks, deps);
+
+    expect(spies.generateSceneImage).not.toHaveBeenCalled();
+    expect(spies.submitVideo).not.toHaveBeenCalled();
+  });
+
+  it('does not redo the voice and final cut when another caller completed the reshoot', async () => {
+    const { deps, spies, store, rows, run, callbacks } = await runToFirstCut();
+    const row = rows.get(1)!;
+    row.status = 'rendering';
+    row.videoUrl = null;
+    vi.mocked(store.completeScene).mockImplementationOnce(async () => {
+      row.status = 'done';
+      row.videoUrl = 'vid://winning-take';
+      return { changed: false };
+    });
+    spies.consolidateVoices.mockClear();
+    spies.renderFinalVideo.mockClear();
+
+    await reshootScene(run, 1, callbacks, deps);
+
+    expect(spies.consolidateVoices).not.toHaveBeenCalled();
+    expect(spies.renderFinalVideo).not.toHaveBeenCalled();
+    expect(row.videoUrl).toBe('vid://winning-take');
+    expect(run.busy).toBeUndefined();
   });
 });
 

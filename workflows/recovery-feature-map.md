@@ -14,8 +14,9 @@ npm.cmd run verify:recovery -- --flow saved-run-error
 npm.cmd run verify:recovery
 ```
 
-The first command lists the supported flows. A selected flow runs at **375px and
-1280px**; the full command runs all ten scenarios, twenty browser cases.
+The first command lists the supported flows. A selected flow runs at mobile and
+desktop widths. The full command runs all eleven scenarios, twenty-two browser
+cases. The uncertain Kling case uses 390×844 for its mobile viewport.
 Use the evidence directory printed by the command, not a previous run's report.
 The runner writes a readable summary, machine-readable results, and browser
 evidence. Unselected flows are **NOT RUN**, never implied passes.
@@ -64,6 +65,7 @@ Do not enter the developer Director wizard to reproduce a consumer recovery bug.
 | `storyboard` | Reopen Producer → Your Storyboard. Customer approval is still required. | Seeds a storyboard checkpoint; reloads and checks the gate, image, script and zero generation submissions. |
 | `first-cut` | Reopen Producer → Your First Cut. Customer review is still required. | Seeds a completed checkpoint with local video; reloads, verifies playable media and zero new submissions. |
 | `recorded-job` | Reopen Producer during video work → resume polling → Your First Cut. | Seeds earlier stages, then exercises actual submit → record handle → reload → poll → final-render adapters against the stateful fixture. The same scene handle is polled; scene submission count stays one. |
+| `uncertain-kling` | Producer cannot save a Kling job ID → Retry checks the existing attempt → First Cut once the job is found. | Fails the record write and the first lookup, then matches the original task. The browser polls that task and submits only once. |
 | `saved-run-error` | Reopen Producer with a temporary saved-run failure → visible error with Retry and Back. Retry loads the same run. | Injects HTTP 503, checks that the active run reference survives Back and return, clears the failure, retries into Your Storyboard with no new production. |
 | `polling-error` | Producer final-render polling fails → visible Retry → Your First Cut after recovery. | Seeds completed scene videos and injects polling failure. Poll failure does not automatically restart the final render. Only explicit customer Retry submits a new final render; scene videos and run identity remain. |
 | `malformed-run` | Reopen Producer with malformed saved data → visible error with Retry and Back. | Injects malformed successful response variants; retains the active run reference and checks zero production submissions or checkpoint writes. Repairing the fixture response and clicking Retry restores the same Storyboard gate. |

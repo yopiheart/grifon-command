@@ -2,18 +2,19 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { z } from 'zod';
 import { getUserFromAccessToken, getSupabaseAdmin } from '../_lib/supabaseAdmin.js';
 import { rateLimitCheck } from '../_lib/rateLimit.js';
+import { lookupProducerKlingTask, producerKlingTaskId } from '../_lib/producerKlingTask.js';
 
 // Per-scene video job queue for the fan-out render stage (grill 2026-07-01). This is
-// the NO-DOUBLE-SPEND core: every provider render fires exactly once per (runId,sceneIdx)
-// even under resume / retry / two open tabs, because the 'claim' action goes through the
-// atomic producer_claim_scene RPC (single-row UPDATE ... WHERE status='pending').
+// a per-attempt queue: the atomic producer_claim_scene RPC admits one caller to
+// submit, and scene writes must match the attempt returned on the claimed row.
 //
 // Client fan-out loop, per scene:
 //   1. claim   → if claimed:true, THIS caller owns the submit; else poll scene.job_handle
 //   2. record  → after submitting the provider job, store its handle (submitting→rendering)
 //   3. complete→ on poll success, store the urls (→ done)
 //   4. flag    → generation failed after retries (→ flagged, surfaced at a gate)
-//   5. requeue → reshoot: a flagged/done scene goes back to pending so it can be reclaimed
+//   5. requeue → a terminal scene goes back to pending for an intentional reshoot.
+// An unconfirmed submission stays in flight until its original handle is recovered.
 //
 // Service-role only (producer_scenes is RLS-on/no-policies). Ownership is enforced
 // against producer_runs.user_id on every call — a client never asserts its own identity.
@@ -23,18 +24,23 @@ import { rateLimitCheck } from '../_lib/rateLimit.js';
 // oversized writes hit Postgres statement timeouts (2026-07-02 SIGLA smoke).
 export const config = { api: { bodyParser: { sizeLimit: '4mb' } } };
 
+const sceneRef = { runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23) };
+const attemptNumber = z.number().int().max(2_147_483_647);
+const attempt = attemptNumber.min(1);
 const Body = z.discriminatedUnion('action', [
   z.object({ action: z.literal('seed'), runId: z.string().min(8).max(200), sceneCount: z.number().int().min(1).max(24) }),
-  z.object({ action: z.literal('claim'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23) }),
-  z.object({ action: z.literal('record'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23), jobHandle: z.record(z.string(), z.unknown()) }),
+  z.object({ action: z.literal('claim'), ...sceneRef, protocol: z.number().int().optional() }),
+  z.object({ action: z.literal('scene'), ...sceneRef }),
+  z.object({ action: z.literal('lookup_kling'), ...sceneRef, attempt }),
+  z.object({ action: z.literal('record'), ...sceneRef, attempt, jobHandle: z.record(z.string(), z.unknown()) }),
   // gateVerdict is THREE-STATE and the distinction is load-bearing (see the case body):
   // absent = leave the stored verdict alone, null = clear it, object = store it.
   z.object({ action: z.literal('record_image'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23), imageUrl: z.string().max(3_000_000), endFrameUrl: z.string().max(3_000_000).nullable().optional(), gateVerdict: z.record(z.string(), z.unknown()).nullable().optional() }),
   z.object({ action: z.literal('record_thumbnail'), runId: z.string().min(8).max(200), thumbnailUrl: z.string().max(3_000_000) }),
   z.object({ action: z.literal('record_avatar'), runId: z.string().min(8).max(200), avatarUrl: z.string().max(3_000_000) }),
-  z.object({ action: z.literal('complete'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23), videoUrl: z.string().max(4000), audioUrl: z.string().max(4000).optional() }),
-  z.object({ action: z.literal('flag'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23), reason: z.string().max(500).optional() }),
-  z.object({ action: z.literal('requeue'), runId: z.string().min(8).max(200), sceneIdx: z.number().int().min(0).max(23) }),
+  z.object({ action: z.literal('complete'), ...sceneRef, attempt, videoUrl: z.string().max(4000), audioUrl: z.string().max(4000).optional() }),
+  z.object({ action: z.literal('flag'), ...sceneRef, attempt: attempt.optional(), reason: z.string().max(500).optional() }),
+  z.object({ action: z.literal('requeue'), ...sceneRef, attempt: attemptNumber.min(0) }),
 ]);
 
 const ADVANCE_LIMIT = 600;
@@ -98,33 +104,67 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(200).json({ ok: true, seeded: body.sceneCount });
     }
 
-    case 'claim': {
-      // Atomic: flips exactly one pending scene to 'submitting'. Only the winner submits
-      // the provider job; everyone else gets the current row and polls its handle.
-      const { data: claimed, error } = await admin.rpc('producer_claim_scene', {
-        p_run_id: body.runId, p_scene_idx: body.sceneIdx,
-      });
-      if (error) {
-        console.error('[producer/advance] claim rpc failed:', error.message);
-        return res.status(500).json({ error: 'write_failed' });
+    case 'claim':
+    case 'scene': {
+      let claimed = false;
+      if (body.action === 'claim') {
+        // A pre-upgrade tab could submit a paid job but cannot record its attempt.
+        if (body.protocol !== 2) {
+          return res.status(409).json({ error: 'producer_refresh_required', detail: 'Refresh Grifon before starting another scene render.' });
+        }
+        // Only one caller can move this pending row to submitting and increment attempts.
+        const { data, error } = await admin.rpc('producer_claim_scene', {
+          p_run_id: body.runId, p_scene_idx: body.sceneIdx,
+        });
+        if (error) {
+          console.error('[producer/advance] claim rpc failed:', error.message);
+          return res.status(500).json({ error: 'write_failed' });
+        }
+        claimed = data === true;
       }
-      const { data: scene } = await admin
+      const { data: scene, error } = await admin
         .from('producer_scenes')
         .select('*')
         .eq('run_id', body.runId)
         .eq('scene_idx', body.sceneIdx)
         .maybeSingle();
-      return res.status(200).json({ claimed: claimed === true, scene: scene ?? null });
+      if (error || (claimed && !scene)) {
+        console.error('[producer/advance] scene lookup failed:', error?.message ?? 'claimed row missing');
+        return res.status(500).json({ error: 'write_failed' });
+      }
+      return res.status(200).json(body.action === 'claim' ? { claimed, scene } : { scene });
+    }
+
+    case 'lookup_kling': {
+      const { data: scene, error } = await admin
+        .from('producer_scenes')
+        .select('scene_idx')
+        .eq('run_id', body.runId).eq('scene_idx', body.sceneIdx).eq('attempts', body.attempt)
+        .eq('status', 'submitting').is('job_handle', null)
+        .maybeSingle();
+      if (error) {
+        console.error('[producer/advance] scene lookup failed:', error.message);
+        return res.status(500).json({ error: 'write_failed' });
+      }
+      if (!scene) return res.status(200).json({ operation: null });
+
+      // Share the existing per-user Kling poll limit so lookup cannot bypass it.
+      if (!await rateLimitCheck(`kling:video-poll:${user.id}`, 60, 60)) {
+        res.setHeader('Retry-After', '60');
+        return res.status(429).json({ error: 'rate_limited', retry_after_seconds: 60 });
+      }
+      const externalId = producerKlingTaskId(user.id, body.runId, body.sceneIdx, body.attempt);
+      const operation = await lookupProducerKlingTask(externalId);
+      return res.status(200).json({ operation });
     }
 
     case 'record': {
-      // Store the provider handle. Guard on status='submitting' so a stale/duplicate
-      // record can't clobber a scene that already advanced. `changed:false` (0 rows) tells the
-      // client it lost the race — the scene left 'submitting' under it — so it re-reads state.
+      // The status and attempt together reject a late handle from an older submission.
       const { data, error } = await admin
         .from('producer_scenes')
         .update({ job_handle: body.jobHandle, status: 'rendering', updated_at: nowIso })
-        .eq('run_id', body.runId).eq('scene_idx', body.sceneIdx).eq('status', 'submitting')
+        .eq('run_id', body.runId).eq('scene_idx', body.sceneIdx).eq('attempts', body.attempt)
+        .eq('status', 'submitting').is('job_handle', null)
         .select('scene_idx');
       if (error) {
         console.error('[producer/advance] record failed:', error.message);
@@ -212,7 +252,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const { data, error } = await admin
         .from('producer_scenes')
         .update(patch)
-        .eq('run_id', body.runId).eq('scene_idx', body.sceneIdx).in('status', ['submitting', 'rendering'])
+        .eq('run_id', body.runId).eq('scene_idx', body.sceneIdx).eq('attempts', body.attempt)
+        .eq('status', 'rendering')
         .select('scene_idx');
       if (error) {
         console.error('[producer/advance] complete failed:', error.message);
@@ -222,10 +263,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     case 'flag': {
+      // The pre-video image gate can flag a scene only before its first video claim.
       const { data, error } = await admin
         .from('producer_scenes')
         .update({ status: 'flagged', flagged_reason: body.reason ?? null, updated_at: nowIso })
-        .eq('run_id', body.runId).eq('scene_idx', body.sceneIdx)
+        .eq('run_id', body.runId).eq('scene_idx', body.sceneIdx).eq('attempts', body.attempt ?? 0)
+        .in('status', body.attempt === undefined ? ['pending', 'flagged'] : ['submitting', 'rendering'])
         .select('scene_idx');
       if (error) {
         console.error('[producer/advance] flag failed:', error.message);
@@ -235,21 +278,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     case 'requeue': {
-      // Reshoot / stale-claim escape: return a scene to pending so the claim path can re-run it
-      // exactly once. Clears the stale handle/urls so nothing dangles. GUARDED so it can never
-      // wipe an in-flight scene: allowed when the scene is flagged/done/failed, OR when it is a
-      // STALE 'submitting' claim (no recorded handle AND untouched for >10min) — the single-driver
-      // v1's reaper-free escape from a crash that died between claim and record — OR a STALE
-      // 'rendering' scene (>10min): a reload mid-reshoot leaves a recorded handle nobody polls at
-      // the First Cut gate, and provider jobs finish or die well inside 10min, so after that the
-      // requeue costs at most one extra render vs. a permanently un-reshootable scene. A 0-row
-      // result (changed:false) means the guard blocked it (actively in flight) → the client re-reads.
-      const staleIso = new Date(Date.now() - 10 * 60 * 1000).toISOString();
+      // Age is not evidence that the provider rejected a job. Keep unresolved claims
+      // and recorded handles in flight, and requeue only the terminal attempt requested.
       const { data, error } = await admin
         .from('producer_scenes')
         .update({ status: 'pending', job_handle: null, video_url: null, audio_url: null, flagged_reason: null, updated_at: nowIso })
-        .eq('run_id', body.runId).eq('scene_idx', body.sceneIdx)
-        .or(`status.in.(flagged,done,failed),and(status.eq.submitting,job_handle.is.null,updated_at.lt."${staleIso}"),and(status.eq.rendering,updated_at.lt."${staleIso}")`)
+        .eq('run_id', body.runId).eq('scene_idx', body.sceneIdx).eq('attempts', body.attempt)
+        .in('status', ['flagged', 'done', 'failed'])
         .select('scene_idx');
       if (error) {
         console.error('[producer/advance] requeue failed:', error.message);

@@ -42,6 +42,7 @@ export async function installRecoveryBackend(page: Page, seed = seededRun('story
   const state = {
     row: seed.row as ProductionRunRow | null, scenes: seed.scenes,
     loadFails: false, loadResponse: undefined as unknown, holdVideo: false, finalPollFails: false,
+    recordFails: false, lookupTaskId: null as string | null,
     reads: [] as string[], checkpoints: [] as Record<string, any>[],
     submissions: [] as Record<string, any>[], polls: [] as Record<string, any>[],
     finalStarts: [] as Record<string, any>[], finalPolls: [] as string[],
@@ -81,6 +82,14 @@ export async function installRecoveryBackend(page: Page, seed = seededRun('story
         const claimed = scene?.status === 'pending';
         if (claimed) Object.assign(scene!, { status: 'submitting', attempts: scene!.attempts + 1 });
         return route.fulfill({ json: { claimed, scene } });
+      }
+      if (body.action === 'lookup_kling') {
+        const taskId = scene?.status === 'submitting' && scene.attempts === body.attempt ? state.lookupTaskId : null;
+        return route.fulfill({ json: { operation: taskId ? { task_id: taskId } : null } });
+      }
+      if (body.action === 'record' && state.recordFails) return route.fulfill({ status: 500, json: { error: 'write_failed' } });
+      if (['record', 'complete'].includes(body.action) && scene?.attempts !== body.attempt) {
+        return route.fulfill({ json: { changed: false } });
       }
       if (body.action === 'record') Object.assign(scene!, { status: 'rendering', job_handle: body.jobHandle });
       else if (body.action === 'complete') Object.assign(scene!, { status: 'done', video_url: body.videoUrl });
