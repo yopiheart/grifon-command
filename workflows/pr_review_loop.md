@@ -11,6 +11,35 @@ Keep findings local or in the authorized draft PR description unless the user
 explicitly requests a posted comment. Merge and deployment require explicit requests.
 The legacy Claude CI reviewer remains opt-in via ENABLE_LEGACY_CLAUDE_REVIEW.
 
+### Evidence and review scope
+
+Use one fresh independent reviewer by default for non-trivial work. Give it the
+originating contract, current diff, affected callers and test evidence. It may
+cover correctness, spec fidelity, smoke results and relevant security boundaries
+in the same review. Add a specialist only when a material boundary requires it;
+do not routinely stack reviewers or models to seek agreement.
+
+An actionable finding needs a concrete trigger, a reachable path with current
+`file:line` references, a violated contract and practical impact. Include a
+reproducer or the narrowest check that could confirm it, distinguishing checks
+actually run from proposed checks. Keep unverified concerns separate and name
+the evidence needed to resolve them. "No actionable findings" is a valid result.
+Naming preferences, generic code smells and speculative future needs do not
+justify changes without an effect on the requested behavior or repository rules.
+
+Use existing deterministic checks and real boundary tests first. For an observed
+defect, demonstrate that the regression check fails the original behavior and
+passes the fix. A mock cannot establish a database lock or provider guarantee;
+a formal model establishes properties of its stated model, not deployed code.
+Keep creative and visual judgment where the contract requires it.
+
+After fixes, refresh affected checks and independently recheck relevant changes
+and their immediate interactions. Expand scope only when the fix opens another
+boundary or evidence reveals a new failure. Stop when required checks and the
+contract pass and actionable findings are resolved; retain unrelated suggestions
+as optional notes. Missing evidence is INCOMPLETE, not a clean pass. Required
+independent review, tuned approvals, paid-test approval and release gates remain.
+
 ### PR handoff
 
 Use the [PR template](../.github/pull_request_template.md) for the handoff,
@@ -138,13 +167,10 @@ no GitHub Action running Claude and no `ANTHROPIC_API_KEY` in CI (deferred — s
      `api/` or `api/_lib/`.
    - **Reuse / simplification** (duplicated logic, primitives that already exist in
      `components/ui/`, dead code).
-   - **Code-smell baseline** (Fowler's *Refactoring*): mysterious name, duplicated code, feature
-     envy, data clumps, primitive obsession, repeated switches, shotgun surgery, divergent change,
-     speculative generality, message chains, middle man, refused bequest. **A documented repo
-     standard always wins over the baseline** — `DESIGN.md`, `services/CLAUDE.md` Hard Rules, and
-     `surgical-edit`'s deliberate minimalism suppress any smell they endorse (e.g. don't flag
-     "speculative generality" gaps in code that is minimal *because* surgical-edit forbids
-     just-in-case abstractions).
+   - **Maintainability affecting the contract:** flag duplication, naming or structure only
+     when it causes a concrete correctness, verification or repository-rule problem. Follow
+     the evidence standard above; do not run a generic code-smell sweep. `DESIGN.md`, scoped
+     instructions and `surgical-edit` govern the implementation.
 
    **Axis 2 — Spec fidelity** (only when step 2 found a spec): does the diff build what the spec
    specified, or a plausible neighbor of it? Check every stated requirement landed, nothing
@@ -168,7 +194,8 @@ no GitHub Action running Claude and no `ANTHROPIC_API_KEY` in CI (deferred — s
 7. **Act within the babysit rules** (the PR-babysit loop — [loops.md](loops.md) Tier 5):
    - Apply only **small, clearly-correct, non-TUNED** fixes, then push.
    - Anything ambiguous, architectural, or TUNED → comment + ask Neil.
-   - Re-run this whole loop on each significant new push to the PR.
+   - Refresh the current diff and recheck relevant fixes and affected boundaries on each
+     significant new push; use the review scope and stopping conditions above.
 
 ## Output
 
