@@ -4,6 +4,8 @@
 ## Active task and boundaries
 Checkout: F:/CodexWorktrees/47bd/grifon-command.
 Branch: codex/evidence-led-review, based on main 7c422cd7 (PR205 merged).
+Draft PR225: https://github.com/yopiheart/grifon-command/pull/225
+Reviewed change afdbb3d6 is pushed and verified in the remote PR head.
 Neil approved proceeding after the X-post/codebase evaluation: tighten review
 instructions and investigate provider-submission recovery. No runtime changes,
 generation tuning, paid/provider calls, production writes, merge or deployment.
@@ -42,5 +44,6 @@ Full application build/unit/browser runs and live DB/provider tests are NOT RUN:
 this change edits workflow documentation/skills only. No runtime fix is claimed.
 
 ## ▶ NEXT ACTION
-Commit/push the reviewed changes and open a draft PR.
-Record the actual remote commit/PR and evidence here. Do not merge or deploy.
+Review draft PR225 and its hosted checks; no merge or deployment is authorized.
+The next engineering slice is an isolated actual scene/API persistence harness
+from workflows/provider-submission-recovery.md, before selecting a runtime fix.
