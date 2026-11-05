@@ -46,14 +46,81 @@ The finished-ad meter already has an isolated PostgreSQL concurrency verifier in
 `tools/verify-finished-ad-meter.mjs`. It tests customer debit/receipt behavior,
 not scene submission. Preserve that distinction when interpreting a green run.
 
-## Recommended next engineering slice
+## Executable isolated handler/persistence harness
 
-First establish a free integration harness for the actual scene claim and advance
-boundary using an isolated database and a deterministic fake provider. Follow the
-finished-ad verifier's isolation restrictions: no application credentials, remote
-database, paid provider calls or live test flags. Exercise the current handler and
-SQL, including ownership checks, instead of reimplementing their predicates in a
-fake. Compare persisted rows, accepted fake jobs and HTTP outcomes.
+`npm run verify:provider-recovery` now exercises the actual
+`api/producer/advance.ts`, unchanged `supabase/producer_runs.sql`, installed
+Supabase JS client, local PostgREST and a fresh local PostgreSQL cluster.
+It creates synthetic users and jobs only; it never loads application environment
+files, authenticates to Supabase, or calls a paid provider.
+
+Prerequisites: Node 24, installed root dependencies, PostgreSQL binaries, and a
+PostgREST binary compatible with that PostgreSQL. The first Windows run used
+PostgreSQL 17.6 and PostgREST 16.5. Set paths to already installed tools:
+
+```powershell
+$env:PG_BIN_DIR = 'C:/path/to/pgsql/bin'
+$env:POSTGREST_PATH = 'C:/path/to/postgrest.exe'
+npm.cmd run verify:provider-recovery
+node tools/verify-provider-recovery.mjs --fail-on-known-risk
+```
+
+The second command is a **negative control**, expected to exit **2** when the
+current unsafe sequences reproduce. It is not a future-proof safety gate: these
+tests intentionally characterize the current behavior. A protocol fix must update
+the relevant expectations and first demonstrate its prevention test failing the
+original defect. Unknown flags fail; there is no live mode or connection URL.
+The npm script also accepts this flag after `--`, but npm may normalize exit 2
+to exit 1; use direct Node invocation when checking the exact negative-control code.
+
+Every run prints its unique `.tmp/provider-recovery/<run>/` evidence directory:
+
+- `report.json`: scenario PASS/FAIL/NOT RUN, separate KNOWN RISK findings, actual
+  request/response and row timelines, accepted fake jobs, source hashes, revision,
+  database/PostgREST versions, mode, exit code and cleanup outcome.
+- `report.md`: readable verdict and coverage limits.
+- `source.json`: inspected source identity; `postgres.log`: owned database log.
+
+A normal **PASS / KNOWN RISK / exit 0** means the characterization worked. It
+does not mean recovery is safe. A setup or assertion failure exits **1**, and
+unexecuted scenarios remain **NOT RUN**. Missing scenario coverage cannot pass.
+
+The nine cases cover two SQL claimers deliberately blocked behind a held row lock;
+a real HTTP socket drop after record commit; a trigger-induced record rollback
+followed by fresh recovery; repeated stale recovery; timestamps one millisecond
+below/at/above the ten-minute boundary; a late old-attempt record; ownership and
+synthetic invalid-token rejection; completed-output retrieval; and an actual
+owned PostgreSQL shutdown. The handler's filters and SQL predicates are not
+reimplemented in a fake query builder.
+
+**Observed risks on the unchanged baseline:** repeated failed handle writes and
+two stale recoveries accept three fake-provider jobs. A late old attempt can
+record its handle after requeue/reclaim, before the new attempt records its own;
+the newer record then receives `changed:false`. The earlier late-record
+hypothesis is therefore demonstrated at this isolated handler/database boundary.
+
+**Limits:** scenario sequencing and fake-provider polling are test drivers, not
+the actual `runProduction` orchestrator or browser. Authentication and rate-limit
+decisions are explicit synthetic seams. The SDK gateway strips its dummy auth
+headers and `/rest/v1` prefix to reach local PostgREST's fixture service role;
+query strings, filters and bodies reach real PostgREST. This does not certify
+hosted auth/RLS, customer billing, provider idempotency, deployment, approval gates
+or real output quality. The existing orchestrator and finished-ad meter suites
+remain separate evidence.
+
+**Isolation:** a sanitized environment, owned loopback listeners, outbound-fetch
+denial and redirect refusal keep the scenarios local. The runner verifies the
+database's reported data directory before loading SQL. Only its randomly created
+cluster and processes are cleaned up; if shutdown cannot be confirmed, the
+cluster is retained and the run fails. Local fixture authentication is trust-only:
+do not run on a shared untrusted host. `initdb --no-sync` accelerates creation of
+the disposable cluster; no machine-power-loss durability claim is made.
+
+## Engineering scope established by this harness
+
+The harness above implements the following boundary checks. It does not change
+runtime recovery behavior. Compare persisted rows, accepted fake jobs and HTTP
+outcomes before selecting a fix.
 
 | Sequence | Required observation |
 | --- | --- |
@@ -62,7 +129,7 @@ fake. Compare persisted rows, accepted fake jobs and HTTP outcomes.
 | Record fails before commit; claim still fresh | Resume stays recoverable and does not submit. |
 | Repeated failed records, each followed by stale recovery | Reproduce today's repeated submissions. A future prevention check must fail this original behavior. |
 | Ten-minute threshold | Control time around the actual strict-less-than timestamp predicate; do not substitute a stale boolean. |
-| Late record after requeue/reclaim | Establish whether the older attempt can overwrite the new attempt's handle; currently a hypothesis, not a demonstrated defect. |
+| Late record after requeue/reclaim | Older attempt records first into the reclaimed submitting state; newer record is rejected. Demonstrated by the isolated harness, not a production incident claim. |
 | Wrong user and database outage | Ownership rejects the caller; persistence failure cannot be presented as a durable handle. |
 
 Before choosing a runtime fix, define the safety/availability decision for a job
