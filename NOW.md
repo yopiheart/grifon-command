@@ -1,49 +1,49 @@
 # NOW - the resume doc
-**Stamped: 2026-11-05; evidence-led review workflow and recovery investigation**
+**Stamped: 2026-11-05; isolated provider recovery harness**
 
-## Active task and boundaries
-Checkout: F:/CodexWorktrees/47bd/grifon-command.
-Branch: codex/evidence-led-review, based on main 7c422cd7 (PR205 merged).
-Draft PR225: https://github.com/yopiheart/grifon-command/pull/225
-Reviewed change afdbb3d6 is pushed and verified in the remote PR head.
-Neil approved proceeding after the X-post/codebase evaluation: tighten review
-instructions and investigate provider-submission recovery. No runtime changes,
-generation tuning, paid/provider calls, production writes, merge or deployment.
-PR201 live voice remains paused; no new Android microphone or release claim.
-Chat-release evidence remains in PR205 and its commits. Its deployment
-status has not been rechecked in this session; do not reuse its old pending work.
+## Active work
+Checkout: F:/CodexWorktrees/debb/grifon-command
+Branch: codex/provider-recovery-harness, based on main b46b5e71 (PR225 merged).
+Draft PR226: https://github.com/yopiheart/grifon-command/pull/226
+Implementation commit: 494b7c7b. Harness only. No runtime, migration, tuned
+content, dependency, paid provider or production data change.
+PR201 live voice remains paused. No new release or live microphone evidence.
 
-## Changes
-Codex and legacy Claude straw-man-audit now require evidence instead of a false
-hostile premise. Current per-instance rate-limit fallback and transactional,
-fail-closed finished-ad metering replace stale blanket fail-open descriptions.
-Review workflow and both verify-changes skills allow one fresh reviewer to cover
-smoke, correctness and relevant security; findings need a concrete path/impact,
-unverified concerns stay separate, and fixes receive scoped independent rechecks.
-Required independent review and existing tuned/paid/release approvals remain.
-workflows/provider-submission-recovery.md records the actual claim -> submit ->
-record gap, existing evidence, limitations and the next isolated integration slice.
-Repeated lost handle writes can repeat upstream submissions despite credit dedupe.
-A late old-attempt record after reclaim is a hypothesis requiring a boundary test.
+## Observed behavior
+The real Producer advance handler and unchanged scene SQL ran through Supabase
+JS, loopback PostgREST and isolated PostgreSQL. Two SQL claimers overlapped and
+one won. A dropped reply after commit resumed through the saved handle.
+Failed writes stayed blocked before and exactly at ten minutes; one
+millisecond later requeue was eligible. The two reproduced risks are:
+- Three fake jobs accepted after the initial failed handle write and two
+  stale recoveries of the same scene.
+- An older attempt recorded first after a newer claim. The newer record
+  returned changed:false and the older handle remained saved.
 
 ## Verification
-PASS: npm.cmd run check:codex (34 skills, 0 reference errors; 26 contracts).
-PASS: npm.cmd run test -- tests/producerOrchestrator.test.ts
-  tests/unit/finishedAdAtomic.test.ts (119 tests, 2 files).
-Initial unit startup hit a sandbox cache-write denial via reused node_modules;
-the same command passed with the required cache permission. No test was skipped.
-Dependencies reuse the existing desktop install with identical package-lock hash.
-PASS: paired old/new skill source evaluations, 2 scopes and 6 expectations each.
-Both versions passed; this does not demonstrate token savings or better recall.
-PASS: resume-doc strict check, diff whitespace check and audit-skill parity.
-PASS: independent review of this workflow/skill/investigation diff, 0 findings.
-Reviewer checked source claims, scope, parity, gates and whitespace against
-7c422cd7 plus the uncommitted changes; final handoff pointers follow that review.
-Evidence workspace: .tmp/review-workflow (local-only, ignored).
-Full application build/unit/browser runs and live DB/provider tests are NOT RUN:
-this change edits workflow documentation/skills only. No runtime fix is claimed.
+Windows Node 24.21.0, PostgreSQL 17.6, PostgREST 16.5.
+Normal characterization exit 0, nine PASS and two KNOWN RISK findings.
+Direct Node negative control exit 2 as expected, with the same nine cases.
+Forced PostgREST startup failure exit 1, nine NOT RUN, cleanup verified.
+Independent review and exact source rerun passed with no open findings.
+Build and bundle leak passed. Unit 1681 passed, 32 opt-in skips. Codex
+26/26 and ASCII, voice, eval prompt, domain, design and anchor checks passed.
+Separate finished-ad meter control passed on isolated PostgreSQL with the
+committed LF fixture. The Windows worktree copy changed the frozen hash.
+No app checkout file changed to make that control pass.
+
+Local evidence under .tmp/provider-recovery:
+- Normal: 2daffd04-e4db-459e-a8cf-f2efddcbf266
+- Negative control: 71a8de9a-4651-457f-9fd0-bb24d30ceae8
+- Setup failure: a4ce0ad9-f8d3-4334-bcff-fd5bd341e22b
+The reports record exact source hashes, fake job activity and stored rows.
+The harness uses synthetic auth/rate-limit seams and scripted provider
+operations. Browser, full orchestrator, hosted auth and real billing were
+not exercised. Portable tools are in ignored .tmp/provider-recovery-tools.
+Run and interpret using workflows/provider-submission-recovery.md.
 
 ## ▶ NEXT ACTION
-Review draft PR225 and its hosted checks; no merge or deployment is authorized.
-The next engineering slice is an isolated actual scene/API persistence harness
-from workflows/provider-submission-recovery.md, before selecting a runtime fix.
+Review draft PR226 and its hosted checks. The measured sequences are inputs
+to choosing a runtime recovery policy. Establish provider idempotency or
+reconciliation support and decide how to handle uncertain submissions before
+changing the protocol.
