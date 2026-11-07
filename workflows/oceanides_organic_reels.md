@@ -194,7 +194,7 @@ screening rather than a refreshed performance audit:
 | --- | --- | --- |
 | [Saveo](https://www.instagram.com/saveo.house/reel/DecvxHktyGJ/) | Illustrated choice/cliffhanger story | 15.6M |
 | [Temi](https://www.instagram.com/_temi_makeup/reel/DeqrASrBkQD/) | Expressive stylized character routine | 17M |
-| [Zuni](https://www.instagram.com/zuni.hr/reel/De2R1FQRJve/) | Familiar game-world interaction | 108M |
+| [Zuni](https://www.instagram.com/zuni.hr/reel/De2R1FQRJve/) | Continuous first-person prop handoff | 108M |
 | [Glovio](https://www.instagram.com/glovioai/reel/DeGpKrTE6zw/) | Short faceless athletic movement | 3.7M |
 
 The sample included pinned posts and did not establish account baselines,
@@ -217,9 +217,18 @@ locations to look at in a café washroom. Their choice can set the first clue
 of Part 2. The reference study records the original's illustrated scenes,
 paper inserts, and vote-to-sequel handoff. V2 is a 19s illustrated recut with
 expressive eyes, slow pushes, separate angles, a paper insert and an in-scene
-vote followed by a sequel slate. It is ready for picture and copy review.
+vote followed by a sequel slate. Neil accepted the locked picture and the
+[Eleven v4 sound pass](../clients/oceanides/organic/saveo-sound-receipt.md).
 [Source study](reference_studies/saveo-audience-choice.md) ·
 [Pilot and exact copy](../clients/oceanides/organic/saveo-choice-pilot.md).
+
+**Zuni follow-up, 2026-11-08.** The [source study](reference_studies/zuni-pov-prop-handoff.md)
+and Swipe File E22 separate the actual POV, handoff and character response
+from the initial game-world label. The [local Blender proof](../clients/oceanides/organic/zuni-pov-pilot.md)
+uses one camera in one space, with window framing, a practical pickup and
+an in-world light reveal. Put the next visual question in the scene and
+let attention shift through motion. Use overlays only if the action needs
+context. Keep the fiction separate from actual job footage and service proof.
 
 ## Preserved pilot and reproduction
 

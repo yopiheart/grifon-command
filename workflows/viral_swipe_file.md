@@ -381,6 +381,25 @@ that follows the audience's pick. The [Oceanides draft](../clients/oceanides/org
 tests this with a café washroom and a 14s local proof. **ONE_OFF.** Pattern Index
 counts and preset proposals stay at their existing status.
 
+### 2026-11-08 — E22 Zuni first-person prop handoff (Instagram, game-world fiction)
+
+**Source:** https://www.instagram.com/zuni.hr/reel/De2R1FQRJve/
+**Why autopsied:** next Oceanides format after Saveo. The initial shortlist
+displayed 108M views; no conversion or baseline-adjusted performance claim.
+**Evidence:** 454 decoded frames, 15 one-second samples, no scene candidates
+above 0.30. See the [source study](reference_studies/zuni-pov-prop-handoff.md)
+for source hash, shot observations and limits.
+
+| Hook | Pace driver | Overlay | Camera and transition | Payoff |
+| --- | --- | --- | --- | --- |
+| Window frames the stylized character, its vehicle and a red can. | Each movement changes what the viewer is looking at or what the prop does. | Small creator watermark; no observed HUD, voting or instruction cards. | POV exits through door framing, approaches, tilts down, lifts the prop, follows the vehicle. | The character responds and moves away after the prop interaction. |
+
+**So what:** stage the clue where the camera can find it, make the handoff
+physical, and show a consequence in the same space. The
+[Oceanides pilot](../clients/oceanides/organic/zuni-pov-pilot.md) turns this
+into a flashlight reveal. Audio and exact cut count remain unverified.
+**ONE_OFF; no Pattern Index counts or presets changed.**
+
 ### 2026-11-07 — E19 Dr. Plants ant-colony story (YouTube, nature documentary)
 
 **Source:** https://www.youtube.com/watch?v=PyiCHWfBQPY

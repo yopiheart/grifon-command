@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-11-07. Saveo V2 sound review with Eleven v4 delivered.**
+**Stamped: 2026-11-08. Saveo V2 sound accepted; Zuni POV picture proof.**
 
 ## Current session
 
@@ -33,7 +33,7 @@ Sibling ZIP oceanides-illustrative-v6-2026-11-07.zip has SHA256
 This is local preservation only. GitHub metadata confirmed this repository is
 PUBLIC; native audio/production media were not added to Git.
 
-The next Oceanides format is a Saveo-inspired audience choice. The café washroom
+A completed Oceanides format is a Saveo-inspired audience choice. The café washroom
 story ends with two visual options for the first location to check in Part 2.
 E21 and workflows/reference_studies/saveo-audience-choice.md record sampled
 source frames, the reported vote and the sequel caption. Exact cut count and
@@ -80,9 +80,33 @@ f14992dc6c7008dbf53c0bd8a2da9aa46aa6b390fbab133535ce27edbb99e3b6
 Full 456-frame decode and unchanged video stream hash passed. Stereo
 -18.03 LUFS / -2.13 dBTP and mono -20.97 LUFS / -2.16 dBTP. The local
 Whisper read recovered the story, both clue names, and the vote prompt.
-Some Filipino spellings and CTA wording were ambiguous in ASR. Direct
-listening and phone playback are pending. Receipt and cue evidence:
+Some Filipino spellings and CTA wording were ambiguous in ASR. Neil accepted
+the exact sound review on 2026-11-08. APPROVAL.md sits beside the master and
+records both archive hashes. No separate agent listening or phone playback
+check was recorded. Receipt and cue evidence:
 clients/oceanides/organic/saveo-sound-receipt.md.
+
+Zuni is the next original Oceanides pilot. Source Reel De2R1FQRJve was
+decoded locally (454 frames; 15 visual samples). E22 and
+workflows/reference_studies/zuni-pov-prop-handoff.md document the apparent
+single POV, door transition, physical prop handoff and character response.
+The separate proof uses one Blender camera and an original fictional café
+scene. It follows a gloved hand through a truck exit, flashlight pickup and
+light reveal on a wet grate; the caretaker acknowledges it. No new copy,
+voice, paid generation or publishing. Pilot:
+clients/oceanides/organic/zuni-pov-pilot.md. Picture review pending.
+
+Zuni local archive: F:/CodexCreativeArchive/oceanides/organic/zuni-pov-proof-v1/
+Movie: oceanides-zuni-POV-PROOF.mp4, silent 15.00s, 540x960, 24fps.
+SHA256 d3b5b25c5f752ea70153bbfad893819fc9c72c2ace1b92ef9f62d37c9fc38d1b
+All 360 native frames decoded. Twelve sampled encoded frames cover the truck
+exit, pickup, lamp, reaction and transparent mark. No abrupt scene candidates
+above 0.30. The archived source opens with one camera and seven beat markers.
+All 13 package files matched. Editable ZIP:
+F:/CodexCreativeArchive/oceanides/organic/oceanides-zuni-pov-editable-v1.zip
+ZIP SHA256 390dce4ab8ea89eef0a87ed930374ddf55f514a0d0acf45cefc10231bee9a7a6
+Domain language, artifact anchors, 11 local links and staged diff checks
+passed. No app code changed. Review the Zuni picture before any sound work.
 
 Dr. Plants takeaway: test a story that follows a subject through question, clues,
 and payoff; use VO when it supplies context and causality. A 25-35 second narrated

@@ -7,6 +7,10 @@ takes on each narration click. The original v3 takes are archived. The final
 audio uses v4 take 1, the original score and latch, and paper candidate 4.
 [Original spec](saveo-sound-spec.md) · [Approved v4 amendment](saveo-sound-v4-amendment.md).
 
+2026-11-08: Neil accepted this exact sound review and moved on to the next
+format. The approval sidecar sits beside the local master and records the
+verified movie and editable ZIP hashes.
+
 ## Reconciled credits
 
 | Generation | Credits |
@@ -39,16 +43,15 @@ and the final encoded mix. Take 1 produced the clearest recognition of both
 clue names. The final transcript recovered the story beats, both clues, and
 the vote prompt in sequence. The recognizer produced spelling and word
 boundary errors in Filipino, including rendering the CTA conjunction as
-English “or.” This is a content cross-check. Exact pronunciation, naturalness,
-creative balance, and phone playback await listening review.
+English “or.” This is a content cross-check. Neil accepted the delivered mix.
+No independent listening or phone playback check was recorded.
 [Whisper.cpp release](https://github.com/ggml-org/whisper.cpp/releases/tag/b5454)
 · [Model](https://huggingface.co/ggerganov/whisper.cpp/blob/main/ggml-base-q5_1.bin).
 
 The MP4 decoded all 456 frames at 540x960, 24fps and 19.00s, with 48kHz stereo
 AAC. The approved compressed picture stream hash matched. The encoded mix
 measured -18.03 LUFS and -2.13 dBTP in stereo, and -20.97 LUFS and -2.16 dBTP
-in mono. The last 100ms measured below -120dBFS peak. The sound review remains
-for Neil's listening review.
+in mono. The last 100ms measured below -120dBFS peak.
 
 Output SHA-256:
 `03fb4a64363458a984ef450c9e19d5c4c17d399046f9b139ec8f22297e49836b`.
