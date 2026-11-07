@@ -37,6 +37,12 @@ service. Crew review of the depicted drainage arrangement remains pending.
    knowledge, motion, transitions, sound, and ending. Record timestamps and the
    limits of observation. High displayed views alone do not establish why it won
    or that it will bring Oceanides customers.
+   For each format, map the reference's shot sizes, character or object motion,
+   camera movement, cuts, inserts, text timing and ending before drawing the
+   first frame. Use the chosen Reel to set the edit. Use the YouTube learnings
+   to sharpen the hook, cause and consequence, and payoff within that edit.
+   Compare the silent proof against the reference's actual beats before sound.
+   Keep the Oceanides identity and readable safe margins across treatments.
 4. Write a short beat sheet: time, viewer question/emotion, visual change,
    narration or text, evidence, and sound cue. Each beat should advance the
    explanation or story. Write exact customer-facing Taglish for Neil's approval.
@@ -205,8 +211,9 @@ Preset promotion and batch rollout are separate decisions.
 **Saveo follow-up, 2026-11-07.** The audience-choice pilot gives viewers two
 locations to look at in a café washroom. Their choice can set the first clue
 of Part 2. The reference study records the original's illustrated scenes,
-paper inserts, and vote-to-sequel handoff. The new 14s silent draft is ready for
-copy and direction review.
+paper inserts, and vote-to-sequel handoff. V2 is a 19s illustrated recut with
+expressive eyes, slow pushes, separate angles, a paper insert and an in-scene
+vote followed by a sequel slate. It is ready for picture and copy review.
 [Source study](reference_studies/saveo-audience-choice.md) ·
 [Pilot and exact copy](../clients/oceanides/organic/saveo-choice-pilot.md).
 

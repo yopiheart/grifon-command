@@ -50,6 +50,12 @@ The Saveo footage is reference evidence for a single experiment. Its source
 graphics, character, finance narrative and audio stay separate from the pilot.
 [Oceanides pilot and exact draft copy](../../clients/oceanides/organic/saveo-choice-pilot.md).
 
+Neil asked for a closer visual adaptation after V1. V2 uses a wide scene,
+expressive character close-ups, a hand and latch detail, a separate paper shot,
+two clue angles, and a return to the character for the timed vote. A dedicated
+sequel slate follows the vote. Slow push-ins support the illustrated shots.
+The brief latch jolt is a directing choice for the Oceanides story.
+
 Local evidence is under
 `F:/CodexCreativeArchive/references/saveo-DecvxHktyGJ/`. Source SHA-256
 `9cbba4d97ff53b6e963382e774cf8d3820863f2e1235bbb34a6b91186397f559`.

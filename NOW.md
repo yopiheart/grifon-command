@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-11-07. Saveo-inspired choice proof ready for review.**
+**Stamped: 2026-11-07. Saveo illustrated recut V2 ready for review.**
 
 ## Current session
 
@@ -39,13 +39,19 @@ E21 and workflows/reference_studies/saveo-audience-choice.md record sampled
 source frames, the reported vote and the sequel caption. Exact cut count and
 audio grammar remain unverified. Pattern Index counts are unchanged.
 
-Saveo draft and exact copy: clients/oceanides/organic/saveo-choice-pilot.md.
-Local editable archive: F:/CodexCreativeArchive/oceanides/organic/saveo-choice-proof-v1/
-Proof: oceanides-saveo-choice-PROOF.mp4, 14s, 540x960, 24fps, 336 decoded frames.
-SHA256 4aa28e97bba7ef1914da9ab3c178ba6702e81692e76145f4d33ac8776e0f5968
-Text bounds, editability and nine encoded transition/end samples passed.
-The silent proof uses authored SVG and HTML. Generation spend was zero.
-Next action is Neil's review of the visual direction and exact draft copy.
+Neil directed each format to follow its own Reel's editing and use the YouTube
+learnings to improve that edit. Saveo V2 adds visible eyes, gaze shifts,
+slow pushes, a short latch bump, distinct clue angles, a paper insert, and a
+separate vote and sequel slate. The draft wording is in the pilot brief.
+Saveo V2 brief: clients/oceanides/organic/saveo-choice-pilot.md.
+Local archive: F:/CodexCreativeArchive/oceanides/organic/saveo-choice-proof-v2/
+Proof: oceanides-saveo-choice-V2.mp4, 19s, 540x960, 24fps, 456 decoded frames.
+SHA256 3320f092af3752ffb381ab68a7c5355e61da11877fc276d2c61ca2f879e5211c
+Nine encoded cuts matched the timeline. Text bounds, editability and 17
+encoded samples passed. V1 remains in saveo-choice-proof-v1 and its hash
+matched. V2 is the silent picture recut for Neil's review. Generation spend
+was zero. Sound generation has a separate approval after picture lock.
+All 21 listed V2 files matched their archive and editable ZIP hashes.
 
 Dr. Plants takeaway: test a story that follows a subject through question, clues,
 and payoff; use VO when it supplies context and causality. A 25-35 second narrated

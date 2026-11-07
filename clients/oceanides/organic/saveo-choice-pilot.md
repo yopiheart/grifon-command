@@ -1,4 +1,46 @@
-# Oceanides choice story V1
+# Oceanides choice story
+
+## V2 illustrated recut
+
+Neil asked for the source Reel's editing to shape each format. He called out
+the character's visible eyes, scene changes during the story, and slow push-ins.
+V2 stages the same café story as a comic with separate camera setups. The
+character looks toward the door, reacts in the washroom, and changes gaze
+as the choices appear. The established draft wording is split across the shots.
+
+| Time | Shot and motion | Exact draft text |
+| --- | --- | --- |
+| 0-1.75s | Full-frame café wide. Slow push toward the worker and door. | Kuwento 01 · Ilustrasyon / May amoy sa CR. |
+| 1.75-3.25s | Tight face insert in the café. Pupils track toward the door. | Magbubukas na yung café. |
+| 3.25-4.5s | Hand turns the brass latch. Light widens at the jamb and a short camera bump accents the release around 4.05s. | — |
+| 4.5-6.25s | Cut inside. The mop and bucket establish the cleaning beat while the camera moves toward the fixtures. | Bagong linis. |
+| 6.25-8.25s | Reaction close-up. The worker looks down and the brow moves. | Pero bumalik yung amoy. |
+| 8.25-10.25s | Full-frame paper insert. Ink circles are drawn around the two illustrated fixtures in sequence. | Saan kaya galing? |
+| 10.25-11.5s | Low tile angle on the floor drain. | A · Floor drain |
+| 11.5-12.75s | Separate close angle on the sink and faucet. | B · Lababo |
+| 12.75-15.75s | Return to the worker. A then B enters under the face as the gaze changes. Both hold for about 2.1s. | Saan ka unang titingin? / A · Floor drain / B · Lababo |
+| 15.75-19s | Hard cut to the dark sequel slate and transparent Oceanides mark. | Comment A o B. / Doon tayo magsisimula sa Part 2. |
+
+The side-by-side review pairs Saveo's setting wide, character close-up,
+paper insert, object detail, in-scene vote and end slate with the new shots.
+V2 uses a 19-second timeline, original characters and local SVG/HTML. The
+lower centered story captions sit below the action. The paper scene uses
+dark ink and the closing slate uses the Oceanides palette. The draft is silent
+for picture review. Source audio analysis and a platform playback check remain
+unverified. [Saveo shot study](../../../workflows/reference_studies/saveo-audience-choice.md).
+
+V2 is saved at `F:/CodexCreativeArchive/oceanides/organic/saveo-choice-proof-v2/`.
+The 540x960, 24fps MP4 decoded through all 456 frames. The scene check matched
+all nine authored cut times. The four source comparison beats of wide,
+close-up, paper, and choice were also checked against the saved reference
+frames. Ten layout samples and seventeen encoded samples cover the edit,
+including the latch bump, both choice entrances, and the final hold.
+The editable ZIP is `F:/CodexCreativeArchive/oceanides/organic/oceanides-saveo-choice-v2-editable.zip`.
+
+V2 SHA-256
+`3320f092af3752ffb381ab68a7c5355e61da11877fc276d2c61ca2f879e5211c`.
+
+## V1 proof history
 
 2026-11-07. Draft copy and silent portrait motion proof for Neil's review.
 The viewer is a business operator who notices a recurring washroom issue
