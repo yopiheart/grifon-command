@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-11-07. Saveo sound assets saved, v4 amendment pending.**
+**Stamped: 2026-11-07. Saveo V2 sound review with Eleven v4 delivered.**
 
 ## Current session
 
@@ -64,10 +64,25 @@ Native results, evidence, and prepared 19.00s music/latch stems are saved at
 F:/CodexCreativeArchive/oceanides/organic/saveo-sound-in-progress-v1/.
 Latch envelope anchor is frame 98. The prior preflight archive remains at
 F:/CodexCreativeArchive/oceanides/organic/saveo-sound-preflight-v1/.
-Next action is approval of clients/oceanides/organic/saveo-sound-v4-amendment.md
-for one v4 replacement and the paper effect, up to 278 more credits and 840
-cumulative. v4 is staged with the same 160 characters and voice. Its 210
-estimate includes the observed fee. Reconcile its actual usage before paper.
+Neil approved up to 278 more credits. Eleven v4 used 210 (160 base and 50
+owner fee). Paper used 67. Reconciled additional usage 277 and cumulative
+usage 839/840. The final balance was 59,463. Two remaining Generate clicks
+completed without retries. The mix uses v4 take 1 and paper take 4 from
+their returned batches.
+
+Saveo sound review: F:/CodexCreativeArchive/oceanides/organic/saveo-sound-review-v1/
+Movie: oceanides-saveo-V2-sound-review.mp4
+SHA256 03fb4a64363458a984ef450c9e19d5c4c17d399046f9b139ec8f22297e49836b
+Editable sound ZIP: F:/CodexCreativeArchive/oceanides/organic/oceanides-saveo-v2-sound-editable.zip
+All 41 listed files matched the extracted ZIP hashes. The local remix from
+the extracted ZIP reproduced the exact MP4. ZIP SHA256
+f14992dc6c7008dbf53c0bd8a2da9aa46aa6b390fbab133535ce27edbb99e3b6
+Full 456-frame decode and unchanged video stream hash passed. Stereo
+-18.03 LUFS / -2.13 dBTP and mono -20.97 LUFS / -2.16 dBTP. The local
+Whisper read recovered the story, both clue names, and the vote prompt.
+Some Filipino spellings and CTA wording were ambiguous in ASR. Direct
+listening and phone playback are pending. Receipt and cue evidence:
+clients/oceanides/organic/saveo-sound-receipt.md.
 
 Dr. Plants takeaway: test a story that follows a subject through question, clues,
 and payoff; use VO when it supplies context and causality. A 25-35 second narrated

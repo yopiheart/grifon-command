@@ -2,7 +2,9 @@
 
 2026-11-07. Neil asked to use Eleven v4 for the narration after the original
 Eleven v3 submission. The v3 result is archived and the requested v4 take is
-staged for approval. The music and latch WAVs are available for the final mix.
+staged. Neil approved up to 278 more credits and both approved actions completed.
+The [sound receipt](saveo-sound-receipt.md) records the 277-credit addition and
+the local review. The remaining-scope section below preserves the approval terms.
 [Original approved sound spec and exact inputs](saveo-sound-spec.md).
 
 The source remains the approved 19.00s picture
