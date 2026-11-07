@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-11-07. Neil approved Glovio Reel V1 with sound.**
+**Stamped: 2026-11-07. Saveo-inspired choice proof ready for review.**
 
 ## Current session
 
@@ -32,6 +32,20 @@ Sibling ZIP oceanides-illustrative-v6-2026-11-07.zip has SHA256
 5cfd7142b824c27a01a8cd6f3dbc70d2467fd6aae875411aa22547b9a945b277.
 This is local preservation only. GitHub metadata confirmed this repository is
 PUBLIC; native audio/production media were not added to Git.
+
+The next Oceanides format is a Saveo-inspired audience choice. The café washroom
+story ends with two visual options for the first location to check in Part 2.
+E21 and workflows/reference_studies/saveo-audience-choice.md record sampled
+source frames, the reported vote and the sequel caption. Exact cut count and
+audio grammar remain unverified. Pattern Index counts are unchanged.
+
+Saveo draft and exact copy: clients/oceanides/organic/saveo-choice-pilot.md.
+Local editable archive: F:/CodexCreativeArchive/oceanides/organic/saveo-choice-proof-v1/
+Proof: oceanides-saveo-choice-PROOF.mp4, 14s, 540x960, 24fps, 336 decoded frames.
+SHA256 4aa28e97bba7ef1914da9ab3c178ba6702e81692e76145f4d33ac8776e0f5968
+Text bounds, editability and nine encoded transition/end samples passed.
+The silent proof uses authored SVG and HTML. Generation spend was zero.
+Next action is Neil's review of the visual direction and exact draft copy.
 
 Dr. Plants takeaway: test a story that follows a subject through question, clues,
 and payoff; use VO when it supplies context and causality. A 25-35 second narrated

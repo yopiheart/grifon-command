@@ -202,6 +202,14 @@ preserves the scene, exact text and cue timings, native audio, and mix.
 Preset promotion and batch rollout are separate decisions.
 [Accepted export and reproduction notes](../clients/oceanides/organic/glovio-sound-receipt.md).
 
+**Saveo follow-up, 2026-11-07.** The audience-choice pilot gives viewers two
+locations to look at in a café washroom. Their choice can set the first clue
+of Part 2. The reference study records the original's illustrated scenes,
+paper inserts, and vote-to-sequel handoff. The new 14s silent draft is ready for
+copy and direction review.
+[Source study](reference_studies/saveo-audience-choice.md) ·
+[Pilot and exact copy](../clients/oceanides/organic/saveo-choice-pilot.md).
+
 ## Preserved pilot and reproduction
 
 Local archive outside the worktree, copied without changing the originals:

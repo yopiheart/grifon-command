@@ -357,6 +357,30 @@ Keep navy, white Inter/shadow, approved transparent logo, and conditional claims
 do not import the condensed corner typography, boxing identity/audio, or source
 reading speed. **ONE_OFF; no Pattern Index counts or tuned content changed.**
 
+### 2026-11-07 — E21 Saveo Day 1 audience choice (Instagram, illustrated fiction)
+
+**Source:** https://www.instagram.com/saveo.house/reel/DecvxHktyGJ/
+**Why autopsied:** Neil's shortlisted high-engagement choice story offers a
+different format for Oceanides after two explainers. Earlier screening displayed
+15.6M views. Current UI displayed 12.6K beside comments and 28.5K beside reposts.
+**Format:** illustrated dilemma with graphic explainers and a viewer vote,
+86.97s portrait. Source hash and visual sequence in the
+[Saveo study](reference_studies/saveo-audience-choice.md).
+
+| Hook | Pace driver | Captions | Edit grammar | Camera | Reveal | CTA |
+| --- | --- | --- | --- | --- | --- | --- |
+| Character, bags and cash in a motel room. | Illustrated action alternates with paper inserts and changing status values. | Lower-center phrases in sampled story frames. Status row and large type in inserts. | Detected 24 candidate boundaries at scene threshold 0.30. Audio grammar unverified. | Wide room, seated medium close, note details and face close at a window. | A recurring room and changed status make the dilemma visible. | Two labels around 81s, then a Part 2 slate with the voting instruction. |
+
+**Evidence:** full-timeline four-second samples and one-second ending samples.
+The Day 1 creator comment and the Day 2 caption both report HIDE at 61%.
+The vote count was not independently audited. The art is stylized illustration
+with unknown authoring method. Direct listening and exact cut count are unverified.
+
+**So What:** use one familiar location, two visual choices and an honest sequel
+that follows the audience's pick. The [Oceanides draft](../clients/oceanides/organic/saveo-choice-pilot.md)
+tests this with a café washroom and a 14s local proof. **ONE_OFF.** Pattern Index
+counts and preset proposals stay at their existing status.
+
 ### 2026-11-07 — E19 Dr. Plants ant-colony story (YouTube, nature documentary)
 
 **Source:** https://www.youtube.com/watch?v=PyiCHWfBQPY
