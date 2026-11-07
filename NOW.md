@@ -1,15 +1,66 @@
 # NOW - the resume doc
-**Stamped: 2026-11-05; isolated provider recovery harness**
+**Stamped: 2026-11-07; Oceanides organic Reel workflow saved**
 
-## Active work
+## Current session
+
+Checkout: F:/CodexWorktrees/cce6/grifon-command
+Branch: codex/oceanides-organic-workflow, based on main 37f54d67 (PR226 merged).
+Scope: document Neil's approved organic illustrative-explainer flow, preserve
+local sources, and assess the new Dr. Plants storytelling summary. No app code,
+tuned content, dependency, provider generation, publication, or deployment change.
+
+Reusable runbook: workflows/oceanides_organic_reels.md. It records the reference
+limits, evidence/illustration boundary, connected 2-3 second progression, centered
+white Inter/shadow/no-box overrides, transparent updated logo, exact approved
+contact numbers, VFX pass, picture lock, paid sound spec, and verification.
+The pilot is 14 seconds, 540x960, 24 fps. Picture V6 was accepted and the approved
+sound pass completed. Direct listening, crew validation, a current platform preview,
+and published performance remain pending. No VO was generated.
+
+Current local review:
+.tmp/oceanides-reel-motion/oceanides-reel-v6-sound-review.mp4
+SHA256 779d46414e73375b77612e50b591ffe3324a2a494eb2a7e7223968d0f26cd273
+
+Local archive outside the worktree:
+F:/CodexCreativeArchive/oceanides/organic/illustrative-explainer-001/
+31 copied files matched their original SHA-256 values; manifest.json records them.
+Sibling ZIP oceanides-illustrative-v6-2026-11-07.zip has SHA256
+5cfd7142b824c27a01a8cd6f3dbc70d2467fd6aae875411aa22547b9a945b277.
+This is local preservation only. GitHub metadata confirmed this repository is
+PUBLIC; native audio/production media were not added to Git.
+
+Dr. Plants takeaway: test a story that follows a subject through question, clues,
+and payoff; use VO when it supplies context and causality. A 25-35 second narrated
+investigation is a proposed future test, not a rewrite of the accepted pilot.
+The attached summary and located interview are not a frame-by-frame video autopsy.
+Do not copy low upload frequency into a local service business or treat VO as a
+proven cause of virality. Do not invent customer testimony or a diagnostic outcome.
+
+Next: Glovio is Neil's requested reference. Inspect the specific shortlisted Reel
+before proposing one Oceanides adaptation. Keep narrative format separate from
+motion style. No new paid generation or multi-page batch is approved by this save.
+
+Verification/handoff: all 31 archive copy/hash checks passed. The archived renderer
+passed --plates-only --check-edit (exit 0) in an isolated working copy, covering
+editable text, bounds, logo alpha, and plate creation. Accepted movie hashes are
+unchanged. git diff --check passed. App build/test and provider calls were not
+run for this documentation-only change. Draft PR handoff is pending.
+
+## Previous engineering handoff (retained)
+
+The provider-recovery work below was recorded on 2026-11-05. PR226 is now merged
+at this checkout's base; its old draft-review next step is superseded. The measured
+runtime risks and the need to choose a recovery policy remain unresolved.
+
+### Provider recovery work
 Checkout: F:/CodexWorktrees/debb/grifon-command
 Branch: codex/provider-recovery-harness, based on main b46b5e71 (PR225 merged).
-Draft PR226: https://github.com/yopiheart/grifon-command/pull/226
+PR226 (merged): https://github.com/yopiheart/grifon-command/pull/226
 Implementation commit: 494b7c7b. Harness only. No runtime, migration, tuned
 content, dependency, paid provider or production data change.
 PR201 live voice remains paused. No new release or live microphone evidence.
 
-## Observed behavior
+### Observed behavior
 The real Producer advance handler and unchanged scene SQL ran through Supabase
 JS, loopback PostgREST and isolated PostgreSQL. Two SQL claimers overlapped and
 one won. A dropped reply after commit resumed through the saved handle.
@@ -20,7 +71,7 @@ millisecond later requeue was eligible. The two reproduced risks are:
 - An older attempt recorded first after a newer claim. The newer record
   returned changed:false and the older handle remained saved.
 
-## Verification
+### Verification
 Windows Node 24.21.0, PostgreSQL 17.6, PostgREST 16.5.
 Normal characterization exit 0, nine PASS and two KNOWN RISK findings.
 Direct Node negative control exit 2 as expected, with the same nine cases.
@@ -42,8 +93,8 @@ operations. Browser, full orchestrator, hosted auth and real billing were
 not exercised. Portable tools are in ignored .tmp/provider-recovery-tools.
 Run and interpret using workflows/provider-submission-recovery.md.
 
-## ▶ NEXT ACTION
-Review draft PR226 and its hosted checks. The measured sequences are inputs
+### Engineering follow-up
+The measured sequences are inputs
 to choosing a runtime recovery policy. Establish provider idempotency or
 reconciliation support and decide how to handle uncertain submissions before
 changing the protocol.
