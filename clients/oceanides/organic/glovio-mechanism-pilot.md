@@ -1,7 +1,7 @@
 # Oceanides Glovio-inspired mechanism pilot
 
-2026-11-07. Status: **picture/copy accepted by Neil's proceed message; sound spec awaiting paid approval**.
-Local production only; no paid generation, publishing, or deployment.
+2026-11-07. Status: **picture/copy accepted; approved music/SFX pass delivered for listening review**.
+Local video production; three authorized audio generations, no publishing or deployment.
 Reference analysis: [Glovio action breakdown](../../../workflows/reference_studies/glovio-boxing-action-breakdown.md).
 
 ## Intended behavior
@@ -38,8 +38,9 @@ The end card also reads:
 > Smart: 0939-245-6217
 
 Neil accepted the new picture/copy after viewing the silent draft. The separate
-[sound spec](glovio-sound-spec.md) proposes a 301-credit maximum and still needs
-its own paid approval. No delivery deadline, repair guarantee,
+[sound spec](glovio-sound-spec.md) received Neil's explicit 301-credit approval;
+the [sound receipt](glovio-sound-receipt.md) records the completed pass and its
+remaining listening checks. No delivery deadline, repair guarantee,
 customer testimony, or assertion that a tank is full is included.
 
 ## Production and review
@@ -63,18 +64,19 @@ hard blocker visible in the three stills. Small low-flow seams remain; water's
 opaque blue look is stylized. This is not proof of fluid simulation or finished
 production quality. Candidate one is preserved under `v1/`.
 
-The reference's audible grammar was not directly inspected. This review is
-silent; no borrowed boxing audio, saved stock score, or procedural music was
-substituted. The separate ElevenLabs music/SFX spec is fitted to this timeline,
-following the shared music workflow and paid-spec approval rule. No paid audio
-or VO is authorized by this pilot brief alone.
+The reference's audible grammar was not directly inspected. The original silent
+review is preserved. The approved ElevenLabs pass adds one original score and
+two water effects; no borrowed boxing audio, saved stock score or procedural
+music was substituted. See the separate spec and receipt for the exact limited
+authorization, generation evidence and new sound review. No VO was generated.
 
 ## Verification and next step
 
 Text plates passed centered bounds, logo-corner transparency, and an editable
 text check. Render/decode and sampled transition results are recorded with the
-completed local output and in NOW.md. Actual phone/Reels preview, client technical
-review, audio, and published performance remain pending.
+completed local output and in NOW.md. Sound-review duration, unchanged picture,
+decode and stereo/mono levels passed. Actual listening/phone/Reels preview,
+client technical review and published performance remain pending.
 
 Reproduce in a working copy of the saved source, using installed Blender 5.2.2,
 Playwright/Chromium, Sharp, and FFmpeg. Scripts overwrite task-owned filenames.

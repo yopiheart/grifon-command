@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-11-07; Glovio picture accepted, sound preflight awaiting 301-credit approval**
+**Stamped: 2026-11-07; Glovio approved sound pass delivered, listening review pending**
 
 ## Current session
 
@@ -9,8 +9,9 @@ Draft PR230: https://github.com/yopiheart/grifon-command/pull/230
 Runbook commit: 02ae639e, pushed. No merge requested or performed.
 Scope: document Neil's approved organic illustrative-explainer flow, preserve
 local sources, inspect Dr. Plants and Glovio references, and create a separate
-original Glovio-inspired local mechanism draft. No application code,
-tuned content, dependency, provider generation, publication, or deployment change.
+original Glovio-inspired local mechanism film with its approved music/two-SFX
+pass. No application code, tuned content, dependency, publication or deployment
+change. Exactly three approved ElevenLabs Generate actions completed this turn.
 
 Reusable runbook: workflows/oceanides_organic_reels.md. It records the reference
 limits, evidence/illustration boundary, connected 2-3 second progression, centered
@@ -74,10 +75,11 @@ Independent review covered three stills, not video/audio. Small low-flow seams
 remain. Neil accepted the new picture/copy with his latest proceed message.
 Exact draft/timing: clients/oceanides/organic/glovio-mechanism-pilot.md.
 
-Current Glovio-inspired silent draft: 11s, 540x960, 24fps, 264 frames; eight seconds
+Preserved Glovio-inspired silent picture: 11s, 540x960, 24fps, 264 frames; eight seconds
 of 3D motion and three-second contact card. Centered white Inter/shadow, updated
 transparent mark and previously approved contact wording. New hook/body copy is
-in .tmp/oceanides-glovio-pilot/beats.json. No music, SFX or VO was generated.
+in .tmp/oceanides-glovio-pilot/beats.json. The new sound review adds music and
+two SFX while copying the accepted picture stream; no VO was generated.
 Local review/source archive (42 verified files, excluding regenerable frame cache):
 F:/CodexCreativeArchive/oceanides/organic/glovio-mechanism-pilot/
 Movie: oceanides-glovio-DRAFT-silent.mp4
@@ -85,26 +87,45 @@ SHA256 93130b4ec7439538817cf7aa6e8d5dcbaede523d670e1189278cac1fac28119f
 Editable ZIP: F:/CodexCreativeArchive/oceanides/organic/oceanides-glovio-pilot-editable.zip
 Archives are local preservation, not off-device backup; media remain outside Git.
 
-Sound preflight is concrete: clients/oceanides/organic/glovio-sound-spec.md binds
-to the accepted movie hash and proposes exactly three Generate actions, capped
-at 301 existing credits: Music v2.5, one 11s variant (live quote 165), plus two
-SFX v3 actions (live quote 68 each). Exact prompts, settings, cues, pass/fail and
-evidence are recorded. No VO, reference upload, paid QA or publishing. Starter
-plan and live controls were observed. No Generate was clicked; paid actions zero.
-Spec approval is pending in an asynchronous question; never treat silence as
-approval or reuse the previous episode's 414-credit authorization.
+Neil explicitly approved the exact sound spec: "Approve up to 301 credits."
+All three Generate actions completed: Music v2.5, one custom-11s variant (quote
+165; native 12.04s WAV), plus two SFX v3 actions (quote 68 each; candidate 1 WAVs,
+4s flow and 2s buildup). No retry, extra variant, VO, reference upload, paid QA,
+top-up or publishing. Exact prompts/settings, IDs, pre-submit screenshots,
+native hashes and balances are in audio-v1/generation-ledger.json and the archive.
+Quotes total 301; visible balance 60,601 -> 60,302, observed decrease 299.
+This is not an itemized settled billing ledger; the music profile was stale.
+Receipt: clients/oceanides/organic/glovio-sound-receipt.md.
 
 Local preflight archive, six copy/hash-verified files:
 F:/CodexCreativeArchive/oceanides/organic/glovio-sound-preflight-v1/
-Includes exact spec, cue plan and live-quote screenshots. The accepted silent
-movie hash is unchanged. Next: obtain the 301-credit spec approval, recheck live
-quotes, then generate once per approved asset and mix into a new review file.
+Includes the historical pre-approval spec, cue plan and live-quote screenshots;
+it is preserved unchanged. Completed editable source/audio/output archive:
+F:/CodexCreativeArchive/oceanides/organic/glovio-sound-v1/
+ZIP: F:/CodexCreativeArchive/oceanides/organic/oceanides-glovio-sound-editable-v1.zip
+All 65 listed source/output files matched archive and extracted ZIP hashes.
+ZIP SHA256 e87b178310249e805f992b4f3fae7ef81bc872cd23eba9c57c63020d9823b782
+The local mix reran from the extracted ZIP and reproduced the exact movie hash.
+Current review: oceanides-glovio-sound-review-v1.mp4 in that archive.
+SHA256 a03704a7f379cfd1f3886d1a0c6a09f1c17a8d4624fe984b735b969026a4ae21
+The original silent archive and accepted first film remain unchanged.
+
+Sound verification: full decode exit 0, 11.00s, 264 frames, 540x960/24fps,
+AAC 192kbps/48kHz stereo. Approved compressed video stream hash is unchanged.
+Stereo -18.03 LUFS / -1.88 dBTP; mono -21.77 LUFS / -4.94 dBTP.
+Continuous original-tempo score with tail fade, no source joins; flow filtered
+from 2s and out by 4s; measured buildup attack aligned at 4.5s/frame 108.
+An envelope anchor is not a perceptual-onset check. Listening/creative audio
+acceptance and phone/Reels preview remain pending; do not claim auditioned quality.
+Local mix script has no network/provider operation. App build/test not run for
+this media/documentation pass. Next: Neil's listening review and any local mix
+corrections, then phone/client checks before considering publication or a batch.
 
 Verification/handoff: all 31 archive copy/hash checks passed. The archived renderer
 passed --plates-only --check-edit (exit 0) in an isolated working copy, covering
 editable text, bounds, logo alpha, and plate creation. Accepted movie hashes are
-unchanged. git diff --check passed. App build/test and provider calls were not
-run for this documentation-only change. Reference extraction and scene-candidate
+unchanged. git diff --check passed. App build/test was not run for the
+documentation/media work. Reference extraction and scene-candidate
 analysis both exited 0; candidate statistics are explicitly not a full shot count.
 Reference document links, unique E19 heading, all 26 archive hashes, and staged
 diff checks passed. Glovio: 192 native 3D frames rendered with Blender 5.2.2;

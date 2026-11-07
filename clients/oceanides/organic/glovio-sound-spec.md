@@ -1,9 +1,9 @@
 # Oceanides Glovio pilot: sound test spec
 
-Prepared 2026-11-07. **Status: awaiting approval of this exact paid spec.**
-Neil's latest proceed message accepts the picture/copy and authorizes preparation
-of the sound pass. No new audio generation has run. The previous episode's
-414-credit authorization does not fund this test.
+Prepared 2026-11-07. **Status: Neil approved this exact spec up to 301 credits.**
+Approval was received through the budget question: "Approve up to 301 credits."
+It covers one score and two SFX actions as specified below. Generation/result
+status belongs in the receipt; this spec preserves the approved inputs and limit.
 
 ## Purpose, input and limit
 
