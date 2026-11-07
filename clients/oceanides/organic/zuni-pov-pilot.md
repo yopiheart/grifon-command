@@ -3,7 +3,7 @@
 ## V2 look direction
 
 Neil clarified that the world and first-person operator should look real.
-Only the caretaker on camera should read as hand-drawn anime. The supplied
+Only the Filipino caretaker on camera should read as hand-drawn anime. The supplied
 still guides line weight, cel shadows and adult proportions. Use an original
 Filipino caretaker, with matching light and contact shadow, rather than the
 reference character's likeness or costume. The V1 Blender file stays useful
@@ -12,10 +12,20 @@ for camera, timing and prop blocking.
 One vertical look keyframe is saved locally in
 `F:/CodexCreativeArchive/oceanides/organic/zuni-hybrid-look-v2/`.
 It shows a photographic hand, flashlight and wet café lane with one
-illustrated character. This is a still for look review. The smallest motion
-test is the light coming on, the caretaker looking down and the camera
-settling, with a stable face, real shadow and clean tracking throughout.
-Test that shot before remaking the full 15s. Add the existing transparent
+illustrated character. Neil accepted the still and approved proceeding with
+the short motion test. The resulting 4s proof uses the locked plate, small
+POV and wrist movement, an authored beam cue at 0.84s, and the caretaker's
+head and shoulder reaction. The proof is silent and has no visible copy.
+
+The 900x1600, 24fps export fully decoded all 96 frames. Sampled frames show
+the face and contact shadow holding through the reaction. The grate region
+brightens after the switch. Local playback reached the end at a 390x844
+viewport with no dropped frames. The editable composition, still, export,
+and evidence are saved in
+`F:/CodexCreativeArchive/oceanides/organic/zuni-hybrid-motion-v2/`.
+This motion test is authored from a single still. A real POV plate or a
+separately approved moving-plate test is the next step for the full 15s,
+especially for the truck exit and prop pickup. Add the existing transparent
 Oceanides mark in post.
 
 ## V1 blocking proof

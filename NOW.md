@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-11-08. Saveo V2 sound accepted; Zuni hybrid look keyframe.**
+**Stamped: 2026-11-08. Zuni hybrid look accepted; motion test rendered.**
 
 ## Current session
 
@@ -115,9 +115,17 @@ as blocking reference. Kept the V1 movie and Blender scene intact. V2 is a
 941x1672 still at F:/CodexCreativeArchive/oceanides/organic/zuni-hybrid-look-v2/
 oceanides-zuni-hybrid-keyframe-v2.png, SHA256
 83c760ae0ae52da3ab9bfb456ab2ae9087ebeb86a1dd742f3497bf8f721a55d7.
-Look review pending. Next test: one short flashlight reveal, with a realistic
-plate and stable anime face, outline, contact shadow and reaction. No full
-remake or sound was generated.
+Neil accepted the look and clarified that the only anime subject is the
+Filipino caretaker. The requested 4.00s motion proof is rendered locally
+from the approved still: photographic POV hand/flashlight, 0.84s switch
+cue and caretaker reaction. Movie and editable sources:
+F:/CodexCreativeArchive/oceanides/organic/zuni-hybrid-motion-v2/
+oceanides-zuni-hybrid-reveal-v2.mp4, silent 900x1600/24fps.
+SHA256 bb66b6af62da13d453952be5c70e064de8d714e5fec8fb02dabb6b1379d8869c
+96 frames decoded. Twelve picture samples, five face crops and local
+390x844 Chromium playback passed. The selected grate region's mean Y
+increased from 82.00 to 164.73 after the switch. All 12 ZIP entries match.
+No paid generation, sound, full remake or publishing. Motion review pending.
 
 Dr. Plants takeaway: test a story that follows a subject through question, clues,
 and payoff; use VO when it supplies context and causality. A 25-35 second narrated
