@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-11-07; Oceanides workflow and Dr. Plants source study saved**
+**Stamped: 2026-11-07; Glovio study and Oceanides silent mechanism draft**
 
 ## Current session
 
@@ -8,8 +8,8 @@ Branch: codex/oceanides-organic-workflow, based on main 37f54d67 (PR226 merged).
 Draft PR230: https://github.com/yopiheart/grifon-command/pull/230
 Runbook commit: 02ae639e, pushed. No merge requested or performed.
 Scope: document Neil's approved organic illustrative-explainer flow, preserve
-local sources, assess the new Dr. Plants summary, and inspect one actual video.
-No app code,
+local sources, inspect Dr. Plants and Glovio references, and create a separate
+original Glovio-inspired local mechanism draft. No application code,
 tuned content, dependency, provider generation, publication, or deployment change.
 
 Reusable runbook: workflows/oceanides_organic_reels.md. It records the reference
@@ -58,9 +58,36 @@ comparison sheet: sheets/overlay-examples.jpg inside that archive.
 Do not copy low upload frequency into a local service business or treat VO as a
 proven cause of virality. Do not invent customer testimony or a diagnostic outcome.
 
-Next: Glovio is Neil's requested reference. Inspect the specific shortlisted Reel
-before proposing one Oceanides adaptation. Keep narrative format separate from
-motion style. No new paid generation or multi-page batch is approved by this save.
+Glovio follow-up completed: source DeGpKrTE6zw (about 7.02s, 540x960/24fps),
+28 quarter-second samples, native audio retained but direct listening unavailable.
+The closer pass found a trainer, timed punch labels, progress ticks and recap,
+beyond the earlier faceless-movement description. Source study is now Swipe File
+E20 and workflows/reference_studies/glovio-boxing-action-breakdown.md. No pattern
+counts, preset or tuned content changed. Reference archive has 77 verified files:
+F:/CodexCreativeArchive/references/glovio-DeGpKrTE6zw/
+
+New original prototype: isolated matte PVC on navy; normal flow -> restriction
+-> rising upstream level. Authored Blender geometry/Boolean water levels, not a
+fluid simulation or confirmed customer diagnosis. Initial still review found
+disconnected water and a cropped outlet; both materially resolved after revision.
+Independent review covered three stills, not video/audio. Small low-flow seams
+remain. New visual direction and customer-facing copy are UNAPPROVED drafts.
+Exact draft/timing: clients/oceanides/organic/glovio-mechanism-pilot.md.
+
+Current Glovio-inspired silent draft: 11s, 540x960, 24fps, 264 frames; eight seconds
+of 3D motion and three-second contact card. Centered white Inter/shadow, updated
+transparent mark and previously approved contact wording. New hook/body copy is
+in .tmp/oceanides-glovio-pilot/beats.json. No music, SFX or VO was generated.
+Local review/source archive (42 verified files, excluding regenerable frame cache):
+F:/CodexCreativeArchive/oceanides/organic/glovio-mechanism-pilot/
+Movie: oceanides-glovio-DRAFT-silent.mp4
+SHA256 93130b4ec7439538817cf7aa6e8d5dcbaede523d670e1189278cac1fac28119f
+Editable ZIP: F:/CodexCreativeArchive/oceanides/organic/oceanides-glovio-pilot-editable.zip
+Archives are local preservation, not off-device backup; media remain outside Git.
+
+Next: Neil reviews the actual silent picture and exact new copy. Then prepare a
+fresh approved ElevenLabs sound spec fitted to the accepted cut. No new paid
+generation or multi-page publishing batch is approved by this work.
 
 Verification/handoff: all 31 archive copy/hash checks passed. The archived renderer
 passed --plates-only --check-edit (exit 0) in an isolated working copy, covering
@@ -69,8 +96,13 @@ unchanged. git diff --check passed. App build/test and provider calls were not
 run for this documentation-only change. Reference extraction and scene-candidate
 analysis both exited 0; candidate statistics are explicitly not a full shot count.
 Reference document links, unique E19 heading, all 26 archive hashes, and staged
-diff checks passed. PR230 carries this follow-up study. Hosted checks and
-independent review have not been assessed in this save pass.
+diff checks passed. Glovio: 192 native 3D frames rendered with Blender 5.2.2;
+264 final frames fully decoded; centered text bounds, transparent logo corners,
+editable text and nine encoded transition/end samples passed. Coarse body-image
+comparison found zero identical adjacent frames, not proof of motion quality.
+Actual phone/Reels preview and client technical validation remain pending.
+PR230 carries the documentation/handoff; no media committed. Hosted checks and
+independent application-code review were not assessed in this artifact-only pass.
 
 ## Previous engineering handoff (retained)
 

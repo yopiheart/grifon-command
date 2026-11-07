@@ -191,11 +191,12 @@ The sample included pinned posts and did not establish account baselines,
 conversion, or the independent effect of the editing. Zuni's recognizable game
 and Glovio's boxing subject contribute context that cannot simply be transferred.
 
-**Glovio is Neil's next requested reference.** First inspect its motion, transitions,
-sound, and why each beat works. Then propose one Oceanides adaptation with its
-own subject, evidence, production method, and exact test scope. Do not force a
-long narrated story onto a seven-second movement reference or start a multi-page
-batch merely because this pilot's picture was accepted.
+**Glovio follow-up, 2026-11-07:** [source study](reference_studies/glovio-boxing-action-breakdown.md)
+and Swipe File E20 now record the actual movement, camera presentation, numbered
+action labels and recap. A separate [Oceanides mechanism pilot](../clients/oceanides/organic/glovio-mechanism-pilot.md)
+uses local Blender plus centered HTML text. It is a new silent draft, with new
+copy/direction awaiting Neil's review and sound still unverified/unproduced.
+Do not treat it as an accepted preset or start a multi-page batch from it.
 
 ## Preserved pilot and reproduction
 

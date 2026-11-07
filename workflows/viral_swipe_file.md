@@ -321,6 +321,42 @@ lip-sync drift, impossible lighting, plastic over-clean texture).*
 
 ## Entries
 
+### 2026-11-07 — E20 Glovio boxing action breakdown (Instagram, sports instruction)
+
+**Source:** https://www.instagram.com/glovioai/reel/DeGpKrTE6zw/
+**Why autopsied:** Neil requested the next Oceanides format after the Dr. Plants
+study, including camera, transitions, movement, and text. Historical screening:
+3.7M displayed views, not refreshed here. Retrieved metadata: 169,689 likes and
+553 comments. No baseline outlier or conversion evidence. **Format:** short
+eight-action skill breakdown, about 7.02s, 540x960/24fps.
+**File:** local source SHA256
+`29b46a94b00f0cf98eec7f741a2a28958da405a7d8e646c1c85101aa8fb694bc`.
+
+**Evidence:** 28 nominal quarter-second samples across the full clip, from a
+10fps extraction. Scene-score threshold 0.30 returned zero candidates, not proof
+of an exact one-shot count. Direct listening unavailable; no paid analyzer.
+Full [camera/action/text map](reference_studies/glovio-boxing-action-breakdown.md).
+
+| Hook | Pace driver | Text | Edit/camera | Ending |
+| --- | --- | --- | --- | --- |
+| Large faceless boxer already moving. | Footwork, body rotation, pad contacts, then rapid numbered actions. | Small progress appears ~2.75s; number/action labels ~3.25-5.75s; compact recap ~6.25s. | Apparent rear-to-front/side move followed by consistent action geography; no obvious hard cut in sampled frames. | Recap while boxer moves away; caption directs to app waitlist. |
+
+**Interpretation (medium confidence):** neutral figures and a saturated-blue
+performer accent simplify the action; the full-body view preserves stance and
+contact; labels identify the active technique and the recap makes it repeatable.
+Visible comments recognize a boxer/style, including through sound, so existing
+interest is a performance confounder. No assumption that the rendering alone won.
+
+**Believability:** stylized faceless 3D-looking figures; authoring method unknown.
+Not a real-human believability corroboration. Audio/VO presence, actual font,
+camera rig, and exact text entrance frames remain unverified.
+
+**So What:** one original Oceanides three-state pipe-mechanism draft uses editable
+Blender geometry and centered HTML text. See the [pilot brief](../clients/oceanides/organic/glovio-mechanism-pilot.md).
+Keep navy, white Inter/shadow, approved transparent logo, and conditional claims;
+do not import the condensed corner typography, boxing identity/audio, or source
+reading speed. **ONE_OFF; no Pattern Index counts or tuned content changed.**
+
 ### 2026-11-07 — E19 Dr. Plants ant-colony story (YouTube, nature documentary)
 
 **Source:** https://www.youtube.com/watch?v=PyiCHWfBQPY
