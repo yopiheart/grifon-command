@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-11-07; Oceanides organic Reel workflow saved**
+**Stamped: 2026-11-07; Oceanides workflow and Dr. Plants source study saved**
 
 ## Current session
 
@@ -8,7 +8,8 @@ Branch: codex/oceanides-organic-workflow, based on main 37f54d67 (PR226 merged).
 Draft PR230: https://github.com/yopiheart/grifon-command/pull/230
 Runbook commit: 02ae639e, pushed. No merge requested or performed.
 Scope: document Neil's approved organic illustrative-explainer flow, preserve
-local sources, and assess the new Dr. Plants storytelling summary. No app code,
+local sources, assess the new Dr. Plants summary, and inspect one actual video.
+No app code,
 tuned content, dependency, provider generation, publication, or deployment change.
 
 Reusable runbook: workflows/oceanides_organic_reels.md. It records the reference
@@ -34,7 +35,26 @@ PUBLIC; native audio/production media were not added to Git.
 Dr. Plants takeaway: test a story that follows a subject through question, clues,
 and payoff; use VO when it supplies context and causality. A 25-35 second narrated
 investigation is a proposed future test, not a rewrite of the accepted pilot.
-The attached summary and located interview are not a frame-by-frame video autopsy.
+The interview summary itself is not a source-video autopsy. Neil then requested
+one actual Dr. Plants video before Glovio, including editing, camera switching,
+transitions, and overlay purpose/placement/entry/exit. Completed a qualified
+visual/transcript study of https://www.youtube.com/watch?v=PyiCHWfBQPY:
+- Official channel displayed 99M views; downloaded source is 515.86s, 720p/30fps.
+- Inspected 172 full-timeline samples plus dense details and 2-4 fps text strips.
+- Opening counter fades after its number lands; dates change position at shot
+  changes; a short pointer identifies a tiny detail, then leaves at the next angle.
+- Story analysis records recurring geography, nested obstacles/payoffs, visible
+  consequences, and the difference between observed behavior and narrated intent.
+- Exact shot count, physical-vs-digital camera mechanism, and font are unverified.
+  Direct listening was unavailable. No paid analyzer was run.
+
+Detailed study: workflows/reference_studies/drplants-ant-colony-1000-days.md.
+Swipe File E19 and the organic runbook link to it. No Pattern Index counts or
+presets changed. Reference evidence archive:
+F:/CodexCreativeArchive/references/drplants-ant-1000-days/
+All 26 copied files matched source hashes; manifest.json records them. Native
+video/transcript/images stay local, outside this public repository. Overlay
+comparison sheet: sheets/overlay-examples.jpg inside that archive.
 Do not copy low upload frequency into a local service business or treat VO as a
 proven cause of virality. Do not invent customer testimony or a diagnostic outcome.
 
@@ -46,7 +66,10 @@ Verification/handoff: all 31 archive copy/hash checks passed. The archived rende
 passed --plates-only --check-edit (exit 0) in an isolated working copy, covering
 editable text, bounds, logo alpha, and plate creation. Accepted movie hashes are
 unchanged. git diff --check passed. App build/test and provider calls were not
-run for this documentation-only change. Draft PR230 is open; hosted checks and
+run for this documentation-only change. Reference extraction and scene-candidate
+analysis both exited 0; candidate statistics are explicitly not a full shot count.
+Reference document links, unique E19 heading, all 26 archive hashes, and staged
+diff checks passed. PR230 carries this follow-up study. Hosted checks and
 independent review have not been assessed in this save pass.
 
 ## Previous engineering handoff (retained)

@@ -164,6 +164,13 @@ gate for promoting a new reusable editing preset.
 
 ## Reference record and next format
 
+The requested pre-Glovio Dr. Plants study is now documented in
+[the ant-colony story, camera and text map](reference_studies/drplants-ant-colony-1000-days.md)
+and Swipe File E19. It uses the source video and official transcript, with
+timestamped visual samples and text timing strips. Add an explicit cause/change
+and an overlay purpose/exit to the manual beat sheet. This remains a one-source
+study with direct listening unverified; it does not promote a global style preset.
+
 The primary pilot reference is [GeoallDay's Darien Gap Reel](https://www.instagram.com/geoallday/reel/C_tPZGtyA8I/).
 Muted samples at approximately 0, 4.2, 7.0, 13.5, and 18.7 seconds showed a question,
 regional callout, colored reveal, connected areas, and a route drawn on the map.
