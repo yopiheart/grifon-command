@@ -5,6 +5,8 @@
 
 Checkout: F:/CodexWorktrees/cce6/grifon-command
 Branch: codex/oceanides-organic-workflow, based on main 37f54d67 (PR226 merged).
+Draft PR230: https://github.com/yopiheart/grifon-command/pull/230
+Runbook commit: 02ae639e, pushed. No merge requested or performed.
 Scope: document Neil's approved organic illustrative-explainer flow, preserve
 local sources, and assess the new Dr. Plants storytelling summary. No app code,
 tuned content, dependency, provider generation, publication, or deployment change.
@@ -44,7 +46,8 @@ Verification/handoff: all 31 archive copy/hash checks passed. The archived rende
 passed --plates-only --check-edit (exit 0) in an isolated working copy, covering
 editable text, bounds, logo alpha, and plate creation. Accepted movie hashes are
 unchanged. git diff --check passed. App build/test and provider calls were not
-run for this documentation-only change. Draft PR handoff is pending.
+run for this documentation-only change. Draft PR230 is open; hosted checks and
+independent review have not been assessed in this save pass.
 
 ## Previous engineering handoff (retained)
 
