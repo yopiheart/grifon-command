@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-11-07. Saveo illustrated recut V2 ready for review.**
+**Stamped: 2026-11-07. Saveo V2 picture approved, sound spec ready.**
 
 ## Current session
 
@@ -49,9 +49,18 @@ Proof: oceanides-saveo-choice-V2.mp4, 19s, 540x960, 24fps, 456 decoded frames.
 SHA256 3320f092af3752ffb381ab68a7c5355e61da11877fc276d2c61ca2f879e5211c
 Nine encoded cuts matched the timeline. Text bounds, editability and 17
 encoded samples passed. V1 remains in saveo-choice-proof-v1 and its hash
-matched. V2 is the silent picture recut for Neil's review. Generation spend
-was zero. Sound generation has a separate approval after picture lock.
+matched. Neil accepted V2 and asked to proceed. APPROVAL.md beside the master
+records the approval and the exact picture hash.
 All 21 listed V2 files matched their archive and editable ZIP hashes.
+
+The Saveo sound spec is clients/oceanides/organic/saveo-sound-spec.md.
+Preflight verified the exact music and effect settings and their live quotes.
+The score is 285 credits, the two effects are 68 each, and the 160-character
+Eleven v3 narration is estimated at 160 with the standard website rate.
+Requested cap is 581 existing credits across four actions. Native generation
+has not started. The saved text inputs and composer screenshots are at
+F:/CodexCreativeArchive/oceanides/organic/saveo-sound-preflight-v1/.
+Next action is approval of this exact spec before submitting paid work.
 
 Dr. Plants takeaway: test a story that follows a subject through question, clues,
 and payoff; use VO when it supplies context and causality. A 25-35 second narrated

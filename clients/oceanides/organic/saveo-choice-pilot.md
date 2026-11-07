@@ -2,6 +2,9 @@
 
 ## V2 illustrated recut
 
+Neil approved the 19-second picture on 2026-11-07. The narration, original
+score and effects are defined in the [sound test spec](saveo-sound-spec.md).
+
 Neil asked for the source Reel's editing to shape each format. He called out
 the character's visible eyes, scene changes during the story, and slow push-ins.
 V2 stages the same café story as a comic with separate camera setups. The
