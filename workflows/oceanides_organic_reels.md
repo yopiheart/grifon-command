@@ -229,6 +229,9 @@ uses one camera in one space, with window framing, a practical pickup and
 an in-world light reveal. Put the next visual question in the scene and
 let attention shift through motion. Use overlays only if the action needs
 context. Keep the fiction separate from actual job footage and service proof.
+Neil's V2 look clarification: the POV, hand, flashlight and setting should
+look photographic. Only the caretaker is hand-drawn anime. Keep the
+existing POV blocking and test the blend in one shot before a full remake.
 
 ## Preserved pilot and reproduction
 

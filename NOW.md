@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-11-08. Saveo V2 sound accepted; Zuni POV picture proof.**
+**Stamped: 2026-11-08. Saveo V2 sound accepted; Zuni hybrid look keyframe.**
 
 ## Current session
 
@@ -107,6 +107,17 @@ F:/CodexCreativeArchive/oceanides/organic/oceanides-zuni-pov-editable-v1.zip
 ZIP SHA256 390dce4ab8ea89eef0a87ed930374ddf55f514a0d0acf45cefc10231bee9a7a6
 Domain language, artifact anchors, 11 local links and staged diff checks
 passed. No app code changed. Review the Zuni picture before any sound work.
+
+Neil clarified the Zuni look after seeing V1: realistic POV, hand, flashlight
+and location; only the visible caretaker is hand-drawn anime. One native image
+keyframe tests that split using the provided still as style reference and V1
+as blocking reference. Kept the V1 movie and Blender scene intact. V2 is a
+941x1672 still at F:/CodexCreativeArchive/oceanides/organic/zuni-hybrid-look-v2/
+oceanides-zuni-hybrid-keyframe-v2.png, SHA256
+83c760ae0ae52da3ab9bfb456ab2ae9087ebeb86a1dd742f3497bf8f721a55d7.
+Look review pending. Next test: one short flashlight reveal, with a realistic
+plate and stable anime face, outline, contact shadow and reaction. No full
+remake or sound was generated.
 
 Dr. Plants takeaway: test a story that follows a subject through question, clues,
 and payoff; use VO when it supplies context and causality. A 25-35 second narrated
