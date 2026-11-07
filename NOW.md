@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-11-07; Glovio study and Oceanides silent mechanism draft**
+**Stamped: 2026-11-07; Glovio picture accepted, sound preflight awaiting 301-credit approval**
 
 ## Current session
 
@@ -71,7 +71,7 @@ New original prototype: isolated matte PVC on navy; normal flow -> restriction
 fluid simulation or confirmed customer diagnosis. Initial still review found
 disconnected water and a cropped outlet; both materially resolved after revision.
 Independent review covered three stills, not video/audio. Small low-flow seams
-remain. New visual direction and customer-facing copy are UNAPPROVED drafts.
+remain. Neil accepted the new picture/copy with his latest proceed message.
 Exact draft/timing: clients/oceanides/organic/glovio-mechanism-pilot.md.
 
 Current Glovio-inspired silent draft: 11s, 540x960, 24fps, 264 frames; eight seconds
@@ -85,9 +85,20 @@ SHA256 93130b4ec7439538817cf7aa6e8d5dcbaede523d670e1189278cac1fac28119f
 Editable ZIP: F:/CodexCreativeArchive/oceanides/organic/oceanides-glovio-pilot-editable.zip
 Archives are local preservation, not off-device backup; media remain outside Git.
 
-Next: Neil reviews the actual silent picture and exact new copy. Then prepare a
-fresh approved ElevenLabs sound spec fitted to the accepted cut. No new paid
-generation or multi-page publishing batch is approved by this work.
+Sound preflight is concrete: clients/oceanides/organic/glovio-sound-spec.md binds
+to the accepted movie hash and proposes exactly three Generate actions, capped
+at 301 existing credits: Music v2.5, one 11s variant (live quote 165), plus two
+SFX v3 actions (live quote 68 each). Exact prompts, settings, cues, pass/fail and
+evidence are recorded. No VO, reference upload, paid QA or publishing. Starter
+plan and live controls were observed. No Generate was clicked; paid actions zero.
+Spec approval is pending in an asynchronous question; never treat silence as
+approval or reuse the previous episode's 414-credit authorization.
+
+Local preflight archive, six copy/hash-verified files:
+F:/CodexCreativeArchive/oceanides/organic/glovio-sound-preflight-v1/
+Includes exact spec, cue plan and live-quote screenshots. The accepted silent
+movie hash is unchanged. Next: obtain the 301-credit spec approval, recheck live
+quotes, then generate once per approved asset and mix into a new review file.
 
 Verification/handoff: all 31 archive copy/hash checks passed. The archived renderer
 passed --plates-only --check-edit (exit 0) in an isolated working copy, covering

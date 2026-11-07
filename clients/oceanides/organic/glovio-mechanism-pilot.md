@@ -1,6 +1,6 @@
 # Oceanides Glovio-inspired mechanism pilot
 
-2026-11-07. Status: **new visual direction and copy are drafts for Neil's review**.
+2026-11-07. Status: **picture/copy accepted by Neil's proceed message; sound spec awaiting paid approval**.
 Local production only; no paid generation, publishing, or deployment.
 Reference analysis: [Glovio action breakdown](../../../workflows/reference_studies/glovio-boxing-action-breakdown.md).
 
@@ -37,8 +37,9 @@ The end card also reads:
 >
 > Smart: 0939-245-6217
 
-The new hook/body wording is unapproved. Reusing the contact wording does not
-establish approval of the new film. No delivery deadline, repair guarantee,
+Neil accepted the new picture/copy after viewing the silent draft. The separate
+[sound spec](glovio-sound-spec.md) proposes a 301-credit maximum and still needs
+its own paid approval. No delivery deadline, repair guarantee,
 customer testimony, or assertion that a tank is full is included.
 
 ## Production and review
@@ -64,9 +65,9 @@ production quality. Candidate one is preserved under `v1/`.
 
 The reference's audible grammar was not directly inspected. This review is
 silent; no borrowed boxing audio, saved stock score, or procedural music was
-substituted. After picture/copy review, prepare a separate ElevenLabs music/SFX
-spec fitted to this timeline, following the shared music workflow and paid-spec
-approval rule. No paid audio or VO is authorized by this pilot brief.
+substituted. The separate ElevenLabs music/SFX spec is fitted to this timeline,
+following the shared music workflow and paid-spec approval rule. No paid audio
+or VO is authorized by this pilot brief alone.
 
 ## Verification and next step
 
