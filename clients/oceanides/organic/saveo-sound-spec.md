@@ -1,7 +1,9 @@
 # Oceanides Saveo V2 sound test
 
 Prepared 2026-11-07. Neil approved the picture recut and asked to proceed.
-**Audio generation awaits approval of this exact spec and credit cap.**
+**Neil approved the 581-credit cap on 2026-11-07.** The score, v3 narration and
+latch were submitted. The [v4 amendment](saveo-sound-v4-amendment.md) records
+the actual charges, Neil's new narration direction, and the held paper effect.
 
 The sound should make the 19-second café mystery easy to follow. A Filipino
 storyteller carries the situation and question. A light original score leaves

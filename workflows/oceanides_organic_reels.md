@@ -65,6 +65,10 @@ service. Crew review of the depicted drainage arrangement remains pending.
     Paid music, SFX, VO, images, or video require an exact approved test spec:
     purpose, inputs, settings, pass/fail criteria, evidence, and maximum cost.
     Historical approval is not permission to generate the next episode.
+    Include any ElevenLabs library voice owner fee in the VO cap. Saveo's
+    Pochology take incurred a separate 50-credit fee despite a composer with
+    no multiplier notice. Reconcile the balance after each paid action before
+    proceeding when the remaining budget is tight.
 11. Sync the audible attack of each cue to the visual event, mix for intelligibility,
     inspect encoded frames, decode the whole export, and check stereo and mono.
     Review on a phone. Mark listening or platform checks pending if not observed.

@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-11-07. Saveo V2 picture approved, sound spec ready.**
+**Stamped: 2026-11-07. Saveo sound assets saved, v4 amendment pending.**
 
 ## Current session
 
@@ -53,14 +53,21 @@ matched. Neil accepted V2 and asked to proceed. APPROVAL.md beside the master
 records the approval and the exact picture hash.
 All 21 listed V2 files matched their archive and editable ZIP hashes.
 
-The Saveo sound spec is clients/oceanides/organic/saveo-sound-spec.md.
-Preflight verified the exact music and effect settings and their live quotes.
-The score is 285 credits, the two effects are 68 each, and the 160-character
-Eleven v3 narration is estimated at 160 with the standard website rate.
-Requested cap is 581 existing credits across four actions. Native generation
-has not started. The saved text inputs and composer screenshots are at
+Neil approved the exact 581-credit Saveo spec. Three Generate actions were
+submitted before the v4 direction. All completed. Score 285, v3 narration 210
+(160 base and 50 owner fee), latch 67. The 562-credit decrease from 60,302 to
+59,740 reconciles with the dated product/model usage CSV and earlier Glovio
+usage. The two v3 candidates came from one click. Paper was held because its
+68-credit quote exceeds the original cap's remaining 19.
+
+Native results, evidence, and prepared 19.00s music/latch stems are saved at
+F:/CodexCreativeArchive/oceanides/organic/saveo-sound-in-progress-v1/.
+Latch envelope anchor is frame 98. The prior preflight archive remains at
 F:/CodexCreativeArchive/oceanides/organic/saveo-sound-preflight-v1/.
-Next action is approval of this exact spec before submitting paid work.
+Next action is approval of clients/oceanides/organic/saveo-sound-v4-amendment.md
+for one v4 replacement and the paper effect, up to 278 more credits and 840
+cumulative. v4 is staged with the same 160 characters and voice. Its 210
+estimate includes the observed fee. Reconcile its actual usage before paper.
 
 Dr. Plants takeaway: test a story that follows a subject through question, clues,
 and payoff; use VO when it supplies context and causality. A 25-35 second narrated
