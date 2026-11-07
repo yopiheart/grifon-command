@@ -194,11 +194,13 @@ and Glovio's boxing subject contribute context that cannot simply be transferred
 **Glovio follow-up, 2026-11-07:** [source study](reference_studies/glovio-boxing-action-breakdown.md)
 and Swipe File E20 now record the actual movement, camera presentation, numbered
 action labels and recap. A separate [Oceanides mechanism pilot](../clients/oceanides/organic/glovio-mechanism-pilot.md)
-uses local Blender plus centered HTML text. Neil accepted its picture/copy.
-The separately approved 301-credit music/two-SFX pass is delivered as a sound
-review; see its [receipt](../clients/oceanides/organic/glovio-sound-receipt.md).
-Technical checks passed; direct listening and phone preview remain pending.
-Do not treat it as an accepted preset or start a multi-page batch from it.
+uses local Blender plus centered HTML text. Neil approved the delivered
+11-second Reel with its original score and two water effects. Use the saved
+film as the reference for an isolated mechanism that shows normal flow, a
+restriction, and rising water before the contact card. Its editable archive
+preserves the scene, exact text and cue timings, native audio, and mix.
+Preset promotion and batch rollout are separate decisions.
+[Accepted export and reproduction notes](../clients/oceanides/organic/glovio-sound-receipt.md).
 
 ## Preserved pilot and reproduction
 

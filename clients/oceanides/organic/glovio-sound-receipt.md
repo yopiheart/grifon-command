@@ -1,10 +1,10 @@
-# Oceanides Glovio pilot: sound review V1
+# Oceanides Glovio pilot: accepted Reel V1
 
 2026-11-07. The [exact sound spec](glovio-sound-spec.md) was approved by Neil:
 "Approve up to 301 credits." All three authorized Generate actions completed;
 there were no retries, extra variants, reference uploads, VO, or publishing.
-Picture/copy remains accepted. **Sound is delivered for listening review;
-technical checks passed, creative audio acceptance remains pending.**
+**Neil approved the delivered Reel with sound in chat on 2026-11-07.**
+The acceptance applies to the exact export identified by the SHA-256 below.
 
 ## Generation record
 
@@ -32,7 +32,7 @@ Candidate 1 was used for this review; no listening-based ranking is claimed.
   2s to 3.35s, and fades out by 4s as the illustrated restriction develops.
 - Buildup source trim: 0.08-1.55s. Its measured main attack is at 0.13s using a
   10ms RMS window crossing -40dBFS. A 4.45s delay places that envelope anchor at
-  4.5s, zero-based frame 108. Perceived onset still needs listening confirmation.
+  4.5s, zero-based frame 108. This timing is measured from the waveform.
 - Lowered music around the buildup cue and kept the contact-card tail sparse.
   Separate native sources, edited stems, 24-bit mix, exact filters and gains are
   retained. A measured envelope does not prove the intended musical resolution.
@@ -51,16 +51,15 @@ Output SHA-256:
 Input SHA-256:
 `93130b4ec7439538817cf7aa6e8d5dcbaede523d670e1189278cac1fac28119f`.
 
-Direct listening was unavailable. Water realism, perceived cue timing, balance,
-harshness, musical continuity/resolution and actual phone/Reels playback remain
-unverified. This is a technically checked sound review, not a claim of finished
-creative quality or published performance. No app code changed; app build/test
-was not required or run for this media/documentation pass.
+Neil's chat approval records creative acceptance of the delivered Reel. Direct
+agent listening was unavailable. A specific phone/Reels playback check, client
+technical validation and published performance have yet to be verified.
 
 ## Preservation and reproduction
 
 Completed source/output archive:
 `F:/CodexCreativeArchive/oceanides/organic/glovio-sound-v1/`.
+The archive's `APPROVAL.md` records Neil's acceptance alongside the exact export.
 
 Editable ZIP:
 `F:/CodexCreativeArchive/oceanides/organic/oceanides-glovio-sound-editable-v1.zip`.

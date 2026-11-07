@@ -1,6 +1,6 @@
 # Oceanides Glovio-inspired mechanism pilot
 
-2026-11-07. Status: **picture/copy accepted; approved music/SFX pass delivered for listening review**.
+**2026-11-07. Neil accepted the Glovio-inspired Reel V1 with music and SFX.**
 Local video production; three authorized audio generations, no publishing or deployment.
 Reference analysis: [Glovio action breakdown](../../../workflows/reference_studies/glovio-boxing-action-breakdown.md).
 
@@ -39,8 +39,8 @@ The end card also reads:
 
 Neil accepted the new picture/copy after viewing the silent draft. The separate
 [sound spec](glovio-sound-spec.md) received Neil's explicit 301-credit approval;
-the [sound receipt](glovio-sound-receipt.md) records the completed pass and its
-remaining listening checks. No delivery deadline, repair guarantee,
+the [sound receipt](glovio-sound-receipt.md) records the completed pass and final
+acceptance. No delivery deadline, repair guarantee,
 customer testimony, or assertion that a tank is full is included.
 
 ## Production and review
@@ -75,8 +75,9 @@ authorization, generation evidence and new sound review. No VO was generated.
 Text plates passed centered bounds, logo-corner transparency, and an editable
 text check. Render/decode and sampled transition results are recorded with the
 completed local output and in NOW.md. Sound-review duration, unchanged picture,
-decode and stereo/mono levels passed. Actual listening/phone/Reels preview,
-client technical review and published performance remain pending.
+decode and stereo/mono levels passed. Neil accepted the Reel in chat. Direct
+agent listening, phone/Reels playback, client technical review and published
+performance were not verified.
 
 Reproduce in a working copy of the saved source, using installed Blender 5.2.2,
 Playwright/Chromium, Sharp, and FFmpeg. Scripts overwrite task-owned filenames.

@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-11-07; Glovio approved sound pass delivered, listening review pending**
+**Stamped: 2026-11-07. Neil approved Glovio Reel V1 with sound.**
 
 ## Current session
 
@@ -11,7 +11,7 @@ Scope: document Neil's approved organic illustrative-explainer flow, preserve
 local sources, inspect Dr. Plants and Glovio references, and create a separate
 original Glovio-inspired local mechanism film with its approved music/two-SFX
 pass. No application code, tuned content, dependency, publication or deployment
-change. Exactly three approved ElevenLabs Generate actions completed this turn.
+change. Exactly three approved ElevenLabs Generate actions completed in the sound pass.
 
 Reusable runbook: workflows/oceanides_organic_reels.md. It records the reference
 limits, evidence/illustration boundary, connected 2-3 second progression, centered
@@ -106,8 +106,10 @@ ZIP: F:/CodexCreativeArchive/oceanides/organic/oceanides-glovio-sound-editable-v
 All 65 listed source/output files matched archive and extracted ZIP hashes.
 ZIP SHA256 e87b178310249e805f992b4f3fae7ef81bc872cd23eba9c57c63020d9823b782
 The local mix reran from the extracted ZIP and reproduced the exact movie hash.
-Current review: oceanides-glovio-sound-review-v1.mp4 in that archive.
+Accepted reference: oceanides-glovio-sound-review-v1.mp4 in that archive.
 SHA256 a03704a7f379cfd1f3886d1a0c6a09f1c17a8d4624fe984b735b969026a4ae21
+Neil approved the delivered Reel on 2026-11-07. APPROVAL.md beside the movie
+records the acceptance and binds it to that export and the editable ZIP.
 The original silent archive and accepted first film remain unchanged.
 
 Sound verification: full decode exit 0, 11.00s, 264 frames, 540x960/24fps,
@@ -115,11 +117,9 @@ AAC 192kbps/48kHz stereo. Approved compressed video stream hash is unchanged.
 Stereo -18.03 LUFS / -1.88 dBTP; mono -21.77 LUFS / -4.94 dBTP.
 Continuous original-tempo score with tail fade, no source joins; flow filtered
 from 2s and out by 4s; measured buildup attack aligned at 4.5s/frame 108.
-An envelope anchor is not a perceptual-onset check. Listening/creative audio
-acceptance and phone/Reels preview remain pending; do not claim auditioned quality.
-Local mix script has no network/provider operation. App build/test not run for
-this media/documentation pass. Next: Neil's listening review and any local mix
-corrections, then phone/client checks before considering publication or a batch.
+Neil accepted the delivered mix. Direct agent listening and a specific
+phone/Reels playback check were not observed. The recorded cue anchor comes
+from the waveform. Local mix reproduction uses the saved WAVs.
 
 Verification/handoff: all 31 archive copy/hash checks passed. The archived renderer
 passed --plates-only --check-edit (exit 0) in an isolated working copy, covering
