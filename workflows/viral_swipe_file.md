@@ -12,6 +12,12 @@ below are condensed pointers, not replacements).
 
 ## Pending Actions
 
+- [ ] **2026-11-07 E19 Dr. Plants:** before using this study to drive a general
+  story/editing preset, complete a listening pass and obtain two additional
+  independent source studies. Current entry is a qualified visual/transcript
+  study; detector boundaries are not a verified full shot count. No pattern
+  counts were incremented. See `reference_studies/drplants-ant-colony-1000-days.md`.
+
 - [ ] **2026-09-17 Apple reference adaptation:** secure one matching Grifon
   project capture and review its shipped output excerpt before the replacement
   motion preview. Detailed scene map: `assets/grifon-motion-spark/reference-analysis.md`.
@@ -314,6 +320,112 @@ lip-sync drift, impossible lighting, plastic over-clean texture).*
   accumulate. Footage realism is what carried it — never pair TTS with synthetic-looking b-roll.
 
 ## Entries
+
+### 2026-11-07 — E20 Glovio boxing action breakdown (Instagram, sports instruction)
+
+**Source:** https://www.instagram.com/glovioai/reel/DeGpKrTE6zw/
+**Why autopsied:** Neil requested the next Oceanides format after the Dr. Plants
+study, including camera, transitions, movement, and text. Historical screening:
+3.7M displayed views, not refreshed here. Retrieved metadata: 169,689 likes and
+553 comments. No baseline outlier or conversion evidence. **Format:** short
+eight-action skill breakdown, about 7.02s, 540x960/24fps.
+**File:** local source SHA256
+`29b46a94b00f0cf98eec7f741a2a28958da405a7d8e646c1c85101aa8fb694bc`.
+
+**Evidence:** 28 nominal quarter-second samples across the full clip, from a
+10fps extraction. Scene-score threshold 0.30 returned zero candidates, not proof
+of an exact one-shot count. Direct listening unavailable; no paid analyzer.
+Full [camera/action/text map](reference_studies/glovio-boxing-action-breakdown.md).
+
+| Hook | Pace driver | Text | Edit/camera | Ending |
+| --- | --- | --- | --- | --- |
+| Large faceless boxer already moving. | Footwork, body rotation, pad contacts, then rapid numbered actions. | Small progress appears ~2.75s; number/action labels ~3.25-5.75s; compact recap ~6.25s. | Apparent rear-to-front/side move followed by consistent action geography; no obvious hard cut in sampled frames. | Recap while boxer moves away; caption directs to app waitlist. |
+
+**Interpretation (medium confidence):** neutral figures and a saturated-blue
+performer accent simplify the action; the full-body view preserves stance and
+contact; labels identify the active technique and the recap makes it repeatable.
+Visible comments recognize a boxer/style, including through sound, so existing
+interest is a performance confounder. No assumption that the rendering alone won.
+
+**Believability:** stylized faceless 3D-looking figures; authoring method unknown.
+Not a real-human believability corroboration. Audio/VO presence, actual font,
+camera rig, and exact text entrance frames remain unverified.
+
+**So What:** one original Oceanides three-state pipe-mechanism draft uses editable
+Blender geometry and centered HTML text. See the [pilot brief](../clients/oceanides/organic/glovio-mechanism-pilot.md).
+Keep navy, white Inter/shadow, approved transparent logo, and conditional claims;
+do not import the condensed corner typography, boxing identity/audio, or source
+reading speed. **ONE_OFF; no Pattern Index counts or tuned content changed.**
+
+### 2026-11-07 — E21 Saveo Day 1 audience choice (Instagram, illustrated fiction)
+
+**Source:** https://www.instagram.com/saveo.house/reel/DecvxHktyGJ/
+**Why autopsied:** Neil's shortlisted high-engagement choice story offers a
+different format for Oceanides after two explainers. Earlier screening displayed
+15.6M views. Current UI displayed 12.6K beside comments and 28.5K beside reposts.
+**Format:** illustrated dilemma with graphic explainers and a viewer vote,
+86.97s portrait. Source hash and visual sequence in the
+[Saveo study](reference_studies/saveo-audience-choice.md).
+
+| Hook | Pace driver | Captions | Edit grammar | Camera | Reveal | CTA |
+| --- | --- | --- | --- | --- | --- | --- |
+| Character, bags and cash in a motel room. | Illustrated action alternates with paper inserts and changing status values. | Lower-center phrases in sampled story frames. Status row and large type in inserts. | Detected 24 candidate boundaries at scene threshold 0.30. Audio grammar unverified. | Wide room, seated medium close, note details and face close at a window. | A recurring room and changed status make the dilemma visible. | Two labels around 81s, then a Part 2 slate with the voting instruction. |
+
+**Evidence:** full-timeline four-second samples and one-second ending samples.
+The Day 1 creator comment and the Day 2 caption both report HIDE at 61%.
+The vote count was not independently audited. The art is stylized illustration
+with unknown authoring method. Direct listening and exact cut count are unverified.
+
+**So What:** use one familiar location, two visual choices and an honest sequel
+that follows the audience's pick. The [Oceanides draft](../clients/oceanides/organic/saveo-choice-pilot.md)
+tests this with a café washroom and a 14s local proof. **ONE_OFF.** Pattern Index
+counts and preset proposals stay at their existing status.
+
+### 2026-11-07 — E19 Dr. Plants ant-colony story (YouTube, nature documentary)
+
+**Source:** https://www.youtube.com/watch?v=PyiCHWfBQPY
+**Why autopsied:** Neil requested one actual high-view Dr. Plants video before
+Glovio, including story, camera, transitions, switching, and overlay entry/exit.
+Official channel displayed 99M views on the review date; no baseline-adjusted
+outlier or retention claim. **Format:** protagonist-led conflict/recovery story;
+515.86 seconds, landscape. **File:** local source SHA256
+`64e9bcfb5564c3880edcb290b506cdc6e791570bcb75e78fe4569d86baea7467`;
+native evidence preserved outside the worktree, not uploaded to this repository.
+
+**Evidence:** official YouTube transcript; 172 full-timeline visual samples at
+three-second intervals; overlapping one-second detail strips; four text timing
+strips at 2-4 fps. FFmpeg threshold 0.30 returned 168 candidate boundaries and
+median detected span 2.23s; visible missed changes prevent treating this as an
+exact shot count. No paid analysis or direct listening. **Detailed study:**
+[story, camera and overlay map](reference_studies/drplants-ant-colony-1000-days.md).
+
+| Hook | Pace driver | Captions | Edit grammar | Camera | Reveal | CTA |
+| --- | --- | --- | --- | --- | --- | --- |
+| Queen/goal/time horizon, then rival and stakes within the first 20s. | Nested obstacles and payoffs; variable shot scale and elapsed-time markers. | Sparse dates/numbers and occasional pointer in reviewed frames, not continuous burned-in VO text. | Connected hard cuts, surface-to-chamber movement, number landings/fades, brief desaturation; audible grammar unverified. | Macro/ant-height details, room geography, wider nest map; camera/crop mechanism unverified. | Partial growth payoff by ~1:58; setback ~2:23; resolution ~8:15-8:21. | Next-video screen ~8:24; cameo follows. |
+
+**Why it may work (interpretations, medium confidence):** a repeated room/nest
+geography makes reversals legible; the food setup at ~2:12 becomes the threat at
+~2:23 and returns with changed behavior around ~3:45-4:18; the main conflict
+introduced by ~0:06 resolves in the same locations around ~8:15-8:21. Text supports
+specific information: opening counter visible by ~2.55s and gone by ~3.80s;
+small food pointer visible ~1:45-1:46 and gone by ~1:46.50. Times are sampled.
+
+**Believability DNA:** practical-looking animal/set footage with constructed
+underground presentation; cinematic documentary register (medium confidence,
+not a forensic authenticity verdict). No talking performance or lip-sync grade.
+Narration structure comes from captions; delivery, music and SFX remain unverified.
+Narrated intent/strategy is not independently verified biological evidence.
+
+**Weaknesses/transfer limits:** low-contrast day marker under the chamber around
+0:29; lettering overlaps a plant around 4:41-4:43; landscape corner placement does
+not fit Neil's centered Reels requirement. No evidence that every choice is optimal.
+
+**So What for Grifon/Oceanides:** add a cause-and-consequence chain and overlay
+purpose/exit to the manual client beat sheet; plan wider geography before macro
+details. Existing Blender and HTML/FFmpeg tools can implement those choices.
+These are one-reference hypotheses for an authored future test, not tuned prompt
+or preset changes. **Patterns:** relates to P1/P4/P5 scope limits, but does not
+confirm/contradict them quantitatively. **ONE_OFF; no Pattern Index counts changed.**
 
 ### 2026-09-17 — Apple-supplied product-film reference (YouTube DDnNc60onT4, consumer technology)
 

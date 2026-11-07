@@ -1,15 +1,176 @@
 # NOW - the resume doc
-**Stamped: 2026-11-05; isolated provider recovery harness**
+**Stamped: 2026-11-07. Saveo illustrated recut V2 ready for review.**
 
-## Active work
+## Current session
+
+Checkout: F:/CodexWorktrees/cce6/grifon-command
+Branch: codex/oceanides-organic-workflow, based on main 37f54d67 (PR226 merged).
+Draft PR230: https://github.com/yopiheart/grifon-command/pull/230
+Runbook commit: 02ae639e, pushed. No merge requested or performed.
+Scope: document Neil's approved organic illustrative-explainer flow, preserve
+local sources, inspect Dr. Plants and Glovio references, and create a separate
+original Glovio-inspired local mechanism film with its approved music/two-SFX
+pass. No application code, tuned content, dependency, publication or deployment
+change. Exactly three approved ElevenLabs Generate actions completed in the sound pass.
+
+Reusable runbook: workflows/oceanides_organic_reels.md. It records the reference
+limits, evidence/illustration boundary, connected 2-3 second progression, centered
+white Inter/shadow/no-box overrides, transparent updated logo, exact approved
+contact numbers, VFX pass, picture lock, paid sound spec, and verification.
+The pilot is 14 seconds, 540x960, 24 fps. Picture V6 was accepted and the approved
+sound pass completed. Direct listening, crew validation, a current platform preview,
+and published performance remain pending. No VO was generated.
+
+Current local review:
+.tmp/oceanides-reel-motion/oceanides-reel-v6-sound-review.mp4
+SHA256 779d46414e73375b77612e50b591ffe3324a2a494eb2a7e7223968d0f26cd273
+
+Local archive outside the worktree:
+F:/CodexCreativeArchive/oceanides/organic/illustrative-explainer-001/
+31 copied files matched their original SHA-256 values; manifest.json records them.
+Sibling ZIP oceanides-illustrative-v6-2026-11-07.zip has SHA256
+5cfd7142b824c27a01a8cd6f3dbc70d2467fd6aae875411aa22547b9a945b277.
+This is local preservation only. GitHub metadata confirmed this repository is
+PUBLIC; native audio/production media were not added to Git.
+
+The next Oceanides format is a Saveo-inspired audience choice. The café washroom
+story ends with two visual options for the first location to check in Part 2.
+E21 and workflows/reference_studies/saveo-audience-choice.md record sampled
+source frames, the reported vote and the sequel caption. Exact cut count and
+audio grammar remain unverified. Pattern Index counts are unchanged.
+
+Neil directed each format to follow its own Reel's editing and use the YouTube
+learnings to improve that edit. Saveo V2 adds visible eyes, gaze shifts,
+slow pushes, a short latch bump, distinct clue angles, a paper insert, and a
+separate vote and sequel slate. The draft wording is in the pilot brief.
+Saveo V2 brief: clients/oceanides/organic/saveo-choice-pilot.md.
+Local archive: F:/CodexCreativeArchive/oceanides/organic/saveo-choice-proof-v2/
+Proof: oceanides-saveo-choice-V2.mp4, 19s, 540x960, 24fps, 456 decoded frames.
+SHA256 3320f092af3752ffb381ab68a7c5355e61da11877fc276d2c61ca2f879e5211c
+Nine encoded cuts matched the timeline. Text bounds, editability and 17
+encoded samples passed. V1 remains in saveo-choice-proof-v1 and its hash
+matched. V2 is the silent picture recut for Neil's review. Generation spend
+was zero. Sound generation has a separate approval after picture lock.
+All 21 listed V2 files matched their archive and editable ZIP hashes.
+
+Dr. Plants takeaway: test a story that follows a subject through question, clues,
+and payoff; use VO when it supplies context and causality. A 25-35 second narrated
+investigation is a proposed future test, not a rewrite of the accepted pilot.
+The interview summary itself is not a source-video autopsy. Neil then requested
+one actual Dr. Plants video before Glovio, including editing, camera switching,
+transitions, and overlay purpose/placement/entry/exit. Completed a qualified
+visual/transcript study of https://www.youtube.com/watch?v=PyiCHWfBQPY:
+- Official channel displayed 99M views; downloaded source is 515.86s, 720p/30fps.
+- Inspected 172 full-timeline samples plus dense details and 2-4 fps text strips.
+- Opening counter fades after its number lands; dates change position at shot
+  changes; a short pointer identifies a tiny detail, then leaves at the next angle.
+- Story analysis records recurring geography, nested obstacles/payoffs, visible
+  consequences, and the difference between observed behavior and narrated intent.
+- Exact shot count, physical-vs-digital camera mechanism, and font are unverified.
+  Direct listening was unavailable. No paid analyzer was run.
+
+Detailed study: workflows/reference_studies/drplants-ant-colony-1000-days.md.
+Swipe File E19 and the organic runbook link to it. No Pattern Index counts or
+presets changed. Reference evidence archive:
+F:/CodexCreativeArchive/references/drplants-ant-1000-days/
+All 26 copied files matched source hashes; manifest.json records them. Native
+video/transcript/images stay local, outside this public repository. Overlay
+comparison sheet: sheets/overlay-examples.jpg inside that archive.
+Do not copy low upload frequency into a local service business or treat VO as a
+proven cause of virality. Do not invent customer testimony or a diagnostic outcome.
+
+Glovio follow-up completed: source DeGpKrTE6zw (about 7.02s, 540x960/24fps),
+28 quarter-second samples, native audio retained but direct listening unavailable.
+The closer pass found a trainer, timed punch labels, progress ticks and recap,
+beyond the earlier faceless-movement description. Source study is now Swipe File
+E20 and workflows/reference_studies/glovio-boxing-action-breakdown.md. No pattern
+counts, preset or tuned content changed. Reference archive has 77 verified files:
+F:/CodexCreativeArchive/references/glovio-DeGpKrTE6zw/
+
+New original prototype: isolated matte PVC on navy; normal flow -> restriction
+-> rising upstream level. Authored Blender geometry/Boolean water levels, not a
+fluid simulation or confirmed customer diagnosis. Initial still review found
+disconnected water and a cropped outlet; both materially resolved after revision.
+Independent review covered three stills, not video/audio. Small low-flow seams
+remain. Neil accepted the new picture/copy with his latest proceed message.
+Exact draft/timing: clients/oceanides/organic/glovio-mechanism-pilot.md.
+
+Preserved Glovio-inspired silent picture: 11s, 540x960, 24fps, 264 frames; eight seconds
+of 3D motion and three-second contact card. Centered white Inter/shadow, updated
+transparent mark and previously approved contact wording. New hook/body copy is
+in .tmp/oceanides-glovio-pilot/beats.json. The new sound review adds music and
+two SFX while copying the accepted picture stream; no VO was generated.
+Local review/source archive (42 verified files, excluding regenerable frame cache):
+F:/CodexCreativeArchive/oceanides/organic/glovio-mechanism-pilot/
+Movie: oceanides-glovio-DRAFT-silent.mp4
+SHA256 93130b4ec7439538817cf7aa6e8d5dcbaede523d670e1189278cac1fac28119f
+Editable ZIP: F:/CodexCreativeArchive/oceanides/organic/oceanides-glovio-pilot-editable.zip
+Archives are local preservation, not off-device backup; media remain outside Git.
+
+Neil explicitly approved the exact sound spec: "Approve up to 301 credits."
+All three Generate actions completed: Music v2.5, one custom-11s variant (quote
+165; native 12.04s WAV), plus two SFX v3 actions (quote 68 each; candidate 1 WAVs,
+4s flow and 2s buildup). No retry, extra variant, VO, reference upload, paid QA,
+top-up or publishing. Exact prompts/settings, IDs, pre-submit screenshots,
+native hashes and balances are in audio-v1/generation-ledger.json and the archive.
+Quotes total 301; visible balance 60,601 -> 60,302, observed decrease 299.
+This is not an itemized settled billing ledger; the music profile was stale.
+Receipt: clients/oceanides/organic/glovio-sound-receipt.md.
+
+Local preflight archive, six copy/hash-verified files:
+F:/CodexCreativeArchive/oceanides/organic/glovio-sound-preflight-v1/
+Includes the historical pre-approval spec, cue plan and live-quote screenshots;
+it is preserved unchanged. Completed editable source/audio/output archive:
+F:/CodexCreativeArchive/oceanides/organic/glovio-sound-v1/
+ZIP: F:/CodexCreativeArchive/oceanides/organic/oceanides-glovio-sound-editable-v1.zip
+All 65 listed source/output files matched archive and extracted ZIP hashes.
+ZIP SHA256 e87b178310249e805f992b4f3fae7ef81bc872cd23eba9c57c63020d9823b782
+The local mix reran from the extracted ZIP and reproduced the exact movie hash.
+Accepted reference: oceanides-glovio-sound-review-v1.mp4 in that archive.
+SHA256 a03704a7f379cfd1f3886d1a0c6a09f1c17a8d4624fe984b735b969026a4ae21
+Neil approved the delivered Reel on 2026-11-07. APPROVAL.md beside the movie
+records the acceptance and binds it to that export and the editable ZIP.
+The original silent archive and accepted first film remain unchanged.
+
+Sound verification: full decode exit 0, 11.00s, 264 frames, 540x960/24fps,
+AAC 192kbps/48kHz stereo. Approved compressed video stream hash is unchanged.
+Stereo -18.03 LUFS / -1.88 dBTP; mono -21.77 LUFS / -4.94 dBTP.
+Continuous original-tempo score with tail fade, no source joins; flow filtered
+from 2s and out by 4s; measured buildup attack aligned at 4.5s/frame 108.
+Neil accepted the delivered mix. Direct agent listening and a specific
+phone/Reels playback check were not observed. The recorded cue anchor comes
+from the waveform. Local mix reproduction uses the saved WAVs.
+
+Verification/handoff: all 31 archive copy/hash checks passed. The archived renderer
+passed --plates-only --check-edit (exit 0) in an isolated working copy, covering
+editable text, bounds, logo alpha, and plate creation. Accepted movie hashes are
+unchanged. git diff --check passed. App build/test was not run for the
+documentation/media work. Reference extraction and scene-candidate
+analysis both exited 0; candidate statistics are explicitly not a full shot count.
+Reference document links, unique E19 heading, all 26 archive hashes, and staged
+diff checks passed. Glovio: 192 native 3D frames rendered with Blender 5.2.2;
+264 final frames fully decoded; centered text bounds, transparent logo corners,
+editable text and nine encoded transition/end samples passed. Coarse body-image
+comparison found zero identical adjacent frames, not proof of motion quality.
+Actual phone/Reels preview and client technical validation remain pending.
+PR230 carries the documentation/handoff; no media committed. Hosted checks and
+independent application-code review were not assessed in this artifact-only pass.
+
+## Previous engineering handoff (retained)
+
+The provider-recovery work below was recorded on 2026-11-05. PR226 is now merged
+at this checkout's base; its old draft-review next step is superseded. The measured
+runtime risks and the need to choose a recovery policy remain unresolved.
+
+### Provider recovery work
 Checkout: F:/CodexWorktrees/debb/grifon-command
 Branch: codex/provider-recovery-harness, based on main b46b5e71 (PR225 merged).
-Draft PR226: https://github.com/yopiheart/grifon-command/pull/226
+PR226 (merged): https://github.com/yopiheart/grifon-command/pull/226
 Implementation commit: 494b7c7b. Harness only. No runtime, migration, tuned
 content, dependency, paid provider or production data change.
 PR201 live voice remains paused. No new release or live microphone evidence.
 
-## Observed behavior
+### Observed behavior
 The real Producer advance handler and unchanged scene SQL ran through Supabase
 JS, loopback PostgREST and isolated PostgreSQL. Two SQL claimers overlapped and
 one won. A dropped reply after commit resumed through the saved handle.
@@ -20,7 +181,7 @@ millisecond later requeue was eligible. The two reproduced risks are:
 - An older attempt recorded first after a newer claim. The newer record
   returned changed:false and the older handle remained saved.
 
-## Verification
+### Verification
 Windows Node 24.21.0, PostgreSQL 17.6, PostgREST 16.5.
 Normal characterization exit 0, nine PASS and two KNOWN RISK findings.
 Direct Node negative control exit 2 as expected, with the same nine cases.
@@ -42,8 +203,8 @@ operations. Browser, full orchestrator, hosted auth and real billing were
 not exercised. Portable tools are in ignored .tmp/provider-recovery-tools.
 Run and interpret using workflows/provider-submission-recovery.md.
 
-## ▶ NEXT ACTION
-Review draft PR226 and its hosted checks. The measured sequences are inputs
+### Engineering follow-up
+The measured sequences are inputs
 to choosing a runtime recovery policy. Establish provider idempotency or
 reconciliation support and decide how to handle uncertain submissions before
 changing the protocol.
