@@ -400,6 +400,25 @@ physical, and show a consequence in the same space. The
 into a flashlight reveal. Audio and exact cut count remain unverified.
 **ONE_OFF; no Pattern Index counts or presets changed.**
 
+### 2026-11-08 — E23 Temi character routine (Instagram, stylized beauty)
+
+**Source:** https://www.instagram.com/_temi_makeup/reel/DeqrASrBkQD/
+**Why autopsied:** remaining format from Neil's original Oceanides shortlist.
+Initial screening displayed 17M views. No fresh baseline or retention evidence.
+**Evidence:** 481 decoded frames at 720x1280/24fps, half-second samples and
+adjacent frames at 10 candidate changes. See the
+[Temi study](reference_studies/temi-character-routine.md) for the timeline,
+source hash and audio limits.
+
+| Hook | Pace driver | Overlay | Camera and transition | Payoff |
+| --- | --- | --- | --- | --- |
+| Character and cosmetic tube visible in frame one. | Hands advance the routine through different products and visible face states. | Physical package text. No added hook, labels, captions or CTA seen. | Largely fixed frontal setup, edits inside the routine, tighter pose at 17.00s, location and scale change at 19.00s. | Makeup reveal at 15.67s, pose and wink, then a full-outfit walk. |
+
+**So what:** try an original Oceanides crew readiness routine. Let hand
+contact drive the internal edits. Save the reaction and new angle for the
+finished look. Source audio decoded, but individual cues and narration
+remain unverified by ear. **ONE_OFF.** No Pattern Index or preset promotion.
+
 ### 2026-11-07 — E19 Dr. Plants ant-colony story (YouTube, nature documentary)
 
 **Source:** https://www.youtube.com/watch?v=PyiCHWfBQPY

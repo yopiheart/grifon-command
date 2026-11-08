@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-11-08. Zuni parked; Temi is the remaining untested format.**
+**Stamped: 2026-11-08. Zuni parked; Temi Reel study saved.**
 
 ## Current session
 
@@ -133,8 +133,12 @@ staging cleanup was confirmed. The private run receipt and unchanged inputs
 are in F:/CodexCreativeArchive/oceanides/organic/zuni-seedance-2-action-preflight-v1/.
 Neil parked Zuni. Resume it when he asks. The next attempt requires
 provider access and separate authorization. Of the original five
-references, Temi is the only format without an Oceanides pilot. It
-still needs a detailed Reel study.
+references, Temi is the only format without an Oceanides pilot. E23 and
+workflows/reference_studies/temi-character-routine.md capture the source
+Reel's frontal routine, hand-driven changes, pose and full-body exit.
+FFmpeg decoded 481 frames. Offline ASR did not recover usable narration.
+Individual audio cues remain unverified. The proposed crew readiness
+routine is ready for a picture brief. No media generation or spend.
 
 Dr. Plants takeaway: test a story that follows a subject through question, clues,
 and payoff; use VO when it supplies context and causality. A 25-35 second narrated

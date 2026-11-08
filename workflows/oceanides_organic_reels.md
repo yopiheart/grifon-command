@@ -233,6 +233,12 @@ Neil's V2 look clarification: the POV, hand, flashlight and setting should
 look photographic. Only the caretaker is hand-drawn anime. Keep the
 existing POV blocking and test the blend in one shot before a full remake.
 
+**Temi follow-up, 2026-11-08.** The [source study](reference_studies/temi-character-routine.md)
+and Swipe File E23 record the frontal grooming routine, hand-driven state
+changes, brief makeup reaction and full-body exit. A proposed Oceanides
+pilot uses the same structure for an original crew member's gear routine.
+Picture and sound are pending.
+
 ## Preserved pilot and reproduction
 
 Local archive outside the worktree, copied without changing the originals:
