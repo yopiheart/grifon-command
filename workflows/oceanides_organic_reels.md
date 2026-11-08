@@ -237,7 +237,10 @@ existing POV blocking and test the blend in one shot before a full remake.
 and Swipe File E23 record the frontal grooming routine, hand-driven state
 changes, brief makeup reaction and full-body exit. A proposed Oceanides
 pilot uses the same structure for an original crew member's gear routine.
-Picture and sound are pending.
+Neil approved the six-panel storyboard. The 13s local motion pass is
+ready for picture review. Its archive preserves the approved plates,
+editable timings, render, and frame checks. The exit uses a held step pose
+with small body and case movements. Sound work is pending.
 
 ## Preserved pilot and reproduction
 

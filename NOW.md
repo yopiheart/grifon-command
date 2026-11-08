@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-11-08. Zuni parked; Temi storyboard ready for review.**
+**Stamped: 2026-11-08. Zuni parked; Temi picture pass rendered.**
 
 ## Current session
 
@@ -133,7 +133,7 @@ staging cleanup was confirmed. The private run receipt and unchanged inputs
 are in F:/CodexCreativeArchive/oceanides/organic/zuni-seedance-2-action-preflight-v1/.
 Neil parked Zuni. Resume it when he asks. The next attempt requires
 provider access and separate authorization. Of the original five
-references, Temi is the only format without an Oceanides pilot. E23 and
+references, Temi was the last format without an Oceanides pilot. E23 and
 workflows/reference_studies/temi-character-routine.md capture the source
 Reel's frontal routine, hand-driven changes, pose and full-body exit.
 FFmpeg decoded 481 frames. Offline ASR did not recover usable narration.
@@ -144,7 +144,22 @@ Native image, input and prompts are archived locally at
 F:/CodexCreativeArchive/oceanides/organic/temi-storyboard-preview-v2/.
 Selected preview SHA256
 0bcbb9093168f5a0a65196c168daae514dca1b2ffbba48b52ec6b2ee65248daa.
-Storyboard review pending. No video or audio pass started.
+Neil approved storyboard V2. The 13s silent picture pass keeps the frontal
+workbench through the glove, cuff, jacket and flashlight, then cuts tighter
+for the reaction and wide for the doorway payoff. Local plate animation
+supplies the hand gestures and switch cue. The wide exit holds a step pose
+with body and case motion rather than a full walk cycle. Picture review
+pending. No audio or paid generation.
+
+Temi archive: F:/CodexCreativeArchive/oceanides/organic/temi-crew-motion-v1/
+Movie: oceanides-temi-crew-motion-v1.mp4, 13.00s, 540x960/24fps.
+SHA256 bb7f9bb1cdaf955d8f2275af715d5511dce081f5850f16287863df1a4e6b0d5b
+All 312 frames decoded. Nineteen encoded frames sampled. The workbench
+region rose from Y=36.71 to 134.70 after the switch. Local Chromium
+390x844 playback presented 312 frames with zero drops. All 13 package
+files matched. Editable ZIP:
+F:/CodexCreativeArchive/oceanides/organic/oceanides-temi-crew-motion-v1-editable.zip
+SHA256 e9f8ab763b37207a2af611df8845cd0a4f9f5bad4786b56a8b6235fbab90c91b
 
 Dr. Plants takeaway: test a story that follows a subject through question, clues,
 and payoff; use VO when it supplies context and causality. A 25-35 second narrated
