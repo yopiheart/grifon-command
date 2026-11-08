@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-11-08. Zuni parked; Temi Reel study saved.**
+**Stamped: 2026-11-08. Zuni parked; Temi storyboard ready for review.**
 
 ## Current session
 
@@ -137,8 +137,14 @@ references, Temi is the only format without an Oceanides pilot. E23 and
 workflows/reference_studies/temi-character-routine.md capture the source
 Reel's frontal routine, hand-driven changes, pose and full-body exit.
 FFmpeg decoded 481 frames. Offline ASR did not recover usable narration.
-Individual audio cues remain unverified. The proposed crew readiness
-routine is ready for a picture brief. No media generation or spend.
+Individual audio cues remain unverified. Neil requested a storyboard
+before production. The six-panel V2 preview shows the original stylized
+Filipino crew member, glove, zip, flashlight, reaction and wide exit.
+Native image, input and prompts are archived locally at
+F:/CodexCreativeArchive/oceanides/organic/temi-storyboard-preview-v2/.
+Selected preview SHA256
+0bcbb9093168f5a0a65196c168daae514dca1b2ffbba48b52ec6b2ee65248daa.
+Storyboard review pending. No video or audio pass started.
 
 Dr. Plants takeaway: test a story that follows a subject through question, clues,
 and payoff; use VO when it supplies context and causality. A 25-35 second narrated
