@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-11-08. Zuni hybrid look accepted; motion test rendered.**
+**Stamped: 2026-11-08. Zuni local motion proof saved; provider test pending access.**
 
 ## Current session
 
@@ -125,7 +125,13 @@ SHA256 bb66b6af62da13d453952be5c70e064de8d714e5fec8fb02dabb6b1379d8869c
 96 frames decoded. Twelve picture samples, five face crops and local
 390x844 Chromium playback passed. The selected grate region's mean Y
 increased from 82.00 to 164.73 after the switch. All 12 ZIP entries match.
-No paid generation, sound, full remake or publishing. Motion review pending.
+Neil found the reaction too subtle and approved a six-second Seedance 2.0
+action test through BytePlus. Exact assets and approval spec passed the
+local dry run. API auth and private staging checks passed. The provider
+rejected the one submission before a generation task was created. Exact
+staging cleanup was confirmed. The private run receipt and unchanged inputs
+are in F:/CodexCreativeArchive/oceanides/organic/zuni-seedance-2-action-preflight-v1/.
+The next attempt requires provider access and separate authorization.
 
 Dr. Plants takeaway: test a story that follows a subject through question, clues,
 and payoff; use VO when it supplies context and causality. A 25-35 second narrated

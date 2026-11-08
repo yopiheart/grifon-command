@@ -28,6 +28,13 @@ separately approved moving-plate test is the next step for the full 15s,
 especially for the truck exit and prop pickup. Add the existing transparent
 Oceanides mark in post.
 
+The local motion was too subtle in Neil's review. He approved one six-second
+Seedance 2.0 action test through the existing BytePlus connection. It uses
+the same look still and a six-second Blender guide for the lift and camera
+tilt. BytePlus rejected the submission before a job was created. The
+temporary guide upload was removed. The spec and run receipt are saved
+locally in `F:/CodexCreativeArchive/oceanides/organic/zuni-seedance-2-action-preflight-v1/`.
+
 ## V1 blocking proof
 
 Picture proof for organic awareness. A fictional café caretaker stands near
