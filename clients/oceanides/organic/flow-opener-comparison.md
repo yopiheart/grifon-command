@@ -26,11 +26,13 @@ decoded all 144 frames. No new paid generation occurred.
 
 Local archive: `F:/CodexCreativeArchive/oceanides/organic/flow-ab-picture-test-v1/`.
 It preserves the source and recut Blender scenes, timeline, approved plates,
-sound assets, both exports, and evidence. Direct listening, viewer
-comprehension, and organic performance await review.
+sound assets, both exports, and evidence. Viewer comprehension and
+organic performance await review.
 
 Sound V2 moves the droplet layer from 1.25s to the shared shot cut at
 2.50s, with a measured 2.58s onset and a fade ending at 5.50s. The buildup
 cue remains at 5.75s. Both V2 exports retain the V1 compressed picture
-streams and share the exact same revised audio. Sound review files:
+streams and share the exact same revised audio. Neil accepted Sound V2
+on 2026-11-09. The approval receipt records both exact export hashes.
+Sound review files:
 `F:/CodexCreativeArchive/oceanides/organic/flow-ab-sound-v2/`.
