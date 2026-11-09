@@ -212,6 +212,13 @@ preserves the scene, exact text and cue timings, native audio, and mix.
 Preset promotion and batch rollout are separate decisions.
 [Accepted export and reproduction notes](../clients/oceanides/organic/glovio-sound-receipt.md).
 
+**Glovio opener test, 2026-11-09.** A separate
+[matched opener comparison](../clients/oceanides/organic/flow-opener-comparison.md)
+reuses the approved scene, contact card and sound assets. The shared
+six-second camera move explains the mechanism. Two equal-length openings
+carry the same question. Both use illustration until a real symptom
+clip is cleared. Local review only.
+
 **Saveo follow-up, 2026-11-07.** The audience-choice pilot gives viewers two
 locations to look at in a café washroom. Their choice can set the first clue
 of Part 2. The reference study records the original's illustrated scenes,

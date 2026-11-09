@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-11-08. Zuni parked; Temi picture pass rendered.**
+**Stamped: 2026-11-09. Oceanides flow opener comparison ready for review.**
 
 ## Current session
 
@@ -7,6 +7,25 @@ Checkout: F:/CodexWorktrees/cce6/grifon-command
 Branch: codex/oceanides-organic-workflow, based on main 37f54d67 (PR226 merged).
 Draft PR230: https://github.com/yopiheart/grifon-command/pull/230
 Runbook commit: 02ae639e, pushed. No merge requested or performed.
+Neil approved the Glovio follow-up test. The two local 13s exports use
+the accepted question, matching sound, six-second explanation and
+contact ending. A opens on the prior illustrated normal-flow scene
+because no cleared real symptom clip was identified locally. B opens
+on backed-up water in the same illustration. The separate silent body
+is available for checking comprehension on mute.
+
+Archive: F:/CodexCreativeArchive/oceanides/organic/flow-ab-picture-test-v1/
+Pilot: clients/oceanides/organic/flow-opener-comparison.md.
+Both 312-frame exports decoded at 540x960/24fps. Their first 60 frames
+differ, and the remaining 252 decoded frames and encoded audio match.
+The six-second proof decoded 144 frames. Both final files reached the
+end at 390x844 with zero browser frame drops. Stereo -18.04 LUFS /
+-2.74 dBTP. Only the B opening was rendered again to clear the copy.
+Final reassembly took 7.09s after render, preserving A byte for byte.
+All 36 archive files matched the editable ZIP.
+ZIP SHA256 788260b7731c0e15c5f01ebb1d1e24c1c1d7f79d16475710bbb864104935542b.
+No new paid generation or publishing. Viewer and listening review pending.
+
 Scope: document Neil's approved organic illustrative-explainer flow, preserve
 local sources, inspect Dr. Plants and Glovio references, and create a separate
 original Glovio-inspired local mechanism film with its approved music/two-SFX
