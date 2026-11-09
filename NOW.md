@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-11-09. Oceanides flow opener comparison ready for review.**
+**Stamped: 2026-11-09. Oceanides flow opener sound timing revised.**
 
 ## Current session
 
@@ -25,6 +25,13 @@ Final reassembly took 7.09s after render, preserving A byte for byte.
 All 36 archive files matched the editable ZIP.
 ZIP SHA256 788260b7731c0e15c5f01ebb1d1e24c1c1d7f79d16475710bbb864104935542b.
 No new paid generation or publishing. Viewer and listening review pending.
+
+Neil flagged the early water droplets. Sound V2 starts that layer at the
+shared shot's 2.50s cut (first measured onset 2.58s), fades it by 5.50s,
+and retains the buildup target at 5.75s. Both revised exports fully
+decoded and retained the V1 compressed picture streams. The revised
+AAC stream is identical across A and B. Sound V2 files and cue evidence:
+F:/CodexCreativeArchive/oceanides/organic/flow-ab-sound-v2/.
 
 Scope: document Neil's approved organic illustrative-explainer flow, preserve
 local sources, inspect Dr. Plants and Glovio references, and create a separate
