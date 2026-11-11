@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-11-11. Oceanides Neuronvisuals picture preview rendered.**
+**Stamped: 2026-11-12. Oceanides Neuronvisuals sound preview rendered.**
 
 ## Current session
 
@@ -15,7 +15,15 @@ left panel while the right cutaway shows the restriction clearing. The
 13-second silent portrait preview and editable composition are archived at
 F:/CodexCreativeArchive/oceanides/organic/neuronvisuals-drain-comparison-v1/.
 All 312 frames decoded at 540x960/24fps. Playback at 390x844 reported zero
-dropped frames. Draft copy and motion await Neil's review.
+dropped frames. Neil requested music and effects and approved the exact
+399-credit cap. The four generations produced one continuous instrumental
+score and the three effects. The mixed preview keeps the locked video
+stream, with a probe attack at 6.01s and drain onset at 6.97s.
+Sound archive: F:/CodexCreativeArchive/oceanides/organic/neuronvisuals-drain-sound-v1/.
+The compressed picture hash matched, all 312 frames decoded, and the
+390x844 playback reached the end with audio enabled and zero drops.
+Stereo -18.02 LUFS / -3.06 dBTP. Listening and Neil's mix review remain
+pending. See clients/oceanides/organic/neuronvisuals-sound-receipt.md.
 
 Neil approved the Glovio follow-up test. The two local 13s exports use
 the accepted question, matching sound, six-second explanation and
