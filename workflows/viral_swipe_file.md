@@ -321,6 +321,31 @@ lip-sync drift, impossible lighting, plastic over-clean texture).*
 
 ## Entries
 
+### 2026-11-11 — E24 Neuronvisuals first brick comparison (Instagram, animated metaphor)
+
+**Source:** https://www.instagram.com/reel/DeSZWn3RYFG/
+**Why reviewed:** Neil requested a reverse engineering pass and an Oceanides
+adaptation. He singled out the luminous figures at mobile size. Instagram
+displayed 9,059 comments on review. No channel baseline or retention data.
+
+**Evidence:** browser player reports 13.814 seconds and 1080x1920. Thirteen
+timed playback samples span 0.14 to 12.80 seconds. The sampled floor and
+labels stay fixed. The browser credited Mark Bernes' "Dark Night (2026
+Remaster)." The streamed audio could not be exported or checked by ear.
+The account's software and exact edit count remain unverified.
+
+| Time | Observable action | Direction |
+| --- | --- | --- |
+| 0.14–2.61s | Both figures are working. The left figure holds a red level over one area. The right starts stacking bricks. | Fixed, slightly elevated full-figure frame with both work areas visible. White silhouettes on black, soft bloom and floor reflections. |
+| 3.52–7.14s | The left figure repeats its bend and level action. Rows build under the right figure. | The height difference becomes the progress indicator. The white role labels remain in the same positions. The red tool identifies the repeated motion. |
+| 9.09–12.80s | The right figure rises behind the finished wall, exits right, and leaves the wall in view. The left keeps working. | A visible result holds through the last samples. The caption separately invites viewers to comment for the creator's course. |
+
+**Oceanides application:** compare a recurring floor-drain puddle with
+inspection and clearing in a fictional cutaway. The figures share a locked
+frame and the same opening symptom. Body glow, soft reflections and one
+colored tool per side carry the attention. Use a local editable composition
+for the figures, floor, flow and reaction. **ONE_OFF visual study.**
+
 ### 2026-11-07 — E20 Glovio boxing action breakdown (Instagram, sports instruction)
 
 **Source:** https://www.instagram.com/glovioai/reel/DeGpKrTE6zw/

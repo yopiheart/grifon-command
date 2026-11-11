@@ -1,5 +1,5 @@
 # NOW - the resume doc
-**Stamped: 2026-11-09. Oceanides flow Sound V2 accepted.**
+**Stamped: 2026-11-11. Oceanides Neuronvisuals picture preview rendered.**
 
 ## Current session
 
@@ -7,6 +7,16 @@ Checkout: F:/CodexWorktrees/cce6/grifon-command
 Branch: codex/oceanides-organic-workflow, based on main 37f54d67 (PR226 merged).
 Draft PR230: https://github.com/yopiheart/grifon-command/pull/230
 Runbook commit: 02ae639e, pushed. No merge requested or performed.
+Neil moved on from the Temi flashlight rebuild before export. The current
+reference is the Neuronvisuals first-brick Reel, recorded in Swipe File E24.
+The local adaptation compares two responses to a fictional floor-drain
+backup using luminous figures in one fixed frame. The water returns in the
+left panel while the right cutaway shows the restriction clearing. The
+13-second silent portrait preview and editable composition are archived at
+F:/CodexCreativeArchive/oceanides/organic/neuronvisuals-drain-comparison-v1/.
+All 312 frames decoded at 540x960/24fps. Playback at 390x844 reported zero
+dropped frames. Draft copy and motion await Neil's review.
+
 Neil approved the Glovio follow-up test. The two local 13s exports use
 the accepted question, matching sound, six-second explanation and
 contact ending. A opens on the prior illustrated normal-flow scene
