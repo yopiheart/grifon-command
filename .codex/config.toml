@@ -1,3 +1,7 @@
+model = "gpt-6.1-sol"
+model_reasoning_effort = "high"
+service_tier = "default"
+
 [features]
 # Project hooks still require the user's trust review in Codex.
 hooks = true
