@@ -1,9 +1,10 @@
 # NOW - the resume doc
-**Stamped: 2026-11-13. Codex model routing and Producer recovery handoff**
+**Stamped: 2026-11-14. Codex model routing and Producer recovery handoff**
 
 ## Codex model routing
-Branch `codex/auto-model-routing` sets Sol High at Standard speed and adds
-task-based Luna High and Astra Extra High handoffs. See the
+[Draft PR235](https://github.com/yopiheart/grifon-command/pull/235) sets Sol
+High at Standard speed and adds task-based Luna High and Astra Extra High
+handoffs on `codex/auto-model-routing`. See the
 [desktop model selection workflow](workflows/codex_desktop.md#automatic-model-selection).
 The project config and a fresh ephemeral Codex chat resolved to Sol High.
 The ChatGPT-signed-in catalog exposed all three selected model and effort
