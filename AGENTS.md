@@ -48,6 +48,17 @@ document: overwrite it only when a session changes project state; never create a
 second resume document. Check remote branches and repository content before
 declaring work missing. Documentation is context, not runtime evidence.
 
+## Automatic model selection for Codex work
+
+Use GPT-6.1 Sol at High effort and Standard speed as the project default.
+Handle simple requests and normal implementation directly. When a substantial
+read-only scan benefits from delegation, use GPT-6 Luna at High effort. For
+an unresolved technical decision with material consequences for auth, billing,
+paid provider jobs, or data integrity, delegate that decision to GPT-6 Astra at
+Extra High effort, then continue the work in Sol. Use a clean fork for model
+overrides. Honor an explicit user choice for the current task. See the
+[desktop model selection workflow](workflows/codex_desktop.md#automatic-model-selection).
+
 ## Product and architecture
 
 GRIFON COMMAND is a React 18 + Vite + TypeScript + Tailwind AI-marketing
