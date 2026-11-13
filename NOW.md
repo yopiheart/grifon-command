@@ -4,7 +4,7 @@
 ## Active work
 The `codex/reconcile-agent-instructions` branch aligns the standing lessons
 and WAT with the current Codex secret, delegation and verification rules.
-Review the [instruction changes](https://github.com/yopiheart/grifon-command/compare/main...codex/reconcile-agent-instructions).
+Review the [instruction changes in draft PR234](https://github.com/yopiheart/grifon-command/pull/234).
 PR201 live voice remains paused.
 
 ## Producer recovery
