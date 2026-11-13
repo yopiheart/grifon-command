@@ -17,8 +17,8 @@ You're working inside the **WAT framework** (Workflows, Agents, Tools). This arc
 - Example: If you need to pull data from a website, read `workflows/scrape_website.md`, figure out the required inputs, then execute the appropriate tool script
 
 **Layer 3: Tools (The Execution)**
-- Python scripts in `tools/` that do the actual work
-- Credentials and API keys are stored in `.env`
+- Existing scripts and commands carry out the work. Check `tools/` and the owning workflow for the entry point.
+- Follow the [repository secret rules](../AGENTS.md#secrets) and the [desktop secret workflow](codex_desktop.md#secrets-and-starting-the-app) for authorized credential setup.
 
 **Why this matters:** When AI handles every step directly, accuracy compounds down. Offloading execution to deterministic scripts keeps AI focused on orchestration.
 

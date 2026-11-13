@@ -62,6 +62,9 @@ adds exact tracked files, never replaces rules or restores non-sparse deletions.
   SessionStart guard/sweep, allowed/denied PreToolUse probes, Stop dispatch,
   and direct-composer UserPromptSubmit. This is not every-policy-path coverage;
   changed hook source still needs its normal review/trust on this desktop.
+  `npm.cmd run check:codex` exercises the checked-in contracts. Use a harmless
+  probe in the actual Codex session when a change depends on runtime dispatch.
+  For changes to legacy `.claude/settings.json`, use `bash tools/hook_gate_test.sh`.
 - `.codex/config.toml` configures the optional Playwright MCP server using a
   pinned package. Built-in browser tools can also drive manual checks. The old
   `restore-playwright-mcp.ps1` writes Claude configuration and is unnecessary
@@ -140,6 +143,12 @@ npm.cmd run check:domain
 npm.cmd run check:artifact-anchors
 npm.cmd run test:e2e
 ```
+
+Choose the narrowest check that exercises the changed behavior. Use the
+[One-Shot recovery map](recovery-feature-map.md) for saved-work and browser
+flows, and the [isolated provider recovery harness](provider-submission-recovery.md)
+for scene claims and handle persistence. Record each check against the behavior
+it covers. The Stop hook's build result covers the build only.
 
 Build includes the PowerShell ASCII check. The migration checks exercise skill
 paths, asset selection, readiness and the Codex hook protocol. Existing CI also
