@@ -50,6 +50,35 @@ Use the current task branch when resuming or updated `main` for new work.
 Preserve a clone's existing sparse patterns when using selective restoration: the asset helper
 adds exact tracked files, never replaces rules or restores non-sparse deletions.
 
+## Automatic model selection
+
+The project default is `gpt-6.2-sol` at High effort and Standard speed.
+The desktop chat keeps its selected model. An explicit user choice takes
+precedence. For automatic selection, use the smallest handoff that owns the
+difficult part of the request.
+
+| Work | Route |
+| --- | --- |
+| Questions, lookups and scans, routine implementation, reproducible bugs or routine UI edits | Sol High handles the task directly. |
+| Complex UI or 3D work against a reference, a client deliverable with a strict template, or implementation spanning tightly coupled modules | Delegate the difficult deliverable itself to `gpt-6.2-astra` at `high`. Sol integrates and verifies it. |
+| Competing options with a material risk of double charging, duplicate paid jobs, incorrect access or data loss | Delegate the unresolved decision to `gpt-6.2-astra` at `xhigh`. Reassess when new evidence contradicts Sol's diagnosis and escalate if material uncertainty remains. |
+
+For Astra, start a [fresh subagent](https://learn.chatgpt.com/docs/agent-configuration/subagents)
+with `fork_turns: "none"`, the explicit model and effort, the question or
+deliverable, the relevant evidence and acceptance criteria. Include the short
+source excerpt when it is already available. While the child works, leave
+its investigation to it. Preserve the same
+permissions and approval boundaries. Use the returned result once, then
+verify it against the task. If delegation is unavailable, identify the
+fallback and continue with the available model.
+
+To verify a route, open a fresh chat in the trusted project with the project
+default. Use a representative task and inspect the parent and any child
+runtime records for the model and effort actually used. Record the answer
+against known evidence, elapsed time, available token usage and rework.
+A requested child model or the parent model picker alone leaves the child
+route unverified.
+
 ## Controls and connections
 
 - `.agents/skills` contains the migrated workflow entry points; `.codex/agents`

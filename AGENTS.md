@@ -48,6 +48,17 @@ document: overwrite it only when a session changes project state; never create a
 second resume document. Check remote branches and repository content before
 declaring work missing. Documentation is context, not runtime evidence.
 
+## Automatic model selection for Codex work
+
+Use GPT-6.2 Sol High at Standard speed for routine work. Delegate the bounded
+part of a complex reference-driven design, template-matched deliverable or
+cross-module implementation to GPT-6.2 Astra High. Use GPT-6.2 Astra Extra
+High for an unresolved decision with material risk to billing, access, paid
+jobs or data integrity. Reassess when new evidence contradicts a diagnosis.
+The main chat integrates and verifies delegated work. Honor an explicit user
+model choice. Follow the [desktop routing workflow](workflows/codex_desktop.md#automatic-model-selection)
+for fresh subagent handoffs and runtime verification.
+
 ## Product and architecture
 
 GRIFON COMMAND is a React 18 + Vite + TypeScript + Tailwind AI-marketing
