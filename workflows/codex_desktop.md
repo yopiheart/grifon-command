@@ -52,36 +52,32 @@ adds exact tracked files, never replaces rules or restores non-sparse deletions.
 
 ## Automatic model selection
 
-Use the project's GPT-6.1 Sol High default at Standard speed. The main chat
-owns the outcome and selects a route from the request, affected boundary and
-available checks. Follow an explicit user model choice for that task.
+The project default is `gpt-6.2-sol` at High effort and Standard speed.
+The desktop chat keeps its selected model. An explicit user choice takes
+precedence. For automatic selection, use the smallest handoff that owns the
+difficult part of the request.
 
 | Work | Route |
 | --- | --- |
-| Quick question, one-file lookup, or small edit | Sol handles it directly. |
-| Bounded read-only scan with a specific evidence request | Delegate to GPT-6 Luna at High effort when the scan is large enough to justify a handoff. |
-| Implementation, debugging, or independent review of an agreed contract | GPT-6.1 Sol at High effort. Use the existing executor or review workflow where applicable. |
-| An unresolved decision about auth, billing, provider submission, data integrity, or a cross-module design with competing options | Delegate the specific decision to GPT-6 Astra at Extra High effort. Sol implements and verifies against the resulting contract. |
+| Questions, lookups and scans, routine implementation, reproducible bugs or routine UI edits | Sol High handles the task directly. |
+| Complex UI or 3D work against a reference, a client deliverable with a strict template, or implementation spanning tightly coupled modules | Delegate the difficult deliverable itself to `gpt-6.2-astra` at `high`. Sol integrates and verifies it. |
+| Competing options with a material risk of double charging, duplicate paid jobs, incorrect access or data loss | Delegate the unresolved decision to `gpt-6.2-astra` at `xhigh`. Reassess when new evidence contradicts Sol's diagnosis and escalate if material uncertainty remains. |
 
-Reassess after a failed check that contradicts the plan. Send Astra the
-unresolved question, relevant files and failing evidence when deeper judgment
-is needed. Reuse the result for related work and escalate again only if new
-evidence changes the decision. Keep simple work in the main chat to save the
-overhead of starting a subagent. Use a fresh reviewer for independent review.
+For Astra, start a [fresh subagent](https://learn.chatgpt.com/docs/agent-configuration/subagents)
+with `fork_turns: "none"`, the explicit model and effort, the question or
+deliverable, the relevant evidence and acceptance criteria. Include the short
+source excerpt when it is already available. While the child works, leave
+its investigation to it. Preserve the same
+permissions and approval boundaries. Use the returned result once, then
+verify it against the task. If delegation is unavailable, identify the
+fallback and continue with the available model.
 
-Use a fresh subagent with `fork_turns: "none"` where supported for a Luna or
-Astra handoff. Pass the model, effort and the specific question with its evidence.
-Wait for the agent returned by the spawn call. If model selection or spawning
-is unavailable, finish with the available Sol setting and identify the fallback.
-Keep the same tool permissions and repository approval boundaries at every
-handoff.
-
-The desktop chat keeps its selected model. This workflow chooses models for
-delegated work using [Codex subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents).
-Project defaults apply when the trusted project config is loaded. A model
-chosen explicitly in the desktop chat can override the project default.
-Use the Codex usage dashboard and completed task evidence to assess savings on
-comparable work, including time spent correcting the result.
+To verify a route, open a fresh chat in the trusted project with the project
+default. Use a representative task and inspect the parent and any child
+runtime records for the model and effort actually used. Record the answer
+against known evidence, elapsed time, available token usage and rework.
+A requested child model or the parent model picker alone leaves the child
+route unverified.
 
 ## Controls and connections
 

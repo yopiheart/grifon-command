@@ -50,14 +50,14 @@ declaring work missing. Documentation is context, not runtime evidence.
 
 ## Automatic model selection for Codex work
 
-Use GPT-6.1 Sol at High effort and Standard speed as the project default.
-Handle simple requests and normal implementation directly. When a substantial
-read-only scan benefits from delegation, use GPT-6 Luna at High effort. For
-an unresolved technical decision with material consequences for auth, billing,
-paid provider jobs, or data integrity, delegate that decision to GPT-6 Astra at
-Extra High effort, then continue the work in Sol. Use a clean fork for model
-overrides. Honor an explicit user choice for the current task. See the
-[desktop model selection workflow](workflows/codex_desktop.md#automatic-model-selection).
+Use GPT-6.2 Sol High at Standard speed for routine work. Delegate the bounded
+part of a complex reference-driven design, template-matched deliverable or
+cross-module implementation to GPT-6.2 Astra High. Use GPT-6.2 Astra Extra
+High for an unresolved decision with material risk to billing, access, paid
+jobs or data integrity. Reassess when new evidence contradicts a diagnosis.
+The main chat integrates and verifies delegated work. Honor an explicit user
+model choice. Follow the [desktop routing workflow](workflows/codex_desktop.md#automatic-model-selection)
+for fresh subagent handoffs and runtime verification.
 
 ## Product and architecture
 

@@ -1,17 +1,17 @@
 # NOW - the resume doc
-**Stamped: 2026-11-14. Codex model routing and Producer recovery handoff**
+**Stamped: 2026-11-18. Codex model routing and Producer recovery handoff**
 
 ## Codex model routing
-[Draft PR235](https://github.com/yopiheart/grifon-command/pull/235) sets Sol
-High at Standard speed and adds task-based Luna High and Astra Extra High
-handoffs on `codex/auto-model-routing`. See the
-[desktop model selection workflow](workflows/codex_desktop.md#automatic-model-selection).
-The project config and a fresh ephemeral Codex chat resolved to Sol High.
-The ChatGPT-signed-in catalog exposed all three selected model and effort
-pairs. A read-only Luna scan and an independent Astra review completed.
-An App Server probe loaded the project instructions and completed a delegated
-read-only decision. The probe did not report the child's resolved model.
-The 26 Codex checks and strict resume check passed locally.
+[Draft PR235](https://github.com/yopiheart/grifon-command/pull/235) configures
+GPT-6.2 Sol High at Standard speed. Sol delegates complex deliverables to
+GPT-6.2 Astra High and material unresolved risk decisions to Astra Extra High.
+The [desktop workflow](workflows/codex_desktop.md#automatic-model-selection)
+covers handoffs, explicit model choices and runtime evidence.
+Three fresh CLI chats loaded Sol High. The routine recovery-map lookup
+returned 375px and 1280px directly. Linked child turn records confirm Astra
+High for the Companion drawer and Astra Extra High for paid-job recovery.
+All 26 Codex checks and the strict resume check passed locally.
+See PR235 for per-case usage, time, output checks and local CLI read overhead.
 
 ## Other open work
 [PR226](https://github.com/yopiheart/grifon-command/pull/226) merged the
@@ -26,6 +26,6 @@ the earlier instruction cleanup. GitHub Actions was blocked by an account
 billing lock. PR201 live voice remains paused.
 
 ## ▶ NEXT ACTION
-Start a fresh Grifon chat on the model routing branch. Check the actual
-handoff on a real task and compare usage, elapsed time and rework. Keep the
-recovery and instruction drafts available for review when hosted CI resumes.
+Review the verified GPT-6.2 routing in draft PR235. It is available in the
+routing worktree. Project-wide rollout to main awaits a separate merge decision.
+Compare usage and rework on comparable desktop tasks before claiming savings.
